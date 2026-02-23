@@ -1,1 +1,1 @@
-## WordsGO
+## WordsGO English
