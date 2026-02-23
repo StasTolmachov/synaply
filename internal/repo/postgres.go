@@ -2,6 +2,7 @@ package repo
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -25,6 +26,13 @@ func NewPostgres(cfg config.DB) (*Postgres, error) {
 		return nil, fmt.Errorf("error running migrations: %w", err)
 	}
 	return p, nil
+}
+
+func (p *Postgres) Close() {
+	err := p.db.Close()
+	if err != nil {
+		log.Fatalf("error closing postgres connection: %s", err)
+	}
 }
 
 func (p *Postgres) runMigratopns(path string) error {
