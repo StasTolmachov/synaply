@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/google/uuid"
 )
 
 type userIDCtxKey struct{}
@@ -130,11 +131,13 @@ func (h *PrettyHandler) Handle(ctx context.Context, r slog.Record) error {
 	timeStr := color.GreenString(r.Time.Format(time.DateTime))
 	msg := color.BlueString(r.Message)
 
-	// Check for a trace ID in the context and add it to the log fields if present
-
 	IDKey, ok := ctx.Value(RequestIDKey).(string)
 	if ok {
 		fields["RequestIDKey"] = IDKey
+	}
+	userID, ok := ctx.Value(UserIDKey).(uuid.UUID)
+	if ok {
+		fields["UserIDKey"] = userID
 	}
 	b, err := json.MarshalIndent(fields, "", "  ")
 	if err != nil {
