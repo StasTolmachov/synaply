@@ -12,8 +12,15 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/google/uuid"
 )
+
+type userIDCtxKey struct{}
+
+var UserIDKey userIDCtxKey
+
+type requestIDCtxKey struct{}
+
+var RequestIDKey requestIDCtxKey
 
 const (
 	LevelFatal = slog.Level(12)
@@ -124,9 +131,10 @@ func (h *PrettyHandler) Handle(ctx context.Context, r slog.Record) error {
 	msg := color.BlueString(r.Message)
 
 	// Check for a trace ID in the context and add it to the log fields if present
-	traceID, ok := ctx.Value("trace-id").(uuid.UUID)
+
+	IDKey, ok := ctx.Value(RequestIDKey).(string)
 	if ok {
-		fields["trace-id"] = traceID
+		fields["RequestIDKey"] = IDKey
 	}
 	b, err := json.MarshalIndent(fields, "", "  ")
 	if err != nil {

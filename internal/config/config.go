@@ -10,7 +10,8 @@ import (
 )
 
 type Config struct {
-	DB DB
+	DB  DB
+	Api Api
 }
 
 type DB struct {
@@ -21,6 +22,10 @@ type DB struct {
 	Password       string
 	SSLMode        string
 	MigrationsPath string
+}
+
+type Api struct {
+	Port string
 }
 
 func NewConfig() (*Config, error) {
@@ -51,6 +56,10 @@ func NewConfig() (*Config, error) {
 	}
 	if cfg.DB.MigrationsPath = os.Getenv("MIGRATIONS_PATH"); cfg.DB.MigrationsPath == "" {
 		return nil, fmt.Errorf("MIGRATIONS_PATH environment variable is not set")
+	}
+
+	if cfg.Api.Port = os.Getenv("API_PORT"); cfg.Api.Port == "" {
+		return nil, fmt.Errorf("API_PORT environment variable is not set")
 	}
 
 	return cfg, nil
