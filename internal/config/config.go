@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 
@@ -10,8 +11,9 @@ import (
 )
 
 type Config struct {
-	DB  DB
-	Api Api
+	DB    DB
+	Api   Api
+	Redis Redis
 }
 
 type DB struct {
@@ -26,6 +28,12 @@ type DB struct {
 
 type Api struct {
 	Port string
+}
+
+type Redis struct {
+	Host string
+	Port string
+	TTL  time.Duration
 }
 
 func NewConfig() (*Config, error) {
@@ -60,6 +68,23 @@ func NewConfig() (*Config, error) {
 
 	if cfg.Api.Port = os.Getenv("API_PORT"); cfg.Api.Port == "" {
 		return nil, fmt.Errorf("API_PORT environment variable is not set")
+	}
+
+	if cfg.Redis.Host = os.Getenv("REDIS_HOST"); cfg.Redis.Host == "" {
+		return nil, fmt.Errorf("REDIS_HOST environment variable is not set")
+	}
+	if cfg.Redis.Port = os.Getenv("REDIS_PORT"); cfg.Redis.Port == "" {
+		return nil, fmt.Errorf("REDIS_PORT environment variable is not set")
+	}
+	redisTTLString := os.Getenv("REDIS_TTL")
+	if redisTTLString == "" {
+		return nil, fmt.Errorf("REDIS_TTL environment variable is not set")
+	} else {
+		ttl, err := time.ParseDuration(redisTTLString)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse REDIS_TTL environment variable as a duration")
+		}
+		cfg.Redis.TTL = ttl
 	}
 
 	return cfg, nil

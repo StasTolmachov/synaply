@@ -5,10 +5,12 @@ import (
 	"net/http"
 	"time"
 
+	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/config"
 	"wordsGo_v2/internal/handler"
 	"wordsGo_v2/internal/repository"
 	"wordsGo_v2/internal/service"
+	"wordsGo_v2/slogger"
 )
 
 func StartServer(cfg config.Config) {
@@ -19,7 +21,13 @@ func StartServer(cfg config.Config) {
 
 	wordsRepo := repository.NewWordsPostgres(db)
 
-	wordsService := service.NewWordsService(wordsRepo)
+	redisClient, err := cache.NewRedisClient(cfg.Redis)
+	if err != nil {
+		slogger.Log.Warn("Error connecting to redis:", "error", err)
+	}
+	defer redisClient.Close()
+
+	wordsService := service.NewWordsService(wordsRepo, redisClient)
 
 	wordsHandler := handler.NewHandler(wordsService)
 

@@ -23,3 +23,16 @@ type Word struct {
 	UpdatedAt      time.Time  `db:"updated_at"`
 	DeletedAt      *time.Time `db:"deleted_at"`
 }
+
+type WordCreateReq struct {
+	UserID     uuid.UUID `db:"user_id"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
+	SourceWord string    `db:"source_word"`
+	TargetWord string    `db:"target_word"`
+	Comment    string    `db:"comment"`
+}
+
+type WordID struct {
+	ID uuid.UUID `db:"id"`
+}

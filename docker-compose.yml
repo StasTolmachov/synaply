@@ -13,6 +13,15 @@ services:
       - db-data:/var/lib/postgresql/data
     networks:
       - backend
+
+  redis:
+    image: redis:7-alpine
+    container_name: words_redis
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - backend
 volumes:
   db-data:
 networks:
