@@ -29,6 +29,11 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 	r.Route("/api/v1/", func(r chi.Router) {
 		r.Post("/create", h.Create)
 	})
+
+	r.Group(func(r chi.Router) {
+		r.Get("/Start", h.StartLesson)
+		r.Post("/check", h.Check)
+	})
 	return r
 }
 
@@ -52,4 +57,28 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	slogger.Log.DebugContext(r.Context(), "Handler Create called with resp", "resp", resp)
 	JSONResponse(w, http.StatusOK, resp)
+}
+
+func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
+
+	word, err := h.us.StartLesson(r.Context(), userID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, word)
+
+}
+
+func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
+
+	req := models.AnswerReq{}
+	resp, err := h.us.CheckAnswer(r.Context(), req)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+	}
+
 }

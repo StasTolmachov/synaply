@@ -12,7 +12,7 @@ import (
 
 type WordsPostgresI interface {
 	Create(ctx context.Context, req *modelsDB.WordCreateReq) (*modelsDB.Word, error)
-	GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.WordID, error)
+	GetLessonWords(ctx context.Context, userID uuid.UUID) (*[]modelsDB.LessonWordsDB, error)
 	GetWordByID(ctx context.Context, wordID uuid.UUID) (*modelsDB.Word, error)
 }
 type WordsPostgres struct {
@@ -30,17 +30,17 @@ returning id, user_id, source_lang, target_lang, source_word, target_word, comme
 	var resp modelsDB.Word
 	err := p.db.db.QueryRowxContext(ctx, query, req.UserID, req.SourceLang, req.TargetLang, req.SourceWord, req.TargetWord, req.Comment).StructScan(&resp)
 	if err != nil {
-		return nil, fmt.Errorf("error creating word: %p", err)
+		return nil, fmt.Errorf("error creating word: %s", err)
 	}
 	slogger.Log.DebugContext(ctx, "Repo Create response", "resp", resp)
 	return &resp, nil
 }
 
-func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.WordID, error) {
+func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) (*[]modelsDB.LessonWordsDB, error) {
 	query := `
 	with
 	new_words as (
-		select w.id
+		select w.id, w.source_word, w.target_word
 		from words w
 		where w.user_id = $1
 		and w.is_learned = false
@@ -49,7 +49,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 		limit 3
 	),
     hard_words as (
-        select w.id
+        select w.id, w.source_word, w.target_word
         from words w
         where w.user_id = $1
         and w.is_learned = false
@@ -58,7 +58,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
         limit 5
     ),
 	review_words as (
-	    select w.id
+	    select w.id, w.source_word, w.target_word
 	    from words w
 	    where w.user_id = $1 
 	    and w.is_learned = true
@@ -71,13 +71,13 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	union all 
 	select review_words;
 	`
-	var resp []modelsDB.WordID
+	var resp []modelsDB.LessonWordsDB
 	err := p.db.db.SelectContext(ctx, &resp, query, userID)
 	if err != nil {
-		return nil, fmt.Errorf("error getting words: %w", err)
+		return nil, fmt.Errorf("error getting words: %s", err)
 	}
 
-	return resp, nil
+	return &resp, nil
 }
 
 func (p *WordsPostgres) GetWordByID(ctx context.Context, wordID uuid.UUID) (*modelsDB.Word, error) {

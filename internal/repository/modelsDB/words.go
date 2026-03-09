@@ -36,3 +36,8 @@ type WordCreateReq struct {
 type WordID struct {
 	ID uuid.UUID `db:"id"`
 }
+type LessonWordsDB struct {
+	ID         uuid.UUID `db:"id"`
+	SourceWord string    `db:"source_word"`
+	TargetWord string    `db:"target_word"`
+}

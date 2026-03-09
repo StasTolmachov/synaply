@@ -77,3 +77,40 @@ func CreateReqToDBCreateReq(req *WordCreateReq, userID uuid.UUID) *modelsDB.Word
 		Comment:    req.Comment,
 	}
 }
+
+type WordID struct {
+	ID uuid.UUID
+}
+
+type LessonWords struct {
+	ID         uuid.UUID
+	SourceWord string
+	TargetWord string
+}
+
+func LessonWordsFromDB(words *[]modelsDB.LessonWordsDB) []LessonWords {
+	var result []LessonWords
+	for _, word := range *words {
+		result = append(result, LessonWords{ID: word.ID, SourceWord: word.SourceWord, TargetWord: word.TargetWord})
+	}
+	return result
+}
+
+type AnswerReq struct {
+	ID         uuid.UUID
+	TargetWord string
+}
+
+type AnswerResp struct {
+	ID         uuid.UUID
+	SourceWord string
+	TargetWord string
+}
+
+type Word struct {
+	ID         uuid.UUID
+	UserID     uuid.UUID
+	SourceWord string
+	TargetWord string
+	Comment    string
+}
