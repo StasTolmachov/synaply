@@ -24,7 +24,7 @@ type Word struct {
 	DeletedAt      *time.Time `db:"deleted_at"`
 }
 
-type WordCreateReq struct {
+type CreateReq struct {
 	UserID     uuid.UUID `db:"user_id"`
 	SourceLang string    `db:"source_lang"`
 	TargetLang string    `db:"target_lang"`
@@ -33,11 +33,13 @@ type WordCreateReq struct {
 	Comment    string    `db:"comment"`
 }
 
-type WordID struct {
-	ID uuid.UUID `db:"id"`
-}
 type LessonWordsDB struct {
-	ID         uuid.UUID `db:"id"`
-	SourceWord string    `db:"source_word"`
-	TargetWord string    `db:"target_word"`
+	ID             uuid.UUID `db:"id"`
+	SourceWord     string    `db:"source_word"`
+	TargetWord     string    `db:"target_word"`
+	Comment        string    `db:"comment"`
+	CorrectStreak  int       `db:"correct_streak"`
+	TotalMistakes  int       `db:"total_mistakes"`
+	DifficultLevel int       `db:"difficult_level"`
+	LastSeenAt     time.Time `db:"last_seen_at"`
 }

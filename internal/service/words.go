@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
-	"strings"
+	"math"
+	"time"
 
 	"github.com/google/uuid"
-	"github.com/redis/go-redis/v9"
 
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
@@ -14,12 +15,9 @@ import (
 )
 
 type WordsServiceI interface {
-	Create(ctx context.Context, req *models.WordCreateReq, userID uuid.UUID) (*models.WordResp, error)
-	GetNextWord(ctx context.Context, userID uuid.UUID, cacheKey string) (*models.WordResp, error)
-	GetWordIDs(ctx context.Context, userID uuid.UUID, cacheKey string) (*uuid.UUID, error)
-	GetWordByID(ctx context.Context, wordID uuid.UUID) (*models.WordResp, error)
-	StartLesson(ctx context.Context, userID uuid.UUID) (*models.WordResp, error)
-	CheckAnswer(ctx context.Context, req models.AnswerReq) (*models.AnswerResp, error)
+	Create(ctx context.Context, req *models.CreateReq, userID uuid.UUID) (*models.Response, error)
+	LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error)
+	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (*models.Response, error)
 }
 
 type WordsService struct {
@@ -31,110 +29,111 @@ func NewWordsService(repo repository.WordsPostgresI, cache cache.CacheRepository
 	return &WordsService{repo: repo, cache: cache}
 }
 
-func (s *WordsService) Create(ctx context.Context, req *models.WordCreateReq, userID uuid.UUID) (*models.WordResp, error) {
+func (s *WordsService) Create(ctx context.Context, req *models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 
-	resp, err := s.repo.Create(ctx, models.CreateReqToDBCreateReq(req, userID))
+	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))
 	if err != nil {
 		return nil, fmt.Errorf("error creating word: %s", err)
 	}
-	return models.WordDBToWordResp(resp), nil
+	return models.DBtoResponse(resp), nil
 }
 
-func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID, cacheKey string) (*models.WordResp, error) {
-	//check redis for words and get one
-	result, err := s.cache.ZRange(ctx, cacheKey, 0, 0)
-	if err == nil && len(result) > 0 {
-		//if word exists, send to handle
-		wordID, _ := uuid.Parse(result[0])
-		word, _ := s.repo.GetWordByID(ctx, wordID)
-		err := s.cache.ZIncrBy(ctx, cacheKey, 1, wordID.String())
-		if err != nil {
-			return nil, fmt.Errorf("failed increment showed word: %s", err)
-		}
-		return models.WordDBToWordResp(word), nil
+func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
+	key := models.CacheKey(userID)
+
+	nextWord, err := s.GetNextWord(ctx, userID)
+	if err == nil {
+		return nextWord, nil
+	}
+
+	wordsDB, err := s.repo.GetLessonWords(ctx, userID)
+
+	wordsRedis := models.WordsDBtoLessonRedis(wordsDB)
+
+	resp := FindMinIdx(wordsRedis)
+
+	val, err := json.Marshal(wordsRedis)
+
+	s.cache.Set(ctx, key, val)
+
+	return resp, err
+}
+
+func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (*models.Response, error) {
+	key := models.CacheKey(userID)
+	lesson := make(map[string]models.WordRedis)
+
+	data, err := s.cache.Get(ctx, key)
+	if err == nil {
+		json.Unmarshal([]byte(data), &lesson)
+	}
+
+	if req.TargetWord != lesson[req.ID].TargetWord {
+		word := lesson[req.ID]
+
+		word.TotalMistakes++
+		word.LastSeenAt = time.Now()
+		word.DifficultLevel = CalculateDifficulty(word.CorrectStreak, word.TotalMistakes)
+		lesson[req.ID] = word
+
+		val, _ := json.Marshal(lesson)
+		s.cache.Set(ctx, key, val)
+
+		return models.WordRedisToResponse(&word), nil
+	}
+	word := lesson[req.ID]
+
+	word.CorrectStreak++
+	word.LastSeenAt = time.Now()
+	word.DifficultLevel = CalculateDifficulty(word.CorrectStreak, word.TotalMistakes)
+	word.Index++
+
+	lesson[req.ID] = word
+
+	val, _ := json.Marshal(lesson)
+	s.cache.Set(ctx, key, val)
+
+	nextWord, _ := s.GetNextWord(ctx, userID)
+	return nextWord, nil
+}
+
+func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
+	key := models.CacheKey(userID)
+	lesson := make(map[string]models.WordRedis)
+
+	data, err := s.cache.Get(ctx, key)
+	if err == nil {
+		json.Unmarshal([]byte(data), &lesson)
+
+		return FindMinIdx(lesson), nil
 	}
 	return nil, err
 }
 
-func (s *WordsService) GetWordIDs(ctx context.Context, userID uuid.UUID, cacheKey string) (*uuid.UUID, error) {
-	//if word not exists in redis, get new 10 words id
-	wordsDB, err := s.repo.GetLessonWords(ctx, userID)
-	words := models.LessonWordsFromDB(wordsDB)
-	if err != nil {
-		return nil, fmt.Errorf("error getting words: %s", err)
-	}
-	//save 10 words ids to redis
-	var members []redis.Z
-	for _, word := range words {
-		members = append(members, redis.Z{
-			Score:  0,
-			Member: word.ID.String(),
-		})
-		answerKey := fmt.Sprintf("answer_%s", word.ID)
-		err := s.cache.Set(ctx, answerKey, word.TargetWord)
-		if err != nil {
-			return nil, fmt.Errorf("error setting answer to redis: %s", err)
+func FindMinIdx(lesson map[string]models.WordRedis) *models.Response {
+	minIdx := math.MaxInt32
+	var nextWordID uuid.UUID
+	for _, word := range lesson {
+
+		if word.Index < minIdx {
+			minIdx = word.Index
+			nextWordID = word.ID
 		}
 	}
-	err = s.cache.ZAdd(ctx, cacheKey, members...)
-	if err != nil {
-		return nil, fmt.Errorf("error adding words id to redis: %s", err)
-	}
-	return &words[0].ID, nil
+	nextWord := lesson[nextWordID.String()]
+	return models.WordRedisToResponse(&nextWord)
 }
 
-func (s *WordsService) GetWordByID(ctx context.Context, wordID uuid.UUID) (*models.WordResp, error) {
-	//get word by id from db
-	word, err := s.repo.GetWordByID(ctx, wordID)
-	if err != nil {
-		return nil, fmt.Errorf("error getting word by id: %s", err)
-	}
-	return models.WordDBToWordResp(word), nil
-}
+// CalculateDifficulty вычисляет сложность слова от 0 до 100.
+// Чем выше число, тем сложнее слово для пользователя.
+func CalculateDifficulty(correctAnswers int, mistakes int) int {
+	// Приводим к float64 для точного деления
+	m := float64(mistakes)
+	c := float64(correctAnswers)
 
-func (s *WordsService) StartLesson(ctx context.Context, userID uuid.UUID) (*models.WordResp, error) {
-	cacheKey := fmt.Sprintf("lesson_words_%s", userID)
-	word, err := s.GetNextWord(ctx, userID, cacheKey)
-	if err != nil {
-		wordID, err := s.GetWordIDs(ctx, userID, cacheKey)
-		if err != nil {
-			return nil, fmt.Errorf("error getting word ids: %s", err)
-		}
-		word, err = s.GetWordByID(ctx, *wordID)
-		if err != nil {
-			return nil, fmt.Errorf("error getting word by id: %s", err)
-		}
-		return word, nil
-	}
-	return word, nil
-}
+	// Применяем формулу сглаживания Лапласа
+	difficulty := ((m + 1.0) / (m + c + 2.0)) * 100.0
 
-func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq) (*models.AnswerResp, error) {
-	answerKey := fmt.Sprintf("answer_%s", req.ID)
-	correctAnswer, err := s.cache.Get(ctx, answerKey)
-	if err != nil {
-		word, err := s.repo.GetWordByID(ctx, req.ID)
-		if err != nil {
-			return nil, fmt.Errorf("error getting word by id: %s", err)
-		}
-		correctAnswer = word.SourceWord
-	}
-	answerUser := strings.TrimSpace(req.TargetWord)
-	isCorrect := strings.EqualFold(correctAnswer, answerUser)
-
-	//stat
-	resp := models.AnswerResp{}
-	if isCorrect {
-		//need to send next word
-
-	} else {
-		//need to send previous word again
-		resp = models.AnswerResp{
-			ID:         req.ID,
-			SourceWord: correctAnswer,
-			TargetWord: req.TargetWord,
-		}
-	}
-
-	return &resp, nil
+	// Округляем до ближайшего целого и возвращаем как int
+	return int(math.Round(difficulty))
 }

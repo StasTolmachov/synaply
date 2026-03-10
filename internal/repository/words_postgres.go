@@ -11,7 +11,7 @@ import (
 )
 
 type WordsPostgresI interface {
-	Create(ctx context.Context, req *modelsDB.WordCreateReq) (*modelsDB.Word, error)
+	Create(ctx context.Context, req *modelsDB.CreateReq) (*modelsDB.Word, error)
 	GetLessonWords(ctx context.Context, userID uuid.UUID) (*[]modelsDB.LessonWordsDB, error)
 	GetWordByID(ctx context.Context, wordID uuid.UUID) (*modelsDB.Word, error)
 }
@@ -23,7 +23,7 @@ func NewWordsPostgres(db *Postgres) *WordsPostgres {
 	return &WordsPostgres{db: db}
 }
 
-func (p *WordsPostgres) Create(ctx context.Context, req *modelsDB.WordCreateReq) (*modelsDB.Word, error) {
+func (p *WordsPostgres) Create(ctx context.Context, req *modelsDB.CreateReq) (*modelsDB.Word, error) {
 	query := `insert into words (user_id, source_lang, target_lang, source_word, target_word, comment) 
 values ($1, $2, $3, $4, $5, $6)
 returning id, user_id, source_lang, target_lang, source_word, target_word, comment`
@@ -40,7 +40,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) (*
 	query := `
 	with
 	new_words as (
-		select w.id, w.source_word, w.target_word
+		select w.id, w.source_word, w.target_word, w.comment, w.correct_streak, w.total_mistakes, w.difficult_level, w.last_seen_at
 		from words w
 		where w.user_id = $1
 		and w.is_learned = false
@@ -49,7 +49,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) (*
 		limit 3
 	),
     hard_words as (
-        select w.id, w.source_word, w.target_word
+        select w.id, w.source_word, w.target_word, w.comment, w.correct_streak, w.total_mistakes, w.difficult_level, w.last_seen_at
         from words w
         where w.user_id = $1
         and w.is_learned = false
@@ -58,7 +58,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) (*
         limit 5
     ),
 	review_words as (
-	    select w.id, w.source_word, w.target_word
+	    select w.id, w.source_word, w.target_word, w.comment, w.correct_streak, w.total_mistakes, w.difficult_level, w.last_seen_at
 	    from words w
 	    where w.user_id = $1 
 	    and w.is_learned = true
@@ -67,9 +67,9 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) (*
 	)
 	select * from new_words
 	union all 
-	select hard_words
+	select * from hard_words
 	union all 
-	select review_words;
+	select * from review_words;
 	`
 	var resp []modelsDB.LessonWordsDB
 	err := p.db.db.SelectContext(ctx, &resp, query, userID)

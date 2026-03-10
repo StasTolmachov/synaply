@@ -32,13 +32,13 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 
 	r.Group(func(r chi.Router) {
 		r.Get("/Start", h.StartLesson)
-		r.Post("/check", h.Check)
+		r.Post("/check", h.CheckAnswer)
 	})
 	return r
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
-	var req models.WordCreateReq
+	var req models.CreateReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "invalid request body")
 		slogger.Log.ErrorContext(r.Context(), "invalid request body", "error", err)
@@ -62,7 +62,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
 
-	word, err := h.us.StartLesson(r.Context(), userID)
+	word, err := h.us.LessonStart(r.Context(), userID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -76,9 +76,10 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
 
 	req := models.AnswerReq{}
-	resp, err := h.us.CheckAnswer(r.Context(), req)
+	resp, err := h.us.CheckAnswer(r.Context(), req, userID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, err.Error())
 	}
+	JSONResponse(w, http.StatusOK, resp)
 
 }
