@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -28,12 +29,14 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 
 	r.Route("/api/v1/", func(r chi.Router) {
 		r.Post("/create", h.Create)
+
+		r.Group(func(r chi.Router) {
+			r.Get("/start", h.StartLesson)
+			r.Post("/check", h.CheckAnswer)
+			r.Post("/finish", h.Finish)
+		})
 	})
 
-	r.Group(func(r chi.Router) {
-		r.Get("/Start", h.StartLesson)
-		r.Post("/check", h.CheckAnswer)
-	})
 	return r
 }
 
@@ -48,11 +51,22 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
 
-	resp, err := h.us.Create(r.Context(), &req, userID)
+	resp, err := h.us.Create(r.Context(), req, userID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
-		slogger.Log.ErrorContext(r.Context(), "error creating word", "error", err)
-		return
+		switch {
+		case errors.Is(err, models.ErrWordAlreadyExists):
+			WriteError(w, http.StatusConflict, "word already exists")
+			slogger.Log.ErrorContext(r.Context(), "word already exists", "error", err)
+			return
+		case errors.Is(err, models.ErrDBTimeout):
+			WriteError(w, http.StatusRequestTimeout, "timeout")
+			slogger.Log.ErrorContext(r.Context(), "timeout", "error", err)
+			return
+		default:
+			WriteError(w, http.StatusInternalServerError, "internal server error")
+			slogger.Log.ErrorContext(r.Context(), "internal server error", "error", err)
+			return
+		}
 	}
 
 	slogger.Log.DebugContext(r.Context(), "Handler Create called with resp", "resp", resp)
@@ -64,8 +78,16 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 
 	word, err := h.us.LessonStart(r.Context(), userID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
-		return
+		switch {
+		case errors.Is(err, models.ErrNoWordsForLesson):
+			WriteError(w, http.StatusNotFound, "no words found for lesson")
+			slogger.Log.ErrorContext(r.Context(), "no words found for lesson", "error", err)
+			return
+		default:
+			WriteError(w, http.StatusInternalServerError, "internal server error")
+			slogger.Log.ErrorContext(r.Context(), "internal server error", "error", err)
+			return
+		}
 	}
 
 	JSONResponse(w, http.StatusOK, word)
@@ -75,11 +97,40 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
 
-	req := models.AnswerReq{}
-	resp, err := h.us.CheckAnswer(r.Context(), req, userID)
+	var req models.AnswerReq
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid request body")
+		slogger.Log.ErrorContext(r.Context(), "invalid request body", "error", err)
+		return
+	}
+	slogger.Log.DebugContext(r.Context(), "Handler CheckAnswer called with req", "req", req)
+
+	if req.ID == "" {
+		slogger.Log.ErrorContext(r.Context(), "Handler CheckAnswer called with empty req.ID", "req", req.ID)
+		WriteError(w, http.StatusBadRequest, "invalid request id")
+		return
+	}
+	if req.TargetWord == "" {
+		slogger.Log.ErrorContext(r.Context(), "Handler CheckAnswer called with empty req.TargetWord", "req", req.TargetWord)
+		WriteError(w, http.StatusBadRequest, "invalid request target word")
+		return
+	}
+	isCorrect, resp, err := h.us.CheckAnswer(r.Context(), req, userID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, err.Error())
 	}
-	JSONResponse(w, http.StatusOK, resp)
+	if isCorrect {
+		slogger.Log.DebugContext(r.Context(), "Handler CheckAnswer is correct")
+		JSONResponse(w, http.StatusOK, resp)
+	} else {
+		slogger.Log.DebugContext(r.Context(), "Handler CheckAnswer is NOT correct")
+		JSONResponse(w, http.StatusOK, resp)
+	}
 
+}
+func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value(slogger.UserIDKey).(uuid.UUID)
+
+	h.us.Finish(r.Context(), userID)
+	JSONResponse(w, http.StatusOK, nil)
 }

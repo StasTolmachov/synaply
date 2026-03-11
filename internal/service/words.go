@@ -3,21 +3,32 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/open-spaced-repetition/go-fsrs/v4"
+	"github.com/redis/go-redis/v9"
 
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
+	"wordsGo_v2/internal/repository/modelsDB"
+	"wordsGo_v2/slogger"
+)
+
+var (
+	fsrsParams    = fsrs.DefaultParam()
+	fsrsScheduler = fsrs.NewFSRS(fsrsParams)
 )
 
 type WordsServiceI interface {
-	Create(ctx context.Context, req *models.CreateReq, userID uuid.UUID) (*models.Response, error)
+	Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error)
 	LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error)
-	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (*models.Response, error)
+	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
+	Finish(ctx context.Context, userID uuid.UUID) error
 }
 
 type WordsService struct {
@@ -29,111 +40,206 @@ func NewWordsService(repo repository.WordsPostgresI, cache cache.CacheRepository
 	return &WordsService{repo: repo, cache: cache}
 }
 
-func (s *WordsService) Create(ctx context.Context, req *models.CreateReq, userID uuid.UUID) (*models.Response, error) {
+func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 
 	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))
 	if err != nil {
-		return nil, fmt.Errorf("error creating word: %s", err)
+		return nil, err
 	}
 	return models.DBtoResponse(resp), nil
 }
 
 func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
 	key := models.CacheKey(userID)
+	slogger.Log.DebugContext(ctx, "LessonStart is started ")
 
 	nextWord, err := s.GetNextWord(ctx, userID)
 	if err == nil {
-		return nextWord, nil
+		nextWordLog := models.LessonWordToResponse(nextWord)
+		slogger.Log.DebugContext(ctx, "answer from GetNextWord", "next_word", nextWordLog)
+		return models.LessonWordToResponse(nextWord), nil
 	}
+	slogger.Log.ErrorContext(ctx, "failed to get next word from cache", "error", err)
 
 	wordsDB, err := s.repo.GetLessonWords(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
 
-	wordsRedis := models.WordsDBtoLessonRedis(wordsDB)
+	LessonWords := models.LessonWordsDBtoLessonWords(wordsDB)
 
-	resp := FindMinIdx(wordsRedis)
+	val, err := json.Marshal(LessonWords)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
+	}
 
-	val, err := json.Marshal(wordsRedis)
+	err = s.cache.Set(ctx, key, val)
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to cache lesson", "key", key, "error", err)
+		return nil, fmt.Errorf("failed to set lesson: %w", err)
+	}
 
-	s.cache.Set(ctx, key, val)
+	id := FindMinIdx(LessonWords)
+	nextWordDB := LessonWords[id]
+	resp := models.LessonWordToResponse(&nextWordDB)
+	slogger.Log.DebugContext(ctx, "successfully created lesson", "next word:", nextWordDB)
 
 	return resp, err
 }
 
-func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (*models.Response, error) {
+func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
 	key := models.CacheKey(userID)
-	lesson := make(map[string]models.WordRedis)
+	var isCorrect bool
+	lesson := make(map[string]models.Lesson)
+	var word models.Lesson
 
 	data, err := s.cache.Get(ctx, key)
 	if err == nil {
-		json.Unmarshal([]byte(data), &lesson)
+		if err := json.Unmarshal([]byte(data), &lesson); err != nil {
+			return isCorrect, nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
+		}
+		word = lesson[req.ID]
+	} else {
+		slogger.Log.DebugContext(ctx, "failed to get lesson from cache for checking", "key", key)
+		wordDB, err := s.repo.GetWordByID(ctx, req.ID)
+		if err != nil {
+			return isCorrect, nil, err
+		}
+		word = models.LessonDBToLesson(wordDB)
 	}
 
-	if req.TargetWord != lesson[req.ID].TargetWord {
-		word := lesson[req.ID]
-
-		word.TotalMistakes++
-		word.LastSeenAt = time.Now()
-		word.DifficultLevel = CalculateDifficulty(word.CorrectStreak, word.TotalMistakes)
-		lesson[req.ID] = word
-
-		val, _ := json.Marshal(lesson)
-		s.cache.Set(ctx, key, val)
-
-		return models.WordRedisToResponse(&word), nil
+	card := fsrs.Card{
+		Due:           word.Due,
+		Stability:     word.Stability,
+		Difficulty:    word.Difficulty,
+		ElapsedDays:   word.ElapsedDays,
+		ScheduledDays: word.ScheduledDays,
+		Reps:          word.Reps,
+		Lapses:        word.Lapses,
+		State:         word.State,
+		LastReview:    word.LastReview,
 	}
-	word := lesson[req.ID]
 
-	word.CorrectStreak++
-	word.LastSeenAt = time.Now()
-	word.DifficultLevel = CalculateDifficulty(word.CorrectStreak, word.TotalMistakes)
-	word.Index++
+	rating := fsrs.Good
+	isCorrect = true
+	if req.TargetWord != word.TargetWord {
+		rating = fsrs.Again
+		isCorrect = false
+	}
 
-	lesson[req.ID] = word
+	schedulingInfo := fsrsScheduler.Next(card, time.Now(), rating)
+	newCard := schedulingInfo.Card
 
-	val, _ := json.Marshal(lesson)
-	s.cache.Set(ctx, key, val)
+	lesson[req.ID] = models.Lesson{
+		ID:            word.ID,
+		SourceWord:    word.SourceWord,
+		TargetWord:    word.TargetWord,
+		Comment:       word.Comment,
+		Due:           newCard.Due,
+		Stability:     newCard.Stability,
+		Difficulty:    newCard.Difficulty,
+		ElapsedDays:   newCard.ElapsedDays,
+		ScheduledDays: newCard.ScheduledDays,
+		Reps:          newCard.Reps,
+		Lapses:        newCard.Lapses,
+		State:         newCard.State,
+		LastReview:    newCard.LastReview,
+		Index:         word.Index + 1,
+	}
+	val, err := json.Marshal(lesson)
+	if err != nil {
+		return isCorrect, nil, fmt.Errorf("failed to marshal lesson: %w", err)
+	}
+	err = s.cache.Set(ctx, key, val)
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to cache lesson", "key", key, "error", err)
+	}
+	bgCtx := context.WithoutCancel(context.Background())
+	go func() {
+		lessonDB := make(map[string]modelsDB.LessonDB)
+		for _, word := range lesson {
+			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
+		}
+		err := s.repo.Update(bgCtx, lessonDB)
+		if err != nil {
+			slogger.Log.ErrorContext(ctx, "failed to update lesson", "key", key, "error", err)
+		}
+	}()
 
-	nextWord, _ := s.GetNextWord(ctx, userID)
-	return nextWord, nil
+	if isCorrect {
+		nextWord, err := s.GetNextWord(ctx, userID)
+		if err != nil {
+			return isCorrect, nil, err
+		}
+		resp := models.LessonWordToResponse(nextWord)
+		slogger.Log.DebugContext(ctx, "successfully created next word", "next word:", nextWord)
+		return isCorrect, resp, nil
+	}
+
+	return isCorrect, models.LessonWordToResponse(&word), nil
 }
 
-func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
+func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
 	key := models.CacheKey(userID)
-	lesson := make(map[string]models.WordRedis)
-
 	data, err := s.cache.Get(ctx, key)
-	if err == nil {
-		json.Unmarshal([]byte(data), &lesson)
-
-		return FindMinIdx(lesson), nil
+	if errors.Is(err, redis.Nil) {
+		slogger.Log.DebugContext(ctx, "GetNextWord is cache miss")
 	}
-	return nil, err
+	if err != nil {
+		return nil, err
+	}
+
+	lesson := make(map[string]models.Lesson)
+	if err := json.Unmarshal([]byte(data), &lesson); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
+	}
+	slogger.Log.DebugContext(ctx, "GetNextWord lesson from cache", "lesson", lesson)
+
+	id := FindMinIdx(lesson)
+	word, exists := lesson[id]
+	if !exists {
+		slogger.Log.DebugContext(ctx, "GetNextWord is not exists")
+	}
+
+	slogger.Log.DebugContext(ctx, "GetNextWord is finished ", "word:", word)
+
+	return &word, nil
 }
 
-func FindMinIdx(lesson map[string]models.WordRedis) *models.Response {
+func FindMinIdx(lesson map[string]models.Lesson) string {
 	minIdx := math.MaxInt32
-	var nextWordID uuid.UUID
-	for _, word := range lesson {
+	var nextWordID string
+	for key, word := range lesson {
 
 		if word.Index < minIdx {
 			minIdx = word.Index
-			nextWordID = word.ID
+			nextWordID = key
 		}
 	}
-	nextWord := lesson[nextWordID.String()]
-	return models.WordRedisToResponse(&nextWord)
+
+	return nextWordID
 }
 
-// CalculateDifficulty вычисляет сложность слова от 0 до 100.
-// Чем выше число, тем сложнее слово для пользователя.
-func CalculateDifficulty(correctAnswers int, mistakes int) int {
-	// Приводим к float64 для точного деления
-	m := float64(mistakes)
-	c := float64(correctAnswers)
+func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
+	data, err := s.cache.Get(ctx, models.CacheKey(userID))
+	lesson := make(map[string]models.Lesson)
+	lessonDB := make(map[string]modelsDB.LessonDB)
 
-	// Применяем формулу сглаживания Лапласа
-	difficulty := ((m + 1.0) / (m + c + 2.0)) * 100.0
+	if err == nil {
+		err = json.Unmarshal([]byte(data), &lesson)
 
-	// Округляем до ближайшего целого и возвращаем как int
-	return int(math.Round(difficulty))
+		for _, word := range lesson {
+			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
+		}
+		err := s.repo.Update(ctx, lessonDB)
+		if err != nil {
+			return err
+		}
+
+		err = s.cache.Del(ctx, models.CacheKey(userID))
+		if err != nil {
+			slogger.Log.ErrorContext(ctx, "failed to delete cache lesson", "error", err)
+		}
+	}
+	return nil
 }

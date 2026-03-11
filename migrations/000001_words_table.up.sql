@@ -8,11 +8,18 @@ create table if not exists words (
     source_word text not null,
     target_word text not null,
     comment text,
-    is_learned boolean default false,
-    correct_streak integer,
-    total_mistakes integer,
-    difficult_level integer,
-    Last_seen_at timestamptz,
+
+    -- НОВЫЕ ПОЛЯ FSRS:
+    due timestamptz not null default now(),      -- Когда R упадет до 90% (пора повторять)
+    stability double precision not null default 0, -- S (Стабильность)
+    difficulty double precision not null default 0, -- D (Сложность)
+    elapsed_days integer not null default 0,      -- Дней с прошлого показа
+    scheduled_days integer not null default 0,    -- На сколько дней было отложено
+    reps integer not null default 0,              -- Всего повторений
+    lapses integer not null default 0,            -- Сколько раз забыл
+    state integer not null default 0,             -- 0-New, 1-Learning, 2-Review, 3-Relearning
+    last_review timestamptz,                      -- Время последнего ответа
+
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
     deleted_at timestamptz not null default now()
