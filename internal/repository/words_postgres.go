@@ -125,14 +125,11 @@ where id = :id
 
 	defer tx.Rollback()
 
-	wordsToUpdate := make([]modelsDB.LessonDB, 0, len(lesson))
 	for _, word := range lesson {
-		wordsToUpdate = append(wordsToUpdate, word)
-	}
-
-	_, err = tx.NamedExecContext(ctx, query, wordsToUpdate)
-	if err != nil {
-		return fmt.Errorf("error updating word: %s", err)
+		_, err = tx.NamedExecContext(ctx, query, word)
+		if err != nil {
+			return fmt.Errorf("error updating word: %s", err)
+		}
 	}
 
 	if err := tx.Commit(); err != nil {
