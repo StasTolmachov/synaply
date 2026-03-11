@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/google/uuid"
 
 	"wordsGo_v2/internal/middleware"
@@ -24,6 +25,16 @@ func NewHandler(us service.WordsServiceI) *Handler {
 
 func RegisterRoutes(h *Handler) *chi.Mux {
 	r := chi.NewRouter()
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"}, // Разрешаем откуда угодно (для разработки)
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+
 	r.Use(middleware.LoggerMiddleware)
 	r.Use(middleware.AuthMidleware)
 
@@ -118,14 +129,23 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	isCorrect, resp, err := h.us.CheckAnswer(r.Context(), req, userID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, err.Error())
+		return
 	}
+	responseData := struct {
+		IsCorrect bool             `json:"is_correct"`
+		NextWord  *models.Response `json:"next_word"`
+	}{
+		IsCorrect: isCorrect,
+		NextWord:  resp,
+	}
+
 	if isCorrect {
 		slogger.Log.DebugContext(r.Context(), "Handler CheckAnswer is correct")
-		JSONResponse(w, http.StatusOK, resp)
 	} else {
 		slogger.Log.DebugContext(r.Context(), "Handler CheckAnswer is NOT correct")
-		JSONResponse(w, http.StatusOK, resp)
 	}
+
+	JSONResponse(w, http.StatusOK, responseData)
 
 }
 func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {

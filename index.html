@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordsGO 🚀</title>
+    <style>
+        /* Современные CSS-переменные для палитры */
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #D1D5DB;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 0;
+        }
+
+        /* Карточки с мягкой тенью */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        h3 { margin-top: 0; color: var(--text-main); }
+
+        /* Красивые поля ввода */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .form-grid.full { grid-template-columns: 1fr; }
+
+        input {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Анимированные кнопки */
+        button {
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            width: 100%;
+        }
+
+        button:hover:not(:disabled) { background-color: var(--primary-hover); }
+        button:active:not(:disabled) { transform: translateY(2px); }
+        button:disabled { background-color: var(--border); cursor: not-allowed; opacity: 0.7; }
+
+        button.btn-danger { background-color: var(--danger); }
+        button.btn-danger:hover:not(:disabled) { background-color: #DC2626; }
+
+        /* Зона урока */
+        .lesson-zone { text-align: center; padding: 20px 0; }
+        .word-display { font-size: 32px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+        .word-comment { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; min-height: 20px; }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+            transition: color 0.3s ease;
+        }
+
+        /* Консоль логов */
+        .logs-wrapper {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+        .log-time { color: #888; margin-right: 10px; }
+        .log-info { color: #569CD6; }
+        .log-success { color: #4CAF50; }
+        .log-error { color: #F44336; }
+        .log-req { color: #CE9178; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>WordsGO 🚀</h1>
+
+    <div class="card" id="lessonCard">
+        <h3>🎓 Урок</h3>
+        <button id="startBtn" onclick="startLesson()">Начать урок</button>
+
+        <div id="lessonArea" class="hidden lesson-zone">
+            <div class="word-display" id="currentWordDisplay">Слово</div>
+            <div class="word-comment" id="wordComment">Подсказка</div>
+
+            <div class="form-grid full">
+                <input type="text" id="answerInput" placeholder="Введите перевод..." onkeypress="handleEnter(event)">
+                <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
+            </div>
+
+            <div id="feedbackText" class="feedback"></div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+            <button id="finishBtn" class="btn-danger" onclick="finishLesson()">Завершить урок</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>➕ Добавить новое слово</h3>
+        <div class="form-grid">
+            <input type="text" id="sourceLang" placeholder="Язык оригинала (en)" value="en">
+            <input type="text" id="targetLang" placeholder="Язык перевода (ru)" value="ru">
+        </div>
+        <div class="form-grid">
+            <input type="text" id="sourceWord" placeholder="Слово (apple)">
+            <input type="text" id="targetWord" placeholder="Перевод (яблоко)">
+        </div>
+        <div class="form-grid full">
+            <input type="text" id="comment" placeholder="Комментарий (необязательно)">
+            <button id="createBtn" onclick="createWord()">Сохранить слово</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-bottom: 10px;">📋 Логи сети</h3>
+        <div id="logArea" class="logs-wrapper"></div>
+    </div>
+</div>
+
+<script>
+    // КОНФИГУРАЦИЯ
+    const API_BASE_URL = 'http://localhost:8080/api/v1';
+    let currentWordId = null;
+
+    // --- СИСТЕМА ЛОГОВ ---
+    function log(type, msg) {
+        const logArea = document.getElementById('logArea');
+        const time = new Date().toLocaleTimeString();
+        let colorClass = 'log-info';
+        if (type === 'SUCCESS') colorClass = 'log-success';
+        if (type === 'ERROR') colorClass = 'log-error';
+        if (type === 'REQ') colorClass = 'log-req';
+
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `<span class="log-time">[${time}]</span> <span class="${colorClass}">${type}:</span> ${msg}`;
+        logArea.appendChild(entry);
+        logArea.scrollTop = logArea.scrollHeight;
+    }
+
+    // --- ОБЕРТКА ДЛЯ ЗАПРОСОВ (Best Practice: управление кнопками и ошибками в одном месте) ---
+    async function apiCall(endpoint, method = 'GET', body = null, btnId = null) {
+        let btn = btnId ? document.getElementById(btnId) : null;
+        if (btn) btn.disabled = true; // Блокируем кнопку от спама
+
+        log('REQ', `${method} ${endpoint}`);
+
+        try {
+            const options = { method, headers: {} };
+            if (body) {
+                options.headers['Content-Type'] = 'application/json';
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+
+            // Пытаемся распарсить JSON, если он есть
+            let data = null;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                data = await response.json();
+            }
+
+            if (!response.ok) {
+                const errMsg = data && data.error ? data.error : `HTTP ${response.status}`;
+                throw new Error(errMsg);
+            }
+            return data;
+        } catch (err) {
+            log('ERROR', err.message);
+            throw err; // Прокидываем ошибку дальше для обработки
+        } finally {
+            if (btn) btn.disabled = false; // Разблокируем кнопку
+        }
+    }
+
+    // --- БИЗНЕС ЛОГИКА ---
+
+    async function createWord() {
+        const payload = {
+            source_lang: document.getElementById('sourceLang').value.trim(),
+            target_lang: document.getElementById('targetLang').value.trim(),
+            source_word: document.getElementById('sourceWord').value.trim(),
+            target_word: document.getElementById('targetWord').value.trim(),
+            comment: document.getElementById('comment').value.trim()
+        };
+
+        if (!payload.source_word || !payload.target_word) {
+            alert('Пожалуйста, заполните слово и перевод');
+            return;
+        }
+
+        try {
+            const data = await apiCall('/create', 'POST', payload, 'createBtn');
+            log('SUCCESS', `Слово создано: ${data.source_word}`);
+            // Очищаем только поля ввода слов
+            document.getElementById('sourceWord').value = '';
+            document.getElementById('targetWord').value = '';
+            document.getElementById('comment').value = '';
+        } catch (e) { /* Ошибка уже залогирована в apiCall */ }
+    }
+
+    async function startLesson() {
+        try {
+            const wordData = await apiCall('/start', 'GET', null, 'startBtn');
+            log('SUCCESS', 'Урок успешно начат!');
+            showLesson(wordData);
+        } catch (e) { }
+    }
+
+    async function checkAnswer() {
+        if (!currentWordId) return;
+
+        const answerInput = document.getElementById('answerInput');
+        const targetWord = answerInput.value.trim();
+
+        if (!targetWord) return;
+
+        try {
+            const data = await apiCall('/check', 'POST', { id: currentWordId, target_word: targetWord }, 'checkBtn');
+
+            const feedbackEl = document.getElementById('feedbackText');
+
+            // Настраиваем разное время ожидания.
+            // Если ответил верно - идем дальше быстро.
+            // Если ошибся - даем время прочитать и запомнить правильный ответ.
+            let delayTime = 1500;
+
+            if (data.is_correct) {
+                log('SUCCESS', `Верно! "${targetWord}"`);
+                feedbackEl.innerHTML = '✅ Абсолютно верно!';
+                feedbackEl.style.color = 'var(--success)';
+                answerInput.style.borderColor = 'var(--success)';
+            } else {
+                log('ERROR', `Ошибка. Ваш ответ: "${targetWord}"`);
+
+                // ВАЖНО: Достаем оригинальное слово и правильный перевод из ответа бэкенда!
+                const correctWord = data.next_word.target_word;
+                const sourceWord = data.next_word.source_word;
+
+                // Выводим красивую подсказку
+                feedbackEl.innerHTML = `❌ Неверно.<br>
+                    <span style="font-size: 0.9em; color: var(--text-main);">
+                        Слово: <b>${sourceWord}</b> <br>
+                        Перевод: <b style="color: var(--primary);">${correctWord}</b>
+                    </span>`;
+
+                feedbackEl.style.color = 'var(--danger)';
+                answerInput.style.borderColor = 'var(--danger)';
+
+                delayTime = 3000; // Увеличиваем задержку до 3 секунд
+            }
+
+            // Переход к следующему состоянию
+            setTimeout(() => {
+                feedbackEl.innerHTML = '';
+                answerInput.style.borderColor = 'var(--border)';
+                answerInput.value = '';
+
+                if (data.next_word) {
+                    showLesson(data.next_word);
+                } else {
+                    log('INFO', 'Слов для повторения больше нет.');
+                    finishLesson();
+                }
+            }, delayTime);
+
+        } catch (e) { }
+    }
+
+    async function finishLesson() {
+        try {
+            await apiCall('/finish', 'POST', null, 'finishBtn');
+            log('SUCCESS', 'Урок завершен и сохранен.');
+            hideLesson();
+        } catch (e) { }
+    }
+
+    // --- UI ФУНКЦИИ ---
+
+    function showLesson(wordData) {
+        document.getElementById('startBtn').classList.add('hidden');
+        document.getElementById('lessonArea').classList.remove('hidden');
+
+        currentWordId = wordData.id;
+        document.getElementById('currentWordDisplay').textContent = wordData.source_word;
+        document.getElementById('wordComment').textContent = wordData.comment ? `(${wordData.comment})` : '';
+
+        const input = document.getElementById('answerInput');
+        input.focus();
+    }
+
+    function hideLesson() {
+        document.getElementById('startBtn').classList.remove('hidden');
+        document.getElementById('lessonArea').classList.add('hidden');
+        currentWordId = null;
+    }
+
+    // Отправка по нажатию Enter
+    function handleEnter(e) {
+        if (e.key === 'Enter') checkAnswer();
+    }
+</script>
+</body>
+</html>
