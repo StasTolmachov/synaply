@@ -35,6 +35,18 @@ type Word struct {
 	DeletedAt *time.Time
 }
 
+type TranslateReq struct {
+	ID         uuid.UUID `json:"-"` // ID мы берем из контекста, поэтому запрещаем брать его из JSON
+	SourceLang string    `json:"source_lang"`
+	TargetLang string    `json:"target_lang"`
+	SourceWord string    `json:"source_word"`
+	TargetWord string    `json:"target_word"`
+}
+type TranslateResp struct {
+	ID         uuid.UUID `json:"id"`
+	SourceWord string    `json:"source_word"`
+	TargetWord string    `json:"target_word"`
+}
 type CreateReq struct {
 	SourceLang string `json:"source_lang"`
 	TargetLang string `json:"target_lang"`

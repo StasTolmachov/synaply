@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"wordsGo_v2/external/deepl"
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/config"
 	"wordsGo_v2/internal/handler"
@@ -27,7 +28,9 @@ func StartServer(cfg config.Config) {
 	}
 	defer redisClient.Close()
 
-	wordsService := service.NewWordsService(wordsRepo, redisClient)
+	client := &http.Client{}
+	deeplServ := deepl.NewService(cfg.Deepl.Key, cfg.Deepl.Url, client)
+	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ)
 
 	wordsHandler := handler.NewHandler(wordsService)
 

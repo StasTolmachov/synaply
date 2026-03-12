@@ -11,6 +11,7 @@
             --primary-hover: #4338CA;
             --success: #10B981;
             --danger: #EF4444;
+            --warning: #F59E0B;
             --bg: #F3F4F6;
             --card-bg: #FFFFFF;
             --text-main: #1F2937;
@@ -42,7 +43,6 @@
             margin-bottom: 0;
         }
 
-        /* Карточки с мягкой тенью */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -53,12 +53,20 @@
 
         h3 { margin-top: 0; color: var(--text-main); }
 
-        /* Красивые поля ввода */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 15px;
+        }
+
+        /* Специальная сетка для полей со словом и кнопкой перевода */
+        .form-grid-translate {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+            align-items: center;
         }
 
         .form-grid.full { grid-template-columns: 1fr; }
@@ -70,6 +78,8 @@
             font-size: 16px;
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         input:focus {
@@ -77,7 +87,6 @@
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
 
-        /* Анимированные кнопки */
         button {
             padding: 12px 20px;
             background-color: var(--primary);
@@ -98,19 +107,14 @@
         button.btn-danger { background-color: var(--danger); }
         button.btn-danger:hover:not(:disabled) { background-color: #DC2626; }
 
-        /* Зона урока */
+        button.btn-icon { background-color: var(--warning); padding: 12px; width: auto; }
+        button.btn-icon:hover:not(:disabled) { background-color: #D97706; }
+
         .lesson-zone { text-align: center; padding: 20px 0; }
         .word-display { font-size: 32px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
         .word-comment { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; min-height: 20px; }
+        .feedback { margin-top: 15px; font-weight: 600; min-height: 24px; transition: color 0.3s ease; }
 
-        .feedback {
-            margin-top: 15px;
-            font-weight: 600;
-            min-height: 24px;
-            transition: color 0.3s ease;
-        }
-
-        /* Консоль логов */
         .logs-wrapper {
             background-color: #1e1e1e;
             border-radius: 8px;
@@ -162,8 +166,9 @@
             <input type="text" id="sourceLang" placeholder="Язык оригинала (en)" value="en">
             <input type="text" id="targetLang" placeholder="Язык перевода (ru)" value="ru">
         </div>
-        <div class="form-grid">
+        <div class="form-grid-translate">
             <input type="text" id="sourceWord" placeholder="Слово (apple)">
+            <button id="translateBtn" class="btn-icon" onclick="translateWord()" title="Перевести автоматически">🔄</button>
             <input type="text" id="targetWord" placeholder="Перевод (яблоко)">
         </div>
         <div class="form-grid full">
@@ -179,11 +184,9 @@
 </div>
 
 <script>
-    // КОНФИГУРАЦИЯ
     const API_BASE_URL = 'http://localhost:8080/api/v1';
     let currentWordId = null;
 
-    // --- СИСТЕМА ЛОГОВ ---
     function log(type, msg) {
         const logArea = document.getElementById('logArea');
         const time = new Date().toLocaleTimeString();
@@ -199,10 +202,9 @@
         logArea.scrollTop = logArea.scrollHeight;
     }
 
-    // --- ОБЕРТКА ДЛЯ ЗАПРОСОВ (Best Practice: управление кнопками и ошибками в одном месте) ---
     async function apiCall(endpoint, method = 'GET', body = null, btnId = null) {
         let btn = btnId ? document.getElementById(btnId) : null;
-        if (btn) btn.disabled = true; // Блокируем кнопку от спама
+        if (btn) btn.disabled = true;
 
         log('REQ', `${method} ${endpoint}`);
 
@@ -215,7 +217,6 @@
 
             const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
 
-            // Пытаемся распарсить JSON, если он есть
             let data = null;
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -229,13 +230,64 @@
             return data;
         } catch (err) {
             log('ERROR', err.message);
-            throw err; // Прокидываем ошибку дальше для обработки
+            throw err;
         } finally {
-            if (btn) btn.disabled = false; // Разблокируем кнопку
+            if (btn) btn.disabled = false;
         }
     }
 
-    // --- БИЗНЕС ЛОГИКА ---
+    // --- НОВАЯ ФУНКЦИЯ: Автоперевод ---
+    async function translateWord() {
+        const sourceWordInput = document.getElementById('sourceWord');
+        const targetWordInput = document.getElementById('targetWord');
+        const sourceLang = document.getElementById('sourceLang').value.trim();
+        const targetLang = document.getElementById('targetLang').value.trim();
+
+        const sourceWord = sourceWordInput.value.trim();
+        const targetWord = targetWordInput.value.trim();
+
+        // 1. Проверяем, что хотя бы одно поле заполнено
+        if (!sourceWord && !targetWord) {
+            alert('Введите слово хотя бы в одно из полей для перевода!');
+            return;
+        }
+
+        // 2. Если заполнено оба поля, просим юзера очистить одно,
+        // чтобы мы поняли, в какую сторону переводить
+        if (sourceWord && targetWord) {
+            alert('Пожалуйста, очистите одно из полей, чтобы я понял, что нужно перевести.');
+            return;
+        }
+
+        // 3. Перевод Source -> Target (Слева направо)
+        if (sourceWord) {
+            const payload = {
+                source_lang: sourceLang,
+                target_lang: targetLang,
+                source_word: sourceWord,
+                target_word: ""
+            };
+            try {
+                const data = await apiCall('/translate', 'POST', payload, 'translateBtn');
+                targetWordInput.value = data.target_word; // Заполняем правое поле
+                log('SUCCESS', `Перевод: ${sourceWord} -> ${data.target_word}`);
+            } catch (e) {}
+        }
+        // 4. Перевод Target -> Source (Справа налево)
+        else if (targetWord) {
+            const payload = {
+                source_lang: sourceLang,
+                target_lang: targetLang,
+                source_word: "",
+                target_word: targetWord
+            };
+            try {
+                const data = await apiCall('/translate', 'POST', payload, 'translateBtn');
+                sourceWordInput.value = data.source_word; // Заполняем левое поле
+                log('SUCCESS', `Перевод: ${targetWord} -> ${data.source_word}`);
+            } catch (e) {}
+        }
+    }
 
     async function createWord() {
         const payload = {
@@ -254,11 +306,10 @@
         try {
             const data = await apiCall('/create', 'POST', payload, 'createBtn');
             log('SUCCESS', `Слово создано: ${data.source_word}`);
-            // Очищаем только поля ввода слов
             document.getElementById('sourceWord').value = '';
             document.getElementById('targetWord').value = '';
             document.getElementById('comment').value = '';
-        } catch (e) { /* Ошибка уже залогирована в apiCall */ }
+        } catch (e) {}
     }
 
     async function startLesson() {
@@ -279,12 +330,7 @@
 
         try {
             const data = await apiCall('/check', 'POST', { id: currentWordId, target_word: targetWord }, 'checkBtn');
-
             const feedbackEl = document.getElementById('feedbackText');
-
-            // Настраиваем разное время ожидания.
-            // Если ответил верно - идем дальше быстро.
-            // Если ошибся - даем время прочитать и запомнить правильный ответ.
             let delayTime = 1500;
 
             if (data.is_correct) {
@@ -294,12 +340,9 @@
                 answerInput.style.borderColor = 'var(--success)';
             } else {
                 log('ERROR', `Ошибка. Ваш ответ: "${targetWord}"`);
-
-                // ВАЖНО: Достаем оригинальное слово и правильный перевод из ответа бэкенда!
                 const correctWord = data.next_word.target_word;
                 const sourceWord = data.next_word.source_word;
 
-                // Выводим красивую подсказку
                 feedbackEl.innerHTML = `❌ Неверно.<br>
                     <span style="font-size: 0.9em; color: var(--text-main);">
                         Слово: <b>${sourceWord}</b> <br>
@@ -308,11 +351,9 @@
 
                 feedbackEl.style.color = 'var(--danger)';
                 answerInput.style.borderColor = 'var(--danger)';
-
-                delayTime = 3000; // Увеличиваем задержку до 3 секунд
+                delayTime = 3000;
             }
 
-            // Переход к следующему состоянию
             setTimeout(() => {
                 feedbackEl.innerHTML = '';
                 answerInput.style.borderColor = 'var(--border)';
@@ -337,8 +378,6 @@
         } catch (e) { }
     }
 
-    // --- UI ФУНКЦИИ ---
-
     function showLesson(wordData) {
         document.getElementById('startBtn').classList.add('hidden');
         document.getElementById('lessonArea').classList.remove('hidden');
@@ -357,7 +396,6 @@
         currentWordId = null;
     }
 
-    // Отправка по нажатию Enter
     function handleEnter(e) {
         if (e.key === 'Enter') checkAnswer();
     }

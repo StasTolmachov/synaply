@@ -12,6 +12,7 @@ import (
 	"github.com/open-spaced-repetition/go-fsrs/v4"
 	"github.com/redis/go-redis/v9"
 
+	"wordsGo_v2/external/deepl"
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
@@ -29,17 +30,55 @@ type WordsServiceI interface {
 	LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error)
 	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
 	Finish(ctx context.Context, userID uuid.UUID) error
+	Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error)
 }
 
 type WordsService struct {
 	repo  repository.WordsPostgresI
 	cache cache.CacheRepositoryI
+	deepl deepl.ServiceI
 }
 
-func NewWordsService(repo repository.WordsPostgresI, cache cache.CacheRepositoryI) *WordsService {
-	return &WordsService{repo: repo, cache: cache}
+func NewWordsService(repo repository.WordsPostgresI, cache cache.CacheRepositoryI, deepl deepl.ServiceI) *WordsService {
+	return &WordsService{repo: repo, cache: cache, deepl: deepl}
 }
 
+func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
+	var deeplReq deepl.DeepLRequest
+
+	if req.SourceWord != "" {
+		deeplReq = deepl.DeepLRequest{
+			Text:       []string{req.SourceWord},
+			TargetLang: req.TargetLang,
+		}
+
+		deeplResp, err := s.deepl.Translate(ctx, deeplReq)
+		if err != nil {
+			return nil, err
+		}
+
+		return &models.TranslateResp{
+			ID:         req.ID,
+			SourceWord: req.SourceWord,
+			TargetWord: deeplResp.Translations[0].Text,
+		}, nil
+	}
+	deeplReq = deepl.DeepLRequest{
+		Text:       []string{req.TargetWord},
+		TargetLang: req.SourceLang,
+	}
+	deeplResp, err := s.deepl.Translate(ctx, deeplReq)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.TranslateResp{
+		ID:         req.ID,
+		SourceWord: deeplResp.Translations[0].Text,
+		TargetWord: req.TargetWord,
+	}, nil
+
+}
 func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 
 	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))

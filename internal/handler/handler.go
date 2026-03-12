@@ -40,6 +40,7 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 
 	r.Route("/api/v1/", func(r chi.Router) {
 		r.Post("/create", h.Create)
+		r.Post("/translate", h.Translate)
 
 		r.Group(func(r chi.Router) {
 			r.Get("/start", h.StartLesson)
@@ -49,6 +50,28 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 	})
 
 	return r
+}
+
+func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
+	var req models.TranslateReq
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusInternalServerError, "invalid request body")
+		return
+	}
+	if req.SourceWord == "" && req.TargetWord == "" {
+		WriteError(w, http.StatusInternalServerError, "bad request: both source and target words are empty")
+		return
+	}
+	req.ID = r.Context().Value(slogger.UserIDKey).(uuid.UUID)
+	slogger.Log.Debug("translate req %+v", "req", req)
+	resp, err := h.us.Translate(r.Context(), req)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "error translating")
+		return
+	}
+	slogger.Log.Debug("translate resp %+v", "resp", resp)
+
+	JSONResponse(w, http.StatusOK, resp)
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {

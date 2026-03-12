@@ -14,6 +14,7 @@ type Config struct {
 	DB    DB
 	Api   Api
 	Redis Redis
+	Deepl Deepl
 }
 
 type DB struct {
@@ -34,6 +35,11 @@ type Redis struct {
 	Host string
 	Port string
 	TTL  time.Duration
+}
+
+type Deepl struct {
+	Key string
+	Url string
 }
 
 func NewConfig() (*Config, error) {
@@ -85,6 +91,14 @@ func NewConfig() (*Config, error) {
 			return nil, fmt.Errorf("failed to parse REDIS_TTL environment variable as a duration")
 		}
 		cfg.Redis.TTL = ttl
+	}
+
+	if cfg.Deepl.Key = os.Getenv("DEEPL_KEY"); cfg.Deepl.Key == "" {
+		return nil, fmt.Errorf("DEEPL_KEY environment variable is not set")
+	}
+
+	if cfg.Deepl.Url = os.Getenv("DEEPL_URL"); cfg.Deepl.Url == "" {
+		return nil, fmt.Errorf("DEEPL_URL environment variable is not set")
 	}
 
 	return cfg, nil
