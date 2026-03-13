@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WordsGO 🚀</title>
     <style>
-        /* Современные CSS-переменные для палитры */
         :root {
             --primary: #4F46E5;
             --primary-hover: #4338CA;
@@ -29,102 +28,33 @@
             justify-content: center;
         }
 
-        .container {
-            max-width: 700px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        .container { max-width: 700px; width: 100%; display: flex; flex-direction: column; gap: 20px; }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 0; }
+        .card { background-color: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        h3 { margin-top: 0; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; }
 
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 0;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-        }
-
-        h3 { margin-top: 0; color: var(--text-main); }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        /* Специальная сетка для полей со словом и кнопкой перевода */
-        .form-grid-translate {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 12px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+        .form-grid-translate { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; margin-bottom: 15px; align-items: center; }
         .form-grid.full { grid-template-columns: 1fr; }
 
-        input {
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            width: 100%;
-            box-sizing: border-box;
-        }
+        input { padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; outline: none; width: 100%; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
 
-        input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-        }
-
-        button {
-            padding: 12px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            width: 100%;
-        }
-
+        button { padding: 12px 20px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; }
         button:hover:not(:disabled) { background-color: var(--primary-hover); }
-        button:active:not(:disabled) { transform: translateY(2px); }
         button:disabled { background-color: var(--border); cursor: not-allowed; opacity: 0.7; }
-
         button.btn-danger { background-color: var(--danger); }
         button.btn-danger:hover:not(:disabled) { background-color: #DC2626; }
-
         button.btn-icon { background-color: var(--warning); padding: 12px; width: auto; }
-        button.btn-icon:hover:not(:disabled) { background-color: #D97706; }
+        button.btn-secondary { background-color: var(--text-muted); }
+        button.btn-small { padding: 6px 12px; font-size: 14px; width: auto; }
 
         .lesson-zone { text-align: center; padding: 20px 0; }
         .word-display { font-size: 32px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
         .word-comment { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; min-height: 20px; }
-        .feedback { margin-top: 15px; font-weight: 600; min-height: 24px; transition: color 0.3s ease; }
+        .feedback { margin-top: 15px; font-weight: 600; min-height: 24px; }
 
-        .logs-wrapper {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            padding: 15px;
-            height: 200px;
-            overflow-y: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
+        .logs-wrapper { background-color: #1e1e1e; border-radius: 8px; padding: 15px; height: 200px; overflow-y: auto; font-family: monospace; font-size: 14px; }
         .log-entry { margin-bottom: 5px; border-bottom: 1px solid #333; padding-bottom: 4px; }
         .log-time { color: #888; margin-right: 10px; }
         .log-info { color: #569CD6; }
@@ -140,45 +70,76 @@
 <div class="container">
     <h1>WordsGO 🚀</h1>
 
-    <div class="card" id="lessonCard">
-        <h3>🎓 Урок</h3>
-        <button id="startBtn" onclick="startLesson()">Начать урок</button>
-
-        <div id="lessonArea" class="hidden lesson-zone">
-            <div class="word-display" id="currentWordDisplay">Слово</div>
-            <div class="word-comment" id="wordComment">Подсказка</div>
-
-            <div class="form-grid full">
-                <input type="text" id="answerInput" placeholder="Введите перевод..." onkeypress="handleEnter(event)">
-                <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
-            </div>
-
-            <div id="feedbackText" class="feedback"></div>
-
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-            <button id="finishBtn" class="btn-danger" onclick="finishLesson()">Завершить урок</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>➕ Добавить новое слово</h3>
+    <div id="authSection" class="card">
+        <h3>🔐 Вход / Регистрация</h3>
         <div class="form-grid">
-            <input type="text" id="sourceLang" placeholder="Язык оригинала (en)" value="en">
-            <input type="text" id="targetLang" placeholder="Язык перевода (ru)" value="ru">
+            <input type="email" id="authEmail" placeholder="Email (test@user.com)">
+            <input type="password" id="authPassword" placeholder="Пароль">
         </div>
-        <div class="form-grid-translate">
-            <input type="text" id="sourceWord" placeholder="Слово (apple)">
-            <button id="translateBtn" class="btn-icon" onclick="translateWord()" title="Перевести автоматически">🔄</button>
-            <input type="text" id="targetWord" placeholder="Перевод (яблоко)">
+        <div class="form-grid">
+            <input type="text" id="authFirstName" placeholder="Имя (только для рег.)">
+            <input type="text" id="authLastName" placeholder="Фамилия (только для рег.)">
         </div>
-        <div class="form-grid full">
-            <input type="text" id="comment" placeholder="Комментарий (необязательно)">
-            <button id="createBtn" onclick="createWord()">Сохранить слово</button>
+        <div class="form-grid">
+            <button id="loginBtn" onclick="loginUser()">Войти</button>
+            <button id="registerBtn" class="btn-secondary" onclick="registerUser()">Регистрация</button>
+        </div>
+    </div>
+
+    <div id="appSection" class="hidden">
+
+        <div class="card" style="margin-bottom: 20px;">
+            <h3>👤 Профиль <button class="btn-danger btn-small" onclick="logoutUser()">Выйти</button></h3>
+            <div class="form-grid">
+                <input type="text" id="updateFirstName" placeholder="Новое имя">
+                <input type="text" id="updateLastName" placeholder="Новая фамилия">
+            </div>
+            <div class="form-grid">
+                <button onclick="updateProfile()" class="btn-secondary">Обновить профиль</button>
+                <button onclick="deleteAccount()" class="btn-danger">Удалить аккаунт</button>
+            </div>
+        </div>
+
+        <div class="card" id="lessonCard" style="margin-bottom: 20px;">
+            <h3>🎓 Урок</h3>
+            <button id="startBtn" onclick="startLesson()">Начать урок</button>
+
+            <div id="lessonArea" class="hidden lesson-zone">
+                <div class="word-display" id="currentWordDisplay">Слово</div>
+                <div class="word-comment" id="wordComment">Подсказка</div>
+
+                <div class="form-grid full">
+                    <input type="text" id="answerInput" placeholder="Введите перевод..." onkeypress="handleEnter(event)">
+                    <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
+                </div>
+
+                <div id="feedbackText" class="feedback"></div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+                <button id="finishBtn" class="btn-danger" onclick="finishLesson()">Завершить урок</button>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 20px;">
+            <h3>➕ Добавить новое слово</h3>
+            <div class="form-grid">
+                <input type="text" id="sourceLang" placeholder="Оригинал (en)" value="en">
+                <input type="text" id="targetLang" placeholder="Перевод (ru)" value="ru">
+            </div>
+            <div class="form-grid-translate">
+                <input type="text" id="sourceWord" placeholder="Слово (apple)">
+                <button id="translateBtn" class="btn-icon" onclick="translateWord()" title="Перевести автоматически">🔄</button>
+                <input type="text" id="targetWord" placeholder="Перевод (яблоко)">
+            </div>
+            <div class="form-grid full">
+                <input type="text" id="comment" placeholder="Комментарий (необязательно)">
+                <button id="createBtn" onclick="createWord()">Сохранить слово</button>
+            </div>
         </div>
     </div>
 
     <div class="card">
-        <h3 style="margin-bottom: 10px;">📋 Логи сети</h3>
+        <h3>📋 Логи сети</h3>
         <div id="logArea" class="logs-wrapper"></div>
     </div>
 </div>
@@ -187,19 +148,37 @@
     const API_BASE_URL = 'http://localhost:8080/api/v1';
     let currentWordId = null;
 
+    window.onload = () => {
+        checkAuthState();
+    };
+
     function log(type, msg) {
         const logArea = document.getElementById('logArea');
         const time = new Date().toLocaleTimeString();
-        let colorClass = 'log-info';
-        if (type === 'SUCCESS') colorClass = 'log-success';
-        if (type === 'ERROR') colorClass = 'log-error';
-        if (type === 'REQ') colorClass = 'log-req';
+        let colorClass = type === 'SUCCESS' ? 'log-success' : type === 'ERROR' ? 'log-error' : type === 'REQ' ? 'log-req' : 'log-info';
+
+        if (typeof msg === 'object') msg = JSON.stringify(msg);
 
         const entry = document.createElement('div');
         entry.className = 'log-entry';
         entry.innerHTML = `<span class="log-time">[${time}]</span> <span class="${colorClass}">${type}:</span> ${msg}`;
         logArea.appendChild(entry);
         logArea.scrollTop = logArea.scrollHeight;
+    }
+
+    function getUserIdFromToken() {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) return null;
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload).user_id;
+        } catch (e) {
+            return null;
+        }
     }
 
     async function apiCall(endpoint, method = 'GET', body = null, btnId = null) {
@@ -210,6 +189,12 @@
 
         try {
             const options = { method, headers: {} };
+
+            const token = localStorage.getItem('jwt_token');
+            if (token) {
+                options.headers['Authorization'] = `Bearer ${token}`;
+            }
+
             if (body) {
                 options.headers['Content-Type'] = 'application/json';
                 options.body = JSON.stringify(body);
@@ -224,6 +209,7 @@
             }
 
             if (!response.ok) {
+                if (response.status === 401) logoutUser();
                 const errMsg = data && data.error ? data.error : `HTTP ${response.status}`;
                 throw new Error(errMsg);
             }
@@ -236,56 +222,123 @@
         }
     }
 
-    // --- НОВАЯ ФУНКЦИЯ: Автоперевод ---
+    // --- АВТОРИЗАЦИЯ И ПОЛЬЗОВАТЕЛИ (Пути остались прежними: /users/...) ---
+    function checkAuthState() {
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('appSection').classList.remove('hidden');
+            log('INFO', 'Пользователь авторизован. ID: ' + getUserIdFromToken());
+        } else {
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('appSection').classList.add('hidden');
+        }
+    }
+
+    async function registerUser() {
+        const payload = {
+            email: document.getElementById('authEmail').value.trim(),
+            password: document.getElementById('authPassword').value.trim(),
+            first_name: document.getElementById('authFirstName').value.trim(),
+            last_name: document.getElementById('authLastName').value.trim()
+        };
+        try {
+            await apiCall('/users/create', 'POST', payload, 'registerBtn');
+            log('SUCCESS', 'Регистрация успешна! Теперь вы можете войти.');
+            alert('Регистрация успешно завершена! Теперь авторизуйтесь.');
+        } catch (e) {
+            alert('Ошибка регистрации: ' + e.message);
+        }
+    }
+
+    async function loginUser() {
+        const payload = {
+            email: document.getElementById('authEmail').value.trim(),
+            password: document.getElementById('authPassword').value.trim()
+        };
+        try {
+            const data = await apiCall('/users/login', 'POST', payload, 'loginBtn');
+            localStorage.setItem('jwt_token', data.token);
+            log('SUCCESS', 'Вход выполнен успешно!');
+            checkAuthState();
+        } catch (e) {
+            alert('Ошибка входа: ' + e.message);
+        }
+    }
+
+    function logoutUser() {
+        localStorage.removeItem('jwt_token');
+        checkAuthState();
+        log('INFO', 'Выполнен выход из аккаунта');
+    }
+
+    async function updateProfile() {
+        const userId = getUserIdFromToken();
+        if (!userId) return;
+
+        const payload = {};
+        const fn = document.getElementById('updateFirstName').value.trim();
+        const ln = document.getElementById('updateLastName').value.trim();
+        if (fn) payload.first_name = fn;
+        if (ln) payload.last_name = ln;
+
+        if (Object.keys(payload).length === 0) {
+            alert('Заполните поля для обновления');
+            return;
+        }
+
+        try {
+            await apiCall(`/users/${userId}`, 'PUT', payload);
+            log('SUCCESS', 'Профиль обновлен!');
+            alert('Профиль успешно обновлен!');
+            document.getElementById('updateFirstName').value = '';
+            document.getElementById('updateLastName').value = '';
+        } catch (e) {
+            alert('Ошибка при обновлении: ' + e.message);
+        }
+    }
+
+    async function deleteAccount() {
+        if(!confirm('Вы уверены, что хотите удалить аккаунт? Это действие необратимо!')) return;
+
+        const userId = getUserIdFromToken();
+        try {
+            await apiCall(`/users/${userId}`, 'DELETE');
+            log('SUCCESS', 'Аккаунт удален.');
+            alert('Аккаунт удален.');
+            logoutUser();
+        } catch (e) {
+            alert('Ошибка удаления аккаунта: ' + e.message);
+        }
+    }
+
+    // --- СЛОВА И УРОКИ (Пути обновлены на новые) ---
     async function translateWord() {
-        const sourceWordInput = document.getElementById('sourceWord');
-        const targetWordInput = document.getElementById('targetWord');
+        const sourceWord = document.getElementById('sourceWord').value.trim();
+        const targetWord = document.getElementById('targetWord').value.trim();
         const sourceLang = document.getElementById('sourceLang').value.trim();
         const targetLang = document.getElementById('targetLang').value.trim();
 
-        const sourceWord = sourceWordInput.value.trim();
-        const targetWord = targetWordInput.value.trim();
-
-        // 1. Проверяем, что хотя бы одно поле заполнено
         if (!sourceWord && !targetWord) {
-            alert('Введите слово хотя бы в одно из полей для перевода!');
+            alert('Введите слово для перевода!');
             return;
         }
 
-        // 2. Если заполнено оба поля, просим юзера очистить одно,
-        // чтобы мы поняли, в какую сторону переводить
-        if (sourceWord && targetWord) {
-            alert('Пожалуйста, очистите одно из полей, чтобы я понял, что нужно перевести.');
-            return;
-        }
+        const payload = {
+            source_lang: sourceLang,
+            target_lang: targetLang,
+            source_word: sourceWord || "",
+            target_word: targetWord || ""
+        };
 
-        // 3. Перевод Source -> Target (Слева направо)
-        if (sourceWord) {
-            const payload = {
-                source_lang: sourceLang,
-                target_lang: targetLang,
-                source_word: sourceWord,
-                target_word: ""
-            };
-            try {
-                const data = await apiCall('/translate', 'POST', payload, 'translateBtn');
-                targetWordInput.value = data.target_word; // Заполняем правое поле
-                log('SUCCESS', `Перевод: ${sourceWord} -> ${data.target_word}`);
-            } catch (e) {}
-        }
-        // 4. Перевод Target -> Source (Справа налево)
-        else if (targetWord) {
-            const payload = {
-                source_lang: sourceLang,
-                target_lang: targetLang,
-                source_word: "",
-                target_word: targetWord
-            };
-            try {
-                const data = await apiCall('/translate', 'POST', payload, 'translateBtn');
-                sourceWordInput.value = data.source_word; // Заполняем левое поле
-                log('SUCCESS', `Перевод: ${targetWord} -> ${data.source_word}`);
-            } catch (e) {}
+        try {
+            // ИЗМЕНЕНО: теперь запрос идёт на /words/translate
+            const data = await apiCall('/words/translate', 'POST', payload, 'translateBtn');
+            if (sourceWord) document.getElementById('targetWord').value = data.target_word;
+            else document.getElementById('sourceWord').value = data.source_word;
+            log('SUCCESS', 'Перевод получен');
+        } catch (e) {
+            alert('Ошибка перевода: ' + e.message);
         }
     }
 
@@ -299,95 +352,88 @@
         };
 
         if (!payload.source_word || !payload.target_word) {
-            alert('Пожалуйста, заполните слово и перевод');
+            alert('Слово и перевод не могут быть пустыми!');
             return;
         }
 
         try {
-            const data = await apiCall('/create', 'POST', payload, 'createBtn');
-            log('SUCCESS', `Слово создано: ${data.source_word}`);
+            // ИЗМЕНЕНО: теперь запрос идёт на /words/create
+            await apiCall('/words/create', 'POST', payload, 'createBtn');
+            log('SUCCESS', `Слово сохранено: ${payload.source_word}`);
             document.getElementById('sourceWord').value = '';
             document.getElementById('targetWord').value = '';
             document.getElementById('comment').value = '';
-        } catch (e) {}
+        } catch (e) {
+            alert('Ошибка сохранения слова: ' + e.message);
+        }
     }
 
     async function startLesson() {
         try {
-            const wordData = await apiCall('/start', 'GET', null, 'startBtn');
-            log('SUCCESS', 'Урок успешно начат!');
+            // ИЗМЕНЕНО: теперь запрос идёт на /lesson/start
+            const wordData = await apiCall('/lesson/start', 'GET', null, 'startBtn');
+            log('SUCCESS', 'Урок начат!');
             showLesson(wordData);
-        } catch (e) { }
+        } catch (e) {
+            alert('Не удалось начать урок: ' + e.message);
+        }
     }
 
     async function checkAnswer() {
         if (!currentWordId) return;
-
         const answerInput = document.getElementById('answerInput');
         const targetWord = answerInput.value.trim();
 
-        if (!targetWord) return;
+        if (!targetWord) {
+            alert('Введите перевод!');
+            return;
+        }
 
         try {
-            const data = await apiCall('/check', 'POST', { id: currentWordId, target_word: targetWord }, 'checkBtn');
+            // ИЗМЕНЕНО: теперь запрос идёт на /lesson/check
+            const data = await apiCall('/lesson/check', 'POST', { id: currentWordId, target_word: targetWord }, 'checkBtn');
             const feedbackEl = document.getElementById('feedbackText');
-            let delayTime = 1500;
 
             if (data.is_correct) {
-                log('SUCCESS', `Верно! "${targetWord}"`);
-                feedbackEl.innerHTML = '✅ Абсолютно верно!';
+                feedbackEl.innerHTML = '✅ Верно!';
                 feedbackEl.style.color = 'var(--success)';
-                answerInput.style.borderColor = 'var(--success)';
             } else {
-                log('ERROR', `Ошибка. Ваш ответ: "${targetWord}"`);
-                const correctWord = data.next_word.target_word;
-                const sourceWord = data.next_word.source_word;
-
-                feedbackEl.innerHTML = `❌ Неверно.<br>
-                    <span style="font-size: 0.9em; color: var(--text-main);">
-                        Слово: <b>${sourceWord}</b> <br>
-                        Перевод: <b style="color: var(--primary);">${correctWord}</b>
-                    </span>`;
-
+                feedbackEl.innerHTML = `❌ Ошибка. Правильно: <b>${data.next_word.target_word}</b>`;
                 feedbackEl.style.color = 'var(--danger)';
-                answerInput.style.borderColor = 'var(--danger)';
-                delayTime = 3000;
             }
 
             setTimeout(() => {
                 feedbackEl.innerHTML = '';
-                answerInput.style.borderColor = 'var(--border)';
                 answerInput.value = '';
+                if (data.next_word) showLesson(data.next_word);
+                else finishLesson();
+            }, data.is_correct ? 1500 : 3000);
 
-                if (data.next_word) {
-                    showLesson(data.next_word);
-                } else {
-                    log('INFO', 'Слов для повторения больше нет.');
-                    finishLesson();
-                }
-            }, delayTime);
-
-        } catch (e) { }
+        } catch (e) {
+            alert('Ошибка проверки слова: ' + e.message);
+        }
     }
 
     async function finishLesson() {
         try {
-            await apiCall('/finish', 'POST', null, 'finishBtn');
-            log('SUCCESS', 'Урок завершен и сохранен.');
+            // ИЗМЕНЕНО: теперь запрос идёт на /lesson/finish
+            await apiCall('/lesson/finish', 'POST', null, 'finishBtn');
+            log('SUCCESS', 'Урок завершен.');
             hideLesson();
-        } catch (e) { }
+            alert('Урок успешно завершён!');
+        } catch (e) {
+            alert('Ошибка завершения урока: ' + e.message);
+            hideLesson();
+        }
     }
 
     function showLesson(wordData) {
         document.getElementById('startBtn').classList.add('hidden');
         document.getElementById('lessonArea').classList.remove('hidden');
-
         currentWordId = wordData.id;
         document.getElementById('currentWordDisplay').textContent = wordData.source_word;
         document.getElementById('wordComment').textContent = wordData.comment ? `(${wordData.comment})` : '';
-
-        const input = document.getElementById('answerInput');
-        input.focus();
+        document.getElementById('answerInput').focus();
     }
 
     function hideLesson() {
@@ -396,9 +442,7 @@
         currentWordId = null;
     }
 
-    function handleEnter(e) {
-        if (e.key === 'Enter') checkAnswer();
-    }
+    function handleEnter(e) { if (e.key === 'Enter') checkAnswer(); }
 </script>
 </body>
 </html>

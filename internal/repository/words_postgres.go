@@ -13,21 +13,15 @@ import (
 	"wordsGo_v2/slogger"
 )
 
-type WordsPostgresI interface {
-	Create(ctx context.Context, req modelsDB.CreateReq) (*modelsDB.Word, error)
-	GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error)
-	GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error)
-	Update(ctx context.Context, lesson map[string]modelsDB.LessonDB) error
-}
-type WordsPostgres struct {
+type wordsPostgres struct {
 	db *Postgres
 }
 
-func NewWordsPostgres(db *Postgres) *WordsPostgres {
-	return &WordsPostgres{db: db}
+func NewWordsPostgres(db *Postgres) WordsRepository {
+	return &wordsPostgres{db: db}
 }
 
-func (p *WordsPostgres) Create(ctx context.Context, req modelsDB.CreateReq) (*modelsDB.Word, error) {
+func (p *wordsPostgres) Create(ctx context.Context, req modelsDB.CreateReq) (*modelsDB.Word, error) {
 	slogger.Log.DebugContext(ctx, "create is started")
 
 	query := `
@@ -47,11 +41,11 @@ func (p *WordsPostgres) Create(ctx context.Context, req modelsDB.CreateReq) (*mo
 		}
 		return nil, fmt.Errorf("unexpected error creating word: %w", err)
 	}
-	slogger.Log.DebugContext(ctx, "Repo Create response", "resp", resp)
+	slogger.Log.DebugContext(ctx, "Repo NewWord response", "resp", resp)
 	return &resp, nil
 }
 
-func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error) {
+func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error) {
 	query := `
 	WITH
 	new_words AS (
@@ -87,7 +81,7 @@ func (p *WordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	return resp, nil
 }
 
-func (p *WordsPostgres) GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error) {
+func (p *wordsPostgres) GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error) {
 	query := `
 	select id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 	from words
@@ -101,7 +95,7 @@ func (p *WordsPostgres) GetWordByID(ctx context.Context, wordID string) (*models
 	return &resp, nil
 }
 
-func (p *WordsPostgres) Update(ctx context.Context, lesson map[string]modelsDB.LessonDB) error {
+func (p *wordsPostgres) Update(ctx context.Context, lesson map[string]modelsDB.LessonDB) error {
 	query := `
 update words
 set comment = :comment,

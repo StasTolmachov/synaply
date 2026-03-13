@@ -15,6 +15,8 @@ type Config struct {
 	Api   Api
 	Redis Redis
 	Deepl Deepl
+	JWT   JWT
+	Admin Admin
 }
 
 type DB struct {
@@ -40,6 +42,16 @@ type Redis struct {
 type Deepl struct {
 	Key string
 	Url string
+}
+
+type JWT struct {
+	Secret string
+	TTL    time.Duration
+}
+
+type Admin struct {
+	Email    string
+	Password string
 }
 
 func NewConfig() (*Config, error) {
@@ -99,6 +111,28 @@ func NewConfig() (*Config, error) {
 
 	if cfg.Deepl.Url = os.Getenv("DEEPL_URL"); cfg.Deepl.Url == "" {
 		return nil, fmt.Errorf("DEEPL_URL environment variable is not set")
+	}
+
+	if cfg.JWT.Secret = os.Getenv("JWT_SECRET"); cfg.JWT.Secret == "" {
+		return nil, fmt.Errorf("JWT_SECRET environment variable not set")
+	}
+	ttlString := os.Getenv("JWT_TTL")
+	if ttlString == "" {
+		cfg.JWT.TTL = time.Hour * 24
+	} else {
+		ttl, err := time.ParseDuration(ttlString)
+		if err != nil {
+			cfg.JWT.TTL = time.Hour * 24
+			slogger.Log.Warn("invalid JWT_TTL format:", "err", err)
+		}
+		cfg.JWT.TTL = ttl
+	}
+
+	if cfg.Admin.Email = os.Getenv("ADMIN_EMAIL"); cfg.Admin.Email == "" {
+		return nil, fmt.Errorf("ADMIN_EMAIL environment variable not set")
+	}
+	if cfg.Admin.Password = os.Getenv("ADMIN_PASSWORD"); cfg.Admin.Password == "" {
+		return nil, fmt.Errorf("ADMIN_PASSWORD environment variable not set")
 	}
 
 	return cfg, nil

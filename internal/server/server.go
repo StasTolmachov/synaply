@@ -23,8 +23,10 @@ func StartServer(cfg config.Config) {
 	if err != nil {
 		log.Fatalf("Error connecting to database: %s", err)
 	}
+	defer db.Close()
 
 	wordsRepo := repository.NewWordsPostgres(db)
+	userRepo := repository.NewUserRepo(db)
 
 	redisClient, err := cache.NewRedisClient(cfg.Redis)
 	if err != nil {
@@ -32,13 +34,21 @@ func StartServer(cfg config.Config) {
 	}
 	defer redisClient.Close()
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
 	deeplServ := deepl.NewService(cfg.Deepl.Key, cfg.Deepl.Url, client)
 	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ)
+	userService := service.NewUserService(userRepo, cfg.JWT)
 
-	wordsHandler := handler.NewHandler(wordsService)
+	ctxBG := context.Background()
+	if err := userService.SyncAdmin(ctxBG, cfg.Admin); err != nil {
+		log.Fatal("Failed to sync admin user:", err)
+	}
 
-	router := handler.RegisterRoutes(wordsHandler)
+	wordsHandler := handler.NewHandler(wordsService, userService)
+
+	router := handler.RegisterRoutes(wordsHandler, cfg.JWT.Secret)
 
 	httpServer := &http.Server{
 		Addr:         ":" + cfg.Api.Port,

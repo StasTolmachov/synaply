@@ -10,7 +10,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/open-spaced-repetition/go-fsrs/v4"
-	"github.com/redis/go-redis/v9"
 
 	"wordsGo_v2/external/deepl"
 	"wordsGo_v2/internal/cache"
@@ -34,12 +33,12 @@ type WordsServiceI interface {
 }
 
 type WordsService struct {
-	repo  repository.WordsPostgresI
+	repo  repository.WordsRepository
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
 }
 
-func NewWordsService(repo repository.WordsPostgresI, cache cache.CacheRepositoryI, deepl deepl.ServiceI) *WordsService {
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI) *WordsService {
 	return &WordsService{repo: repo, cache: cache, deepl: deepl}
 }
 
@@ -92,10 +91,10 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	key := models.CacheKey(userID)
 	slogger.Log.DebugContext(ctx, "LessonStart is started ")
 
-	nextWord, err := s.GetNextWord(ctx, userID)
+	nextWord, err := s.GetNextWordFromCache(ctx, userID)
 	if err == nil {
 		nextWordLog := models.LessonWordToResponse(nextWord)
-		slogger.Log.DebugContext(ctx, "answer from GetNextWord", "next_word", nextWordLog)
+		slogger.Log.DebugContext(ctx, "answer from GetNextWordFromCache", "next_word", nextWordLog)
 		return models.LessonWordToResponse(nextWord), nil
 	}
 	slogger.Log.ErrorContext(ctx, "failed to get next word from cache", "error", err)
@@ -109,7 +108,7 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 
 	val, err := json.Marshal(LessonWords)
 	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
+		return nil, fmt.Errorf("failed to marshal lesson: %w", err)
 	}
 
 	err = s.cache.Set(ctx, key, val)
@@ -193,7 +192,9 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "failed to cache lesson", "key", key, "error", err)
 	}
-	bgCtx := context.WithoutCancel(context.Background())
+	bgCtx := context.WithoutCancel(ctx)
+
+	//todo RabitMQ
 	go func() {
 		lessonDB := make(map[string]modelsDB.LessonDB)
 		for _, word := range lesson {
@@ -201,12 +202,12 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 		}
 		err := s.repo.Update(bgCtx, lessonDB)
 		if err != nil {
-			slogger.Log.ErrorContext(ctx, "failed to update lesson", "key", key, "error", err)
+			slogger.Log.ErrorContext(bgCtx, "failed to update lesson", "key", key, "error", err)
 		}
 	}()
 
 	if isCorrect {
-		nextWord, err := s.GetNextWord(ctx, userID)
+		nextWord, err := s.GetNextWordFromCache(ctx, userID)
 		if err != nil {
 			return isCorrect, nil, err
 		}
@@ -218,11 +219,11 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	return isCorrect, models.LessonWordToResponse(&word), nil
 }
 
-func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
+func (s *WordsService) GetNextWordFromCache(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
 	key := models.CacheKey(userID)
 	data, err := s.cache.Get(ctx, key)
-	if errors.Is(err, redis.Nil) {
-		slogger.Log.DebugContext(ctx, "GetNextWord is cache miss")
+	if errors.Is(err, cache.ErrCacheMiss) {
+		slogger.Log.DebugContext(ctx, "GetNextWordFromCache is cache miss")
 	}
 	if err != nil {
 		return nil, err
@@ -232,15 +233,15 @@ func (s *WordsService) GetNextWord(ctx context.Context, userID uuid.UUID) (*mode
 	if err := json.Unmarshal([]byte(data), &lesson); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
 	}
-	slogger.Log.DebugContext(ctx, "GetNextWord lesson from cache", "lesson", lesson)
+	slogger.Log.DebugContext(ctx, "GetNextWordFromCache lesson from cache", "lesson", lesson)
 
 	id := FindMinIdx(lesson)
 	word, exists := lesson[id]
 	if !exists {
-		slogger.Log.DebugContext(ctx, "GetNextWord is not exists")
+		slogger.Log.DebugContext(ctx, "GetNextWordFromCache is not exists")
 	}
 
-	slogger.Log.DebugContext(ctx, "GetNextWord is finished ", "word:", word)
+	slogger.Log.DebugContext(ctx, "GetNextWordFromCache is finished ", "word:", word)
 
 	return &word, nil
 }

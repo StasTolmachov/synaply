@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 )
 
@@ -48,6 +49,10 @@ func (s *Service) Translate(ctx context.Context, req DeepLRequest) (*DeepLRespon
 		return nil, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("deepl API error: received status code %d", resp.StatusCode)
+	}
 
 	var deepLResp DeepLResponse
 	if err := json.NewDecoder(resp.Body).Decode(&deepLResp); err != nil {

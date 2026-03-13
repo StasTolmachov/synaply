@@ -2,6 +2,7 @@ package cache
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -22,9 +23,6 @@ type CacheRepositoryI interface {
 	Get(ctx context.Context, key string) (string, error)
 	Del(ctx context.Context, key string) error
 	Close() error
-	ZAdd(ctx context.Context, key string, members ...redis.Z) error
-	ZRange(ctx context.Context, key string, start int64, stop int64) ([]string, error)
-	ZIncrBy(ctx context.Context, key string, incr float64, member string) error
 }
 
 func NewRedisClient(cfg config.Redis) (*Client, error) {
@@ -59,9 +57,13 @@ func (c *Client) Set(ctx context.Context, key string, value interface{}) error {
 
 func (c *Client) Get(ctx context.Context, key string) (string, error) {
 	if !c.available {
-		return "", redis.Nil
+		return "", ErrCacheMiss
 	}
-	return c.rdb.Get(ctx, key).Result()
+	val, err := c.rdb.Get(ctx, key).Result()
+	if errors.Is(err, redis.Nil) {
+		return "", ErrCacheMiss
+	}
+	return val, err
 }
 
 func (c *Client) Del(ctx context.Context, key string) error {
@@ -75,23 +77,4 @@ func (c *Client) Close() error {
 	return c.rdb.Close()
 }
 
-func (c *Client) ZAdd(ctx context.Context, key string, members ...redis.Z) error {
-	if !c.available {
-		return nil
-	}
-	return c.rdb.ZAdd(ctx, key, members...).Err()
-}
-
-func (c *Client) ZRange(ctx context.Context, key string, start int64, stop int64) ([]string, error) {
-	if !c.available {
-		return nil, nil
-	}
-	return c.rdb.ZRange(ctx, key, start, stop).Result()
-}
-
-func (c *Client) ZIncrBy(ctx context.Context, key string, incr float64, member string) error {
-	if !c.available {
-		return nil
-	}
-	return c.rdb.ZIncrBy(ctx, key, incr, member).Err()
-}
+var ErrCacheMiss = errors.New("cache miss")

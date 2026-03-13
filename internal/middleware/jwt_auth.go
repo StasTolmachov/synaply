@@ -2,20 +2,64 @@ package middleware
 
 import (
 	"context"
+	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 
+	"wordsGo_v2/internal/models"
+	"wordsGo_v2/internal/utils"
 	"wordsGo_v2/slogger"
 )
 
 var userID uuid.UUID
 
-func AuthMidleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userID, _ := uuid.Parse("22c31c05-11c8-4098-a86e-d6fada2ab797")
+type UserCtxKey struct{}
 
-		ctx := context.WithValue(r.Context(), slogger.UserIDKey, userID)
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
+func AuthMidleware(secret string) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			authHeader := r.Header.Get("Authorization")
+			if authHeader == "" {
+				http.Error(w, "Unauthorized", http.StatusUnauthorized)
+				return
+			}
+			parts := strings.SplitN(authHeader, " ", 2)
+			if !(len(parts) == 2 && parts[0] == "Bearer") {
+				http.Error(w, "Invalid Authorization header", http.StatusUnauthorized)
+				return
+			}
+
+			tokenString := parts[1]
+			claims, err := utils.ParseToken(tokenString, secret)
+			if err != nil {
+				http.Error(w, "Invalid token", http.StatusUnauthorized)
+				slogger.Log.DebugContext(r.Context(), "Token parse error", "err", err)
+				return
+			}
+			id, err := uuid.Parse(claims.UserID)
+			if err != nil {
+				http.Error(w, "Failed to parse user ID", http.StatusInternalServerError)
+				slogger.Log.ErrorContext(r.Context(), "Failed to parse user ID", "err", err)
+				return
+			}
+			userCtx := &models.User{
+				ID:   id,
+				Role: models.UserRole(claims.Role),
+			}
+
+			ctx := context.WithValue(r.Context(), UserCtxKey{}, userCtx)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
+}
+
+// GetUserFromContext безопасно извлекает пользователя из контекста
+func GetUserFromContext(ctx context.Context) (*models.User, error) {
+	user, ok := ctx.Value(UserCtxKey{}).(*models.User)
+	if !ok {
+		return nil, errors.New("user not found in context")
+	}
+	return user, nil
 }
