@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Словарь - WordsGO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container container-large">
+    <nav>
+        <h2>Мой словарь</h2>
+        <div class="nav-links">
+            <a href="lesson.html"><b>Начать урок</b></a>
+            <a href="#" onclick="logout()">Выйти</a>
+        </div>
+    </nav>
+
+    <div style="display: flex; gap: 2rem;">
+        <div style="flex: 1;">
+            <h3>Добавить новое слово</h3>
+            <div id="msg" class="error-msg" style="color: var(--success);"></div>
+
+            <div class="form-group">
+                <label>Слово</label>
+                <input type="text" id="sourceWord" placeholder="Например: Яблоко">
+            </div>
+
+            <button onclick="translateWord()">Перевести (DeepL)</button>
+
+            <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border);">
+
+            <div class="form-group">
+                <label>Перевод</label>
+                <input type="text" id="targetWord">
+            </div>
+            <div class="form-group">
+                <label>Комментарий (ассоциация/контекст)</label>
+                <input type="text" id="comment" placeholder="Опционально">
+            </div>
+
+            <button onclick="saveWord()">Сохранить в словарь</button>
+        </div>
+
+        <div style="flex: 1; background: #f3f4f6; padding: 1.5rem; border-radius: 8px;">
+            <h4>Как это работает?</h4>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #4b5563; line-height: 1.5;">
+                1. Введи слово на родном языке.<br>
+                2. Нажми "Перевести", и наш сервер запросит перевод у DeepL.<br>
+                3. Отредактируй перевод, если нужно, добавь комментарий.<br>
+                4. Нажми "Сохранить". Слово попадет в алгоритм FSRS и появится в уроке!
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="api.js"></script>
+<script>
+    requireAuth(); // Защита страницы
+
+    let userLangs = { source: "RU", target: "EN" };
+
+    // Получаем языки пользователя
+    async function fetchMyLangs() {
+        try {
+            const res = await apiFetch('/words/getLanguages');
+            userLangs.source = res.source;
+            userLangs.target = res.target;
+        } catch (err) {
+            console.error("Не удалось получить языки пользователя", err);
+        }
+    }
+    fetchMyLangs();
+
+    async function translateWord() {
+        const word = document.getElementById('sourceWord').value;
+        if (!word) return;
+
+        try {
+            const res = await apiFetch('/words/translate', {
+                method: 'POST',
+                body: JSON.stringify({
+                    source_word: word,
+                    target_word: "",
+                    source_lang: userLangs.source,
+                    target_lang: userLangs.target
+                })
+            });
+            // Бэкенд возвращает target_word из DeepL
+            document.getElementById('targetWord').value = res.target_word;
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
+    async function saveWord() {
+        const sourceWord = document.getElementById('sourceWord').value;
+        const targetWord = document.getElementById('targetWord').value;
+        const comment = document.getElementById('comment').value;
+
+        try {
+            await apiFetch('/words/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    source_lang: userLangs.source,
+                    target_lang: userLangs.target,
+                    source_word: sourceWord,
+                    target_word: targetWord,
+                    comment: comment
+                })
+            });
+
+            const msg = document.getElementById('msg');
+            msg.textContent = "Слово успешно сохранено!";
+            setTimeout(() => msg.textContent = "", 3000);
+
+            document.getElementById('sourceWord').value = '';
+            document.getElementById('targetWord').value = '';
+            document.getElementById('comment').value = '';
+        } catch (err) {
+            alert("Ошибка: " + err.message);
+        }
+    }
+</script>
+</body>
+</html>

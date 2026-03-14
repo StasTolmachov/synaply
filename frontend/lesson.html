@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Урок - WordsGO</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .flashcard { text-align: center; padding: 2rem; border: 2px dashed var(--primary); border-radius: 12px; margin-bottom: 2rem; }
+    .word-huge { font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+    .comment { color: var(--text-muted); font-style: italic; }
+    .feedback { text-align: center; font-weight: bold; font-size: 1.2rem; margin-top: 1rem; min-height: 24px; }
+    .correct { color: var(--success); }
+    .incorrect { color: var(--error); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav style="margin-bottom: 1rem; padding-bottom: 0.5rem;">
+    <a href="dashboard.html" style="text-decoration: none; color: var(--text-muted);">← В словарь</a>
+  </nav>
+
+  <h2>Урок</h2>
+
+  <div id="lessonArea" style="display: none;">
+    <div class="flashcard">
+      <div class="word-huge" id="displayWord">Загрузка...</div>
+      <div class="comment" id="displayComment"></div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="answerInput" placeholder="Введите перевод..." autocomplete="off">
+    </div>
+    <button id="checkBtn" onclick="checkAnswer()">Проверить</button>
+
+    <div id="feedback" class="feedback"></div>
+  </div>
+
+  <div id="doneArea" style="display: none; text-align: center;">
+    <h3 style="color: var(--success);">Отлично! Слова на сегодня закончились.</h3>
+    <button onclick="window.location.href='dashboard.html'">Вернуться в дашборд</button>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script>
+  requireAuth();
+
+  let currentWordId = null;
+
+  async function startLesson() {
+    try {
+      const word = await apiFetch('/lesson/start');
+      showWord(word);
+    } catch (err) {
+      if (err.message.includes("no words found")) {
+        showDone();
+      } else {
+        alert("Ошибка старта урока: " + err.message);
+      }
+    }
+  }
+
+  function showWord(wordData) {
+    document.getElementById('lessonArea').style.display = 'block';
+    document.getElementById('doneArea').style.display = 'none';
+
+    currentWordId = wordData.id;
+    document.getElementById('displayWord').textContent = wordData.source_word;
+    document.getElementById('displayComment').textContent = wordData.comment || '';
+
+    const input = document.getElementById('answerInput');
+    input.value = '';
+    input.focus();
+    document.getElementById('feedback').textContent = '';
+  }
+
+  function showDone() {
+    document.getElementById('lessonArea').style.display = 'none';
+    document.getElementById('doneArea').style.display = 'block';
+  }
+
+  async function checkAnswer() {
+    const answer = document.getElementById('answerInput').value.trim();
+    if (!answer) return;
+
+    const feedback = document.getElementById('feedback');
+
+    try {
+      const res = await apiFetch('/lesson/check', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: currentWordId,
+          target_word: answer
+        })
+      });
+
+      if (res.is_correct) {
+        feedback.className = 'feedback correct';
+        feedback.textContent = 'Правильно!';
+
+        // Бэкенд возвращает next_word или null, если урок окончен
+        setTimeout(() => {
+          if (res.next_word && res.next_word.id !== "") {
+            showWord(res.next_word);
+          } else {
+            finishLesson();
+          }
+        }, 1000);
+      } else {
+        // FSRS пометит слово как забытое, слово останется в кэше
+        feedback.className = 'feedback incorrect';
+        feedback.textContent = `Ошибка! Правильный ответ: ${res.next_word.target_word}`;
+
+        // Даем 2 секунды посмотреть на правильный ответ и переходим дальше
+        setTimeout(() => {
+          showWord(res.next_word);
+        }, 2500);
+      }
+    } catch (err) {
+      alert("Ошибка: " + err.message);
+    }
+  }
+
+  async function finishLesson() {
+    try {
+      await apiFetch('/lesson/finish', { method: 'POST' });
+      showDone();
+    } catch (err) {
+      console.error("Ошибка при завершении", err);
+    }
+  }
+
+  // Поддержка Enter в поле ввода
+  document.getElementById('answerInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      checkAnswer();
+    }
+  });
+
+  // Запуск при загрузке
+  startLesson();
+</script>
+</body>
+</html>
