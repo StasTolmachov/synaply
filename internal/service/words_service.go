@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -125,7 +126,7 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	return resp, err
 }
 
-func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) { //todo Make the input validation case-insensitive
+func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
 	key := models.CacheKey(userID)
 	var isCorrect bool
 	lesson := make(map[string]models.Lesson)
@@ -160,7 +161,7 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 
 	rating := fsrs.Good
 	isCorrect = true
-	if req.TargetWord != word.TargetWord {
+	if !strings.EqualFold(req.TargetWord, word.TargetWord) {
 		rating = fsrs.Again
 		isCorrect = false
 	}
