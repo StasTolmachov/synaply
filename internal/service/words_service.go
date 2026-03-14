@@ -199,17 +199,17 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 
 	s.wg.Add(1)
 	//todo RabitMQ
-	go func() {
+	updatedWord := lesson[req.ID]
+	go func(wordToSave models.Lesson) {
 		defer s.wg.Done()
-		lessonDB := make(map[string]modelsDB.LessonDB)
-		for _, word := range lesson {
-			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
-		}
-		err := s.repo.Update(bgCtx, lessonDB)
+
+		wordDB := models.LessonToLessonDB(&wordToSave)
+
+		err := s.repo.UpdateWord(bgCtx, wordDB)
 		if err != nil {
 			slogger.Log.ErrorContext(bgCtx, "failed to update lesson", "key", key, "error", err)
 		}
-	}()
+	}(updatedWord)
 
 	if isCorrect {
 		nextWord, err := s.GetNextWordFromCache(ctx, userID)

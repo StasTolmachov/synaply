@@ -425,8 +425,8 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	langCodeResp.Target = user.TargetLang
 
 	response := struct {
-		LangCodeResp models.LangCodeResp
-		TotalCorrect int64
+		LangCodeResp models.LangCodeResp `json:"langCodeResp"`
+		TotalCorrect int64               `json:"totalCorrect"`
 	}{
 		LangCodeResp: langCodeResp,
 		TotalCorrect: user.TotalCorrect,
