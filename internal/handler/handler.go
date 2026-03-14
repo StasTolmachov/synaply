@@ -555,12 +555,20 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	totalCorrect, err := h.userService.GetUserByID(ctx, user.ID)
+	if err != nil {
+		//todo
+		totalCorrect.TotalCorrect = 0
+	}
 	responseData := struct {
-		IsCorrect bool             `json:"is_correct"`
-		NextWord  *models.Response `json:"next_word"`
+		IsCorrect    bool             `json:"is_correct"`
+		NextWord     *models.Response `json:"next_word"`
+		TotalCorrect int              `json:"total_count"`
 	}{
-		IsCorrect: isCorrect,
-		NextWord:  resp,
+		IsCorrect:    isCorrect,
+		NextWord:     resp,
+		TotalCorrect: totalCorrect.TotalCorrect,
 	}
 
 	if isCorrect {

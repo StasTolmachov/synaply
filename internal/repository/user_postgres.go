@@ -72,7 +72,7 @@ func (r *userRepo) GetPasswordHashByEmail(ctx context.Context, email string) (*m
 
 func (r *userRepo) GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.UserDB, error) {
 	query := `
-        select id, email, first_name, last_name, role, created_at, updated_at, source_lang, target_lang
+        select id, email, first_name, last_name, role, created_at, updated_at, source_lang, target_lang, total_correct
         from users 
         where id = $1 and deleted_at is null`
 	var userModel modelsDB.UserDB
@@ -140,7 +140,7 @@ func (r *userRepo) GetUsers(ctx context.Context, order string, pagination models
 		sortOrder = "ASC"
 	}
 	query := fmt.Sprintf(`
-        SELECT id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at, 
+        SELECT id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at, total_correct,
                count(id) over() as total 
         FROM users
         WHERE deleted_at IS NULL
@@ -169,7 +169,7 @@ func (r *userRepo) GetUsers(ctx context.Context, order string, pagination models
 
 func (r *userRepo) GetUserByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
 	query := `
-        select id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at
+        select id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at, total_correct
         from users 
         where email = $1 and deleted_at is null`
 	var userModel modelsDB.UserDB

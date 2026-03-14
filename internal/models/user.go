@@ -84,15 +84,16 @@ var (
 )
 
 type UserResponse struct {
-	ID         string `json:"id"`
-	Email      string `json:"email"`
-	FirstName  string `json:"first_name"`
-	LastName   string `json:"last_name"`
-	Role       string `json:"role"`
-	SourceLang string `json:"source_lang"`
-	TargetLang string `json:"target_lang"`
-	CreatedAt  string `json:"created_at"`
-	UpdatedAt  string `json:"updated_at"`
+	ID           string `json:"id"`
+	Email        string `json:"email"`
+	FirstName    string `json:"first_name"`
+	LastName     string `json:"last_name"`
+	Role         string `json:"role"`
+	SourceLang   string `json:"source_lang"`
+	TargetLang   string `json:"target_lang"`
+	TotalCorrect int    `json:"total_correct"`
+	CreatedAt    string `json:"created_at"`
+	UpdatedAt    string `json:"updated_at"`
 }
 type UpdateUserRequest struct {
 	Email      *string `json:"email,omitempty"`
@@ -137,15 +138,16 @@ func ToUserDB(user *User) *modelsDB.UserDB {
 }
 func FromDBToUserResponse(user *modelsDB.UserDB) *UserResponse {
 	return &UserResponse{
-		ID:         user.ID.String(),
-		Email:      user.Email,
-		FirstName:  user.FirstName,
-		LastName:   user.LastName,
-		Role:       user.Role,
-		SourceLang: user.SourceLang,
-		TargetLang: user.TargetLang,
-		CreatedAt:  user.CreatedAt.String(),
-		UpdatedAt:  user.UpdatedAt.String(),
+		ID:           user.ID.String(),
+		Email:        user.Email,
+		FirstName:    user.FirstName,
+		LastName:     user.LastName,
+		Role:         user.Role,
+		SourceLang:   user.SourceLang,
+		TargetLang:   user.TargetLang,
+		TotalCorrect: user.TotalCorrect,
+		CreatedAt:    user.CreatedAt.String(),
+		UpdatedAt:    user.UpdatedAt.String(),
 	}
 }
 func UserDBToUser(user *modelsDB.UserDB) *User {

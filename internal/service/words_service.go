@@ -79,6 +79,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 	}, nil
 
 }
+
 func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 
 	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))
@@ -106,7 +107,6 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	}
 
 	LessonWords := models.LessonWordsDBtoLessonWords(wordsDB)
-
 	val, err := json.Marshal(LessonWords)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal lesson: %w", err)
