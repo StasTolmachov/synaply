@@ -182,3 +182,38 @@ func (r *userRepo) GetUserByEmail(ctx context.Context, email string) (*modelsDB.
 	}
 	return &userModel, nil
 }
+
+func (r *userRepo) GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error) {
+	query := `
+select total_correct
+from users
+where deleted_at is null and id = $1
+`
+	var totalCorrect int64
+	err := r.db.db.QueryRowxContext(ctx, query, userID).Scan(&totalCorrect)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return 0, models.ErrUserNotFound
+		}
+		return 0, fmt.Errorf("failed to get total count: %w", err)
+	}
+	return totalCorrect, nil
+}
+func (r *userRepo) SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error) {
+	query := `
+update users
+set total_correct = $1
+where id = $2 and deleted_at is null
+returning total_correct
+`
+	var totalCorrect int64
+	err := r.db.db.QueryRowxContext(ctx, query, totalCorrectUpdate, userID).Scan(&totalCorrect)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return 0, models.ErrUserNotFound
+		}
+		return 0, fmt.Errorf("failed to update total count: %w", err)
+	}
+
+	return totalCorrect, nil
+}

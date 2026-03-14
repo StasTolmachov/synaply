@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -37,10 +38,11 @@ type WordsService struct {
 	repo  repository.WordsRepository
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
+	wg    *sync.WaitGroup
 }
 
-func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI) *WordsService {
-	return &WordsService{repo: repo, cache: cache, deepl: deepl}
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup) *WordsService {
+	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg}
 }
 
 func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
@@ -195,8 +197,10 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	}
 	bgCtx := context.WithoutCancel(ctx)
 
+	s.wg.Add(1)
 	//todo RabitMQ
 	go func() {
+		defer s.wg.Done()
 		lessonDB := make(map[string]modelsDB.LessonDB)
 		for _, word := range lesson {
 			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)

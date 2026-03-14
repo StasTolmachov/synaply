@@ -91,7 +91,7 @@ type UserResponse struct {
 	Role         string `json:"role"`
 	SourceLang   string `json:"source_lang"`
 	TargetLang   string `json:"target_lang"`
-	TotalCorrect int    `json:"total_correct"`
+	TotalCorrect int64  `json:"total_correct"`
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`
 }

@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import { Loader2, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useScore } from '@/components/ScoreContext';
 
 export default function Lesson() {
   const router = useRouter();
+  const { updateScore } = useScore();
   const [loading, setLoading] = useState(true);
   const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
   const [answer, setAnswer] = useState('');
@@ -26,7 +28,12 @@ export default function Lesson() {
     setError('');
     try {
       const data = await fetchApi('/lesson/start');
-      setWord(data);
+      if (data) {
+        setWord(data.Word);
+        if (typeof data.total_correct === 'number') {
+          updateScore(data.total_correct);
+        }
+      }
     } catch (err: unknown) {
       if (err instanceof Error && err.message?.includes('no words')) {
         setLessonFinished(true);
@@ -55,6 +62,10 @@ export default function Lesson() {
         method: 'POST',
         body: JSON.stringify({ id: word?.id, target_word: answer.trim() })
       });
+
+      if (typeof data.total_correct === 'number') {
+        updateScore(data.total_correct);
+      }
 
       if (data.is_correct) {
         setFeedback({ isCorrect: true, showNextBtn: false });

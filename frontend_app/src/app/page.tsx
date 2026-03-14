@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import Link from 'next/link';
-import { LogOut, BookOpen, Plus, Loader2 } from 'lucide-react';
+import { BookOpen, Plus, Loader2 } from 'lucide-react';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -22,9 +22,11 @@ export default function Dashboard() {
       return;
     }
 
-    fetchApi('/words/getLanguages')
+    fetchApi('/words/GetMe')
       .then(data => {
-        setUserLangs(data);
+        if (data?.LangCodeResp) {
+          setUserLangs(data.LangCodeResp);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -32,11 +34,6 @@ export default function Dashboard() {
         router.push('/login');
       });
   }, [router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/login');
-  };
 
   const handleTranslate = async () => {
     if (!newWord.source_word && !newWord.target_word) return;
@@ -93,29 +90,13 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex-shrink-0 flex items-center">
-              <span className="text-xl font-bold text-blue-600 tracking-tight">WordsGo</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500 hidden sm:block">
-                {userLangs.source} → {userLangs.target}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="text-gray-500 hover:text-gray-700 flex items-center text-sm font-medium"
-              >
-                <LogOut className="w-4 h-4 mr-1" />
-                Sign out
-              </button>
-            </div>
-          </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
+          <p className="text-sm text-gray-500 mt-1">
+            Learning {userLangs.target} from {userLangs.source}
+          </p>
         </div>
-      </nav>
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           <div className="md:col-span-1 space-y-6">
