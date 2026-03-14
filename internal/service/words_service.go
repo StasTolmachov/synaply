@@ -271,6 +271,7 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 		for _, word := range lesson {
 			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
 		}
+		slogger.Log.DebugContext(ctx, "Finish lesson", "lessonDB", lessonDB)
 		err := s.repo.Update(ctx, lessonDB)
 		if err != nil {
 			return err

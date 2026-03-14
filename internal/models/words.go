@@ -108,6 +108,9 @@ func LessonToLessonDB(lesson *Lesson) modelsDB.LessonDB {
 		lastReviewDB = &lesson.LastReview
 	}
 	return modelsDB.LessonDB{
+		ID:            lesson.ID,
+		SourceWord:    lesson.SourceWord,
+		TargetWord:    lesson.TargetWord,
 		Comment:       lesson.Comment,
 		Due:           lesson.Due,
 		Stability:     lesson.Stability,

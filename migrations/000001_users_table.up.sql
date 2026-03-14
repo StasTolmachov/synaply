@@ -6,6 +6,8 @@ create table if not exists users (
     first_name varchar(100) not null,
     last_name varchar(100) not null,
     role varchar(20) not null default 'user',
+    source_lang varchar(20) not null,
+    target_lang varchar(20) not null,
     created_at TIMESTAMPTZ not null default now(),
     updated_at TIMESTAMPTZ not null default now(),
     deleted_at TIMESTAMPTZ null

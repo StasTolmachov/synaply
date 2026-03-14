@@ -15,6 +15,8 @@ type UserDB struct {
 	FirstName    string     `db:"first_name"`
 	LastName     string     `db:"last_name"`
 	Role         string     `db:"role"`
+	SourceLang   string     `db:"source_lang"`
+	TargetLang   string     `db:"target_lang"`
 	CreatedAt    time.Time  `db:"created_at"`
 	UpdatedAt    time.Time  `db:"updated_at"`
 	DeletedAt    *time.Time `db:"deleted_at"`

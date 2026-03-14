@@ -50,6 +50,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	r.Route("/api/v1/", func(r chi.Router) {
 
 		r.Route("/users", func(r chi.Router) {
+			r.Get("/lang", h.Lang)
 			r.Post("/create", h.Create)
 			r.Post("/login", h.Login)
 
@@ -70,6 +71,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 			r.Route("/words", func(r chi.Router) {
 				r.Post("/create", h.NewWord)
 				r.Post("/translate", h.Translate)
+				r.Get("/getLanguages", h.GetLanguages)
 			})
 
 			r.Route("/lesson", func(r chi.Router) {
@@ -82,6 +84,15 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	})
 
 	return r
+}
+
+func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
+
+	var Response models.LangResponse
+	Response.Source = models.SortedSourceLanguages
+	Response.Target = models.SortedTargetLanguages
+	slogger.Log.Debug("lang called", Response)
+	JSONResponse(w, http.StatusOK, Response)
 }
 
 // Login
@@ -141,7 +152,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Email == "" || req.Password == "" || req.FirstName == "" || req.LastName == "" {
+	if req.Email == "" || req.Password == "" || req.FirstName == "" || req.LastName == "" || req.SourceLang == "" || req.TargetLang == "" {
 		WriteError(w, http.StatusBadRequest, "Fields cannot be empty")
 		return
 	}
@@ -151,12 +162,6 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-
-	slogger.Log.DebugContext(ctx, "Creating user",
-		"email", req.Email,
-		"firstName", req.FirstName,
-		"lastName", req.LastName,
-	)
 
 	createdUser, err := h.userService.Create(ctx, req)
 	if err != nil {
@@ -395,6 +400,28 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusOK, updatedUser)
+}
+
+func (h *Handler) GetLanguages(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		return
+	}
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
+		return
+	}
+	var resp models.LangCodeResp
+	resp.Source = user.SourceLang
+	resp.Target = user.TargetLang
+
+	JSONResponse(w, http.StatusOK, resp)
 }
 
 func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {

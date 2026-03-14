@@ -33,9 +33,9 @@ func (r *userRepo) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.
 
 	query := `
 		insert into users 
-    	(email, password_hash, first_name, last_name, role)
-		values ($1, $2, $3, $4, $5)
-		returning id, email, first_name, last_name, role, created_at, updated_at`
+    	(email, password_hash, first_name, last_name, role, source_lang, target_lang)
+		values ($1, $2, $3, $4, $5, $6, $7)
+		returning id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at`
 
 	var res modelsDB.UserDB
 	err := r.db.db.QueryRowxContext(ctx, query,
@@ -44,6 +44,8 @@ func (r *userRepo) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.
 		req.FirstName,
 		req.LastName,
 		req.Role,
+		req.SourceLang,
+		req.TargetLang,
 	).StructScan(&res)
 
 	if err != nil {
@@ -70,8 +72,7 @@ func (r *userRepo) GetPasswordHashByEmail(ctx context.Context, email string) (*m
 
 func (r *userRepo) GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.UserDB, error) {
 	query := `
-        select id, email, first_name, last_name, role, created_at, updated_at,
-               COALESCE((select SUM(value) from votes where target_id = users.id), 0) as rating
+        select id, email, first_name, last_name, role, created_at, updated_at, source_lang, target_lang
         from users 
         where id = $1 and deleted_at is null`
 	var userModel modelsDB.UserDB
@@ -119,7 +120,7 @@ func (r *userRepo) Update(ctx context.Context, id uuid.UUID, fields map[string]a
        UPDATE users
        SET %s
        WHERE id = $%d
-       RETURNING id, email, password_hash, first_name, last_name, role, created_at, updated_at
+       RETURNING id, email, password_hash, first_name, last_name, role, source_lang, target_lang, created_at, updated_at
    `, strings.Join(setParts, ", "), i+1)
 
 	var updatedUser modelsDB.UserDB
@@ -139,7 +140,7 @@ func (r *userRepo) GetUsers(ctx context.Context, order string, pagination models
 		sortOrder = "ASC"
 	}
 	query := fmt.Sprintf(`
-        SELECT id, email, first_name, last_name, role, created_at, updated_at, 
+        SELECT id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at, 
                count(id) over() as total 
         FROM users
         WHERE deleted_at IS NULL
@@ -168,7 +169,7 @@ func (r *userRepo) GetUsers(ctx context.Context, order string, pagination models
 
 func (r *userRepo) GetUserByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
 	query := `
-        select id, email, first_name, last_name, role, created_at, updated_at
+        select id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at
         from users 
         where email = $1 and deleted_at is null`
 	var userModel modelsDB.UserDB

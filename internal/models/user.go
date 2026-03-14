@@ -33,10 +33,12 @@ const (
 )
 
 type CreateUserRequest struct {
-	Email     string `json:"email" validate:"required,email" example:"test@user.com"`
-	Password  string `json:"password" validate:"required,min=8" example:"SecurePass123!"`
-	FirstName string `json:"first_name" validate:"required" example:"test"`
-	LastName  string `json:"last_name" validate:"required" example:"user"`
+	Email      string `json:"email" validate:"required,email" example:"test@user.com"`
+	Password   string `json:"password" validate:"required,min=8" example:"SecurePass123!"`
+	FirstName  string `json:"first_name" validate:"required" example:"test"`
+	LastName   string `json:"last_name" validate:"required" example:"user"`
+	SourceLang string `json:"source_lang" validate:"required" example:"en"`
+	TargetLang string `json:"target_lang" validate:"required" example:"en"`
 }
 
 func NewUser(req CreateUserRequest, role UserRole) (*User, error) {
@@ -64,6 +66,8 @@ func NewUser(req CreateUserRequest, role UserRole) (*User, error) {
 		FirstName:    req.FirstName,
 		LastName:     req.LastName,
 		Role:         role,
+		SourceLang:   req.SourceLang,
+		TargetLang:   req.TargetLang,
 		CreatedAt:    timeNow,
 		UpdatedAt:    timeNow,
 		DeletedAt:    nil,
@@ -80,20 +84,24 @@ var (
 )
 
 type UserResponse struct {
-	ID        string `json:"id"`
-	Email     string `json:"email"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Role      string `json:"role"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID         string `json:"id"`
+	Email      string `json:"email"`
+	FirstName  string `json:"first_name"`
+	LastName   string `json:"last_name"`
+	Role       string `json:"role"`
+	SourceLang string `json:"source_lang"`
+	TargetLang string `json:"target_lang"`
+	CreatedAt  string `json:"created_at"`
+	UpdatedAt  string `json:"updated_at"`
 }
 type UpdateUserRequest struct {
-	Email     *string `json:"email,omitempty"`
-	Password  *string `json:"password,omitempty"`
-	FirstName *string `json:"first_name,omitempty"`
-	LastName  *string `json:"last_name,omitempty"`
-	Role      *string `json:"role,omitempty"`
+	Email      *string `json:"email,omitempty"`
+	Password   *string `json:"password,omitempty"`
+	FirstName  *string `json:"first_name,omitempty"`
+	LastName   *string `json:"last_name,omitempty"`
+	SourceLang *string `json:"source_lang,omitempty"`
+	TargetLang *string `json:"target_lang,omitempty"`
+	Role       *string `json:"role,omitempty"`
 }
 
 type ListOfUsersResponse struct {
@@ -120,6 +128,8 @@ func ToUserDB(user *User) *modelsDB.UserDB {
 		FirstName:    user.FirstName,
 		LastName:     user.LastName,
 		Role:         string(user.Role),
+		SourceLang:   user.SourceLang,
+		TargetLang:   user.TargetLang,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 		DeletedAt:    user.DeletedAt,
@@ -127,13 +137,15 @@ func ToUserDB(user *User) *modelsDB.UserDB {
 }
 func FromDBToUserResponse(user *modelsDB.UserDB) *UserResponse {
 	return &UserResponse{
-		ID:        user.ID.String(),
-		Email:     user.Email,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Role:      user.Role,
-		CreatedAt: user.CreatedAt.String(),
-		UpdatedAt: user.UpdatedAt.String(),
+		ID:         user.ID.String(),
+		Email:      user.Email,
+		FirstName:  user.FirstName,
+		LastName:   user.LastName,
+		Role:       user.Role,
+		SourceLang: user.SourceLang,
+		TargetLang: user.TargetLang,
+		CreatedAt:  user.CreatedAt.String(),
+		UpdatedAt:  user.UpdatedAt.String(),
 	}
 }
 func UserDBToUser(user *modelsDB.UserDB) *User {
@@ -144,6 +156,8 @@ func UserDBToUser(user *modelsDB.UserDB) *User {
 		FirstName:    user.FirstName,
 		LastName:     user.LastName,
 		Role:         UserRole(user.Role),
+		SourceLang:   user.SourceLang,
+		TargetLang:   user.TargetLang,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 	}
