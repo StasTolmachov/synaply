@@ -202,11 +202,14 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	go func(wordToSave models.Lesson) {
 		defer s.wg.Done()
 
+		timeoutCtx, cancel := context.WithTimeout(bgCtx, 5*time.Second)
+		defer cancel()
+
 		wordDB := models.LessonToLessonDB(&wordToSave)
 
-		err := s.repo.UpdateWord(bgCtx, wordDB)
+		err := s.repo.UpdateWord(timeoutCtx, wordDB)
 		if err != nil {
-			slogger.Log.ErrorContext(bgCtx, "failed to update lesson", "key", key, "error", err)
+			slogger.Log.ErrorContext(timeoutCtx, "failed to update lesson", "key", key, "error", err)
 		}
 	}(updatedWord)
 
