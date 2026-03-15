@@ -31,10 +31,10 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
-      DB_USER: ${DB_USERNAME}
+      DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-      DB_MIGRATE_PATH: ${MIGRATIONS_PATH}
+      MIGRATIONS_PATH: ${MIGRATIONS_PATH}
       DB_SSLMODE: ${DB_SSLMODE:-disable}
       API_PORT: 8080
       REDIS_HOST: redis
