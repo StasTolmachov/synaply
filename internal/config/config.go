@@ -11,12 +11,13 @@ import (
 )
 
 type Config struct {
-	DB    DB
-	Api   Api
-	Redis Redis
-	Deepl Deepl
-	JWT   JWT
-	Admin Admin
+	DB     DB
+	Api    Api
+	Redis  Redis
+	Deepl  Deepl
+	JWT    JWT
+	Admin  Admin
+	Gemini Gemini
 }
 
 type DB struct {
@@ -52,6 +53,11 @@ type JWT struct {
 type Admin struct {
 	Email    string
 	Password string
+}
+
+type Gemini struct {
+	Key   string
+	Model string
 }
 
 func NewConfig() (*Config, error) {
@@ -133,6 +139,13 @@ func NewConfig() (*Config, error) {
 	}
 	if cfg.Admin.Password = os.Getenv("ADMIN_PASSWORD"); cfg.Admin.Password == "" {
 		return nil, fmt.Errorf("ADMIN_PASSWORD environment variable not set")
+	}
+
+	if cfg.Gemini.Key = os.Getenv("GEMINI_API_KEY"); cfg.Gemini.Key == "" {
+		return nil, fmt.Errorf("GEMINI_API_KEY environment variable not set")
+	}
+	if cfg.Gemini.Model = os.Getenv("GEMINI_MODEL"); cfg.Gemini.Model == "" {
+		return nil, fmt.Errorf("GEMINI_MODEL environment variable not set")
 	}
 
 	return cfg, nil

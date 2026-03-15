@@ -10,7 +10,7 @@ import (
 )
 
 type ServiceI interface {
-	Translate(ctx context.Context, req DeepLRequest) (*DeepLResponse, error)
+	Translate(ctx context.Context, req Request) (*Response, error)
 }
 
 type Service struct {
@@ -19,7 +19,7 @@ type Service struct {
 	Client *http.Client
 }
 
-func NewService(key string, url string, client *http.Client) *Service {
+func NewService(key string, url string, client *http.Client) ServiceI {
 	return &Service{
 		Key:    key,
 		Url:    url,
@@ -27,7 +27,7 @@ func NewService(key string, url string, client *http.Client) *Service {
 	}
 }
 
-func (s *Service) Translate(ctx context.Context, req DeepLRequest) (*DeepLResponse, error) {
+func (s *Service) Translate(ctx context.Context, req Request) (*Response, error) {
 
 	jsonBody, err := json.Marshal(req)
 	if err != nil {
@@ -54,7 +54,7 @@ func (s *Service) Translate(ctx context.Context, req DeepLRequest) (*DeepLRespon
 		return nil, fmt.Errorf("deepl API error: received status code %d", resp.StatusCode)
 	}
 
-	var deepLResp DeepLResponse
+	var deepLResp Response
 	if err := json.NewDecoder(resp.Body).Decode(&deepLResp); err != nil {
 		return nil, err
 	}

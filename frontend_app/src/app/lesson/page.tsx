@@ -6,6 +6,7 @@ import { fetchApi } from '@/lib/api';
 import { Loader2, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useScore } from '@/components/ScoreContext';
+import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 
 export default function Lesson() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function Lesson() {
     try {
       const data = await fetchApi('/lesson/start');
       if (data) {
-        setWord(data.Word);
+        setWord(data.word || data.Word);
         if (typeof data.total_correct === 'number') {
           updateScore(data.total_correct);
         }
@@ -219,6 +220,12 @@ export default function Lesson() {
               </button>
             )}
           </form>
+
+          {word?.source_word && word?.target_word && (
+            <div className="mt-8 pt-8 border-t border-gray-100 flex justify-center">
+              <AIWordInfoCard sourceWord={word.source_word} targetWord={word.target_word} />
+            </div>
+          )}
         </div>
       </div>
     </div>
