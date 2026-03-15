@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WordsGo",
+  title: "WordsGo Beta",
   description: "Learn new words with spaced repetition",
 };
 

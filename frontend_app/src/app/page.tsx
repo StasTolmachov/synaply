@@ -164,13 +164,6 @@ export default function Dashboard() {
                   </button>
                 </div>
 
-                {(newWord.source_word && newWord.target_word) ? (
-                  <AIWordInfoCard 
-                    sourceWord={newWord.source_word} 
-                    targetWord={newWord.target_word} 
-                  />
-                ) : null}
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Comment / Context (optional)
@@ -201,6 +194,15 @@ export default function Dashboard() {
                   </button>
                 </div>
               </form>
+
+              {(newWord.source_word && newWord.target_word) ? (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <AIWordInfoCard 
+                    sourceWord={newWord.source_word} 
+                    targetWord={newWord.target_word} 
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

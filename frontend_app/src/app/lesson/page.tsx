@@ -168,11 +168,6 @@ export default function Lesson() {
             {word?.comment && (
               <p className="text-sm text-gray-500">{word?.comment}</p>
             )}
-            {word?.source_word && word?.target_word && (
-              <div className="flex justify-center mt-4">
-                <AIWordInfoCard sourceWord={word.source_word} targetWord={word.target_word} />
-              </div>
-            )}
           </div>
 
           <form onSubmit={handleCheck} className="space-y-6">
@@ -225,6 +220,12 @@ export default function Lesson() {
               </button>
             )}
           </form>
+
+          {word?.source_word && word?.target_word && (
+            <div className="mt-8 pt-8 border-t border-gray-100 flex justify-center">
+              <AIWordInfoCard sourceWord={word.source_word} targetWord={word.target_word} />
+            </div>
+          )}
         </div>
       </div>
     </div>
