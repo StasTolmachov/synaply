@@ -44,43 +44,56 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	}))
 
 	r.Use(middleware.LoggerMiddleware)
-	r.Use(middleware.TimeoutMiddleware(ctxWithTimeout))
 
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	r.Route("/api/v1/", func(r chi.Router) {
 
-		r.Route("/users", func(r chi.Router) {
-			r.Get("/lang", h.Lang)
-			r.Post("/create", h.Create)
-			r.Post("/login", h.Login)
+		r.Group(func(r chi.Router) {
+			r.Use(middleware.TimeoutMiddleware(time.Second * 5))
 
-			r.Group(func(r chi.Router) {
-				r.Use(middleware.AuthMidleware(jwtSecret))
+			r.Route("/users", func(r chi.Router) {
+				r.Get("/lang", h.Lang)
+				r.Post("/create", h.Create)
+				r.Post("/login", h.Login)
 
-				//r.Get("/{id}", h.GetUserByID)
-				//r.Get("/all", h.GetUsers)
+				r.Group(func(r chi.Router) {
+					r.Use(middleware.AuthMidleware(jwtSecret))
 
-				r.Put("/{id}", h.Update)
-				r.Delete("/{id}", h.Delete)
+					//r.Get("/{id}", h.GetUserByID)
+					//r.Get("/all", h.GetUsers)
 
+					r.Put("/{id}", h.Update)
+					r.Delete("/{id}", h.Delete)
+
+				})
 			})
 		})
 		r.Group(func(r chi.Router) {
+
 			r.Use(middleware.AuthMidleware(jwtSecret))
 
-			r.Route("/words", func(r chi.Router) {
-				r.Post("/create", h.NewWord)
-				r.Post("/translate", h.Translate)
-				r.Get("/GetMe", h.GetMe)
-				r.Post("/wordInfo", h.WordInfo)
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.TimeoutMiddleware(time.Second * 5))
+
+				r.Route("/words", func(r chi.Router) {
+					r.Post("/create", h.NewWord)
+					r.Post("/translate", h.Translate)
+					r.Get("/GetMe", h.GetMe)
+
+				})
+				r.Route("/lesson", func(r chi.Router) {
+					r.Get("/start", h.StartLesson)
+					r.Post("/check", h.CheckAnswer)
+					r.Post("/finish", h.Finish)
+				})
+			})
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.TimeoutMiddleware(time.Second * 30))
+
+				r.Post("/words/wordInfo", h.WordInfo)
 			})
 
-			r.Route("/lesson", func(r chi.Router) {
-				r.Get("/start", h.StartLesson)
-				r.Post("/check", h.CheckAnswer)
-				r.Post("/finish", h.Finish)
-			})
 		})
 
 	})

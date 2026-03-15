@@ -3,8 +3,14 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { fetchApi } from '../lib/api';
 
+export interface UserLangs {
+  source: string;
+  target: string;
+}
+
 interface ScoreContextType {
   score: number;
+  langs: UserLangs | null;
   setScore: (score: number) => void;
   updateScore: (score: number) => void;
   refreshScore: () => Promise<void>;
@@ -14,6 +20,7 @@ const ScoreContext = createContext<ScoreContextType | undefined>(undefined);
 
 export function ScoreProvider({ children }: { children: React.ReactNode }) {
   const [score, setScore] = useState(0);
+  const [langs, setLangs] = useState<UserLangs | null>(null);
 
   const refreshScore = useCallback(async () => {
     try {
@@ -21,8 +28,16 @@ export function ScoreProvider({ children }: { children: React.ReactNode }) {
       if (!token) return;
 
       const data = await fetchApi('/words/GetMe');
-      if (data && typeof data.TotalCorrect === 'number') {
-        setScore(data.TotalCorrect);
+      if (data) {
+        const correctScore = data.totalCorrect ?? data.TotalCorrect;
+        if (typeof correctScore === 'number') {
+          setScore(correctScore);
+        }
+        
+        const langData = data.langCodeResp || data.LangCodeResp;
+        if (langData) {
+          setLangs(langData);
+        }
       }
     } catch (error) {
       console.error('Failed to initialize score:', error);
@@ -38,7 +53,7 @@ export function ScoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ScoreContext.Provider value={{ score, setScore, updateScore, refreshScore }}>
+    <ScoreContext.Provider value={{ score, langs, setScore, updateScore, refreshScore }}>
       {children}
     </ScoreContext.Provider>
   );
