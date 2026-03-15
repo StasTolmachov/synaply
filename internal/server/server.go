@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"wordsGo_v2/external/deepl"
+	"wordsGo_v2/external/gemini"
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/config"
 	"wordsGo_v2/internal/handler"
@@ -39,9 +40,13 @@ func StartServer(cfg config.Config) {
 		Timeout: time.Second * 10,
 	}
 	deeplServ := deepl.NewService(cfg.Deepl.Key, cfg.Deepl.Url, client)
+	geminiServ, err := gemini.NewService(cfg.Gemini.Key, cfg.Gemini.Model)
+	if err != nil {
+		slogger.Log.Warn("Error connecting to gemini:", "error", err)
+	}
 
 	var wg sync.WaitGroup
-	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ, &wg)
+	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ, &wg, geminiServ)
 	userService := service.NewUserService(userRepo, cfg.JWT)
 
 	ctxBG := context.Background()

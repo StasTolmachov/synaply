@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
+	"wordsGo_v2/external/gemini"
 	"wordsGo_v2/internal/middleware"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/service"
@@ -72,6 +73,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.Post("/create", h.NewWord)
 				r.Post("/translate", h.Translate)
 				r.Get("/GetMe", h.GetMe)
+				r.Post("/wordInfo", h.WordInfo)
 			})
 
 			r.Route("/lesson", func(r chi.Router) {
@@ -419,7 +421,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} GetMeResponse
+// @Success 200 {object} models.GetMeResponse  <--- ИСПРАВЛЕНО ЗДЕСЬ
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
 // @Router /words/GetMe [get]
@@ -558,7 +560,7 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 // @Tags lesson
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} StartLessonResponse
+// @Success 200 {object} models.StartLessonResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 404 {object} handler.JSONError "No words found for lesson"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -608,7 +610,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Security BearerAuth
 // @Param input body models.AnswerReq true "Answer data"
-// @Success 200 {object} CheckAnswerResponse
+// @Success 200 {object} models.CheckAnswerResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
 // @Failure 400 {object} handler.JSONError "Invalid request body"
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -697,4 +699,35 @@ func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
 
 	h.wordsService.Finish(ctx, user.ID)
 	JSONResponse(w, http.StatusOK, nil)
+}
+
+// WordInfo Get AI-generated information about a word
+// @Summary Get word details using AI
+// @Description Returns detailed explanation, grammar, and usage examples for a word using Gemini AI
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body gemini.Request true "Data for Gemini AI prompt"
+// @Success 200 {object} gemini.Response "Successfully generated explanation"
+// @Failure 400 {object} handler.JSONError "Invalid request body"
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /words/wordInfo [post]
+func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	var req gemini.Request
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid request body")
+		return
+	}
+
+	resp, err := h.wordsService.WordInfo(ctx, req)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	JSONResponse(w, http.StatusOK, resp)
+
 }

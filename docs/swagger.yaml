@@ -1,11 +1,55 @@
-basePath: /api/v1
 definitions:
-  handler.JSONError:
+  internal_handler.JSONError:
     properties:
       error:
         type: string
     type: object
-  models.CreateUserRequest:
+  wordsGo_v2_external_gemini.Request:
+    properties:
+      source_lang:
+        type: string
+      source_word:
+        type: string
+      target_lang:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_external_gemini.Response:
+    properties:
+      response:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.AnswerReq:
+    properties:
+      id:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.CheckAnswerResponse:
+    properties:
+      is_correct:
+        type: boolean
+      next_word:
+        $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+      total_correct:
+        type: integer
+    type: object
+  wordsGo_v2_internal_models.CreateReq:
+    properties:
+      comment:
+        type: string
+      source_lang:
+        type: string
+      source_word:
+        type: string
+      target_lang:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.CreateUserRequest:
     properties:
       email:
         example: test@user.com
@@ -20,17 +64,57 @@ definitions:
         example: SecurePass123!
         minLength: 8
         type: string
+      source_lang:
+        example: en
+        type: string
+      target_lang:
+        example: en
+        type: string
     required:
     - email
     - first_name
     - last_name
     - password
+    - source_lang
+    - target_lang
     type: object
-  models.ListOfUsersResponse:
+  wordsGo_v2_internal_models.GetMeResponse:
+    properties:
+      langCodeResp:
+        $ref: '#/definitions/wordsGo_v2_internal_models.LangCodeResp'
+      totalCorrect:
+        type: integer
+    type: object
+  wordsGo_v2_internal_models.LangCodeResp:
+    properties:
+      source:
+        type: string
+      target:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.LangItem:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.LangResponse:
+    properties:
+      source:
+        items:
+          $ref: '#/definitions/wordsGo_v2_internal_models.LangItem'
+        type: array
+      target:
+        items:
+          $ref: '#/definitions/wordsGo_v2_internal_models.LangItem'
+        type: array
+    type: object
+  wordsGo_v2_internal_models.ListOfUsersResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.UserResponse'
+          $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
         type: array
       limit:
         type: integer
@@ -41,7 +125,7 @@ definitions:
       total:
         type: integer
     type: object
-  models.LoginRequest:
+  wordsGo_v2_internal_models.LoginRequest:
     properties:
       email:
         example: test@user.com
@@ -53,12 +137,50 @@ definitions:
     - email
     - password
     type: object
-  models.LoginResponse:
+  wordsGo_v2_internal_models.LoginResponse:
     properties:
       token:
         type: string
     type: object
-  models.UpdateUserRequest:
+  wordsGo_v2_internal_models.Response:
+    properties:
+      comment:
+        type: string
+      id:
+        type: string
+      source_word:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.StartLessonResponse:
+    properties:
+      total_correct:
+        type: integer
+      word:
+        $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+    type: object
+  wordsGo_v2_internal_models.TranslateReq:
+    properties:
+      source_lang:
+        type: string
+      source_word:
+        type: string
+      target_lang:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.TranslateResp:
+    properties:
+      id:
+        type: string
+      source_word:
+        type: string
+      target_word:
+        type: string
+    type: object
+  wordsGo_v2_internal_models.UpdateUserRequest:
     properties:
       email:
         type: string
@@ -70,8 +192,12 @@ definitions:
         type: string
       role:
         type: string
+      source_lang:
+        type: string
+      target_lang:
+        type: string
     type: object
-  models.UserResponse:
+  wordsGo_v2_internal_models.UserResponse:
     properties:
       created_at:
         type: string
@@ -85,15 +211,104 @@ definitions:
         type: string
       role:
         type: string
+      source_lang:
+        type: string
+      target_lang:
+        type: string
+      total_correct:
+        type: integer
       updated_at:
         type: string
     type: object
-host: localhost:8080
 info:
   contact: {}
-  title: WordsGO
+  description: API Server for spaced repetition app
+  title: WordsGo API
   version: "1.0"
 paths:
+  /lesson/check:
+    post:
+      consumes:
+      - application/json
+      description: Submits an answer for the current word and returns the next word
+      parameters:
+      - description: Answer data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wordsGo_v2_internal_models.AnswerReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.CheckAnswerResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Check the answer for a word
+      tags:
+      - lesson
+  /lesson/finish:
+    post:
+      description: Clears the current lesson state from the cache for the current
+        user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Finish the learning lesson
+      tags:
+      - lesson
+  /lesson/start:
+    get:
+      description: Gets the next word for the user to learn
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.StartLessonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "404":
+          description: No words found for lesson
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Start a learning lesson
+      tags:
+      - lesson
   /login:
     post:
       consumes:
@@ -105,18 +320,18 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/models.LoginRequest'
+          $ref: '#/definitions/wordsGo_v2_internal_models.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.LoginResponse'
+            $ref: '#/definitions/wordsGo_v2_internal_models.LoginResponse'
         "401":
           description: Invalid credentials
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       summary: User Login
       tags:
       - users
@@ -144,11 +359,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListOfUsersResponse'
+            $ref: '#/definitions/wordsGo_v2_internal_models.ListOfUsersResponse'
         "500":
           description: Failed to get users
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       summary: Get list of users
       tags:
       - users
@@ -162,26 +377,26 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/models.CreateUserRequest'
+          $ref: '#/definitions/wordsGo_v2_internal_models.CreateUserRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.UserResponse'
+            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
         "400":
           description: Invalid input or validation info
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "409":
           description: User already exists
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       summary: Create a new user
       tags:
       - users
@@ -205,15 +420,15 @@ paths:
         "400":
           description: Invalid user ID
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "403":
           description: You can delete only your own account
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "500":
           description: Failed to delete user
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       security:
       - BearerAuth: []
       summary: Delete user by ID
@@ -236,19 +451,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.UserResponse'
+            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
         "400":
           description: Invalid UUID
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "404":
           description: User not found
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       summary: Get user by ID
       tags:
       - users
@@ -268,34 +483,190 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateUserRequest'
+          $ref: '#/definitions/wordsGo_v2_internal_models.UpdateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Successfully updated
           schema:
-            $ref: '#/definitions/models.UserResponse'
+            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
         "400":
           description: Invalid user ID
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "403":
           description: Permission denied
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
         "500":
           description: Failed to update user
           schema:
-            $ref: '#/definitions/handler.JSONError'
+            $ref: '#/definitions/internal_handler.JSONError'
       security:
       - BearerAuth: []
       summary: Update user by ID
       tags:
       - users
+  /users/lang:
+    get:
+      description: Returns a list of supported source and target languages for learning
+        and translation
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved languages
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.LangResponse'
+      summary: Get available languages
+      tags:
+      - users
+  /words/GetMe:
+    get:
+      consumes:
+      - application/json
+      description: Returns language settings and total correct answers for the current
+        user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.GetMeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Get current user info
+      tags:
+      - words
+  /words/create:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new word to the user's dictionary
+      parameters:
+      - description: Word data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wordsGo_v2_internal_models.CreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "408":
+          description: Database timeout
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "409":
+          description: Word already exists
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Create a new word
+      tags:
+      - words
+  /words/translate:
+    post:
+      consumes:
+      - application/json
+      description: Translates a word using DeepL API
+      parameters:
+      - description: Translation request data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wordsGo_v2_internal_models.TranslateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wordsGo_v2_internal_models.TranslateResp'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Translate a word
+      tags:
+      - words
+  /words/wordInfo:
+    post:
+      consumes:
+      - application/json
+      description: Returns detailed explanation, grammar, and usage examples for a
+        word using Gemini AI
+      parameters:
+      - description: Data for Gemini AI prompt
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wordsGo_v2_external_gemini.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully generated explanation
+          schema:
+            $ref: '#/definitions/wordsGo_v2_external_gemini.Response'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/internal_handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Get word details using AI
+      tags:
+      - words
 securityDefinitions:
   BearerAuth:
-    description: Type "Bearer" followed by a space and your JWT token.
     in: header
     name: Authorization
     type: apiKey

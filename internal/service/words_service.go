@@ -14,6 +14,7 @@ import (
 	"github.com/open-spaced-repetition/go-fsrs/v4"
 
 	"wordsGo_v2/external/deepl"
+	"wordsGo_v2/external/gemini"
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
@@ -31,6 +32,7 @@ type WordsServiceI interface {
 	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
 	Finish(ctx context.Context, userID uuid.UUID) error
 	Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error)
+	WordInfo(ctx context.Context, req gemini.Request) (*gemini.Response, error)
 }
 
 type WordsService struct {
@@ -38,17 +40,18 @@ type WordsService struct {
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
 	wg    *sync.WaitGroup
+	gem   gemini.Service
 }
 
-func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup) *WordsService {
-	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg}
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup, gem gemini.Service) *WordsService {
+	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg, gem: gem}
 }
 
 func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
-	var deeplReq deepl.DeepLRequest
+	var deeplReq deepl.Request
 
 	if req.SourceWord != "" {
-		deeplReq = deepl.DeepLRequest{
+		deeplReq = deepl.Request{
 			Text:       []string{req.SourceWord},
 			TargetLang: req.TargetLang,
 		}
@@ -64,7 +67,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 			TargetWord: deeplResp.Translations[0].Text,
 		}, nil
 	}
-	deeplReq = deepl.DeepLRequest{
+	deeplReq = deepl.Request{
 		Text:       []string{req.TargetWord},
 		TargetLang: req.SourceLang,
 	}
@@ -276,4 +279,16 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 
 	slogger.Log.DebugContext(ctx, "lesson finished and cache cleared", "userId", userID)
 	return nil
+}
+
+func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemini.Response, error) {
+	respString, err := s.gem.WordInfo(ctx, req)
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "WordInfo failed", "error", err)
+		return nil, err
+	}
+	resp := gemini.Response{
+		Response: respString,
+	}
+	return &resp, nil
 }
