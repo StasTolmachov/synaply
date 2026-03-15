@@ -1,0 +1,30 @@
+name: Deploy to DigitalOcean
+
+# Правило: запускать этот скрипт только при push в ветку main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Робот будет работать на Ubuntu
+
+    steps:
+      - name: Deploy to Server via SSH
+        # Используем готовую экшен-библиотеку для SSH подключений
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          # Вот скрипт, который выполнится НА ТВОЕМ СЕРВЕРЕ:
+          script: |
+            # Переходим в папку с проектом (я взял путь из твоих логов)
+            cd /root/wordsGo_v2
+            
+            # Скачиваем свежий код из ветки main
+            git pull origin main
+            
+            # Пересобираем и перезапускаем контейнеры в фоне
+            docker compose up -d --build
