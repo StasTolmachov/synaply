@@ -38,6 +38,12 @@ export default function Login() {
           <h2 className="text-3xl font-extrabold text-gray-900">
             Sign in to WordsGo <span className="text-sm font-normal text-gray-400">Beta</span>
           </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+              Register here
+            </Link>
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="space-y-4 rounded-md shadow-sm">
