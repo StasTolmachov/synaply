@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
@@ -38,7 +39,9 @@ func StartServer(cfg config.Config) {
 		Timeout: time.Second * 10,
 	}
 	deeplServ := deepl.NewService(cfg.Deepl.Key, cfg.Deepl.Url, client)
-	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ)
+
+	var wg sync.WaitGroup
+	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ, &wg)
 	userService := service.NewUserService(userRepo, cfg.JWT)
 
 	ctxBG := context.Background()
@@ -76,5 +79,9 @@ func StartServer(cfg config.Config) {
 	if err := httpServer.Shutdown(ctx); err != nil {
 		log.Fatal("Server forced to shutdown:", err)
 	}
+
+	log.Println("Waiting for background tasks to finish...")
+	wg.Wait()
+
 	log.Println("Server exiting")
 }

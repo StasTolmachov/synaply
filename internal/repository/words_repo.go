@@ -13,4 +13,5 @@ type WordsRepository interface {
 	GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error)
 	GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error)
 	Update(ctx context.Context, lesson map[string]modelsDB.LessonDB) error
+	UpdateWord(ctx context.Context, word modelsDB.LessonDB) error
 }

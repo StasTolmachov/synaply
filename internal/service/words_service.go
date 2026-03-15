@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"strings"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -15,7 +17,6 @@ import (
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
-	"wordsGo_v2/internal/repository/modelsDB"
 	"wordsGo_v2/slogger"
 )
 
@@ -36,10 +37,11 @@ type WordsService struct {
 	repo  repository.WordsRepository
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
+	wg    *sync.WaitGroup
 }
 
-func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI) *WordsService {
-	return &WordsService{repo: repo, cache: cache, deepl: deepl}
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup) *WordsService {
+	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg}
 }
 
 func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
@@ -78,6 +80,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 	}, nil
 
 }
+
 func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 
 	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))
@@ -105,7 +108,6 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	}
 
 	LessonWords := models.LessonWordsDBtoLessonWords(wordsDB)
-
 	val, err := json.Marshal(LessonWords)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal lesson: %w", err)
@@ -160,7 +162,7 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 
 	rating := fsrs.Good
 	isCorrect = true
-	if req.TargetWord != word.TargetWord {
+	if !strings.EqualFold(req.TargetWord, word.TargetWord) {
 		rating = fsrs.Again
 		isCorrect = false
 	}
@@ -194,17 +196,22 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	}
 	bgCtx := context.WithoutCancel(ctx)
 
+	s.wg.Add(1)
 	//todo RabitMQ
-	go func() {
-		lessonDB := make(map[string]modelsDB.LessonDB)
-		for _, word := range lesson {
-			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
-		}
-		err := s.repo.Update(bgCtx, lessonDB)
+	updatedWord := lesson[req.ID]
+	go func(wordToSave models.Lesson) {
+		defer s.wg.Done()
+
+		timeoutCtx, cancel := context.WithTimeout(bgCtx, 5*time.Second)
+		defer cancel()
+
+		wordDB := models.LessonToLessonDB(&wordToSave)
+
+		err := s.repo.UpdateWord(timeoutCtx, wordDB)
 		if err != nil {
-			slogger.Log.ErrorContext(bgCtx, "failed to update lesson", "key", key, "error", err)
+			slogger.Log.ErrorContext(timeoutCtx, "failed to update lesson", "key", key, "error", err)
 		}
-	}()
+	}(updatedWord)
 
 	if isCorrect {
 		nextWord, err := s.GetNextWordFromCache(ctx, userID)
@@ -261,26 +268,12 @@ func FindMinIdx(lesson map[string]models.Lesson) string {
 }
 
 func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
-	data, err := s.cache.Get(ctx, models.CacheKey(userID))
-	lesson := make(map[string]models.Lesson)
-	lessonDB := make(map[string]modelsDB.LessonDB)
 
-	if err == nil {
-		err = json.Unmarshal([]byte(data), &lesson)
-
-		for _, word := range lesson {
-			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
-		}
-		slogger.Log.DebugContext(ctx, "Finish lesson", "lessonDB", lessonDB)
-		err := s.repo.Update(ctx, lessonDB)
-		if err != nil {
-			return err
-		}
-
-		err = s.cache.Del(ctx, models.CacheKey(userID))
-		if err != nil {
-			slogger.Log.ErrorContext(ctx, "failed to delete cache lesson", "error", err)
-		}
+	err := s.cache.Del(ctx, models.CacheKey(userID))
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to delete cache lesson", "error", err)
 	}
+
+	slogger.Log.DebugContext(ctx, "lesson finished and cache cleared", "userId", userID)
 	return nil
 }

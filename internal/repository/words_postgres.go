@@ -132,3 +132,29 @@ where id = :id
 	return nil
 
 }
+
+func (p *wordsPostgres) UpdateWord(ctx context.Context, word modelsDB.LessonDB) error {
+	query := `
+update words
+set comment = :comment,
+    due = :due,
+    stability = :stability,
+    difficulty = :difficulty,
+    elapsed_days = :elapsed_days,
+    scheduled_days = :scheduled_days,
+    reps = :reps,
+    lapses = :lapses,
+    state = :state,
+    last_review = :last_review,
+	updated_at = NOW()
+where id = :id
+`
+
+	_, err := p.db.db.NamedExecContext(ctx, query, word)
+	if err != nil {
+		return fmt.Errorf("error updating word: %s", err)
+	}
+
+	return nil
+
+}

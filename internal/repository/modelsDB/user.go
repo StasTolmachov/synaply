@@ -17,6 +17,7 @@ type UserDB struct {
 	Role         string     `db:"role"`
 	SourceLang   string     `db:"source_lang"`
 	TargetLang   string     `db:"target_lang"`
+	TotalCorrect int64      `db:"total_correct"`
 	CreatedAt    time.Time  `db:"created_at"`
 	UpdatedAt    time.Time  `db:"updated_at"`
 	DeletedAt    *time.Time `db:"deleted_at"`

@@ -13,9 +13,8 @@ import (
 )
 
 type Client struct {
-	rdb       *redis.Client
-	ttl       time.Duration
-	available bool
+	rdb *redis.Client
+	ttl time.Duration
 }
 
 type CacheRepositoryI interface {
@@ -33,32 +32,24 @@ func NewRedisClient(cfg config.Redis) (*Client, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	available := true
 	if err := rdb.Ping(ctx).Err(); err != nil {
 		slogger.Log.Warn("failed to connect to redis", "error", err)
-		available = false
+
 	} else {
 		slogger.Log.Info("connected to redis")
 	}
 
 	return &Client{
-		rdb:       rdb,
-		ttl:       cfg.TTL,
-		available: available,
+		rdb: rdb,
+		ttl: cfg.TTL,
 	}, nil
 }
 
 func (c *Client) Set(ctx context.Context, key string, value interface{}) error {
-	if !c.available {
-		return nil
-	}
 	return c.rdb.Set(ctx, key, value, c.ttl).Err()
 }
 
 func (c *Client) Get(ctx context.Context, key string) (string, error) {
-	if !c.available {
-		return "", ErrCacheMiss
-	}
 	val, err := c.rdb.Get(ctx, key).Result()
 	if errors.Is(err, redis.Nil) {
 		return "", ErrCacheMiss
@@ -67,9 +58,6 @@ func (c *Client) Get(ctx context.Context, key string) (string, error) {
 }
 
 func (c *Client) Del(ctx context.Context, key string) error {
-	if !c.available {
-		return nil
-	}
 	return c.rdb.Del(ctx, key).Err()
 }
 

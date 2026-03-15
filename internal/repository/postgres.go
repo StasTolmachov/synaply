@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -21,6 +22,11 @@ func NewPostgres(cfg config.DB) (*Postgres, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to postgres: %w", err)
 	}
+
+	db.SetMaxOpenConns(50)
+	db.SetMaxIdleConns(50)
+	db.SetConnMaxLifetime(5 * time.Minute)
+
 	p := &Postgres{db: db}
 
 	if err := p.runMigratopns(cfg.MigrationsPath); err != nil {

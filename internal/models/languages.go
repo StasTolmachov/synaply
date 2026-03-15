@@ -26,7 +26,7 @@ func init() {
 }
 
 func sortLanguagesMap(langMap map[string]string) []LangItem {
-	var result []LangItem
+	result := make([]LangItem, 0, len(langMap))
 
 	// Перекладываем данные из мапы в слайс
 	for code, name := range langMap {

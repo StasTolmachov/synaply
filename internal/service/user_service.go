@@ -25,6 +25,8 @@ type UserService interface {
 	Login(ctx context.Context, req models.LoginRequest) (string, error)
 	SyncAdmin(ctx context.Context, adminCfg config.Admin) error
 	GetUserByEmail(ctx context.Context, email string) (*models.UserResponse, error)
+	GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error)
+	SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error)
 }
 
 type userService struct {
@@ -199,7 +201,6 @@ func (s *userService) Update(ctx context.Context, id uuid.UUID, req models.Updat
 
 	return models.FromDBToUserResponse(updated), nil
 }
-
 func (s *userService) GetUsers(ctx context.Context, limit, page uint64, order string) (*models.ListOfUsersResponse, error) {
 	if limit == 0 {
 		limit = 10
@@ -248,4 +249,25 @@ func (s *userService) GetUserByEmail(ctx context.Context, email string) (*models
 	response := models.FromDBToUserResponse(user)
 
 	return response, nil
+}
+func (s *userService) GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error) {
+	totalCorrect, err := s.repo.GetTotalCorrect(ctx, userID)
+	if err != nil {
+		if errors.Is(err, modelsDB.ErrUserNotFound) {
+			return 0, models.ErrUserNotFound
+		}
+		return 0, fmt.Errorf("failed to GetUserTotalCorrect: %w", err)
+	}
+	return totalCorrect, nil
+}
+
+func (s *userService) SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error) {
+	totalCorrect, err := s.repo.SetTotalCorrect(ctx, userID, totalCorrectUpdate+1)
+	if err != nil {
+		if errors.Is(err, modelsDB.ErrUserNotFound) {
+			return 0, models.ErrUserNotFound
+		}
+		return 0, fmt.Errorf("failed to SetTotalCorrect: %w", err)
+	}
+	return totalCorrect, nil
 }

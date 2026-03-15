@@ -1,4 +1,4 @@
-.PHONY: run db-up db-down redis-up api-up docker-up docker-down dev
+.PHONY: run db-up db-down redis-up api-up docker-up docker-down dev frontend-dev
 
 db-up:
 	docker compose up -d db
@@ -8,6 +8,9 @@ redis-up:
 
 api-up:
 	docker compose up -d api
+
+frontend-up:
+	docker compose up -d frontend
 
 db-down:
 	docker compose down -v
@@ -21,8 +24,12 @@ docker-up:
 docker-down:
 	docker compose down
 
-# Запуск инфраструктуры в Docker и API локально
+frontend-dev:
+	cd frontend_app && npm run dev
+
+# Запуск инфраструктуры в Docker и приложения локально
 dev: db-up redis-up
 	@echo "Waiting for services to start..."
-	@sleep 3 # Даем пару секунд базе проснуться
-	go run cmd/api/main.go
+	@sleep 3
+	# Run API in background and frontend in foreground
+	go run cmd/api/main.go & cd frontend_app && npm run dev
