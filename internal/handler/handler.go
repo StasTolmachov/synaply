@@ -86,6 +86,13 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	return r
 }
 
+// Lang Get available languages
+// @Summary Get available languages
+// @Description Returns a list of supported source and target languages for learning and translation
+// @Tags users
+// @Produce json
+// @Success 200 {object} models.LangResponse "Successfully retrieved languages"
+// @Router /users/lang [get]
 func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
 
 	var Response models.LangResponse
