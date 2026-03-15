@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import Link from 'next/link';
 import { BookOpen, Plus, Loader2 } from 'lucide-react';
+import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,8 +25,9 @@ export default function Dashboard() {
 
     fetchApi('/words/GetMe')
       .then(data => {
-        if (data?.LangCodeResp) {
-          setUserLangs(data.LangCodeResp);
+        const langData = data?.langCodeResp || data?.LangCodeResp;
+        if (langData) {
+          setUserLangs(langData);
         }
         setLoading(false);
       })
@@ -192,6 +194,15 @@ export default function Dashboard() {
                   </button>
                 </div>
               </form>
+
+              {(newWord.source_word && newWord.target_word) ? (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <AIWordInfoCard 
+                    sourceWord={newWord.source_word} 
+                    targetWord={newWord.target_word} 
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

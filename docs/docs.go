@@ -15,6 +15,137 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/lesson/check": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Submits an answer for the current word and returns the next word",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lesson"
+                ],
+                "summary": "Check the answer for a word",
+                "parameters": [
+                    {
+                        "description": "Answer data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.AnswerReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.CheckAnswerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/lesson/finish": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Clears the current lesson state from the cache for the current user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lesson"
+                ],
+                "summary": "Finish the learning lesson",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/lesson/start": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Gets the next word for the user to learn",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "lesson"
+                ],
+                "summary": "Start a learning lesson",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.StartLessonResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "404": {
+                        "description": "No words found for lesson",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "description": "Login and get JWT token",
@@ -35,7 +166,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.LoginRequest"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.LoginRequest"
                         }
                     }
                 ],
@@ -43,13 +174,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LoginResponse"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.LoginResponse"
                         }
                     },
                     "401": {
                         "description": "Invalid credentials",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     }
                 }
@@ -92,13 +223,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ListOfUsersResponse"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.ListOfUsersResponse"
                         }
                     },
                     "500": {
                         "description": "Failed to get users",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     }
                 }
@@ -122,7 +253,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.CreateUserRequest"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.CreateUserRequest"
                         }
                     }
                 ],
@@ -130,25 +261,45 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.UserResponse"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid input or validation info",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "409": {
                         "description": "User already exists",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/lang": {
+            "get": {
+                "description": "Returns a list of supported source and target languages for learning and translation",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get available languages",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved languages",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.LangResponse"
                         }
                     }
                 }
@@ -181,25 +332,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.UserResponse"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid UUID",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "404": {
                         "description": "User not found",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     }
                 }
@@ -236,7 +387,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.UpdateUserRequest"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.UpdateUserRequest"
                         }
                     }
                 ],
@@ -244,25 +395,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Successfully updated",
                         "schema": {
-                            "$ref": "#/definitions/models.UserResponse"
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid user ID",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "403": {
                         "description": "Permission denied",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Failed to update user",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     }
                 }
@@ -301,19 +452,242 @@ const docTemplate = `{
                     "400": {
                         "description": "Invalid user ID",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "403": {
                         "description": "You can delete only your own account",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Failed to delete user",
                         "schema": {
-                            "$ref": "#/definitions/handler.JSONError"
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/GetMe": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns language settings and total correct answers for the current user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get current user info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.GetMeResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/create": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Adds a new word to the user's dictionary",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Create a new word",
+                "parameters": [
+                    {
+                        "description": "Word data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.CreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "408": {
+                        "description": "Database timeout",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "409": {
+                        "description": "Word already exists",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/translate": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Translates a word using DeepL API",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Translate a word",
+                "parameters": [
+                    {
+                        "description": "Translation request data",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.TranslateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_internal_models.TranslateResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/wordInfo": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns detailed explanation, grammar, and usage examples for a word using Gemini AI",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get word details using AI",
+                "parameters": [
+                    {
+                        "description": "Data for Gemini AI prompt",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_external_gemini.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully generated explanation",
+                        "schema": {
+                            "$ref": "#/definitions/wordsGo_v2_external_gemini.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handler.JSONError"
                         }
                     }
                 }
@@ -321,7 +695,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handler.JSONError": {
+        "internal_handler.JSONError": {
             "type": "object",
             "properties": {
                 "error": {
@@ -329,13 +703,85 @@ const docTemplate = `{
                 }
             }
         },
-        "models.CreateUserRequest": {
+        "wordsGo_v2_external_gemini.Request": {
+            "type": "object",
+            "properties": {
+                "source_lang": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_external_gemini.Response": {
+            "type": "object",
+            "properties": {
+                "response": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.AnswerReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.CheckAnswerResponse": {
+            "type": "object",
+            "properties": {
+                "is_correct": {
+                    "type": "boolean"
+                },
+                "next_word": {
+                    "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                },
+                "total_correct": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.CreateReq": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.CreateUserRequest": {
             "type": "object",
             "required": [
                 "email",
                 "first_name",
                 "last_name",
-                "password"
+                "password",
+                "source_lang",
+                "target_lang"
             ],
             "properties": {
                 "email": {
@@ -354,16 +800,74 @@ const docTemplate = `{
                     "type": "string",
                     "minLength": 8,
                     "example": "SecurePass123!"
+                },
+                "source_lang": {
+                    "type": "string",
+                    "example": "en"
+                },
+                "target_lang": {
+                    "type": "string",
+                    "example": "en"
                 }
             }
         },
-        "models.ListOfUsersResponse": {
+        "wordsGo_v2_internal_models.GetMeResponse": {
+            "type": "object",
+            "properties": {
+                "langCodeResp": {
+                    "$ref": "#/definitions/wordsGo_v2_internal_models.LangCodeResp"
+                },
+                "totalCorrect": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.LangCodeResp": {
+            "type": "object",
+            "properties": {
+                "source": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.LangItem": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.LangResponse": {
+            "type": "object",
+            "properties": {
+                "source": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wordsGo_v2_internal_models.LangItem"
+                    }
+                },
+                "target": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wordsGo_v2_internal_models.LangItem"
+                    }
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.ListOfUsersResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.UserResponse"
+                        "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
                     }
                 },
                 "limit": {
@@ -380,7 +884,7 @@ const docTemplate = `{
                 }
             }
         },
-        "models.LoginRequest": {
+        "wordsGo_v2_internal_models.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -397,7 +901,7 @@ const docTemplate = `{
                 }
             }
         },
-        "models.LoginResponse": {
+        "wordsGo_v2_internal_models.LoginResponse": {
             "type": "object",
             "properties": {
                 "token": {
@@ -405,7 +909,66 @@ const docTemplate = `{
                 }
             }
         },
-        "models.UpdateUserRequest": {
+        "wordsGo_v2_internal_models.Response": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.StartLessonResponse": {
+            "type": "object",
+            "properties": {
+                "total_correct": {
+                    "type": "integer"
+                },
+                "word": {
+                    "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.TranslateReq": {
+            "type": "object",
+            "properties": {
+                "source_lang": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.TranslateResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "wordsGo_v2_internal_models.UpdateUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -422,10 +985,16 @@ const docTemplate = `{
                 },
                 "role": {
                     "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
                 }
             }
         },
-        "models.UserResponse": {
+        "wordsGo_v2_internal_models.UserResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -446,6 +1015,15 @@ const docTemplate = `{
                 "role": {
                     "type": "string"
                 },
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "total_correct": {
+                    "type": "integer"
+                },
                 "updated_at": {
                     "type": "string"
                 }
@@ -454,7 +1032,6 @@ const docTemplate = `{
     },
     "securityDefinitions": {
         "BearerAuth": {
-            "description": "Type \"Bearer\" followed by a space and your JWT token.",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -465,11 +1042,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api/v1",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "WordsGO",
-	Description:      "",
+	Title:            "WordsGo API",
+	Description:      "API Server for spaced repetition app",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
