@@ -290,5 +290,6 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemin
 	resp := gemini.Response{
 		Response: respString,
 	}
+	slogger.Log.DebugContext(ctx, "WordInfo", "respString", respString)
 	return &resp, nil
 }
