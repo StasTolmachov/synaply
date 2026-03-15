@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import Link from 'next/link';
 import { BookOpen, Plus, Loader2 } from 'lucide-react';
+import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,8 +25,9 @@ export default function Dashboard() {
 
     fetchApi('/words/GetMe')
       .then(data => {
-        if (data?.LangCodeResp) {
-          setUserLangs(data.LangCodeResp);
+        const langData = data?.langCodeResp || data?.LangCodeResp;
+        if (langData) {
+          setUserLangs(langData);
         }
         setLoading(false);
       })
@@ -161,6 +163,13 @@ export default function Dashboard() {
                     Auto-translate missing field
                   </button>
                 </div>
+
+                {(newWord.source_word && newWord.target_word) ? (
+                  <AIWordInfoCard 
+                    sourceWord={newWord.source_word} 
+                    targetWord={newWord.target_word} 
+                  />
+                ) : null}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
