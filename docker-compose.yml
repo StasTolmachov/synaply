@@ -7,8 +7,6 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "${DB_PORT}:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
@@ -23,27 +21,33 @@ services:
     image: redis:7-alpine
     container_name: words_redis
     restart: always
-    ports:
-      - "${REDIS_PORT}:6379"
     networks:
       - backend
-
 
   api:
     build: .
     container_name: wordsGO
     restart: always
-    ports:
-      - "8080:8080"
     environment:
       DB_HOST: db
-      DB_PORT: ${DB_PORT}
+      DB_PORT: 5432
       DB_USER: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_MIGRATE_PATH: ${MIGRATIONS_PATH}
-      API_PORT: ${API_PORT}
+      DB_SSLMODE: ${DB_SSLMODE:-disable}
+      API_PORT: 8080
       REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_TTL: ${REDIS_TTL}
+      DEEPL_KEY: ${DEEPL_KEY}
+      DEEPL_URL: ${DEEPL_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TTL: ${JWT_TTL}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
     depends_on:
       db:
         condition: service_healthy
@@ -53,13 +57,29 @@ services:
   frontend:
     build:
       context: ./frontend_app
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
     container_name: words_frontend
     restart: always
-    ports:
-      - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
     depends_on:
+      - api
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: words_nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    depends_on:
+      - frontend
       - api
     networks:
       - backend
