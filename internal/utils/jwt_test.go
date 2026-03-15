@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	"foxminded/4_user_management/internal/config"
+	"wordsGo_v2/internal/config"
 )
 
 func TestJWT(t *testing.T) {

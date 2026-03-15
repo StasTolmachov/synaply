@@ -179,3 +179,14 @@ var (
 	ErrDBTimeout         = errors.New("db timeout")
 	ErrNoWordsForLesson  = errors.New("no words found for lesson")
 )
+
+type StartLessonResponse struct {
+	TotalCorrect int64     `json:"total_correct"`
+	Word         *Response `json:"word"`
+}
+
+type CheckAnswerResponse struct {
+	IsCorrect    bool      `json:"is_correct"`
+	NextWord     *Response `json:"next_word"`
+	TotalCorrect int64     `json:"total_correct"`
+}

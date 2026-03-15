@@ -71,7 +71,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 			r.Route("/words", func(r chi.Router) {
 				r.Post("/create", h.NewWord)
 				r.Post("/translate", h.Translate)
-				r.Get("/getLanguages", h.GetLanguages)
+				r.Get("/GetMe", h.GetMe)
 			})
 
 			r.Route("/lesson", func(r chi.Router) {
@@ -86,6 +86,13 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	return r
 }
 
+// Lang Get available languages
+// @Summary Get available languages
+// @Description Returns a list of supported source and target languages for learning and translation
+// @Tags users
+// @Produce json
+// @Success 200 {object} models.LangResponse "Successfully retrieved languages"
+// @Router /users/lang [get]
 func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
 
 	var Response models.LangResponse
@@ -107,6 +114,7 @@ func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
 // @Router /login [post]
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	var req models.LoginRequest
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body")
 		return
@@ -146,6 +154,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	var req models.CreateUserRequest
 
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(r.Context(), "Invalid request body", "err", err)
@@ -369,6 +378,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req models.UpdateUserRequest
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(r.Context(), "Invalid request body", "err", err)
@@ -402,7 +412,18 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, updatedUser)
 }
 
-func (h *Handler) GetLanguages(w http.ResponseWriter, r *http.Request) {
+// GetMe Get current user info
+// @Summary Get current user info
+// @Description Returns language settings and total correct answers for the current user
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} GetMeResponse
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /words/GetMe [get]
+func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
@@ -417,16 +438,35 @@ func (h *Handler) GetLanguages(w http.ResponseWriter, r *http.Request) {
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
-	var resp models.LangCodeResp
-	resp.Source = user.SourceLang
-	resp.Target = user.TargetLang
+	var langCodeResp models.LangCodeResp
+	langCodeResp.Source = user.SourceLang
+	langCodeResp.Target = user.TargetLang
 
-	JSONResponse(w, http.StatusOK, resp)
+	response := models.GetMeResponse{
+		LangCodeResp: langCodeResp,
+		TotalCorrect: user.TotalCorrect,
+	}
+
+	JSONResponse(w, http.StatusOK, response)
 }
 
+// Translate Translate a word
+// @Summary Translate a word
+// @Description Translates a word using DeepL API
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.TranslateReq true "Translation request data"
+// @Success 200 {object} models.TranslateResp
+// @Failure 400 {object} handler.JSONError "Invalid request body"
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /words/translate [post]
 func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	slogger.Log.DebugContext(r.Context(), "Translate")
 	var req models.TranslateReq
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusInternalServerError, "invalid request body")
 		return
@@ -456,10 +496,26 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// NewWord Create a new word
+// @Summary Create a new word
+// @Description Adds a new word to the user's dictionary
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.CreateReq true "Word data"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} handler.JSONError "Invalid request body"
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 408 {object} handler.JSONError "Database timeout"
+// @Failure 409 {object} handler.JSONError "Word already exists"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /words/create [post]
 func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var req models.CreateReq
 
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "invalid request body")
 		slogger.Log.ErrorContext(ctx, "invalid request body", "error", err)
@@ -496,16 +552,27 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// StartLesson Start a new lesson
+// @Summary Start a learning lesson
+// @Description Gets the next word for the user to learn
+// @Tags lesson
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} StartLessonResponse
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 404 {object} handler.JSONError "No words found for lesson"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /lesson/start [get]
 func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	user, err := middleware.GetUserFromContext(ctx)
+	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
 		WriteError(w, http.StatusUnauthorized, "unauthorized")
 		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
 		return
 	}
 
-	word, err := h.wordsService.LessonStart(ctx, user.ID)
+	word, err := h.wordsService.LessonStart(ctx, userCtx.ID)
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrNoWordsForLesson):
@@ -519,10 +586,33 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	JSONResponse(w, http.StatusOK, word)
+	totalCorrect, err := h.userService.GetTotalCorrect(ctx, userCtx.ID)
+	if err != nil {
+		//todo
+	}
+
+	response := models.StartLessonResponse{
+		TotalCorrect: totalCorrect,
+		Word:         word,
+	}
+
+	JSONResponse(w, http.StatusOK, response)
 
 }
 
+// CheckAnswer Check word answer
+// @Summary Check the answer for a word
+// @Description Submits an answer for the current word and returns the next word
+// @Tags lesson
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.AnswerReq true "Answer data"
+// @Success 200 {object} CheckAnswerResponse
+// @Failure 400 {object} handler.JSONError "Invalid request body"
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Failure 500 {object} handler.JSONError "Internal server error"
+// @Router /lesson/check [post]
 func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
@@ -533,6 +623,7 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req models.AnswerReq
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "invalid request body")
 		slogger.Log.ErrorContext(ctx, "invalid request body", "error", err)
@@ -555,12 +646,25 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responseData := struct {
-		IsCorrect bool             `json:"is_correct"`
-		NextWord  *models.Response `json:"next_word"`
-	}{
-		IsCorrect: isCorrect,
-		NextWord:  resp,
+
+	totalCorrect, err := h.userService.GetTotalCorrect(ctx, user.ID)
+	if err != nil {
+		//todo
+	}
+	var totalCorrectUpdate int64
+	if isCorrect {
+		totalCorrectUpdate, err = h.userService.SetTotalCorrect(ctx, user.ID, totalCorrect)
+		if err != nil {
+
+		}
+	} else {
+		totalCorrectUpdate = totalCorrect
+	}
+
+	response := models.CheckAnswerResponse{
+		IsCorrect:    isCorrect,
+		TotalCorrect: totalCorrectUpdate,
+		NextWord:     resp,
 	}
 
 	if isCorrect {
@@ -569,10 +673,19 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 		slogger.Log.DebugContext(ctx, "Handler CheckAnswer is NOT correct")
 	}
 
-	JSONResponse(w, http.StatusOK, responseData)
+	JSONResponse(w, http.StatusOK, response)
 
 }
 
+// Finish Finish current lesson
+// @Summary Finish the learning lesson
+// @Description Clears the current lesson state from the cache for the current user
+// @Tags lesson
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {string} string "OK"
+// @Failure 401 {object} handler.JSONError "Unauthorized"
+// @Router /lesson/finish [post]
 func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)

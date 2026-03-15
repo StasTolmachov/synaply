@@ -50,6 +50,20 @@ services:
     networks:
       - backend
 
+  frontend:
+    build:
+      context: ./frontend_app
+    container_name: words_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
+    depends_on:
+      - api
+    networks:
+      - backend
+
 volumes:
   db-data:
 networks:
