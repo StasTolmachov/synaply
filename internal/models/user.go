@@ -179,3 +179,8 @@ func PermissionCheck(requester *User, target *UserResponse) bool {
 	}
 	return false
 }
+
+type GetMeResponse struct {
+	LangCodeResp LangCodeResp `json:"langCodeResp"`
+	TotalCorrect int64        `json:"totalCorrect"`
+}
