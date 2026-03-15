@@ -1,4 +1,4 @@
-.PHONY: run db-up db-down redis-up api-up docker-up docker-down dev frontend-dev
+.PHONY: run db-up db-down redis-up api-up docker-up docker-down dev frontend-dev docker-del
 
 db-up:
 	docker compose up -d db
@@ -23,6 +23,9 @@ docker-up:
 
 docker-down:
 	docker compose down
+
+docker-del:
+	docker compose down -v
 
 frontend-dev:
 	cd frontend_app && npm run dev
