@@ -17,7 +17,6 @@ import (
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
-	"wordsGo_v2/internal/repository/modelsDB"
 	"wordsGo_v2/slogger"
 )
 
@@ -266,26 +265,12 @@ func FindMinIdx(lesson map[string]models.Lesson) string {
 }
 
 func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
-	data, err := s.cache.Get(ctx, models.CacheKey(userID))
-	lesson := make(map[string]models.Lesson)
-	lessonDB := make(map[string]modelsDB.LessonDB)
 
-	if err == nil {
-		err = json.Unmarshal([]byte(data), &lesson)
-
-		for _, word := range lesson {
-			lessonDB[word.ID.String()] = models.LessonToLessonDB(&word)
-		}
-		slogger.Log.DebugContext(ctx, "Finish lesson", "lessonDB", lessonDB)
-		err := s.repo.Update(ctx, lessonDB)
-		if err != nil {
-			return err
-		}
-
-		err = s.cache.Del(ctx, models.CacheKey(userID))
-		if err != nil {
-			slogger.Log.ErrorContext(ctx, "failed to delete cache lesson", "error", err)
-		}
+	err := s.cache.Del(ctx, models.CacheKey(userID))
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to delete cache lesson", "error", err)
 	}
+
+	slogger.Log.DebugContext(ctx, "lesson finished and cache cleared", "userId", userID)
 	return nil
 }
