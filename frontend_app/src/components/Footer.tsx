@@ -1,6 +1,16 @@
+"use client";
+
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isLandingPage = pathname === '/';
+
+  if (isLandingPage) {
+    return null;
+  }
+
   return (
     <footer style={{
       borderTop: '1px solid #ccc',
