@@ -661,11 +661,6 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, http.StatusBadRequest, "invalid request id")
 		return
 	}
-	if req.TargetWord == "" {
-		slogger.Log.ErrorContext(ctx, "Handler CheckAnswer called with empty req.TargetWord", "req", req.TargetWord)
-		WriteError(w, http.StatusBadRequest, "invalid request target word")
-		return
-	}
 	isCorrect, resp, err := h.wordsService.CheckAnswer(ctx, req, user.ID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, err.Error())

@@ -143,6 +143,13 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 			return isCorrect, nil, fmt.Errorf("failed to unmarshal lesson: %w", err)
 		}
 		word = lesson[req.ID]
+		if word.ID == uuid.Nil {
+			wordDB, err := s.repo.GetWordByID(ctx, req.ID)
+			if err != nil {
+				return isCorrect, nil, err
+			}
+			word = models.LessonDBToLesson(wordDB)
+		}
 	} else {
 		slogger.Log.DebugContext(ctx, "failed to get lesson from cache for checking", "key", key)
 		wordDB, err := s.repo.GetWordByID(ctx, req.ID)
