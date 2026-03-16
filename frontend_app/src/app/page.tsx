@@ -186,7 +186,7 @@ export default function Dashboard() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    disabled={addingWord || (!newWord.source_word && !newWord.target_word)}
+                    disabled={addingWord || !newWord.source_word || !newWord.target_word}
                     className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:bg-gray-400 transition-colors"
                   >
                     {addingWord ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
@@ -195,7 +195,7 @@ export default function Dashboard() {
                 </div>
               </form>
 
-              {(newWord.source_word && newWord.target_word) ? (
+              {(newWord.source_word || newWord.target_word) ? (
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <AIWordInfoCard 
                     sourceWord={newWord.source_word} 
