@@ -223,7 +223,7 @@ export default function Lesson() {
 
           {word?.source_word && word?.target_word && (
             <div className="mt-8 pt-8 border-t border-gray-100 flex justify-center">
-              <AIWordInfoCard sourceWord={word.source_word} targetWord={word.target_word} />
+              <AIWordInfoCard key={word.id} sourceWord={word.source_word} targetWord={word.target_word} />
             </div>
           )}
         </div>
