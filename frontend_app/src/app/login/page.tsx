@@ -23,7 +23,7 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
       localStorage.setItem('token', data.token);
-      router.push('/');
+      router.push('/dashboard');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
