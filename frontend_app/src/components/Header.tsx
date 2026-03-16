@@ -11,9 +11,10 @@ export function Header() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const isLandingPage = pathname === '/';
   const isAuthPage = pathname === '/login' || pathname === '/register';
 
-  if (isAuthPage) {
+  if (isAuthPage || isLandingPage) {
     return null;
   }
 

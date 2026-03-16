@@ -54,7 +54,7 @@ export default function Register() {
         body: JSON.stringify({ email: formData.email, password: formData.password }),
       });
       localStorage.setItem('token', loginData.token);
-      router.push('/');
+      router.push('/dashboard');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {

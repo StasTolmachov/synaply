@@ -493,13 +493,23 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 
-	user, err := middleware.GetUserFromContext(ctx)
+	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
 		WriteError(w, http.StatusUnauthorized, "unauthorized")
 		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
 		return
 	}
-	req.ID = user.ID
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
+		return
+	}
+	//todo
+	req.ID = userCtx.ID
+	req.SourceLang = user.SourceLang
+	req.TargetLang = user.TargetLang
 	slogger.Log.Debug("translate req %+v", "req", req)
 	resp, err := h.wordsService.Translate(ctx, req)
 	if err != nil {
