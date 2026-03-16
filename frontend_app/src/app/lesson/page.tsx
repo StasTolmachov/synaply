@@ -177,6 +177,8 @@ export default function Lesson() {
                 type="text"
                 value={answer}
                 onChange={e => setAnswer(e.target.value)}
+                onPaste={e => e.preventDefault()}
+                onDrop={e => e.preventDefault()}
                 disabled={feedback?.isCorrect}
                 placeholder="Type the translation..."
                 className="block w-full text-center text-lg rounded-xl border-gray-300 border-2 px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-blue-500 shadow-sm disabled:bg-gray-50"
