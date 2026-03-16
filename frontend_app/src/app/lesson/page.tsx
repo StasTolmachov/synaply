@@ -55,7 +55,7 @@ export default function Lesson() {
       return;
     }
 
-    if (!answer.trim() || submitting || feedback?.isCorrect) return;
+    if (submitting || feedback?.isCorrect) return;
     setSubmitting(true);
     
     try {
@@ -207,7 +207,7 @@ export default function Lesson() {
                 disabled={submitting || feedback?.isCorrect}
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 transition-colors"
               >
-                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? 'Check Answer' : 'Skip')}
+                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? 'Check Answer' : "Don't remember")}
               </button>
             ) : (
               <button
