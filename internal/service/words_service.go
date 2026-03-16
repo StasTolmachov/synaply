@@ -70,6 +70,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 	deeplReq = deepl.Request{
 		Text:       []string{req.TargetWord},
 		TargetLang: req.SourceLang,
+		SourceLang: req.TargetLang,
 	}
 	deeplResp, err := s.deepl.Translate(ctx, deeplReq)
 	if err != nil {
