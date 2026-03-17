@@ -26,8 +26,3 @@ create table if not exists words (
 );
 
 alter table words add constraint unique_user_word unique (user_id, source_lang, target_lang, source_word, target_word);
--- Индекс для новых слов
-CREATE INDEX idx_words_user_state_created ON words(user_id, state, created_at);
-
--- Индекс для повторяемых слов
-CREATE INDEX idx_words_user_state_due ON words(user_id, state, due);
