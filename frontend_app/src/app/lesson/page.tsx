@@ -165,7 +165,7 @@ export default function Lesson() {
         <div className="bg-white shadow-sm border border-gray-200 rounded-2xl overflow-hidden p-8">
           <div className="text-center mb-10">
             <h2 className="text-4xl font-extrabold text-gray-900 mb-2">{word?.source_word}</h2>
-            {word?.comment && (
+            {word?.comment && feedback && (
               <p className="text-sm text-gray-500">{word?.comment}</p>
             )}
           </div>
@@ -223,7 +223,7 @@ export default function Lesson() {
             )}
           </form>
 
-          {word?.source_word && word?.target_word && (
+          {feedback && word?.source_word && word?.target_word && (
             <div className="mt-8 pt-8 border-t border-gray-100 flex justify-center">
               <AIWordInfoCard key={word.id} sourceWord={word.source_word} targetWord={word.target_word} />
             </div>
