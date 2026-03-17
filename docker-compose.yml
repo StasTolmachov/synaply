@@ -9,8 +9,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
       - backend
     healthcheck:
@@ -23,8 +21,7 @@ services:
     image: redis:7-alpine
     container_name: wordsGO_redis
     restart: always
-    ports:
-      - "6379:6379"
+
     networks:
       - backend
 
