@@ -1,0 +1,11 @@
+# docker-compose.override.yml
+version: '3.8'
+
+services:
+  db:
+    ports:
+      - "5432:5432" # Открываем порт для DBeaver на твоем ПК
+
+  redis:
+    ports:
+      - "6379:6379" # Открываем порт для локального дебага
