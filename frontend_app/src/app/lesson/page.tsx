@@ -108,7 +108,7 @@ export default function Lesson() {
     try {
       await fetchApi('/lesson/finish', { method: 'POST' });
     } catch (_e) {}
-    router.push('/');
+    router.push('/dashboard');
   };
 
   if (loading) {
@@ -144,7 +144,7 @@ export default function Lesson() {
           <XCircle className="w-16 h-16 text-red-500 mx-auto" />
           <h2 className="text-xl font-bold text-gray-900">Oops, an error occurred</h2>
           <p className="text-gray-600">{error}</p>
-          <Link href="/" className="text-blue-600 hover:underline">
+          <Link href="/dashboard" className="text-blue-600 hover:underline">
             Go back
           </Link>
         </div>
