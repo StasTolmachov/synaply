@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:15-alpine
-    container_name: words_db
+    container_name: wordsGO_db
     restart: always
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -21,7 +21,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: words_redis
+    container_name: wordsGO_redis
     restart: always
     ports:
       - "6379:6379"
@@ -30,7 +30,7 @@ services:
 
   api:
     build: .
-    container_name: wordsGO
+    container_name: wordsGO_api
     restart: always
     environment:
       DB_HOST: db
@@ -63,7 +63,7 @@ services:
       context: ./frontend_app
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
-    container_name: words_frontend
+    container_name: wordsGO_frontend
     restart: always
     depends_on:
       - api
@@ -72,7 +72,7 @@ services:
 
   nginx:
     image: nginx:stable-alpine
-    container_name: words_nginx
+    container_name: wordsGO_nginx
     restart: always
     ports:
       - "80:80"
