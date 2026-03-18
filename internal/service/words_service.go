@@ -232,6 +232,9 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	if isCorrect {
 		nextWord, err := s.GetNextWordFromCache(ctx, userID)
 		if err != nil {
+			if errors.Is(err, models.ErrNoWordsForLesson) {
+				return isCorrect, nil, nil
+			}
 			return isCorrect, nil, err
 		}
 		resp := models.LessonWordToResponse(nextWord)
