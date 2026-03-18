@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+        
           # Вот скрипт, который выполнится НА ТВОЕМ СЕРВЕРЕ:
           script: |
             # Переходим в папку с проектом (я взял путь из твоих логов)
