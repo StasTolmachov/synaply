@@ -13,8 +13,6 @@ import (
 	"wordsGo_v2/slogger"
 )
 
-var userID uuid.UUID
-
 type UserCtxKey struct{}
 
 func AuthMidleware(secret string) func(next http.Handler) http.Handler {
