@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
+	"github.com/go-chi/httprate"
 	"github.com/google/uuid"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
@@ -35,7 +36,10 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedOrigins: []string{
+			"https://wordsgo.tolmachov.dev",
+			"http://localhost:3000", // для локальной разработки фронтенда
+		},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
@@ -48,14 +52,15 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	r.Route("/api/v1/", func(r chi.Router) {
+		r.Use(httprate.LimitByIP(100, 1*time.Minute))
 
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.TimeoutMiddleware(time.Second * 5))
 
 			r.Route("/users", func(r chi.Router) {
 				r.Get("/lang", h.Lang)
-				r.Post("/create", h.Create)
-				r.Post("/login", h.Login)
+				r.With(httprate.LimitByIP(10, 1*time.Hour)).Post("/create", h.Create)
+				r.With(httprate.LimitByIP(5, 1*time.Minute)).Post("/login", h.Login)
 
 				r.Group(func(r chi.Router) {
 					r.Use(middleware.AuthMidleware(jwtSecret))
@@ -77,8 +82,8 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.Use(middleware.TimeoutMiddleware(time.Second * 5))
 
 				r.Route("/words", func(r chi.Router) {
-					r.Post("/create", h.NewWord)
-					r.Post("/translate", h.Translate)
+					r.With(httprate.LimitByIP(30, 1*time.Minute)).Post("/create", h.NewWord)
+					r.With(httprate.LimitByIP(20, 1*time.Minute)).Post("/translate", h.Translate)
 					r.Get("/GetMe", h.GetMe)
 
 				})
@@ -91,7 +96,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 			r.Group(func(r chi.Router) {
 				r.Use(middleware.TimeoutMiddleware(time.Second * 30))
 
-				r.Post("/words/wordInfo", h.WordInfo)
+				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordInfo", h.WordInfo)
 			})
 
 		})
