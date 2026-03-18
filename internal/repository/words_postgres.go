@@ -158,3 +158,36 @@ where id = :id
 	return nil
 
 }
+
+func (p *wordsPostgres) SetWordInfo(ctx context.Context, req modelsDB.GeminiReq) error {
+	query := `
+	INSERT INTO gemini (source_lang, target_lang, source_word, target_word, response)
+	VALUES (:source_lang, :target_lang, :source_word, :target_word, :response)
+	ON CONFLICT (source_lang, target_lang, source_word, target_word) 
+	DO UPDATE SET response = EXCLUDED.response;
+	`
+
+	_, err := p.db.db.NamedExecContext(ctx, query, req)
+	if err != nil {
+		return fmt.Errorf("error saving word info: %w", err)
+	}
+
+	return nil
+}
+
+func (p *wordsPostgres) GetWordInfo(ctx context.Context, req *modelsDB.GeminiReq) (*modelsDB.GeminiResp, error) {
+	query := `
+        SELECT response
+        FROM gemini
+        WHERE LOWER(TRIM(source_lang)) = LOWER(TRIM($1)) 
+          AND LOWER(TRIM(target_lang)) = LOWER(TRIM($2)) 
+          AND LOWER(TRIM(source_word)) = LOWER(TRIM($3)) 
+          AND LOWER(TRIM(target_word)) = LOWER(TRIM($4))
+        LIMIT 1`
+	var resp modelsDB.GeminiResp
+	err := p.db.db.GetContext(ctx, &resp, query, req.SourceLang, req.TargetLang, req.SourceWord, req.TargetWord)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}

@@ -18,6 +18,7 @@ import (
 	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository"
+	"wordsGo_v2/internal/repository/modelsDB"
 	"wordsGo_v2/slogger"
 )
 
@@ -86,7 +87,11 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 }
 
 func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
+	sourceWord := strings.ToLower(strings.TrimSpace(req.SourceWord))
+	targetWord := strings.ToLower(strings.TrimSpace(req.TargetWord))
 
+	req.SourceWord = sourceWord
+	req.TargetWord = targetWord
 	resp, err := s.repo.Create(ctx, models.CreateReqToDB(req, userID))
 	if err != nil {
 		return nil, err
@@ -288,16 +293,48 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 	slogger.Log.DebugContext(ctx, "lesson finished and cache cleared", "userId", userID)
 	return nil
 }
-
 func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemini.Response, error) {
+
+	searchReq := &modelsDB.GeminiReq{
+		SourceLang: req.SourceLang,
+		TargetLang: req.TargetLang,
+		SourceWord: req.SourceWord,
+		TargetWord: req.TargetWord,
+	}
+
+	dbResp, err := s.repo.GetWordInfo(ctx, searchReq)
+	if err == nil {
+		slogger.Log.DebugContext(ctx, "success find in db", "resp", dbResp)
+		return &gemini.Response{Response: dbResp.Response}, nil
+	}
+
 	respString, err := s.gem.WordInfo(ctx, req)
 	if err != nil {
-		slogger.Log.ErrorContext(ctx, "WordInfo failed", "error", err)
+		slogger.Log.ErrorContext(ctx, "Gemini упал", "error", err)
 		return nil, err
 	}
-	resp := gemini.Response{
-		Response: respString,
-	}
-	slogger.Log.DebugContext(ctx, "WordInfo", "respString", respString)
-	return &resp, nil
+	slogger.Log.DebugContext(ctx, "3. WordInfo from gemini", "word", respString)
+
+	s.wg.Add(1)
+	go func(geminiAnswer string) {
+		defer s.wg.Done()
+		bgCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+
+		saveReq := modelsDB.GeminiReq{
+			SourceLang: req.SourceLang,
+			TargetLang: req.TargetLang,
+			SourceWord: req.SourceWord,
+			TargetWord: req.TargetWord,
+			Response:   geminiAnswer,
+		}
+
+		if err := s.repo.SetWordInfo(bgCtx, saveReq); err != nil {
+			slogger.Log.ErrorContext(bgCtx, "failed save to db:", "error", err)
+		} else {
+			slogger.Log.DebugContext(bgCtx, "success save to db", "resp", saveReq)
+		}
+	}(respString)
+
+	return &gemini.Response{Response: respString}, nil
 }
