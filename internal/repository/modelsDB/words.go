@@ -50,3 +50,15 @@ type LessonDB struct {
 	State         int        `db:"state"`
 	LastReview    *time.Time `db:"last_review"` // Указатель, так как может быть NULL у новых слов
 }
+
+type GeminiReq struct {
+	SourceLang string `db:"source_lang"`
+	TargetLang string `db:"target_lang"`
+	SourceWord string `db:"source_word"`
+	TargetWord string `db:"target_word"`
+	Response   string `db:"response"`
+}
+
+type GeminiResp struct {
+	Response string `db:"response"`
+}

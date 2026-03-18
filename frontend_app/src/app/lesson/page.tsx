@@ -18,6 +18,7 @@ export default function Lesson() {
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; showNextBtn: boolean } | null>(null);
   const [error, setError] = useState('');
   const [lessonFinished, setLessonFinished] = useState(false);
+  const [nextWordData, setNextWordData] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function Lesson() {
       return;
     }
 
-    if (submitting || feedback?.isCorrect) return;
+    if (submitting) return;
     setSubmitting(true);
     
     try {
@@ -68,40 +69,34 @@ export default function Lesson() {
         updateScore(data.total_correct);
       }
 
+      setFeedback({ isCorrect: data.is_correct, showNextBtn: true });
+
       if (data.is_correct) {
-        setFeedback({ isCorrect: true, showNextBtn: false });
-        setTimeout(() => {
-          if (data.next_word) {
-            setWord(data.next_word);
-            setAnswer('');
-            setFeedback(null);
-            inputRef.current?.focus();
-          } else {
-            setLessonFinished(true);
-          }
-        }, 1000);
+        setNextWordData(data.next_word);
+      } else if (data.next_word && data.next_word.id !== word?.id) {
+        // If the backend returned a DIFFERENT word on failure, store it as next
+        setNextWordData(data.next_word);
       } else {
-        // If incorrect, show the correct word and a next button
-        setWord(data.next_word); // The backend returns the same word with correct info
-        setFeedback({ isCorrect: false, showNextBtn: true });
+        setNextWordData(null);
       }
     } catch (err: unknown) {
-      if (err instanceof Error && (err.message?.includes('no words') || err.message?.includes('no more words'))) {
-        setLessonFinished(true);
-      } else {
-        setError(err instanceof Error ? err.message : 'Error checking answer');
-      }
+      setError(err instanceof Error ? err.message : 'Error checking answer');
     } finally {
       setSubmitting(false);
     }
   };
 
   const nextWord = async () => {
-    // If we were incorrect, we need to try again or fetch next. 
-    // Wait, the backend returns the current word if incorrect. So user has to type it correctly next time.
+    if (nextWordData) {
+      setWord(nextWordData);
+      setNextWordData(null);
+    } else if (feedback?.isCorrect) {
+      setLessonFinished(true);
+    }
+    
     setFeedback(null);
     setAnswer('');
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   const finishLesson = async () => {
@@ -179,9 +174,9 @@ export default function Lesson() {
                 onChange={e => setAnswer(e.target.value)}
                 onPaste={e => e.preventDefault()}
                 onDrop={e => e.preventDefault()}
-                disabled={feedback?.isCorrect}
+                readOnly={!!feedback}
                 placeholder="Type the translation..."
-                className="block w-full text-center text-lg rounded-xl border-gray-300 border-2 px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-blue-500 shadow-sm disabled:bg-gray-50"
+                className="block w-full text-center text-lg rounded-xl border-gray-300 border-2 px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-blue-500 shadow-sm read-only:bg-gray-50"
                 autoFocus
                 autoComplete="off"
               />
@@ -194,11 +189,9 @@ export default function Lesson() {
                 ) : (
                   <XCircle className="w-5 h-5 mr-3 flex-shrink-0" />
                 )}
-                <div>
+                <div className="flex-1">
                   <p className="font-medium">{feedback.isCorrect ? 'Correct!' : 'Incorrect.'}</p>
-                  {!feedback.isCorrect && (
-                    <p className="text-sm mt-1">The correct answer is: <strong>{word?.target_word}</strong></p>
-                  )}
+                  <p className="text-sm mt-1">The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong></p>
                 </div>
               </div>
             )}
@@ -206,15 +199,14 @@ export default function Lesson() {
             {!feedback?.showNextBtn ? (
               <button
                 type="submit"
-                disabled={submitting || feedback?.isCorrect}
+                disabled={submitting}
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 transition-colors"
               >
                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? 'Check Answer' : "Don't remember")}
               </button>
             ) : (
               <button
-                type="button"
-                onClick={nextWord}
+                type="submit"
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors"
               >
                 Continue
