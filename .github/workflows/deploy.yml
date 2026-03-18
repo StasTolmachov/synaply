@@ -12,19 +12,23 @@ jobs:
 
     steps:
       - name: Deploy to Server via SSH
-        # Используем готовую экшен-библиотеку для SSH подключений
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          # Вот скрипт, который выполнится НА ТВОЕМ СЕРВЕРЕ:
           script: |
-            # Переходим в папку с проектом (я взял путь из твоих логов)
+            # ОСТАНАВЛИВАТЬ скрипт при любой ошибке (чтобы GitHub загорелся красным, если что-то пойдет не так)
+            set -e
+            
+            # Переходим в папку с проектом
             cd /root/wordsGo_v2
             
-            # Скачиваем свежий код из ветки main
-            git pull origin main
+            # 1. Скачиваем ВСЕ свежие обновления с GitHub в буфер сервера
+            git fetch origin
             
-            # Пересобираем и перезапускаем контейнеры в фоне
+            # 2. ЖЕСТКО сбрасываем состояние кода на сервере до точной копии ветки main
+            git reset --hard origin/main
+            
+            # 3. Пересобираем и перезапускаем контейнеры в фоне
             docker compose up -d --build
