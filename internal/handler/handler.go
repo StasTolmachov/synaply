@@ -97,6 +97,10 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.Use(middleware.TimeoutMiddleware(time.Second * 30))
 
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordInfo", h.WordInfo)
+
+				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/startPractice", h.StartPracticeWithGemini)
+				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/checkAnswerPractice", h.CheckAnswerPracticeWithGemini)
+
 			})
 
 		})
@@ -731,8 +735,8 @@ func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param input body gemini.Request true "Data for Gemini AI prompt"
-// @Success 200 {object} gemini.Response "Successfully generated explanation"
+// @Param input body gemini.WordInfoRequest true "Data for Gemini AI prompt"
+// @Success 200 {object} gemini.WordInfoResponse "Successfully generated explanation"
 // @Failure 400 {object} handler.JSONError "Invalid request body"
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -746,7 +750,7 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req gemini.Request
+	var req gemini.WordInfoRequest
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "invalid request body")
@@ -760,7 +764,6 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Всегда используем языки из профиля пользователя
 	req.SourceLang = user.SourceLang
 	req.TargetLang = user.TargetLang
 
@@ -771,4 +774,80 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	JSONResponse(w, http.StatusOK, resp)
 
+}
+
+func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		return
+	}
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
+		return
+	}
+
+	var reqBody struct {
+		Topic string `json:"topic"`
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
+	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid request body")
+		return
+	}
+
+	gemReq := &gemini.PracticeWithGemini{
+		SourceLang: user.SourceLang,
+		TargetLang: user.TargetLang,
+		Topic:      reqBody.Topic,
+	}
+	resp, err := h.wordsService.StartPracticeWithGemini(ctx, gemReq, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		slogger.Log.ErrorContext(ctx, "Failed to start practice", "err", err)
+		return
+	}
+	JSONResponse(w, http.StatusOK, resp)
+}
+
+func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		return
+	}
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
+		return
+	}
+
+	var userTranslateResponse models.UserTranslateResponse
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
+	if err := json.NewDecoder(r.Body).Decode(&userTranslateResponse); err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid request body")
+		return
+	}
+
+	gemReq := &gemini.PracticeWithGemini{
+		SourceLang: user.SourceLang,
+		TargetLang: user.TargetLang,
+		Topic:      "",
+	}
+	resp, err := h.wordsService.CheckAnswerPracticeWithGemini(ctx, gemReq, userCtx.ID, userTranslateResponse.Translation)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		slogger.Log.ErrorContext(ctx, "Failed to start practice", "err", err)
+		return
+	}
+	JSONResponse(w, http.StatusOK, resp)
 }

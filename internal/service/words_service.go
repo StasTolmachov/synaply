@@ -33,7 +33,9 @@ type WordsServiceI interface {
 	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
 	Finish(ctx context.Context, userID uuid.UUID) error
 	Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error)
-	WordInfo(ctx context.Context, req gemini.Request) (*gemini.Response, error)
+	WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error)
+	StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (string, error)
+	CheckAnswerPracticeWithGemini(context context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, translate string) (string, error)
 }
 
 type WordsService struct {
@@ -296,7 +298,8 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 	slogger.Log.DebugContext(ctx, "lesson finished and cache cleared", "userId", userID)
 	return nil
 }
-func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemini.Response, error) {
+
+func (s *WordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error) {
 
 	searchReq := &modelsDB.GeminiReq{
 		SourceLang: req.SourceLang,
@@ -308,7 +311,7 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemin
 	dbResp, err := s.repo.GetWordInfo(ctx, searchReq)
 	if err == nil {
 		slogger.Log.DebugContext(ctx, "success find in db", "resp", dbResp)
-		return &gemini.Response{Response: dbResp.Response}, nil
+		return &gemini.WordInfoResponse{Response: dbResp.Response}, nil
 	}
 
 	respString, err := s.gem.WordInfo(ctx, req)
@@ -317,11 +320,11 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemin
 		return nil, err
 	}
 	slogger.Log.DebugContext(ctx, "3. WordInfo from gemini", "word", respString)
-
+	detachedCtx := context.WithoutCancel(ctx)
 	s.wg.Add(1)
 	go func(geminiAnswer string) {
 		defer s.wg.Done()
-		bgCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		timeoutCtx, cancel := context.WithTimeout(detachedCtx, 5*time.Second)
 		defer cancel()
 
 		saveReq := modelsDB.GeminiReq{
@@ -332,12 +335,85 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.Request) (*gemin
 			Response:   geminiAnswer,
 		}
 
-		if err := s.repo.SetWordInfo(bgCtx, saveReq); err != nil {
-			slogger.Log.ErrorContext(bgCtx, "failed save to db:", "error", err)
+		if err := s.repo.SetWordInfo(timeoutCtx, saveReq); err != nil {
+			slogger.Log.ErrorContext(timeoutCtx, "failed save to db:", "error", err)
 		} else {
-			slogger.Log.DebugContext(bgCtx, "success save to db", "resp", saveReq)
+			slogger.Log.DebugContext(timeoutCtx, "success save to db", "resp", saveReq)
 		}
 	}(respString)
 
-	return &gemini.Response{Response: respString}, nil
+	return &gemini.WordInfoResponse{Response: respString}, nil
+}
+
+func (s *WordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (string, error) {
+	temp := &modelsDB.WordsForGeminiReq{
+		UserID:     userID,
+		SourceLang: req.SourceLang,
+		TargetLang: req.TargetLang,
+	}
+
+	wordList, err := s.repo.GetWordsForGemini(ctx, temp)
+	if err != nil {
+		return "", err
+	}
+	var wordsListString strings.Builder
+	for _, word := range wordList {
+		line := fmt.Sprintf("%s - %s\n", word.SourceWord, word.TargetWord)
+		wordsListString.WriteString(line)
+	}
+
+	resp, err := s.gem.StartPracticeWithGemini(ctx, req, wordsListString.String())
+	if err != nil {
+		return "", err
+	}
+
+	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
+
+	data := &models.PracticeWithGeminiCache{
+		TaskTranslate: resp,
+		Topic:         req.Topic,
+	}
+	val, err := json.Marshal(data)
+	if err != nil {
+		return "", err
+	}
+	err = s.cache.Set(ctx, key, val)
+	if errors.Is(err, cache.ErrCacheMiss) {
+		slogger.Log.DebugContext(ctx, "GetNextWordFromCache is cache miss")
+	}
+	if err != nil {
+		return "", err
+	}
+
+	return resp, nil
+}
+func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, userTranslate string) (string, error) {
+	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
+	data, err := s.cache.Get(ctx, key)
+	if errors.Is(err, cache.ErrCacheMiss) {
+		slogger.Log.DebugContext(ctx, "GetNextWordFromCache is cache miss")
+	}
+	if err != nil {
+		return "", err
+	}
+
+	var practiceWithGeminiCache models.PracticeWithGeminiCache
+	if err := json.Unmarshal([]byte(data), &practiceWithGeminiCache); err != nil {
+		return "", fmt.Errorf("failed to unmarshal lesson: %w", err)
+	}
+
+	var taskWithTranslate strings.Builder
+	taskWithTranslate.WriteString("5 sentence for userTranslate:\n")
+	taskWithTranslate.WriteString(practiceWithGeminiCache.TaskTranslate)
+	taskWithTranslate.WriteString("answer from user:\n")
+	taskWithTranslate.WriteString(userTranslate)
+
+	gemReq.Topic = practiceWithGeminiCache.Topic
+	resp, err := s.gem.CheckAnswerPracticeWithGemini(ctx, gemReq, taskWithTranslate.String())
+	if err != nil {
+		return "", err
+	}
+
+	s.cache.Del(ctx, key)
+	return resp, nil
 }

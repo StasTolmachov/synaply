@@ -62,3 +62,14 @@ type GeminiReq struct {
 type GeminiResp struct {
 	Response string `db:"response"`
 }
+
+type WordsForGeminiReq struct {
+	UserID     uuid.UUID `db:"user_id"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
+}
+
+type WordsForGeminiResp struct {
+	SourceWord string `db:"source_word"`
+	TargetWord string `db:"target_word"`
+}
