@@ -805,6 +805,11 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	if len(reqBody.Topic) > 300 {
+		WriteError(w, http.StatusBadRequest, "Topic must be less than 300 characters")
+		return
+	}
+
 	gemReq := &gemini.PracticeWithGemini{
 		SourceLang: user.SourceLang,
 		TargetLang: user.TargetLang,
