@@ -100,6 +100,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/startPractice", h.StartPracticeWithGemini)
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/checkAnswerPractice", h.CheckAnswerPracticeWithGemini)
+				r.Post("/practice/finishPractice", h.FinishPracticeWithGemini)
 
 			})
 
@@ -850,4 +851,21 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 		return
 	}
 	JSONResponse(w, http.StatusOK, resp)
+}
+
+func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		return
+	}
+
+	err = h.wordsService.FinishPracticeWithGemini(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		slogger.Log.ErrorContext(ctx, "Failed to finish practice", "err", err)
+		return
+	}
 }

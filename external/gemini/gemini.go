@@ -97,13 +97,14 @@ As a user message, you will receive a list of words that the student already kno
 Follow these steps strictly in order:
 1. Analyze the provided list of words. Estimate the approximate language proficiency level (from A1 to C2) based on the complexity of these words.
 2. Generate exactly 5 sentences in the "%[1]s" language on the given topic "%[3]s".
-3. Main rule: the sentences must be constructed PRIMARILY from the words provided in the list.
-4. You are allowed to add a minimal number of new words (prepositions, conjunctions, pronouns, basic linking verbs) only if strictly necessary for the grammatical correctness of the sentences.
-5. The complexity of the grammatical structures in the sentences must correspond to the level you determined in Step 1.
+3. Main rule: Try to construct the sentences PRIMARILY using the words from the provided list. 
+4. If the list does not contain enough words (or lacks specific parts of speech, like verbs or nouns) to create 5 meaningful and natural sentences on the topic, you are allowed to introduce new words. However, any new words you add MUST match the proficiency level you determined in Step 1.
+5. You are allowed to add a minimal number of new words (prepositions, conjunctions, pronouns, basic linking verbs) only if strictly necessary for the grammatical correctness of the sentences.
+6. The complexity of the grammatical structures in the sentences must correspond to the level you determined in Step 1.
 
 Reply in Markdown format using the following template:
 
-**Determined level:** [Write the level, e.g., A2]
+Determined level: [Write the level, e.g., A2]
 
 1. [Sentence 1 in the "%[1]s" language]
 
@@ -156,28 +157,29 @@ Student's native language (language of explanations AND all UI labels): %[1]s.
 Target language (language of the translations): %[2]s.
 Exercise topic: "%[3]s".
 
-As a user message, you will receive the student's translation attempts for 5 sentences.
+As a user message, you will receive the original 5 sentences and the student's translation attempts. 
 
 Your task is to review their work and provide constructive, detailed feedback. Follow these steps:
-1. Carefully analyze each translated sentence for grammatical correctness, vocabulary usage, and natural phrasing in the "%[2]s" language.
-2. Identify any mistakes (syntax, spelling, wrong word choice, etc.).
-3. If a sentence is translated perfectly, praise the student!
+1. Match the student's translations to the original sentences.
+2. Carefully analyze each translated sentence for grammatical correctness.
+3. If a sentence is translated perfectly, praise the student.
 4. If there are mistakes, gently explain *why* it's wrong and how to fix it.
-5. CRITICAL RULE: Use the "%[1]s" language for EVERYTHING except the translations themselves. This includes all explanations, comments, praise, and translating the structural labels (e.g., "General comment", "Sentence", "Your version", "Status", "Teacher's comment", "Ideal translation").
-6. Provide the ideal/corrected version for each sentence in the "%[2]s" language.
+5. IF THE STUDENT SKIPPED A SENTENCE (did not provide a translation for it), set the Status to "Skipped" (Translate 'Skipped' to "%[1]s") and just provide the ideal translation without evaluating the empty input.
+6. CRITICAL RULE: Use the "%[1]s" language for EVERYTHING except the translations themselves. This includes all explanations, comments, praise, and translating the structural labels.
+7. FORMATTING RULE: Provide the response in pure plain text. DO NOT use any Markdown formatting (no asterisks, no bold text, no bullet points). DO NOT use emojis. DO NOT output any brackets (like [], <>, or {}).
 
-Reply strictly in Markdown format using the following structure. YOU MUST TRANSLATE the bracketed labels into the "%[1]s" language:
+Reply strictly in plain text using the following structure. YOU MUST TRANSLATE the labels before the colons into the "%[1]s" language:
 
-**[General comment]:** [A short encouraging message about their overall performance in "%[1]s"]
+General comment: <A short encouraging message about their overall performance in "%[1]s">
 
-**[Sentence 1]:**
-* **[Your version]:** [The student's text]
-* **[Status]:** [✅ Correct / ❌ Has mistakes] (Translate 'Correct' and 'Has mistakes' to "%[1]s")
-* **[Teacher's comment]:** [Your detailed explanation in "%[1]s", or praise if correct]
-* **[Ideal translation]:** [The correct translation in "%[2]s"]
+Sentence 1:
+Your version: <The student's text, or "-" if skipped>
+Status: <Correct ✅ / Has mistakes ❌ / Skipped> (Translate to "%[1]s")
+Teacher's comment: <Your detailed explanation in "%[1]s", praise, or "Translation was not provided" if skipped>
+Ideal translation: <The correct translation in "%[2]s">
 
-**[Sentence 2]:**
-...[Repeat the structure for all 5 sentences]...
+Sentence 2:
+...<Repeat the structure for all 5 original sentences>...
 `
 
 func (s *service) CheckAnswerPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, translate string) (string, error) {

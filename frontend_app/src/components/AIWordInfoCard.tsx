@@ -62,7 +62,7 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
           className="inline-flex items-center px-4 py-2 border border-purple-200 text-sm font-medium rounded-full shadow-sm text-purple-700 bg-purple-50 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <Sparkles className="w-4 h-4 mr-2" />
-          Ask AI
+          AI Insights
         </button>
       )}
 

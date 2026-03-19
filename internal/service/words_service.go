@@ -36,6 +36,7 @@ type WordsServiceI interface {
 	WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error)
 	StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (string, error)
 	CheckAnswerPracticeWithGemini(context context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, translate string) (string, error)
+	FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error
 }
 
 type WordsService struct {
@@ -414,6 +415,14 @@ func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq
 		return "", err
 	}
 
-	s.cache.Del(ctx, key)
 	return resp, nil
+}
+
+func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error {
+	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
+	err := s.cache.Del(ctx, key)
+	if err != nil {
+		return err
+	}
+	return nil
 }
