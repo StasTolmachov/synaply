@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
+import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
 
 export default function Login() {
@@ -18,6 +19,7 @@ export default function Login() {
     setError('');
 
     try {
+      sendGAEvent('event', 'login', { method: 'email' });
       const data = await fetchApi('/users/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),

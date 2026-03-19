@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Sparkles, Loader2, X } from 'lucide-react';
+import { sendGAEvent } from '@next/third-parties/google';
 import { fetchApi } from '@/lib/api';
 import { useScore } from '@/components/ScoreContext';
 
@@ -26,6 +27,7 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
     setError(null);
 
     try {
+      sendGAEvent('event', 'ai_insight_click', { target_word: targetWord });
       const data = await fetchApi('/words/wordInfo', {
         method: 'POST',
         body: JSON.stringify({
