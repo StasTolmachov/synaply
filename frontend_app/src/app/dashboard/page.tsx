@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 
 export default function Dashboard() {
@@ -130,6 +130,22 @@ export default function Dashboard() {
                 className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 text-sm font-medium rounded-md shadow-sm text-purple-700 bg-purple-50 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
               >
                 Practice: Sentence Translation
+              </Link>
+            </div>
+
+            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-2 flex items-center">
+                <List className="w-5 h-5 mr-2 text-blue-500" />
+                Manage Words
+              </h3>
+              <p className="text-sm text-gray-500 mb-6">
+                View, search, edit or delete words from your collection.
+              </p>
+              <Link 
+                href="/words"
+                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 text-sm font-medium rounded-md shadow-sm text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                My Words List
               </Link>
             </div>
           </div>

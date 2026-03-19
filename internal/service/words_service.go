@@ -37,6 +37,9 @@ type WordsServiceI interface {
 	StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (*gemini.StartPracticeWithGeminiResponse, error)
 	CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, translate string) (*gemini.CheckAnswerPracticeWithGeminiResponse, error)
 	FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error
+	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
+	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 }
 
 type WordsService struct {
@@ -431,4 +434,16 @@ func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid
 		return err
 	}
 	return nil
+}
+
+func (s *WordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
+	return s.repo.GetWordsList(ctx, req)
+}
+
+func (s *WordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
+	return s.repo.DeleteWord(ctx, wordID, userID)
+}
+
+func (s *WordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
+	return s.repo.UpdateWordFields(ctx, req, userID)
 }
