@@ -17,8 +17,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WordsGo Beta",
-  description: "Learn new words with spaced repetition",
+  title: "WordsGo Beta - Learn new words with spaced repetition",
+  description: "Learn new words with spaced repetition. The easiest way to expand your vocabulary.",
+  keywords: ["learn english", "spaced repetition", "vocabulary", "words", "learning"],
+  authors: [{ name: "WordsGo Team" }],
+  openGraph: {
+    title: "WordsGo Beta",
+    description: "Learn new words with spaced repetition",
+    url: "https://wordsgo.ru",
+    siteName: "WordsGo",
+    locale: "en_US",
+    type: "website",
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
