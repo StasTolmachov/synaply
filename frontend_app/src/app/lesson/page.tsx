@@ -151,7 +151,7 @@ export default function Lesson() {
     <div className="flex min-h-screen bg-gray-50 flex-col py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto w-full">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Practice Session</h1>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Vocabulary Review</h1>
           <button onClick={finishLesson} className="text-sm font-medium text-gray-500 hover:text-gray-700">
             End Lesson
           </button>
