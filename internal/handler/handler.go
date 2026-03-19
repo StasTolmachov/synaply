@@ -16,6 +16,7 @@ import (
 	"wordsGo_v2/external/gemini"
 	"wordsGo_v2/internal/middleware"
 	"wordsGo_v2/internal/models"
+	"wordsGo_v2/internal/repository/modelsDB"
 	"wordsGo_v2/internal/service"
 	"wordsGo_v2/internal/utils"
 	"wordsGo_v2/slogger"
@@ -85,7 +86,9 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 					r.With(httprate.LimitByIP(30, 1*time.Minute)).Post("/create", h.NewWord)
 					r.With(httprate.LimitByIP(20, 1*time.Minute)).Post("/translate", h.Translate)
 					r.Get("/GetMe", h.GetMe)
-
+					r.Get("/", h.GetWordsList)
+					r.Put("/{id}", h.UpdateWordFields)
+					r.Delete("/{id}", h.DeleteWord)
 				})
 				r.Route("/lesson", func(r chi.Router) {
 					r.Get("/start", h.StartLesson)
@@ -868,4 +871,91 @@ func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Reques
 		slogger.Log.ErrorContext(ctx, "Failed to finish practice", "err", err)
 		return
 	}
+}
+
+func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+
+	search := r.URL.Query().Get("search")
+	limitStr := r.URL.Query().Get("limit")
+	offsetStr := r.URL.Query().Get("offset")
+
+	limit, _ := strconv.Atoi(limitStr)
+	if limit <= 0 {
+		limit = 30
+	}
+	offset, _ := strconv.Atoi(offsetStr)
+
+	req := modelsDB.GetWordsListReq{
+		UserID: user.ID,
+		Search: search,
+		Limit:  limit,
+		Offset: offset,
+	}
+
+	words, total, err := h.wordsService.GetWordsList(ctx, req)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "internal server error")
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]any{
+		"words": words,
+		"total": total,
+	})
+}
+
+func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid id")
+		return
+	}
+
+	var req modelsDB.UpdateWordReq
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "invalid request body")
+		return
+	}
+	req.ID = id
+
+	err = h.wordsService.UpdateWordFields(ctx, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "internal server error")
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+
+	err = h.wordsService.DeleteWord(ctx, idStr, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "internal server error")
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
