@@ -16,4 +16,8 @@ type WordsRepository interface {
 	UpdateWord(ctx context.Context, word modelsDB.LessonDB) error
 	SetWordInfo(ctx context.Context, req modelsDB.GeminiReq) error
 	GetWordInfo(ctx context.Context, req *modelsDB.GeminiReq) (*modelsDB.GeminiResp, error)
+	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
+	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
+	GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error)
 }

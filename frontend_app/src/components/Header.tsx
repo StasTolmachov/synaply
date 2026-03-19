@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useScore } from './ScoreContext';
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut } from 'lucide-react';
+import { LogOut, HelpCircle } from 'lucide-react';
 
 export function Header() {
   const { score } = useScore();
@@ -13,6 +13,7 @@ export function Header() {
 
   const isLandingPage = pathname === '/';
   const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isHelpPage = pathname === '/help';
 
   if (isAuthPage || isLandingPage) {
     return null;
@@ -34,6 +35,16 @@ export function Header() {
             </Link>
           </div>
           <div className="flex items-center space-x-6">
+            {!isHelpPage && (
+              <Link
+                href="/help"
+                target="_blank"
+                className="text-gray-500 hover:text-blue-600 flex items-center text-sm font-medium transition-colors"
+              >
+                <HelpCircle className="w-4 h-4 mr-1" />
+                Help
+              </Link>
+            )}
             <div className="text-sm font-medium text-gray-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 shadow-sm">
               Score: <span className="font-bold text-blue-700">{score}</span>
             </div>

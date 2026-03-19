@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 
 export default function Dashboard() {
@@ -104,16 +104,48 @@ export default function Dashboard() {
           
           <div className="md:col-span-1 space-y-6">
             <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Ready to practice?</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Ready to review your words?</h3>
               <p className="text-sm text-gray-500 mb-6">
-                Start a new spaced-repetition lesson to review your vocabulary.
+                Start a review session to strengthen your memory using spaced repetition.
               </p>
               <Link 
                 href="/lesson"
                 className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 <BookOpen className="w-4 h-4 mr-2" />
-                Start Lesson
+                Start Review
+              </Link>
+            </div>
+
+            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-2 flex items-center">
+                <Brain className="w-5 h-5 mr-2 text-purple-500" />
+                AI Practice
+              </h3>
+              <p className="text-sm text-gray-500 mb-6">
+                Improve your vocabulary by translating AI-generated sentences based on any topic or your word list.
+              </p>
+              <Link 
+                href="/practice"
+                className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 text-sm font-medium rounded-md shadow-sm text-purple-700 bg-purple-50 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
+              >
+                Practice: Sentence Translation
+              </Link>
+            </div>
+
+            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-2 flex items-center">
+                <List className="w-5 h-5 mr-2 text-blue-500" />
+                Manage Words
+              </h3>
+              <p className="text-sm text-gray-500 mb-6">
+                View, search, edit or delete words from your collection.
+              </p>
+              <Link 
+                href="/words"
+                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 text-sm font-medium rounded-md shadow-sm text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                My Words List
               </Link>
             </div>
           </div>
@@ -159,9 +191,9 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={handleTranslate}
-                    className="text-sm text-blue-600 hover:text-blue-500 font-medium"
+                    className="text-xs text-blue-600 hover:text-blue-500 font-medium"
                   >
-                    Auto-translate missing field
+                    Auto-translate empty field
                   </button>
                 </div>
 
@@ -179,7 +211,11 @@ export default function Dashboard() {
                 </div>
 
                 {message.text && (
-                  <div className={`text-sm p-3 rounded-md ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                  <div className={`text-sm p-3 rounded-md border ${
+                    message.type === 'success' 
+                      ? 'bg-green-50 text-green-700 border-green-100' 
+                      : 'bg-red-50 text-red-700 border-red-100'
+                  }`}>
                     {message.text}
                   </div>
                 )}

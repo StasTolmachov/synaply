@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle } from 'lucide-react';
+import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function LandingPage() {
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             An intelligent language learning system that adapts to your memory. 
-            No cramming. No limits. Powered by AI.
+            Personalized AI-powered practice for words you actually use.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
@@ -89,7 +89,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
                 <Brain className="w-6 h-6 text-purple-600" />
@@ -116,6 +116,27 @@ export default function LandingPage() {
                 Want to study for 5 minutes or 2 hours? Our &quot;endless lesson&quot; system smoothly mixes in words, 
                 dynamically updating their weights in real-time.
               </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
+                <Sparkles className="w-6 h-6 text-amber-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">AI Practice with Gemini</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Take your learning beyond flashcards. Practice translating sentences based on your vocabulary. 
+                Our AI tutor creates tasks that match your current level and chosen topics.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-gray-600">
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span><strong>Contextual practice:</strong> Sentences generated using words you've already learned.</span>
+                </li>
+                <li className="flex gap-2">
+                  <CheckCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span><strong>Instant Feedback:</strong> Real-time corrections and explanations from a patient AI teacher.</span>
+                </li>
+              </ul>
             </div>
 
             <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
@@ -164,8 +185,13 @@ export default function LandingPage() {
               },
               {
                 step: "3",
+                title: "Practice with your own AI Tutor",
+                description: "Challenge yourself with custom translation exercises. Our AI uses your vocabulary to build sentences that test your knowledge in real-world contexts."
+              },
+              {
+                step: "4",
                 title: "Track your progress",
-                description: "Every correct answer boosts your rating and strengthens neural connections. Watch as words move from the \"new\" status to \"learned forever\"."
+                description: "Every correct answer and successful practice session boosts your rating. Watch as words move from the \"new\" status to \"learned forever\"."
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start">
@@ -200,11 +226,6 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-gray-100 text-center text-gray-500 text-sm">
-        <p>© {new Date().getFullYear()} WordsGo. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
