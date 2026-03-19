@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
+import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
 import { BookOpen, Plus, Loader2, Brain, List } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
@@ -41,6 +42,7 @@ export default function Dashboard() {
   const handleTranslate = async () => {
     if (!newWord.source_word && !newWord.target_word) return;
     try {
+      sendGAEvent('event', 'translate_word', { source_lang: userLangs.source, target_lang: userLangs.target });
       setMessage({ type: '', text: '' });
       const res = await fetchApi('/words/translate', {
         method: 'POST',
@@ -64,6 +66,7 @@ export default function Dashboard() {
     setMessage({ type: '', text: '' });
 
     try {
+      sendGAEvent('event', 'add_word', { source_lang: userLangs.source, target_lang: userLangs.target });
       await fetchApi('/words/create', {
         method: 'POST',
         body: JSON.stringify({
