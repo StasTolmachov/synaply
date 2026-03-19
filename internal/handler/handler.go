@@ -145,6 +145,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.DebugContext(r.Context(), "Invalid request body in Login", "err", err)
 		return
 	}
 
@@ -191,10 +192,12 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	if req.Email == "" || req.Password == "" || req.FirstName == "" || req.LastName == "" || req.SourceLang == "" || req.TargetLang == "" {
 		WriteError(w, http.StatusBadRequest, "Fields cannot be empty")
+		slogger.Log.DebugContext(r.Context(), "Registration failed: empty fields", "req", req)
 		return
 	}
 	if err := utils.ValidatePassword(req.Password); err != nil {
 		WriteError(w, http.StatusBadRequest, err.Error())
+		slogger.Log.DebugContext(r.Context(), "Registration failed: invalid password", "err", err)
 		return
 	}
 
@@ -232,6 +235,7 @@ func (h *Handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid user ID")
+		slogger.Log.DebugContext(r.Context(), "Invalid user ID", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 
@@ -323,18 +327,19 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid user ID")
+		slogger.Log.DebugContext(r.Context(), "Invalid user ID in Delete", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 	target, err := h.userService.GetUserByID(r.Context(), targetID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
-		slogger.Log.ErrorContext(r.Context(), "Failed to get user", "err", err)
+		slogger.Log.ErrorContext(r.Context(), "Failed to get user in Delete", "err", err, "target_id", targetID)
 		return
 	}
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(r.Context(), "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(r.Context(), "Unauthorized", "error", err)
 		return
 	}
 
@@ -382,13 +387,14 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid user ID")
+		slogger.Log.DebugContext(r.Context(), "Invalid user ID in Update", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(r.Context(), "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(r.Context(), "Unauthorized", "error", err)
 		return
 	}
 	slogger.Log.DebugContext(r.Context(), "Updating user", "targetID", targetID, "requester", user)
@@ -396,7 +402,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	target, err := h.userService.GetUserByID(r.Context(), targetID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
-		slogger.Log.ErrorContext(r.Context(), "Failed to get user", "err", err)
+		slogger.Log.ErrorContext(r.Context(), "Failed to get user in Update", "err", err, "target_id", targetID)
 		return
 	}
 
@@ -455,8 +461,8 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -496,11 +502,12 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	var req models.TranslateReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteError(w, http.StatusInternalServerError, "invalid request body")
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.DebugContext(r.Context(), "Invalid request body in Translate", "err", err)
 		return
 	}
 	if req.SourceWord == "" && req.TargetWord == "" {
-		WriteError(w, http.StatusInternalServerError, "bad request: both source and target words are empty")
+		WriteError(w, http.StatusBadRequest, "Both source and target words are empty")
 		return
 	}
 
@@ -508,8 +515,8 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -526,7 +533,8 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	slogger.Log.Debug("translate req %+v", "req", req)
 	resp, err := h.wordsService.Translate(ctx, req)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, "error translating")
+		WriteError(w, http.StatusInternalServerError, "Failed to translate")
+		slogger.Log.ErrorContext(ctx, "Translation failed", "err", err)
 		return
 	}
 	slogger.Log.Debug("translate resp %+v", "resp", resp)
@@ -555,16 +563,16 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid request body")
-		slogger.Log.ErrorContext(ctx, "invalid request body", "error", err)
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
 	slogger.Log.DebugContext(ctx, "Handler NewWord called with req", "req", req)
 
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -572,16 +580,16 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrWordAlreadyExists):
-			WriteError(w, http.StatusConflict, "word already exists")
-			slogger.Log.ErrorContext(ctx, "word already exists", "error", err)
+			WriteError(w, http.StatusConflict, "Word already exists")
+			slogger.Log.ErrorContext(ctx, "Word already exists", "error", err)
 			return
 		case errors.Is(err, models.ErrDBTimeout):
-			WriteError(w, http.StatusRequestTimeout, "timeout")
-			slogger.Log.ErrorContext(ctx, "timeout", "error", err)
+			WriteError(w, http.StatusRequestTimeout, "Timeout")
+			slogger.Log.ErrorContext(ctx, "Timeout", "error", err)
 			return
 		default:
-			WriteError(w, http.StatusInternalServerError, "internal server error")
-			slogger.Log.ErrorContext(ctx, "internal server error", "error", err)
+			WriteError(w, http.StatusInternalServerError, "Internal server error")
+			slogger.Log.ErrorContext(ctx, "Internal server error", "error", err)
 			return
 		}
 	}
@@ -605,8 +613,8 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -614,19 +622,19 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrNoWordsForLesson):
-			WriteError(w, http.StatusNotFound, "no words found for lesson")
-			slogger.Log.ErrorContext(ctx, "no words found for lesson", "error", err)
+			WriteError(w, http.StatusNotFound, "No words found for lesson")
+			slogger.Log.ErrorContext(ctx, "No words found for lesson", "error", err)
 			return
 		default:
-			WriteError(w, http.StatusInternalServerError, "internal server error")
-			slogger.Log.ErrorContext(ctx, "internal server error", "error", err)
+			WriteError(w, http.StatusInternalServerError, "Internal server error")
+			slogger.Log.ErrorContext(ctx, "Internal server error", "error", err)
 			return
 		}
 	}
 
 	totalCorrect, err := h.userService.GetTotalCorrect(ctx, userCtx.ID)
 	if err != nil {
-		//todo
+		slogger.Log.ErrorContext(ctx, "Failed to get total correct count", "error", err)
 	}
 
 	response := models.StartLessonResponse{
@@ -655,28 +663,29 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	var req models.AnswerReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid request body")
-		slogger.Log.ErrorContext(ctx, "invalid request body", "error", err)
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
 	slogger.Log.DebugContext(ctx, "Handler CheckAnswer called with req", "req", req)
 
 	if req.ID == "" {
 		slogger.Log.ErrorContext(ctx, "Handler CheckAnswer called with empty req.ID", "req", req.ID)
-		WriteError(w, http.StatusBadRequest, "invalid request id")
+		WriteError(w, http.StatusBadRequest, "Invalid request ID")
 		return
 	}
 	isCorrect, resp, err := h.wordsService.CheckAnswer(ctx, req, user.ID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
+		WriteError(w, http.StatusInternalServerError, "Failed to check answer")
+		slogger.Log.ErrorContext(ctx, "Failed to check answer", "err", err)
 		return
 	}
 
@@ -723,8 +732,8 @@ func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -749,15 +758,16 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	var req gemini.WordInfoRequest
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid request body")
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.DebugContext(ctx, "Invalid request body", "err", err)
 		return
 	}
 
@@ -773,7 +783,12 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := h.wordsService.WordInfo(ctx, req)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
+		if errors.Is(err, gemini.ErrLimitExceeded) {
+			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			return
+		}
+		WriteError(w, http.StatusInternalServerError, "Failed to get word info")
+		slogger.Log.ErrorContext(ctx, "Failed to get word info", "err", err)
 		return
 	}
 	JSONResponse(w, http.StatusOK, resp)
@@ -784,8 +799,8 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -805,6 +820,11 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	if len(reqBody.Topic) > 300 {
+		WriteError(w, http.StatusBadRequest, "Topic must be less than 300 characters")
+		return
+	}
+
 	gemReq := &gemini.PracticeWithGemini{
 		SourceLang: user.SourceLang,
 		TargetLang: user.TargetLang,
@@ -812,7 +832,11 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	}
 	resp, err := h.wordsService.StartPracticeWithGemini(ctx, gemReq, userCtx.ID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
+		if errors.Is(err, gemini.ErrLimitExceeded) {
+			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			return
+		}
+		WriteError(w, http.StatusInternalServerError, "Failed to start practice")
 		slogger.Log.ErrorContext(ctx, "Failed to start practice", "err", err)
 		return
 	}
@@ -823,8 +847,8 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -849,8 +873,12 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	}
 	resp, err := h.wordsService.CheckAnswerPracticeWithGemini(ctx, gemReq, userCtx.ID, userTranslateResponse.Translation)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
-		slogger.Log.ErrorContext(ctx, "Failed to start practice", "err", err)
+		if errors.Is(err, gemini.ErrLimitExceeded) {
+			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			return
+		}
+		WriteError(w, http.StatusInternalServerError, "Failed to check answer")
+		slogger.Log.ErrorContext(ctx, "Failed to check answer", "err", err)
 		return
 	}
 	JSONResponse(w, http.StatusOK, resp)
@@ -860,24 +888,26 @@ func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Reques
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
-		slogger.Log.ErrorContext(ctx, "unauthorized", "error", err)
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	err = h.wordsService.FinishPracticeWithGemini(ctx, userCtx.ID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, err.Error())
+		WriteError(w, http.StatusInternalServerError, "Failed to finish practice")
 		slogger.Log.ErrorContext(ctx, "Failed to finish practice", "err", err)
 		return
 	}
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
@@ -889,7 +919,10 @@ func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
 	if limit <= 0 {
 		limit = 30
 	}
-	offset, _ := strconv.Atoi(offsetStr)
+	offset, err := strconv.Atoi(offsetStr)
+	if err != nil && offsetStr != "" {
+		slogger.Log.DebugContext(ctx, "Invalid offset in GetWordsList", "err", err, "offset", offsetStr)
+	}
 
 	req := modelsDB.GetWordsListReq{
 		UserID: user.ID,
@@ -900,7 +933,8 @@ func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
 
 	words, total, err := h.wordsService.GetWordsList(ctx, req)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, "internal server error")
+		WriteError(w, http.StatusInternalServerError, "Internal server error")
+		slogger.Log.ErrorContext(ctx, "Failed to get words list", "err", err)
 		return
 	}
 
@@ -914,27 +948,31 @@ func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid id")
+		WriteError(w, http.StatusBadRequest, "Invalid ID")
+		slogger.Log.DebugContext(ctx, "Invalid ID in UpdateWordFields", "err", err, "id", idStr)
 		return
 	}
 
 	var req modelsDB.UpdateWordReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid request body")
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
 	req.ID = id
 
 	err = h.wordsService.UpdateWordFields(ctx, req, user.ID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, "internal server error")
+		WriteError(w, http.StatusInternalServerError, "Internal server error")
+		slogger.Log.ErrorContext(ctx, "Failed to update word fields", "err", err, "word_id", id)
 		return
 	}
 
@@ -945,15 +983,16 @@ func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		WriteError(w, http.StatusUnauthorized, "unauthorized")
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
-
 	err = h.wordsService.DeleteWord(ctx, idStr, user.ID)
 	if err != nil {
-		WriteError(w, http.StatusInternalServerError, "internal server error")
+		WriteError(w, http.StatusInternalServerError, "Internal server error")
+		slogger.Log.ErrorContext(ctx, "Failed to delete word", "err", err, "word_id", idStr)
 		return
 	}
 
