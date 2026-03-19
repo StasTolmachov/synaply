@@ -62,7 +62,7 @@ export default function PracticePage() {
       setLevel(res.level);
       setState('translating');
     } catch (err: any) {
-      setError(err.message || 'Failed to start practice');
+      setError(err.message || "We couldn't get the practice started. Please try again!");
       setState('setup');
     } finally {
       setLoading(false);
@@ -83,7 +83,7 @@ export default function PracticePage() {
       setFeedback(res);
       setState('feedback');
     } catch (err: any) {
-      setError(err.message || 'Failed to check translation');
+      setError(err.message || "We had some trouble checking your answer. Let's try again!");
     } finally {
       setLoading(false);
     }

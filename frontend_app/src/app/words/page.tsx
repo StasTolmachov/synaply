@@ -16,6 +16,7 @@ interface Word {
 export default function WordsList() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [words, setWords] = useState<Word[]>([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
@@ -28,12 +29,14 @@ export default function WordsList() {
   const loadWords = useCallback(async () => {
     try {
       setLoading(true);
+      setError('');
       const offset = page * limit;
       const data = await fetchApi(`/words?search=${encodeURIComponent(search)}&limit=${limit}&offset=${offset}`);
       setWords(data.words || []);
       setTotal(data.total || 0);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to load words', err);
+      setError(err.message || "We couldn't load your words right now. Maybe try refreshing the page?");
     } finally {
       setLoading(false);
     }
@@ -56,10 +59,11 @@ export default function WordsList() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this word?')) return;
     try {
+      setError('');
       await fetchApi(`/words/${id}`, { method: 'DELETE' });
       loadWords();
-    } catch (err) {
-      alert('Failed to delete word');
+    } catch (err: any) {
+      setError(err.message || "Oops! We couldn't delete that word. Please try again!");
     }
   };
 
@@ -71,14 +75,15 @@ export default function WordsList() {
   const handleSaveEdit = async () => {
     if (!editingId) return;
     try {
+      setError('');
       await fetchApi(`/words/${editingId}`, {
         method: 'PUT',
         body: JSON.stringify(editForm),
       });
       setEditingId(null);
       loadWords();
-    } catch (err) {
-      alert('Failed to update word');
+    } catch (err: any) {
+      setError(err.message || "We couldn't update your word. Give it another shot!");
     }
   };
 
@@ -96,6 +101,12 @@ export default function WordsList() {
             <p className="text-sm text-gray-500 mt-1">Total: {total} words</p>
           </div>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm font-medium">
+            {error}
+          </div>
+        )}
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-4 border-b border-gray-100 bg-gray-50/50">
