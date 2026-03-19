@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "WordsGo Beta",
     description: "Learn new words with spaced repetition",
-    url: "https://wordsgo.ru",
+    url: "https://wordsgo.tolmachov.dev",
     siteName: "WordsGo",
     locale: "en_US",
     type: "website",
