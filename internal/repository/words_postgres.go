@@ -192,6 +192,45 @@ func (p *wordsPostgres) GetWordInfo(ctx context.Context, req *modelsDB.GeminiReq
 	return &resp, nil
 }
 
+func (p *wordsPostgres) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
+	var words []modelsDB.GetWordsListResp
+	var total int
+
+	search := "%" + req.Search + "%"
+
+	countQuery := `SELECT count(*) FROM words WHERE user_id = $1 AND (source_word ILIKE $2 OR target_word ILIKE $2)`
+	err := p.db.db.GetContext(ctx, &total, countQuery, req.UserID, search)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	query := `SELECT id, source_word, target_word, comment 
+              FROM words 
+              WHERE user_id = $1 AND (source_word ILIKE $2 OR target_word ILIKE $2)
+              ORDER BY created_at DESC 
+              LIMIT $3 OFFSET $4`
+
+	err = p.db.db.SelectContext(ctx, &words, query, req.UserID, search, req.Limit, req.Offset)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return words, total, nil
+}
+
+func (p *wordsPostgres) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
+	query := `DELETE FROM words WHERE id = $1 AND user_id = $2`
+	_, err := p.db.db.ExecContext(ctx, query, wordID, userID)
+	return err
+}
+
+func (p *wordsPostgres) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
+	query := `UPDATE words SET source_word = $1, target_word = $2, comment = $3, updated_at = now() 
+              WHERE id = $4 AND user_id = $5`
+	_, err := p.db.db.ExecContext(ctx, query, req.SourceWord, req.TargetWord, req.Comment, req.ID, userID)
+	return err
+}
+
 func (p *wordsPostgres) GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error) {
 	query := `
 select source_word, target_word

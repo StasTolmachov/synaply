@@ -226,18 +226,6 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-gray-100 text-center text-gray-500 text-sm">
-        <div className="flex flex-col items-center gap-2">
-          <p>© {new Date().getFullYear()} WordsGo. All rights reserved.</p>
-          <p className="text-gray-400">
-            Crafted with passion by <a href="https://www.tolmachov.dev" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors font-medium">Tolmachov.dev</a>
-            <span className="mx-2">•</span>
-            Feedback: <a href="mailto:wordsgo@tolmachov.dev" className="hover:text-blue-600 transition-colors">wordsgo@tolmachov.dev</a>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
