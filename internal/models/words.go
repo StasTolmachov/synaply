@@ -190,3 +190,12 @@ type CheckAnswerResponse struct {
 	NextWord     *Response `json:"next_word"`
 	TotalCorrect int64     `json:"total_correct"`
 }
+
+type UserTranslateResponse struct {
+	Translation string `json:"translation"`
+}
+
+type PracticeWithGeminiCache struct {
+	TaskTranslate string `json:"task_translate"`
+	Topic         string `json:"topic"`
+}
