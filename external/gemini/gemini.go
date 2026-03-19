@@ -2,6 +2,7 @@ package gemini
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"google.golang.org/genai"
@@ -10,7 +11,9 @@ import (
 )
 
 type Service interface {
-	WordInfo(ctx context.Context, req Request) (string, error)
+	WordInfo(ctx context.Context, req WordInfoRequest) (string, error)
+	StartPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, wordList string) (*StartPracticeWithGeminiResponse, error)
+	CheckAnswerPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, translate string) (*CheckAnswerPracticeWithGeminiResponse, error)
 }
 
 type service struct {
@@ -29,7 +32,7 @@ func NewService(key string, model string) (Service, error) {
 	}, nil
 }
 
-const promptTemplate = `Ты — опытный преподаватель иностранных языков. 
+const WordInfoPromptTemplate = `Ты — опытный преподаватель иностранных языков. 
 Твоя задача — помочь ученику глубоко понять и выучить новое слово.
 
 Язык ученика (язык объяснения): %[1]s.
@@ -47,7 +50,7 @@ const promptTemplate = `Ты — опытный преподаватель ин�
 
 Отвечай только на языке "%[1]s" (кроме самих примеров). Используй Markdown.`
 
-func (s *service) WordInfo(ctx context.Context, req Request) (string, error) {
+func (s *service) WordInfo(ctx context.Context, req WordInfoRequest) (string, error) {
 
 	promt := BuildGeminiPrompt(req)
 
@@ -71,15 +74,177 @@ func (s *service) WordInfo(ctx context.Context, req Request) (string, error) {
 
 	return result.Text(), nil
 }
-func BuildGeminiPrompt(req Request) string {
+func BuildGeminiPrompt(req WordInfoRequest) string {
 	// Я использую явную индексацию аргументов %[1]s, %[2]s и т.д.
 	// Это крутая фича Go! Она позволяет передать аргумент один раз,
 	// но использовать его в шаблоне несколько раз, не дублируя в коде.
 	return fmt.Sprintf(
-		promptTemplate,
+		WordInfoPromptTemplate,
 		req.SourceLang, // %[1]s
 		req.TargetLang, // %[2]s
 		req.SourceWord, // %[3]s
 		req.TargetWord, // %[4]s
 	)
+}
+
+const StartPracticeWithGeminiPromptTemplate = `You are an experienced foreign language teacher. Your task is to create a translation exercise for your student.
+
+Student's native language (language of the tasks): %[1]s.
+Target language: %[2]s.
+Topic for the sentences: "%[3]s".
+
+As a user message, you will receive a list of words that the student already knows.
+
+Follow these steps strictly in order:
+1. Analyze the provided list of words. Estimate the approximate language proficiency level (from A1 to C2) based on the complexity of these words.
+2. Generate exactly 5 sentences in the "%[1]s" language on the given topic "%[3]s".
+3. Main rule: Try to construct the sentences PRIMARILY using the words from the provided list. 
+4. If the list does not contain enough words (or lacks specific parts of speech, like verbs or nouns) to create 5 meaningful and natural sentences on the topic, you are allowed to introduce new words. However, any new words you add MUST match the proficiency level you determined in Step 1.
+5. You are allowed to add a minimal number of new words (prepositions, conjunctions, pronouns, basic linking verbs) only if strictly necessary for the grammatical correctness of the sentences.
+6. The complexity of the grammatical structures in the sentences must correspond to the level you determined in Step 1.
+
+Reply in Markdown format using the following template:
+
+Determined level: [Write the level, e.g., A2]
+
+1. Analyze the word list provided (pairs of words or phrases).
+2. Create 5 diverse sentences for translation from "%[1]s" to "%[2]s".
+3. The sentences should be based on the provided vocabulary and the specified topic: "%[3]s".
+4. If no topic is provided, create general sentences using the vocabulary.
+5. Determine the appropriate difficulty level based on the complexity of the vocabulary.
+
+FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `).
+
+Use exactly this JSON schema:
+{
+  "level": "<Determined level, e.g., A2>",
+  "sentences": [
+    "<Sentence 1 in %[1]s>",
+    "<Sentence 2 in %[1]s>",
+    "<Sentence 3 in %[1]s>",
+    "<Sentence 4 in %[1]s>",
+    "<Sentence 5 in %[1]s>"
+  ]
+}
+`
+
+func (s *service) StartPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, wordList string) (*StartPracticeWithGeminiResponse, error) {
+	SystemPrompt := fmt.Sprintf(
+		StartPracticeWithGeminiPromptTemplate,
+		req.SourceLang,
+		req.TargetLang,
+		req.Topic,
+	)
+	config := &genai.GenerateContentConfig{
+		SystemInstruction: &genai.Content{
+			Parts: []*genai.Part{
+				{Text: SystemPrompt},
+			},
+		},
+		Temperature:      genai.Ptr[float32](0.3),
+		ResponseMIMEType: "application/json",
+	}
+
+	result, err := s.client.Models.GenerateContent(
+		ctx,
+		s.Model,
+		genai.Text(wordList),
+		config,
+	)
+
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		return nil, fmt.Errorf("failed to generate content: %w", err)
+	}
+
+	if result == nil || result.Text() == "" {
+		return nil, fmt.Errorf("no result")
+	}
+
+	slogger.Log.DebugContext(ctx, "Genai promt and  result", "result", result)
+
+	var resp StartPracticeWithGeminiResponse
+	if err := json.Unmarshal([]byte(result.Text()), &resp); err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to unmarshal gemini response", "error", err, "text", result.Text())
+		return nil, fmt.Errorf("failed to unmarshal gemini response: %w", err)
+	}
+
+	return &resp, nil
+}
+
+const CheckAnswerPracticeWithGeminiPromptTemplate = `You are an experienced, patient, and supportive foreign language teacher. Your student has just completed a translation exercise.
+
+Student's native language (language of explanations AND all UI labels): %[1]s.
+Target language (language of the translations): %[2]s.
+Exercise topic: "%[3]s".
+
+As a user message, you will receive the original 5 sentences and the student's translation attempts. 
+
+Your task is to review their work and provide constructive, detailed feedback. Follow these steps:
+1. Match the student's translations to the original sentences.
+2. Carefully analyze each translated sentence for grammatical correctness.
+3. If a sentence is translated perfectly, praise the student.
+4. If there are mistakes, gently explain *why* it's wrong and how to fix it.
+5. IF THE STUDENT SKIPPED A SENTENCE, set the internal status to "skipped" and just provide the ideal translation.
+6. CRITICAL RULE: Use the "%[1]s" language for all explanations, comments, and localized text.
+
+FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `).
+
+Use exactly this JSON schema:
+{
+  "general_comment": "<Your overall encouraging feedback in %[1]s>",
+  "results": [
+    {
+      "sentence_number": 1,
+      "your_version": "<The student's text, or '-' if skipped>",
+      "status": "<MUST BE ONE OF: 'correct', 'mistake', 'skipped'>",
+      "status_localized": "<Translate the status to %[1]s. E.g., 'Правильно', 'Есть ошибки', 'Пропущено'>",
+      "teacher_comment": "<Your explanation in %[1]s>",
+      "ideal_translation": "<The correct translation in %[2]s>"
+    }
+  ]
+}`
+
+func (s *service) CheckAnswerPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, translate string) (*CheckAnswerPracticeWithGeminiResponse, error) {
+	SystemPrompt := fmt.Sprintf(
+		CheckAnswerPracticeWithGeminiPromptTemplate,
+		req.SourceLang,
+		req.TargetLang,
+		req.Topic,
+	)
+	config := &genai.GenerateContentConfig{
+		SystemInstruction: &genai.Content{
+			Parts: []*genai.Part{
+				{Text: SystemPrompt},
+			},
+		},
+		Temperature:      genai.Ptr[float32](0.1),
+		ResponseMIMEType: "application/json",
+	}
+
+	result, err := s.client.Models.GenerateContent(
+		ctx,
+		s.Model,
+		genai.Text(translate),
+		config,
+	)
+
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		return nil, fmt.Errorf("failed to generate content: %w", err)
+	}
+
+	if result == nil || result.Text() == "" {
+		return nil, fmt.Errorf("no result")
+	}
+
+	slogger.Log.DebugContext(ctx, "Genai promt and  result", "result", result)
+
+	var resp CheckAnswerPracticeWithGeminiResponse
+	if err := json.Unmarshal([]byte(result.Text()), &resp); err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to unmarshal gemini response", "error", err, "text", result.Text())
+		return nil, fmt.Errorf("failed to unmarshal gemini response: %w", err)
+	}
+
+	return &resp, nil
 }
