@@ -191,3 +191,21 @@ func (p *wordsPostgres) GetWordInfo(ctx context.Context, req *modelsDB.GeminiReq
 	}
 	return &resp, nil
 }
+
+func (p *wordsPostgres) GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error) {
+	query := `
+select source_word, target_word
+from words
+where user_id = $1
+and source_lang = $2
+and target_lang = $3
+order by due asc 
+limit 500
+`
+	var resp []modelsDB.WordsForGeminiResp
+	err := p.db.db.SelectContext(ctx, &resp, query, req.UserID, req.SourceLang, req.TargetLang)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
