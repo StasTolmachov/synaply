@@ -144,11 +144,17 @@ export default function PracticePage() {
                   placeholder="e.g. Travel, Business, Daily life..."
                   className="w-full rounded-xl border-gray-300 border px-4 py-3 text-gray-900 focus:border-purple-500 focus:ring-purple-500 shadow-sm transition-all"
                   value={topic}
+                  maxLength={300}
                   onChange={(e) => setTopic(e.target.value)}
                 />
-                <p className="mt-2 text-xs text-gray-400">
-                  Leaving it empty will generate sentences based on your vocabulary.
-                </p>
+                <div className="flex justify-between mt-2">
+                  <p className="text-xs text-gray-400">
+                    Leaving it empty will generate sentences based on your vocabulary.
+                  </p>
+                  <p className={`text-xs ${topic.length >= 300 ? 'text-red-500 font-bold' : 'text-gray-400'}`}>
+                    {topic.length}/300
+                  </p>
+                </div>
               </div>
 
               {error && (
