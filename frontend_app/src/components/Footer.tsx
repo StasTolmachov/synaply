@@ -7,10 +7,6 @@ const Footer = () => {
   const pathname = usePathname();
   const isLandingPage = pathname === '/';
 
-  if (isLandingPage) {
-    return null;
-  }
-
   return (
     <footer style={{
       borderTop: '1px solid #ccc',
@@ -18,7 +14,8 @@ const Footer = () => {
       marginTop: '2rem',
       textAlign: 'center',
       fontSize: '0.9rem',
-      color: '#555'
+      color: '#555',
+      backgroundColor: isLandingPage ? 'white' : 'transparent'
     }}>
       <div style={{ marginBottom: '1rem' }}>
         <p>© 2026 WordsGo. A project by Tolmachov.dev. All rights reserved.</p>
