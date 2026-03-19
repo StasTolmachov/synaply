@@ -9,9 +9,11 @@ RUN npm install --legacy-peer-deps
 
 # Copy source and build
 COPY . .
-# We must pass NEXT_PUBLIC_API_URL during build for client-side use
+# We must pass arguments during build for client-side use
 ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_GA_ID
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
 RUN npm run build
 
 # Stage 2: Runtime
