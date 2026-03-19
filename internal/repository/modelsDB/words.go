@@ -62,3 +62,35 @@ type GeminiReq struct {
 type GeminiResp struct {
 	Response string `db:"response"`
 }
+
+type WordsForGeminiReq struct {
+	UserID     uuid.UUID `db:"user_id"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
+}
+
+type GetWordsListReq struct {
+	UserID uuid.UUID `db:"user_id"`
+	Search string    `db:"search"`
+	Limit  int       `db:"limit"`
+	Offset int       `db:"offset"`
+}
+
+type GetWordsListResp struct {
+	ID         uuid.UUID `db:"id" json:"id"`
+	SourceWord string    `db:"source_word" json:"source_word"`
+	TargetWord string    `db:"target_word" json:"target_word"`
+	Comment    string    `db:"comment" json:"comment"`
+}
+
+type UpdateWordReq struct {
+	ID         uuid.UUID `db:"id" json:"id"`
+	SourceWord string    `db:"source_word" json:"source_word"`
+	TargetWord string    `db:"target_word" json:"target_word"`
+	Comment    string    `db:"comment" json:"comment"`
+}
+
+type WordsForGeminiResp struct {
+	SourceWord string `db:"source_word"`
+	TargetWord string `db:"target_word"`
+}
