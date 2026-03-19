@@ -7,6 +7,7 @@ import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
 import { BookOpen, Plus, Loader2, Brain, List } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
+import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -151,6 +152,8 @@ export default function Dashboard() {
                 My Words List
               </Link>
             </div>
+
+            <BuyMeACoffee />
           </div>
 
           <div className="md:col-span-2">
