@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
+import { sendGAEvent } from '@next/third-parties/google';
 import { Loader2, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useScore } from '@/components/ScoreContext';
@@ -29,6 +30,7 @@ export default function Lesson() {
     setLoading(true);
     setError('');
     try {
+      sendGAEvent('event', 'lesson_start', {});
       const data = await fetchApi('/lesson/start');
       if (data) {
         setWord(data.word || data.Word);
@@ -60,6 +62,7 @@ export default function Lesson() {
     setSubmitting(true);
     
     try {
+      sendGAEvent('event', 'lesson_check', { word_id: word?.id });
       const data = await fetchApi('/lesson/check', {
         method: 'POST',
         body: JSON.stringify({ id: word?.id, target_word: answer.trim() })
@@ -101,6 +104,7 @@ export default function Lesson() {
 
   const finishLesson = async () => {
     try {
+      sendGAEvent('event', 'lesson_finish', {});
       await fetchApi('/lesson/finish', { method: 'POST' });
     } catch (_e) {}
     router.push('/dashboard');

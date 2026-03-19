@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
+import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
 
 export default function Register() {
@@ -44,6 +45,7 @@ export default function Register() {
     setError('');
 
     try {
+      sendGAEvent('event', 'sign_up', { method: 'email', source_lang: formData.source_lang, target_lang: formData.target_lang });
       await fetchApi('/users/create', {
         method: 'POST',
         body: JSON.stringify(formData),
