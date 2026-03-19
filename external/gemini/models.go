@@ -36,6 +36,25 @@ type PracticeWithGemini struct {
 	Topic      string `json:"topic"`
 }
 
+type StartPracticeWithGeminiResponse struct {
+	Level     string   `json:"level"`
+	Sentences []string `json:"sentences"`
+}
+
+type CheckAnswerPracticeWithGeminiResponse struct {
+	GeneralComment string                     `json:"general_comment"`
+	Results        []PracticeWithGeminiResult `json:"results"`
+}
+
+type PracticeWithGeminiResult struct {
+	SentenceNumber   int    `json:"sentence_number"`
+	YourVersion      string `json:"your_version"`
+	Status           string `json:"status"`
+	StatusLocalized  string `json:"status_localized"`
+	TeacherComment   string `json:"teacher_comment"`
+	IdealTranslation string `json:"ideal_translation"`
+}
+
 type WordList struct {
 	SourceWord string
 	TargetWord string

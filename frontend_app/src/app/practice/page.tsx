@@ -7,14 +7,34 @@ import { Brain, ArrowLeft, Loader2, Send, CheckCircle2, RotateCcw } from 'lucide
 import Link from 'next/link';
 
 type PracticeState = 'setup' | 'generating' | 'translating' | 'feedback';
+  
+interface PracticeResult {
+  sentence_number: number;
+  your_version: string;
+  status: 'correct' | 'mistake' | 'skipped';
+  status_localized: string;
+  teacher_comment: string;
+  ideal_translation: string;
+}
+
+interface PracticeFeedback {
+  general_comment: string;
+  results: PracticeResult[];
+}
+
+interface StartPracticeResponse {
+  level: string;
+  sentences: string[];
+}
 
 export default function PracticePage() {
   const router = useRouter();
   const [state, setState] = useState<PracticeState>('setup');
   const [topic, setTopic] = useState('');
-  const [sentences, setSentences] = useState('');
+  const [sentences, setSentences] = useState<string[]>([]);
+  const [level, setLevel] = useState('');
   const [userTranslation, setUserTranslation] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState<PracticeFeedback | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -32,11 +52,12 @@ export default function PracticePage() {
     setState('generating');
 
     try {
-      const res = await fetchApi('/practice/startPractice', {
+      const res: StartPracticeResponse = await fetchApi('/practice/startPractice', {
         method: 'POST',
         body: JSON.stringify({ topic }),
       });
-      setSentences(res);
+      setSentences(res.sentences);
+      setLevel(res.level);
       setState('translating');
     } catch (err: any) {
       setError(err.message || 'Failed to start practice');
@@ -67,7 +88,7 @@ export default function PracticePage() {
 
   const handleTryAgain = () => {
     setState('translating');
-    setFeedback('');
+    setFeedback(null);
   };
 
   const handleFinish = async () => {
@@ -155,9 +176,21 @@ export default function PracticePage() {
         {(state === 'translating' || state === 'feedback') && (
           <div className="space-y-8 animate-in fade-in duration-500">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider mb-4">Translate these sentences:</h3>
-              <div className="text-xl leading-relaxed text-gray-800 whitespace-pre-wrap font-medium">
-                {sentences}
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider">Translate these sentences:</h3>
+                {level && (
+                  <span className="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase">
+                    Level: {level}
+                  </span>
+                )}
+              </div>
+              <div className="space-y-4">
+                {sentences.map((sentence, idx) => (
+                  <div key={idx} className="flex items-start">
+                    <span className="text-gray-400 font-bold mr-3 mt-1">{idx + 1}.</span>
+                    <p className="text-xl leading-relaxed text-gray-800 font-medium">{sentence}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -190,7 +223,7 @@ export default function PracticePage() {
               </div>
             </div>
 
-            {state === 'feedback' && (
+            {state === 'feedback' && feedback && (
               <div className="bg-purple-50 rounded-2xl shadow-sm border border-purple-100 p-8 animate-in slide-in-from-bottom-4 duration-500">
                 <div className="flex items-start mb-6">
                   <div className="bg-purple-100 p-2 rounded-lg mr-4">
@@ -202,8 +235,41 @@ export default function PracticePage() {
                   </div>
                 </div>
                 
-                <div className="prose prose-purple max-w-none text-gray-800 text-lg whitespace-pre-wrap">
-                  {feedback}
+                <div className="prose prose-purple max-w-none text-gray-800 mb-8 pb-6 border-b border-purple-200 italic">
+                  {feedback.general_comment}
+                </div>
+
+                <div className="space-y-6">
+                  {feedback.results.map((result, idx) => (
+                    <div key={idx} className="bg-white p-6 rounded-xl border border-purple-100 shadow-sm">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm font-bold text-gray-500 uppercase">Sentence {result.sentence_number}</span>
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${
+                          result.status === 'correct' ? 'bg-green-100 text-green-700' : 
+                          result.status === 'mistake' ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'
+                        }`}>
+                          {result.status_localized}
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase font-bold mb-1">Your version</p>
+                          <p className="text-gray-900">{result.your_version}</p>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase font-bold mb-1">Teacher's comment</p>
+                          <p className="text-gray-800">{result.teacher_comment}</p>
+                        </div>
+
+                        <div>
+                          <p className="text-xs text-gray-400 uppercase font-bold mb-1">Ideal translation</p>
+                          <p className="text-blue-700 font-medium">{result.ideal_translation}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-purple-200 flex flex-wrap gap-4">
