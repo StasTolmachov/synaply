@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useScore } from './ScoreContext';
 import { usePathname, useRouter } from 'next/navigation';
+import { sendGAEvent } from '@next/third-parties/google';
 import { LogOut, HelpCircle } from 'lucide-react';
 
 export function Header() {
@@ -20,6 +21,7 @@ export function Header() {
   }
 
   const handleLogout = () => {
+    sendGAEvent('event', 'logout', {});
     localStorage.removeItem('token');
     router.push('/login');
   };
