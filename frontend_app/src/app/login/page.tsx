@@ -27,7 +27,7 @@ export default function Login() {
       localStorage.setItem('token', data.token);
       router.push('/dashboard');
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      setError(err instanceof Error ? err.message : "Oops! We couldn't sign you in. Please check your credentials.");
     } finally {
       setLoading(false);
     }

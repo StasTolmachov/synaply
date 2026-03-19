@@ -41,10 +41,10 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
       if (data && data.response) {
         setInfo(data.response);
       } else {
-        throw new Error('Received empty response from AI.');
+        throw new Error("The AI is taking a quick coffee break. Please try again in a moment!");
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch AI info.');
+      setError(err instanceof Error ? err.message : "Oops! We couldn't get the AI insights. Let's try again!");
     } finally {
       setLoading(false);
     }
