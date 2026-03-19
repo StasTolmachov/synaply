@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
+import { sendGAEvent } from '@next/third-parties/google';
 import { Brain, ArrowLeft, Loader2, Send, CheckCircle2, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
 
@@ -52,6 +53,7 @@ export default function PracticePage() {
     setState('generating');
 
     try {
+      sendGAEvent('event', 'start_practice', { topic: topic });
       const res: StartPracticeResponse = await fetchApi('/practice/startPractice', {
         method: 'POST',
         body: JSON.stringify({ topic }),
@@ -73,6 +75,7 @@ export default function PracticePage() {
     setError('');
 
     try {
+      sendGAEvent('event', 'submit_translation', { state: state });
       const res = await fetchApi('/practice/checkAnswerPractice', {
         method: 'POST',
         body: JSON.stringify({ translation: userTranslation }),
@@ -93,6 +96,7 @@ export default function PracticePage() {
 
   const handleFinish = async () => {
     try {
+      sendGAEvent('event', 'finish_practice', {});
       await fetchApi('/practice/finishPractice', {
         method: 'POST',
       });
