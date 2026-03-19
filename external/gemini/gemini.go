@@ -3,7 +3,9 @@ package gemini
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strings"
 
 	"google.golang.org/genai"
 
@@ -50,6 +52,8 @@ const WordInfoPromptTemplate = `Ты — опытный преподавател
 
 Отвечай только на языке "%[1]s" (кроме самих примеров). Используй Markdown.`
 
+var ErrLimitExceeded = errors.New("gemini limit exceeded")
+
 func (s *service) WordInfo(ctx context.Context, req WordInfoRequest) (string, error) {
 
 	promt := BuildGeminiPrompt(req)
@@ -63,6 +67,9 @@ func (s *service) WordInfo(ctx context.Context, req WordInfoRequest) (string, er
 
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		if strings.Contains(err.Error(), "429") || strings.Contains(strings.ToLower(err.Error()), "quota") {
+			return "", ErrLimitExceeded
+		}
 		return "", fmt.Errorf("failed to generate content: %w", err)
 	}
 
@@ -154,6 +161,9 @@ func (s *service) StartPracticeWithGemini(ctx context.Context, req *PracticeWith
 
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		if strings.Contains(err.Error(), "429") || strings.Contains(strings.ToLower(err.Error()), "quota") {
+			return nil, ErrLimitExceeded
+		}
 		return nil, fmt.Errorf("failed to generate content: %w", err)
 	}
 
@@ -231,6 +241,9 @@ func (s *service) CheckAnswerPracticeWithGemini(ctx context.Context, req *Practi
 
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		if strings.Contains(err.Error(), "429") || strings.Contains(strings.ToLower(err.Error()), "quota") {
+			return nil, ErrLimitExceeded
+		}
 		return nil, fmt.Errorf("failed to generate content: %w", err)
 	}
 
