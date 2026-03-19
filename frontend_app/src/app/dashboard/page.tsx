@@ -57,7 +57,7 @@ export default function Dashboard() {
       if (res.source_word) setNewWord(prev => ({ ...prev, source_word: res.source_word }));
       if (res.target_word) setNewWord(prev => ({ ...prev, target_word: res.target_word }));
     } catch (err: unknown) {
-      setMessage({ type: 'error', text: err instanceof Error ? err.message : 'Translation failed' });
+      setMessage({ type: 'error', text: err instanceof Error ? err.message : "We couldn't translate that. Maybe try a different word?" });
     }
   };
 
@@ -81,7 +81,7 @@ export default function Dashboard() {
       setMessage({ type: 'success', text: 'Word added successfully!' });
       setNewWord({ source_word: '', target_word: '', comment: '' });
     } catch (err: unknown) {
-      setMessage({ type: 'error', text: err instanceof Error ? err.message : 'Failed to add word' });
+      setMessage({ type: 'error', text: err instanceof Error ? err.message : "We couldn't save your new word. Let's try one more time!" });
     } finally {
       setAddingWord(false);
     }
