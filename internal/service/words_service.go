@@ -39,7 +39,10 @@ type WordsService interface {
 	FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error
 	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
 	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	DeleteAllWords(ctx context.Context, userID uuid.UUID) error
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
+	WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error)
+	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
 }
 
 type wordsService struct {
@@ -444,6 +447,50 @@ func (s *wordsService) DeleteWord(ctx context.Context, wordID string, userID uui
 	return s.repo.DeleteWord(ctx, wordID, userID)
 }
 
+func (s *wordsService) DeleteAllWords(ctx context.Context, userID uuid.UUID) error {
+	return s.repo.DeleteAllWords(ctx, userID)
+}
+
 func (s *wordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
 	return s.repo.UpdateWordFields(ctx, req, userID)
+}
+
+func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error) {
+
+	wordListRespGem, err := s.gem.WordList(ctx, models.WordListReqToGemWordListReq(req))
+	if err != nil {
+		return nil, err
+	}
+	wordListResp := make([]models.WordListResp, len(wordListRespGem))
+	for i, word := range wordListRespGem {
+		wordListResp[i] = models.WordListRespGemToWordListResp(word)
+	}
+	return wordListResp, nil
+}
+
+// Добавь в интерфейс WordsService:
+// CreateBatch(ctx context.Context, reqs []models.CreateReq, userID uuid.UUID) error
+
+func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error {
+	var dbReqs []modelsDB.CreateReq
+
+	for _, word := range req.Words {
+		sourceWord := strings.ToLower(strings.TrimSpace(word.SourceWord))
+		targetWord := strings.ToLower(strings.TrimSpace(word.TargetWord))
+
+		dbReqs = append(dbReqs, modelsDB.CreateReq{
+			UserID:     userID,
+			SourceLang: req.SourceLang,
+			TargetLang: req.TargetLang,
+			SourceWord: sourceWord,
+			TargetWord: targetWord,
+			Comment:    word.Comment,
+		})
+	}
+
+	if len(dbReqs) == 0 {
+		return nil // Нечего сохранять
+	}
+
+	return s.repo.CreateBatch(ctx, dbReqs)
 }

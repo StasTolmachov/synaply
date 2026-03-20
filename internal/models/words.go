@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/open-spaced-repetition/go-fsrs/v4"
 
+	"wordsGo_v2/external/gemini"
 	"wordsGo_v2/internal/repository/modelsDB"
 )
 
@@ -198,4 +199,84 @@ type UserTranslateResponse struct {
 type PracticeWithGeminiCache struct {
 	TaskTranslate string `json:"task_translate"`
 	Topic         string `json:"topic"`
+}
+
+type Topic struct {
+	Slug  string `json:"slug"`
+	Title string `json:"title"`
+}
+
+type TopicResponse struct {
+	Total int     `json:"total"`
+	Topic []Topic `json:"topic"`
+}
+
+var topicList = []Topic{
+	{Slug: "identity", Title: "Identity & Personal Info"},
+	{Slug: "family", Title: "Family & Relationships"},
+	{Slug: "home", Title: "Home & Daily Life"},
+	{Slug: "food", Title: "Food & Drinks"},
+	{Slug: "shopping", Title: "Shopping & Money"},
+	{Slug: "health", Title: "Health & Body"},
+	{Slug: "education", Title: "Education & Learning"},
+	{Slug: "work", Title: "Work & Career"},
+	{Slug: "leisure", Title: "Leisure & Sports"},
+	{Slug: "travel", Title: "Travel & Transport"},
+	{Slug: "city", Title: "City & Infrastructure"},
+	{Slug: "nature", Title: "Nature & Environment"},
+	{Slug: "technology", Title: "Technology & Media"},
+	{Slug: "art", Title: "Art, Culture & Ideas"},
+}
+
+func GetTopicList() []Topic {
+	return topicList
+}
+
+type ProficiencyLevel string
+
+const (
+	LevelA1 ProficiencyLevel = "A1"
+	LevelA2 ProficiencyLevel = "A2"
+	LevelB1 ProficiencyLevel = "B1"
+	LevelB2 ProficiencyLevel = "B2"
+	LevelC1 ProficiencyLevel = "C1"
+	LevelC2 ProficiencyLevel = "C2"
+)
+
+type WordListReq struct {
+	SourceLang string `json:"source_lang"`
+	TargetLang string `json:"target_lang"`
+	Level      string `json:"level"`
+	Topic      string `json:"topic"`
+	UserTopic  string `json:"user_topic"`
+}
+
+func WordListReqToGemWordListReq(req WordListReq) gemini.WordListReq {
+	return gemini.WordListReq{
+		SourceLang: req.SourceLang,
+		TargetLang: req.TargetLang,
+		Level:      req.Level,
+		Topic:      req.Topic,
+		UserTopic:  req.UserTopic,
+	}
+}
+
+type WordListResp struct {
+	SourceWord string `json:"source_word"`
+	TargetWord string `json:"target_word"`
+	Comment    string `json:"comment"`
+}
+
+type CreateBatchReq struct {
+	SourceLang string         `json:"source_lang"`
+	TargetLang string         `json:"target_lang"`
+	Words      []WordListResp `json:"words"`
+}
+
+func WordListRespGemToWordListResp(req gemini.WordListResp) WordListResp {
+	return WordListResp{
+		SourceWord: req.SourceWord,
+		TargetWord: req.TargetWord,
+		Comment:    req.Comment,
+	}
 }
