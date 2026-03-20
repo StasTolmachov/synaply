@@ -299,3 +299,11 @@ type ProgressStats struct {
 	Review     int64 `json:"review"`
 	Relearning int64 `json:"relearning"`
 }
+
+type CreatePublicWordListRequest struct {
+	Title       string         `json:"title"`
+	Description string         `json:"description"`
+	SourceLang  string         `json:"source_lang"`
+	TargetLang  string         `json:"target_lang"`
+	Words       []WordListResp `json:"words"`
+}

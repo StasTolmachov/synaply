@@ -6,7 +6,7 @@ import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp, Globe } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 import { OnboardingModal } from '@/components/OnboardingModal';
@@ -56,9 +56,15 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isSavingBatch, setIsSavingBatch] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [publishForm, setPublishForm] = useState({ title: '', description: '' });
   const [batchMessage, setBatchMessage] = useState({ type: '', text: '' });
   const [isImporting, setIsImporting] = useState(false);
+  const [newGeneratedWord, setNewGeneratedWord] = useState({ source_word: '', target_word: '', comment: '' });
+  const [isTranslatingNewGenerated, setIsTranslatingNewGenerated] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [duplicateWords, setDuplicateWords] = useState<Set<string>>(new Set());
   const [userId, setUserId] = useState<string | null>(null);
   const [stats, setStats] = useState({ new: 0, learning: 0, review: 0, relearning: 0 });
   const [statsLoading, setStatsLoading] = useState(true);
@@ -116,8 +122,6 @@ export default function Dashboard() {
       const res = await fetchApi('/words/translate', {
         method: 'POST',
         body: JSON.stringify({
-          source_lang: userLangs.source,
-          target_lang: userLangs.target,
           source_word: newWord.source_word,
           target_word: newWord.target_word
         })
@@ -187,6 +191,23 @@ export default function Dashboard() {
     }
   };
 
+  useEffect(() => {
+    const words = generatedWords.map(w => w.source_word.toLowerCase().trim()).filter(Boolean);
+    const duplicates = new Set<string>();
+    const seen = new Set<string>();
+    for (const word of words) {
+      if (seen.has(word)) {
+        duplicates.add(word);
+      }
+      seen.add(word);
+    }
+    setDuplicateWords(duplicates);
+    
+    if (duplicates.size === 0 && batchMessage.type === 'error' && (batchMessage.text.includes('already in the list') || batchMessage.text.includes('duplicate words'))) {
+      setBatchMessage({ type: '', text: '' });
+    }
+  }, [generatedWords, batchMessage.type, batchMessage.text]);
+
   const handleGenerateWordList = async () => {
     if (!selectedTopic && !userTopic.trim()) {
       setBatchMessage({ type: 'error', text: "Please select a topic or enter your own context." });
@@ -226,31 +247,125 @@ export default function Dashboard() {
   const currentWords = filteredWords.slice((currentPage - 1) * wordsPerPage, currentPage * wordsPerPage);
 
   const handleDeleteWord = (index: number) => {
-    const actualIndex = (currentPage - 1) * wordsPerPage + index;
     const wordToDelete = currentWords[index];
-    const originalIndex = generatedWords.findIndex(w => w === wordToDelete);
-    if (originalIndex !== -1) {
-      setGeneratedWords(prev => prev.filter((_, i) => i !== originalIndex));
+    const newWords = generatedWords.filter(w => w !== wordToDelete);
+    setGeneratedWords(newWords);
+    
+    // Если после удаления страница стала пустой, переходим на предыдущую
+    if (currentWords.length === 1 && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
   const handleStartEdit = (index: number) => {
     const wordToEdit = currentWords[index];
     const originalIndex = generatedWords.findIndex(w => w === wordToEdit);
-    setEditingIndex(originalIndex);
-    setEditWord({ ...wordToEdit });
+    if (originalIndex !== -1) {
+      setEditingIndex(originalIndex);
+      setEditWord({ ...wordToEdit });
+    }
   };
 
   const handleSaveEdit = () => {
     if (editingIndex !== null && editWord) {
+      // Check for duplicates
+      const isDuplicate = generatedWords.some((w, i) => 
+        i !== editingIndex && w.source_word.toLowerCase().trim() === editWord.source_word.toLowerCase().trim()
+      );
+      if (isDuplicate) {
+        setBatchMessage({ type: 'error', text: `Word "${editWord.source_word}" is already in the list` });
+        return;
+      }
+
       setGeneratedWords(prev => prev.map((w, i) => i === editingIndex ? editWord : w));
       setEditingIndex(null);
       setEditWord(null);
+      setBatchMessage({ type: '', text: '' });
+    }
+  };
+
+  const handleAddItemInline = () => {
+    if (!newGeneratedWord.source_word.trim() || !newGeneratedWord.target_word.trim()) {
+      setBatchMessage({ type: 'error', text: 'Please provide both original word and translation' });
+      return;
+    }
+
+    // Check for duplicates
+    const isDuplicate = generatedWords.some(w => 
+      w.source_word.toLowerCase().trim() === newGeneratedWord.source_word.toLowerCase().trim()
+    );
+    if (isDuplicate) {
+      setBatchMessage({ type: 'error', text: `Word "${newGeneratedWord.source_word}" is already in the list` });
+      // Не блокируем добавление, но информируем. На самом деле лучше блокировать.
+      // В предыдущем тикете просили "валидацию чтоб нельзя было добавить слово которое уже есть в списке"
+      return;
+    }
+
+    setGeneratedWords(prev => [newGeneratedWord, ...prev]);
+    setNewGeneratedWord({ source_word: '', target_word: '', comment: '' });
+    setSearchTerm('');
+    setCurrentPage(1);
+    setEditingIndex(null);
+    setEditWord(null);
+    setBatchMessage({ type: '', text: '' });
+  };
+
+  const handleTranslateNewInline = async () => {
+    if (!newGeneratedWord.source_word) return;
+    try {
+      setIsTranslatingNewGenerated(true);
+      const res = await fetchApi('/words/translate', {
+        method: 'POST',
+        body: JSON.stringify({
+          source_word: newGeneratedWord.source_word,
+          target_word: newGeneratedWord.target_word
+        })
+      });
+      if (res.source_word || res.target_word) {
+        setNewGeneratedWord(prev => ({
+          ...prev,
+          source_word: res.source_word || prev.source_word,
+          target_word: res.target_word || prev.target_word
+        }));
+      }
+    } catch (err: unknown) {
+      console.error('Inline translation failed', err);
+    } finally {
+      setIsTranslatingNewGenerated(false);
+    }
+  };
+
+  const handleTranslateInline = async () => {
+    if (!editWord || (!editWord.source_word && !editWord.target_word)) return;
+    try {
+      setIsTranslatingManual(true);
+      const res = await fetchApi('/words/translate', {
+        method: 'POST',
+        body: JSON.stringify({
+          source_word: editWord.source_word,
+          target_word: editWord.target_word
+        })
+      });
+      if (res.source_word || res.target_word) {
+        setEditWord(prev => ({
+          ...prev!,
+          source_word: res.source_word || prev!.source_word,
+          target_word: res.target_word || prev!.target_word
+        }));
+      }
+    } catch (err: unknown) {
+      console.error('Inline translation failed', err);
+    } finally {
+      setIsTranslatingManual(false);
     }
   };
 
   const handleSaveBatch = async () => {
     if (generatedWords.length === 0) return;
+    if (duplicateWords.size > 0) {
+      setBatchMessage({ type: 'error', text: "Please remove duplicate words before saving." });
+      return;
+    }
     setIsSavingBatch(true);
     setBatchMessage({ type: '', text: '' });
     try {
@@ -274,6 +389,46 @@ export default function Dashboard() {
       setIsSavingBatch(false);
     }
   };
+
+  const handlePublishList = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (generatedWords.length === 0 || !publishForm.title) return;
+    
+    if (duplicateWords.size > 0) {
+      setBatchMessage({ type: 'error', text: "Please remove duplicate words before publishing." });
+      setShowPublishModal(false);
+      return;
+    }
+    
+    setIsPublishing(true);
+    setBatchMessage({ type: '', text: '' });
+    
+    try {
+      sendGAEvent('event', 'publish_list', { word_count: generatedWords.length });
+      await fetchApi('/public-lists', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: publishForm.title,
+          description: publishForm.description,
+          source_lang: userLangs.source,
+          target_lang: userLangs.target,
+          words: generatedWords.map(w => ({
+            source_word: w.source_word,
+            target_word: w.target_word,
+            comment: w.comment
+          }))
+        })
+      });
+      setBatchMessage({ type: 'success', text: 'List published successfully! It is now available for everyone.' });
+      setShowPublishModal(false);
+      setPublishForm({ title: '', description: '' });
+    } catch (err: any) {
+      setBatchMessage({ type: 'error', text: err.message || "Failed to publish list." });
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
 
   if (loading) {
     return (
@@ -462,8 +617,12 @@ export default function Dashboard() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    disabled={addingWord || !newWord.source_word || !newWord.target_word}
-                    className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500 disabled:bg-gray-400 dark:disabled:bg-gray-700 transition-colors"
+                    disabled={addingWord}
+                    className={`w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white transition-all ${
+                      (!newWord.source_word || !newWord.target_word) 
+                        ? 'bg-gray-400 dark:bg-gray-700 cursor-not-allowed opacity-70' 
+                        : 'bg-gray-900 dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500'
+                    }`}
                   >
                     {addingWord ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                     Save Word
@@ -555,7 +714,9 @@ export default function Dashboard() {
                 {generatedWords.length > 0 && (
                   <div className="mt-8 space-y-4 border-t border-gray-100 dark:border-gray-800 pt-6">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">Generated Words ({generatedWords.length})</h4>
+                      <div className="flex items-center space-x-3">
+                        <h4 className="font-semibold text-gray-900 dark:text-gray-100">Generated Words ({generatedWords.length})</h4>
+                      </div>
                       <div className="relative w-48">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
                         <input
@@ -582,18 +743,73 @@ export default function Dashboard() {
                           </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+                          {/* Top row for adding new words */}
+                          <tr className={`bg-blue-50/30 dark:bg-blue-900/10 ${duplicateWords.has(newGeneratedWord.source_word.toLowerCase().trim()) ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
+                            <td className="px-4 py-3">
+                              <input
+                                type="text"
+                                placeholder="New word..."
+                                className={`w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-xs ${duplicateWords.has(newGeneratedWord.source_word.toLowerCase().trim()) ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}
+                                value={newGeneratedWord.source_word}
+                                onChange={e => setNewGeneratedWord(prev => ({...prev, source_word: e.target.value}))}
+                                onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
+                              />
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="text"
+                                  placeholder="Translation..."
+                                  className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                  value={newGeneratedWord.target_word}
+                                  onChange={e => setNewGeneratedWord(prev => ({...prev, target_word: e.target.value}))}
+                                  onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
+                                />
+                                {newGeneratedWord.source_word && (
+                                  <button
+                                    onClick={handleTranslateNewInline}
+                                    disabled={isTranslatingNewGenerated}
+                                    className="text-blue-500 hover:text-blue-700 disabled:opacity-50"
+                                    title="Auto-translate"
+                                  >
+                                    {isTranslatingNewGenerated ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <input
+                                type="text"
+                                placeholder="Comment (optional)"
+                                className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                value={newGeneratedWord.comment}
+                                onChange={e => setNewGeneratedWord(prev => ({...prev, comment: e.target.value}))}
+                                onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
+                              />
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <button
+                                onClick={handleAddItemInline}
+                                className="inline-flex items-center px-2 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700 transition-all active:scale-95"
+                              >
+                                <Plus className="h-3.5 w-3.5 mr-1" />
+                                Add
+                              </button>
+                            </td>
+                          </tr>
                           {currentWords.map((word, idx) => {
                             const isEditing = editingIndex === (currentPage - 1) * wordsPerPage + generatedWords.findIndex(w => w === word);
+                            const isDuplicate = duplicateWords.has(word.source_word.toLowerCase().trim());
                             return (
-                              <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
+                              <tr key={idx} className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${isDuplicate ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
+                                <td className={`px-4 py-3 text-sm font-medium ${isDuplicate ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}>
                                   {isEditing ? (
-                                    <input
-                                      type="text"
-                                      className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
-                                      value={editWord?.source_word}
-                                      onChange={e => setEditWord(prev => prev ? {...prev, source_word: e.target.value} : null)}
-                                    />
+                                      <input
+                                        type="text"
+                                        className={`w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-xs ${duplicateWords.has(editWord?.source_word.toLowerCase().trim() || "") ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}
+                                        value={editWord?.source_word}
+                                        onChange={e => setEditWord(prev => prev ? {...prev, source_word: e.target.value} : null)}
+                                      />
                                   ) : word.source_word}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
@@ -619,19 +835,29 @@ export default function Dashboard() {
                                 <td className="px-4 py-3 text-right text-sm font-medium space-x-2">
                                   {isEditing ? (
                                     <>
-                                      <button onClick={handleSaveEdit} className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300">
+                                      {(editWord?.source_word || editWord?.target_word) && (
+                                        <button 
+                                          onClick={handleTranslateInline} 
+                                          disabled={isTranslatingManual}
+                                          className="text-blue-500 hover:text-blue-700 disabled:opacity-50" 
+                                          title="Auto-translate"
+                                        >
+                                          {isTranslatingManual ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
+                                        </button>
+                                      )}
+                                      <button onClick={handleSaveEdit} className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300" title="Save">
                                         <Check className="h-4 w-4" />
                                       </button>
-                                      <button onClick={() => setEditingIndex(null)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
+                                      <button onClick={() => setEditingIndex(null)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300" title="Cancel">
                                         <X className="h-4 w-4" />
                                       </button>
                                     </>
                                   ) : (
                                     <>
-                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
+                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300" title="Edit">
                                         <Edit2 className="h-4 w-4" />
                                       </button>
-                                      <button onClick={() => handleDeleteWord(idx)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
+                                      <button onClick={() => handleDeleteWord(idx)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300" title="Delete">
                                         <Trash2 className="h-4 w-4" />
                                       </button>
                                     </>
@@ -701,14 +927,28 @@ export default function Dashboard() {
                       </div>
                     )}
 
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-col sm:flex-row gap-3">
                       <button
                         onClick={handleSaveBatch}
-                        disabled={isSavingBatch || generatedWords.length === 0}
-                        className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 dark:disabled:bg-green-900/50 transition-all transform hover:scale-[1.01]"
+                        disabled={isSavingBatch || isPublishing || generatedWords.length === 0}
+                        className="flex-1 flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 dark:disabled:bg-green-900/50 transition-all transform hover:scale-[1.01]"
                       >
                         {isSavingBatch ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                        Save All Words to My Learning List
+                        Save to My List
+                      </button>
+                      <button
+                        onClick={() => {
+                          setPublishForm({ 
+                            title: `${selectedTopic ? topicList.find(t => t.slug === selectedTopic)?.title : userTopic || 'My Word List'}`, 
+                            description: '' 
+                          });
+                          setShowPublishModal(true);
+                        }}
+                        disabled={isSavingBatch || isPublishing || generatedWords.length === 0}
+                        className="flex-1 flex justify-center items-center px-4 py-3 border border-gray-200 dark:border-gray-700 text-sm font-bold rounded-md shadow-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 transition-all transform hover:scale-[1.01]"
+                      >
+                        <Globe className="w-4 h-4 mr-2 text-blue-500" />
+                        Share with Community
                       </button>
                     </div>
                   </div>
@@ -728,6 +968,71 @@ export default function Dashboard() {
           }} 
         />
       )}
+
+      {showPublishModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
+                  <Globe className="w-5 h-5 mr-2 text-blue-500" />
+                  Publish Word List
+                </h3>
+                <button onClick={() => setShowPublishModal(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                Share this collection of {generatedWords.length} words with other users. It will be visible in the Public Lists gallery.
+              </p>
+              
+              <form onSubmit={handlePublishList} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">List Title</label>
+                  <input
+                    type="text"
+                    required
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="e.g. Essential IT Vocabulary"
+                    value={publishForm.title}
+                    onChange={e => setPublishForm({...publishForm, title: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description (optional)</label>
+                  <textarea
+                    rows={3}
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="What is this list about?"
+                    value={publishForm.description}
+                    onChange={e => setPublishForm({...publishForm, description: e.target.value})}
+                  />
+                </div>
+                
+                <div className="pt-4 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowPublishModal(false)}
+                    className="flex-1 px-4 py-2 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isPublishing || !publishForm.title}
+                    className="flex-1 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                  >
+                    {isPublishing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    Publish Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
