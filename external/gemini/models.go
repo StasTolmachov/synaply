@@ -55,7 +55,16 @@ type PracticeWithGeminiResult struct {
 	IdealTranslation string `json:"ideal_translation"`
 }
 
-type WordList struct {
+type WordListResp struct {
 	SourceWord string
 	TargetWord string
+	Comment    string
+}
+
+type WordListReq struct {
+	SourceLang string
+	TargetLang string
+	Level      string
+	Topic      string
+	UserTopic  string
 }

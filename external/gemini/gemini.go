@@ -16,6 +16,7 @@ type Service interface {
 	WordInfo(ctx context.Context, req WordInfoRequest) (string, error)
 	StartPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, wordList string) (*StartPracticeWithGeminiResponse, error)
 	CheckAnswerPracticeWithGemini(ctx context.Context, req *PracticeWithGemini, translate string) (*CheckAnswerPracticeWithGeminiResponse, error)
+	WordList(ctx context.Context, req WordListReq) ([]WordListResp, error)
 }
 
 type service struct {
@@ -260,4 +261,83 @@ func (s *service) CheckAnswerPracticeWithGemini(ctx context.Context, req *Practi
 	}
 
 	return &resp, nil
+}
+
+const WordListRespPromptTemplate = `You are an expert foreign language teacher and curriculum designer. 
+Your task is to generate a highly relevant and educational vocabulary list for a student.
+
+Student's native language (Source Language): %[1]s
+Language to learn (Target Language): %[2]s
+Target Proficiency Level: %[3]s
+Predefined Topic: "%[4]s"
+User's Custom Request: "%[5]s"
+
+Follow these instructions STRICTLY:
+1. Generate a comprehensive list of ALL necessary vocabulary words or short phrases to fully cover the topic at the given proficiency level. Do not arbitrarily limit the count; use your expertise as a teacher to determine the exact, appropriate number of words a student needs to learn for this specific topic and level. Generate ONLY words.
+2. The complexity of the words MUST strictly match the requested Proficiency Level (%[3]s). For example, if the level is A1, use basic, everyday words. If C1, use advanced and nuanced vocabulary.
+3. Topic Selection Logic:
+   - If a "Predefined Topic" is provided (e.g., "Technology & Media"), select words that are highly relevant to this topic AND match the proficiency level.
+   - If a "User's Custom Request" is provided, incorporate this specific context into your word selection.
+   - If the "Predefined Topic" is empty or missing, rely ENTIRELY on the "User's Custom Request".
+4. For the "Comment" field, you MUST write the pronunciation of the "TargetWord". Rule for pronunciation: Write how the word sounds using ONLY the letters of the student's native language (%[1]s) alphabet. It is STRICTLY FORBIDDEN to use International Phonetic Alphabet (IPA) symbols. Write in lowercase letters, but you MUST capitalize the stressed vowel.
+
+FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `). Do not include any other text.
+
+Use exactly this JSON schema (array of objects):
+[
+  {
+    "SourceWord": "<Word or phrase in %[1]s>",
+    "TargetWord": "<Translation in %[2]s>",
+    "Comment": "<Pronunciation generated according to Rule 4>"
+  }
+]
+`
+
+func (s *service) WordList(ctx context.Context, req WordListReq) ([]WordListResp, error) {
+	SystemPrompt := fmt.Sprintf(
+		WordListRespPromptTemplate,
+		req.SourceLang,
+		req.TargetLang,
+		req.Level,
+		req.Topic,
+		req.UserTopic,
+	)
+	config := &genai.GenerateContentConfig{
+		SystemInstruction: &genai.Content{
+			Parts: []*genai.Part{
+				{Text: SystemPrompt},
+			},
+		},
+		Temperature:      genai.Ptr[float32](0.1),
+		ResponseMIMEType: "application/json",
+	}
+
+	result, err := s.client.Models.GenerateContent(
+		ctx,
+		s.Model,
+		genai.Text("Generate the word list according to the system instructions."),
+		config,
+	)
+
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "Genai client response error", "error", err)
+		if strings.Contains(err.Error(), "429") || strings.Contains(strings.ToLower(err.Error()), "quota") {
+			return nil, ErrLimitExceeded
+		}
+		return nil, fmt.Errorf("failed to generate content: %w", err)
+	}
+
+	if result == nil || result.Text() == "" {
+		return nil, fmt.Errorf("no result")
+	}
+
+	slogger.Log.DebugContext(ctx, "Genai result", "result", result)
+
+	var resp []WordListResp
+	if err := json.Unmarshal([]byte(result.Text()), &resp); err != nil {
+		slogger.Log.ErrorContext(ctx, "failed to unmarshal gemini response", "error", err, "text", result.Text())
+		return nil, fmt.Errorf("failed to unmarshal gemini response: %w", err)
+	}
+
+	return resp, nil
 }

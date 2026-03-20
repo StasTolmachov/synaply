@@ -248,3 +248,18 @@ limit 500
 	}
 	return resp, nil
 }
+
+func (p *wordsPostgres) CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error {
+	// Мы пишем запрос так же, как для одной строки
+	query := `
+	insert into words (user_id, source_lang, target_lang, source_word, target_word, comment) 
+	values (:user_id, :source_lang, :target_lang, :source_word, :target_word, :comment)
+	`
+
+	// Но передаем СЛАЙС структур reqs. sqlx сам развернет это в массовую вставку!
+	_, err := p.db.db.NamedExecContext(ctx, query, reqs)
+	if err != nil {
+		return fmt.Errorf("failed to bulk insert words: %w", err)
+	}
+	return nil
+}

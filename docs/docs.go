@@ -307,7 +307,7 @@ const docTemplate = `{
         },
         "/users/{id}": {
             "get": {
-                "description": "Get User By ID from DB",
+                "description": "Get User By Slug from DB",
                 "consumes": [
                     "application/json"
                 ],
@@ -317,7 +317,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Get user by ID",
+                "summary": "Get user by Slug",
                 "parameters": [
                     {
                         "type": "string",
@@ -371,7 +371,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Update user by ID",
+                "summary": "Update user by Slug",
                 "parameters": [
                     {
                         "type": "string",
@@ -399,7 +399,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Invalid user ID",
+                        "description": "Invalid user Slug",
                         "schema": {
                             "$ref": "#/definitions/internal_handler.JSONError"
                         }
@@ -424,7 +424,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Delete user by ID from DB",
+                "description": "Delete user by Slug from DB",
                 "consumes": [
                     "application/json"
                 ],
@@ -434,7 +434,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Delete user by ID",
+                "summary": "Delete user by Slug",
                 "parameters": [
                     {
                         "type": "string",
@@ -450,7 +450,7 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "Invalid user ID",
+                        "description": "Invalid user Slug",
                         "schema": {
                             "$ref": "#/definitions/internal_handler.JSONError"
                         }

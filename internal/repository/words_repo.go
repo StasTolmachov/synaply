@@ -20,4 +20,5 @@ type WordsRepository interface {
 	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error)
+	CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error
 }
