@@ -6,6 +6,7 @@ import { ScoreProvider } from "@/components/ScoreContext";
 import { ThemeProvider } from "@/components/ThemeContext";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,18 @@ export const metadata: Metadata = {
   description: "Learn new words with spaced repetition. The easiest way to expand your vocabulary.",
   keywords: ["learn english", "spaced repetition", "vocabulary", "words", "learning"],
   authors: [{ name: "WordsGo Team" }],
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "WordsGo",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "WordsGo Beta",
     description: "Learn new words with spaced repetition",
@@ -43,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full" suppressHydrationWarning={true}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen`} suppressHydrationWarning={true}>
+        <ServiceWorkerRegister />
         <ThemeProvider>
           <ScoreProvider>
             <Header />
