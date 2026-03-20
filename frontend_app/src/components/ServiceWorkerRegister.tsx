@@ -4,10 +4,11 @@ import { useEffect } from 'react'
 
 export function ServiceWorkerRegister() {
   useEffect(() => {
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+    if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
+        const swUrl = '/sw.js';
         navigator.serviceWorker
-          .register('/sw.js')
+          .register(swUrl)
           .then((registration) => {
             console.log('SW registered: ', registration)
           })

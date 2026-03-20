@@ -5,10 +5,10 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'WordsGo',
     short_name: 'WordsGo',
     description: 'Learn new words with spaced repetition. The easiest way to expand your vocabulary.',
-    start_url: '/',
+    start_url: '/dashboard',
     display: 'standalone',
     background_color: '#030712', // gray-950
-    theme_color: '#030712',      // gray-950
+    theme_color: '#3b82f6',      // blue-500
     orientation: 'portrait',
     icons: [
       {
