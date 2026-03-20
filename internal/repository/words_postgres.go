@@ -269,3 +269,24 @@ func (p *wordsPostgres) CreateBatch(ctx context.Context, reqs []modelsDB.CreateR
 	}
 	return nil
 }
+
+func (p *wordsPostgres) GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error) {
+	var wordList modelsDB.GeminiWordList
+	query := `SELECT id, source_lang, target_lang, level, topic, response, created_at 
+              FROM gemini_word_lists 
+              WHERE source_lang = $1 AND target_lang = $2 AND level = $3 AND topic = $4`
+	err := p.db.db.GetContext(ctx, &wordList, query, sourceLang, targetLang, level, topic)
+	if err != nil {
+		return nil, err
+	}
+	return &wordList, nil
+}
+
+func (p *wordsPostgres) SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error {
+	query := `INSERT INTO gemini_word_lists (source_lang, target_lang, level, topic, response) 
+              VALUES ($1, $2, $3, $4, $5)
+              ON CONFLICT (source_lang, target_lang, level, topic) DO UPDATE 
+              SET response = EXCLUDED.response, created_at = CURRENT_TIMESTAMP`
+	_, err := p.db.db.ExecContext(ctx, query, wordList.SourceLang, wordList.TargetLang, wordList.Level, wordList.Topic, wordList.Response)
+	return err
+}
