@@ -6,7 +6,7 @@ import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp, Globe } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp, Globe, Languages } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 import { OnboardingModal } from '@/components/OnboardingModal';
