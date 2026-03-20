@@ -179,6 +179,12 @@ func (s *userService) Update(ctx context.Context, id uuid.UUID, req models.Updat
 	if req.Role != nil {
 		fields["role"] = *req.Role
 	}
+	if req.SourceLang != nil {
+		fields["source_lang"] = *req.SourceLang
+	}
+	if req.TargetLang != nil {
+		fields["target_lang"] = *req.TargetLang
+	}
 
 	if len(fields) == 0 {
 		currentUser, err := s.GetUserByID(ctx, id)
