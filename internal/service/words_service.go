@@ -673,12 +673,15 @@ func (s *wordsService) AddPublicListToUser(ctx context.Context, listID uuid.UUID
 
 	reqs := make([]modelsDB.CreateReq, 0, len(detail.Items))
 	for _, item := range detail.Items {
+		sourceWord := strings.ToLower(strings.TrimSpace(item.SourceWord))
+		targetWord := strings.ToLower(strings.TrimSpace(item.TargetWord))
+
 		reqs = append(reqs, modelsDB.CreateReq{
 			UserID:     userID,
 			SourceLang: detail.SourceLang,
 			TargetLang: detail.TargetLang,
-			SourceWord: item.SourceWord,
-			TargetWord: item.TargetWord,
+			SourceWord: sourceWord,
+			TargetWord: targetWord,
 			Comment:    item.Comment,
 		})
 	}
