@@ -1,13 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
+
+const proficiencyLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+const topicList = [
+  { slug: "identity", title: "Identity & Personal Info" },
+  { slug: "family", title: "Family & Relationships" },
+  { slug: "home", title: "Home & Daily Life" },
+  { slug: "food", title: "Food & Drinks" },
+  { slug: "shopping", title: "Shopping & Money" },
+  { slug: "health", title: "Health & Body" },
+  { slug: "education", title: "Education & Learning" },
+  { slug: "work", title: "Work & Career" },
+  { slug: "leisure", title: "Leisure & Sports" },
+  { slug: "travel", title: "Travel & Transport" },
+  { slug: "city", title: "City & Infrastructure" },
+  { slug: "nature", title: "Nature & Environment" },
+  { slug: "technology", title: "Technology & Media" },
+  { slug: "art", title: "Art, Culture & Ideas" },
+];
+
+interface GeneratedWord {
+  source_word: string;
+  target_word: string;
+  comment: string;
+}
 
 export default function Dashboard() {
   const router = useRouter();
@@ -17,6 +42,20 @@ export default function Dashboard() {
   
   const [newWord, setNewWord] = useState({ source_word: '', target_word: '', comment: '' });
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  // AI Word List states
+  const [selectedLevel, setSelectedLevel] = useState('B1');
+  const [selectedTopic, setSelectedTopic] = useState('');
+  const [userTopic, setUserTopic] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedWords, setGeneratedWords] = useState<GeneratedWord[]>([]);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editWord, setEditWord] = useState<GeneratedWord | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isSavingBatch, setIsSavingBatch] = useState(false);
+  const [batchMessage, setBatchMessage] = useState({ type: '', text: '' });
+  const wordsPerPage = 30;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -84,6 +123,94 @@ export default function Dashboard() {
       setMessage({ type: 'error', text: err instanceof Error ? err.message : "We couldn't save your new word. Let's try one more time!" });
     } finally {
       setAddingWord(false);
+    }
+  };
+
+  const handleGenerateWordList = async () => {
+    if (!selectedTopic && !userTopic.trim()) {
+      setBatchMessage({ type: 'error', text: "Please select a topic or enter your own context." });
+      return;
+    }
+    setIsGenerating(true);
+    setBatchMessage({ type: '', text: '' });
+    setGeneratedWords([]);
+    setCurrentPage(1);
+    try {
+      const data = await fetchApi('/words/wordList', {
+        method: 'POST',
+        body: JSON.stringify({
+          source_lang: userLangs.source,
+          target_lang: userLangs.target,
+          level: selectedLevel,
+          topic: selectedTopic,
+          user_topic: userTopic
+        })
+      });
+      setGeneratedWords(data || []);
+    } catch (err: unknown) {
+      setBatchMessage({ type: 'error', text: err instanceof Error ? err.message : "Failed to generate word list." });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const filteredWords = useMemo(() => {
+    return generatedWords.filter(w => 
+      w.source_word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      w.target_word.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [generatedWords, searchTerm]);
+
+  const totalPages = Math.ceil(filteredWords.length / wordsPerPage);
+  const currentWords = filteredWords.slice((currentPage - 1) * wordsPerPage, currentPage * wordsPerPage);
+
+  const handleDeleteWord = (index: number) => {
+    const actualIndex = (currentPage - 1) * wordsPerPage + index;
+    const wordToDelete = currentWords[index];
+    const originalIndex = generatedWords.findIndex(w => w === wordToDelete);
+    if (originalIndex !== -1) {
+      setGeneratedWords(prev => prev.filter((_, i) => i !== originalIndex));
+    }
+  };
+
+  const handleStartEdit = (index: number) => {
+    const wordToEdit = currentWords[index];
+    const originalIndex = generatedWords.findIndex(w => w === wordToEdit);
+    setEditingIndex(originalIndex);
+    setEditWord({ ...wordToEdit });
+  };
+
+  const handleSaveEdit = () => {
+    if (editingIndex !== null && editWord) {
+      setGeneratedWords(prev => prev.map((w, i) => i === editingIndex ? editWord : w));
+      setEditingIndex(null);
+      setEditWord(null);
+    }
+  };
+
+  const handleSaveBatch = async () => {
+    if (generatedWords.length === 0) return;
+    setIsSavingBatch(true);
+    setBatchMessage({ type: '', text: '' });
+    try {
+      await fetchApi('/words/create-batch', {
+        method: 'POST',
+        body: JSON.stringify({
+          source_lang: userLangs.source,
+          target_lang: userLangs.target,
+          words: generatedWords.map(w => ({
+            source_word: w.source_word,
+            target_word: w.target_word,
+            comment: w.comment
+          }))
+        })
+      });
+      setBatchMessage({ type: 'success', text: `Successfully added ${generatedWords.length} words to your collection!` });
+      setGeneratedWords([]);
+    } catch (err: unknown) {
+      setBatchMessage({ type: 'error', text: err instanceof Error ? err.message : "Failed to save words." });
+    } finally {
+      setIsSavingBatch(false);
     }
   };
 
@@ -246,6 +373,241 @@ export default function Dashboard() {
                   />
                 </div>
               ) : null}
+            </div>
+
+            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6 mt-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                  <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
+                  Generate Word List with AI
+                </h3>
+              </div>
+
+              <div className="space-y-6">
+                {/* Proficiency Level */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Proficiency Level</label>
+                  <div className="flex flex-wrap gap-2">
+                    {proficiencyLevels.map(level => (
+                      <button
+                        key={level}
+                        onClick={() => setSelectedLevel(level)}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                          selectedLevel === level
+                            ? 'bg-blue-600 text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {level}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Topics */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
+                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1 border border-gray-50 rounded-lg">
+                    {topicList.map(topic => (
+                      <button
+                        key={topic.slug}
+                        onClick={() => setSelectedTopic(topic.slug === selectedTopic ? '' : topic.slug)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                          selectedTopic === topic.slug
+                            ? 'bg-amber-100 text-amber-800 border-amber-200'
+                            : 'bg-white text-gray-600 border-gray-200 hover:border-amber-300 hover:bg-amber-50'
+                        }`}
+                      >
+                        {topic.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Custom Prompt */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Your own topic or context (optional)</label>
+                  <textarea
+                    rows={2}
+                    className="block w-full rounded-md border-gray-300 border px-3 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    placeholder="e.g. Words for a business meeting about marketing"
+                    value={userTopic}
+                    onChange={e => setUserTopic(e.target.value)}
+                  />
+                </div>
+
+                <button
+                  onClick={handleGenerateWordList}
+                  disabled={isGenerating}
+                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:bg-amber-300 transition-colors"
+                >
+                  {isGenerating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
+                  Generate Words
+                </button>
+
+                {/* Generated List Section */}
+                {generatedWords.length > 0 && (
+                  <div className="mt-8 space-y-4 border-t pt-6">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-gray-900">Generated Words ({generatedWords.length})</h4>
+                      <div className="relative w-48">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search..."
+                          className="pl-9 w-full rounded-md border-gray-300 border px-3 py-1.5 text-xs focus:ring-blue-500 focus:border-blue-500"
+                          value={searchTerm}
+                          onChange={e => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-100">
+                          <tr>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{userLangs.source}</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{userLangs.target}</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+                            <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {currentWords.map((word, idx) => {
+                            const isEditing = editingIndex === (currentPage - 1) * wordsPerPage + generatedWords.findIndex(w => w === word);
+                            return (
+                              <tr key={idx} className="hover:bg-gray-50">
+                                <td className="px-4 py-3 text-sm text-gray-900">
+                                  {isEditing ? (
+                                    <input
+                                      type="text"
+                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      value={editWord?.source_word}
+                                      onChange={e => setEditWord(prev => prev ? {...prev, source_word: e.target.value} : null)}
+                                    />
+                                  ) : word.source_word}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-900">
+                                  {isEditing ? (
+                                    <input
+                                      type="text"
+                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      value={editWord?.target_word}
+                                      onChange={e => setEditWord(prev => prev ? {...prev, target_word: e.target.value} : null)}
+                                    />
+                                  ) : word.target_word}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-900">
+                                  {isEditing ? (
+                                    <input
+                                      type="text"
+                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      value={editWord?.comment}
+                                      onChange={e => setEditWord(prev => prev ? {...prev, comment: e.target.value} : null)}
+                                    />
+                                  ) : word.comment}
+                                </td>
+                                <td className="px-4 py-3 text-right text-sm font-medium space-x-2">
+                                  {isEditing ? (
+                                    <>
+                                      <button onClick={handleSaveEdit} className="text-green-600 hover:text-green-900">
+                                        <Check className="h-4 w-4" />
+                                      </button>
+                                      <button onClick={() => setEditingIndex(null)} className="text-red-600 hover:text-red-900">
+                                        <X className="h-4 w-4" />
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 hover:text-blue-900">
+                                        <Edit2 className="h-4 w-4" />
+                                      </button>
+                                      <button onClick={() => handleDeleteWord(idx)} className="text-red-600 hover:text-red-900">
+                                        <Trash2 className="h-4 w-4" />
+                                      </button>
+                                    </>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                      <div className="flex items-center justify-between px-2 py-3 bg-white border-t">
+                        <div className="flex-1 flex justify-between sm:hidden">
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100"
+                          >
+                            Previous
+                          </button>
+                          <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100"
+                          >
+                            Next
+                          </button>
+                        </div>
+                        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                          <div>
+                            <p className="text-xs text-gray-700">
+                              Showing page <span className="font-medium">{currentPage}</span> of <span className="font-medium">{totalPages}</span>
+                            </p>
+                          </div>
+                          <div>
+                            <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                              <button
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100"
+                              >
+                                <ChevronLeft className="h-4 w-4" />
+                              </button>
+                              <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100"
+                              >
+                                <ChevronRight className="h-4 w-4" />
+                              </button>
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {batchMessage.text && (
+                      <div className={`text-sm p-3 rounded-md border ${
+                        batchMessage.type === 'success' 
+                          ? 'bg-green-50 text-green-700 border-green-100' 
+                          : 'bg-red-50 text-red-700 border-red-100'
+                      }`}>
+                        {batchMessage.text}
+                      </div>
+                    )}
+
+                    <div className="pt-4">
+                      <button
+                        onClick={handleSaveBatch}
+                        disabled={isSavingBatch || generatedWords.length === 0}
+                        className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 transition-all transform hover:scale-[1.01]"
+                      >
+                        {isSavingBatch ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                        Save All Words to My Learning List
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

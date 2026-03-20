@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -553,7 +554,7 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	resp, err := h.wordsService.Translate(ctx, req)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to translate")
-		slogger.Log.ErrorContext(ctx, "Translation failed", "err", err)
+		slogger.Log.ErrorContext(ctx, "Translation failed", "error", err)
 		return
 	}
 	slogger.Log.Debug("translate resp %+v", "resp", resp)
@@ -1019,7 +1020,10 @@ func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
+	const wordListTimeout = 120 * time.Second
+	ctx, cancel := context.WithTimeout(r.Context(), wordListTimeout)
+	defer cancel()
+
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
 		WriteError(w, http.StatusUnauthorized, "Unauthorized")
@@ -1030,29 +1034,37 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
-		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "error", err)
 		return
 	}
 
 	var wordListReq models.WordListReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&wordListReq); err != nil {
-		WriteError(w, http.StatusBadRequest, "invalid request body")
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
+	slogger.Log.DebugContext(ctx, "WordList request body decoded", "req", wordListReq)
 	wordListReq.SourceLang = user.SourceLang
 	wordListReq.TargetLang = user.TargetLang
 
+	if wordListReq.Topic == "" && wordListReq.UserTopic == "" {
+		WriteError(w, http.StatusBadRequest, "Please select a topic or provide a custom request")
+		return
+	}
+
+	slogger.Log.DebugContext(ctx, "WordList request", "req", wordListReq)
 	resp, err := h.wordsService.WordList(ctx, user, wordListReq)
 
 	if err != nil {
 		if errors.Is(err, gemini.ErrLimitExceeded) {
-			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
 			return
 		}
 		// Исправленный текст ошибки
-		WriteError(w, http.StatusInternalServerError, "Failed to generate word list")
-		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "err", err)
+		WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
+		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "error", err, "req", wordListReq)
 		return
 	}
 	JSONResponse(w, http.StatusOK, resp)
@@ -1085,7 +1097,7 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	err = h.wordsService.CreateBatch(ctx, reqs, user.ID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to save words")
-		slogger.Log.ErrorContext(ctx, "Failed to CreateBatchWords", "err", err)
+		slogger.Log.ErrorContext(ctx, "Failed to CreateBatchWords", "error", err)
 		return
 	}
 
