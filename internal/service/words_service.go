@@ -27,7 +27,7 @@ var (
 	fsrsScheduler = fsrs.NewFSRS(fsrsParams)
 )
 
-type WordsServiceI interface {
+type WordsService interface {
 	Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error)
 	LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error)
 	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
@@ -42,7 +42,7 @@ type WordsServiceI interface {
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 }
 
-type WordsService struct {
+type wordsService struct {
 	repo  repository.WordsRepository
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
@@ -50,11 +50,11 @@ type WordsService struct {
 	gem   gemini.Service
 }
 
-func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup, gem gemini.Service) *WordsService {
-	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg, gem: gem}
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup, gem gemini.Service) *wordsService {
+	return &wordsService{repo: repo, cache: cache, deepl: deepl, wg: wg, gem: gem}
 }
 
-func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
+func (s *wordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
 	var deeplReq deepl.Request
 
 	if req.SourceWord != "" {
@@ -92,7 +92,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 
 }
 
-func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
+func (s *wordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 	sourceWord := strings.ToLower(strings.TrimSpace(req.SourceWord))
 	targetWord := strings.ToLower(strings.TrimSpace(req.TargetWord))
 
@@ -105,7 +105,7 @@ func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID 
 	return models.DBtoResponse(resp), nil
 }
 
-func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
+func (s *wordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
 	key := models.CacheKey(userID)
 	slogger.Log.DebugContext(ctx, "LessonStart is started ")
 
@@ -142,7 +142,7 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	return resp, err
 }
 
-func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
+func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
 	key := models.CacheKey(userID)
 	var isCorrect bool
 	lesson := make(map[string]models.Lesson)
@@ -251,7 +251,7 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	return isCorrect, models.LessonWordToResponse(&word), nil
 }
 
-func (s *WordsService) GetNextWordFromCache(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
+func (s *wordsService) GetNextWordFromCache(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
 	key := models.CacheKey(userID)
 	data, err := s.cache.Get(ctx, key)
 	if errors.Is(err, cache.ErrCacheMiss) {
@@ -292,7 +292,7 @@ func FindMinIdx(lesson map[string]models.Lesson) string {
 	return nextWordID
 }
 
-func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
+func (s *wordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 
 	err := s.cache.Del(ctx, models.CacheKey(userID))
 	if err != nil {
@@ -303,7 +303,7 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 	return nil
 }
 
-func (s *WordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error) {
+func (s *wordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error) {
 
 	searchReq := &modelsDB.GeminiReq{
 		SourceLang: req.SourceLang,
@@ -349,7 +349,7 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest)
 	return &gemini.WordInfoResponse{Response: respString}, nil
 }
 
-func (s *WordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (*gemini.StartPracticeWithGeminiResponse, error) {
+func (s *wordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (*gemini.StartPracticeWithGeminiResponse, error) {
 	temp := &modelsDB.WordsForGeminiReq{
 		UserID:     userID,
 		SourceLang: req.SourceLang,
@@ -397,7 +397,7 @@ func (s *WordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.
 
 	return resp, nil
 }
-func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, userTranslate string) (*gemini.CheckAnswerPracticeWithGeminiResponse, error) {
+func (s *wordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, userTranslate string) (*gemini.CheckAnswerPracticeWithGeminiResponse, error) {
 	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
 	data, err := s.cache.Get(ctx, key)
 	if errors.Is(err, cache.ErrCacheMiss) {
@@ -427,7 +427,7 @@ func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq
 	return resp, nil
 }
 
-func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error {
+func (s *wordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error {
 	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
 	err := s.cache.Del(ctx, key)
 	if err != nil {
@@ -436,14 +436,14 @@ func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid
 	return nil
 }
 
-func (s *WordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
+func (s *wordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
 	return s.repo.GetWordsList(ctx, req)
 }
 
-func (s *WordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
+func (s *wordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
 	return s.repo.DeleteWord(ctx, wordID, userID)
 }
 
-func (s *WordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
+func (s *wordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
 	return s.repo.UpdateWordFields(ctx, req, userID)
 }
