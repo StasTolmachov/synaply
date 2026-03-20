@@ -1,10 +1,13 @@
 package service
 
 import (
+	"bytes"
 	"context"
+	"encoding/csv"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"math"
 	"strings"
 	"sync"
@@ -43,6 +46,7 @@ type WordsService interface {
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error)
 	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
+	ImportWords(ctx context.Context, file []byte, fileName string, userID uuid.UUID, sourceLang, targetLang string) error
 	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
 }
 
@@ -531,6 +535,66 @@ func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchRe
 	}
 
 	return s.repo.CreateBatch(ctx, dbReqs)
+}
+
+func (s *wordsService) ImportWords(ctx context.Context, file []byte, fileName string, userID uuid.UUID, sourceLang, targetLang string) error {
+	var words []models.WordListResp
+
+	if strings.HasSuffix(fileName, ".json") {
+		var req models.CreateBatchReq
+		if err := json.Unmarshal(file, &req); err == nil && len(req.Words) > 0 {
+			words = req.Words
+			// Update languages from request if provided
+			if req.SourceLang != "" {
+				sourceLang = req.SourceLang
+			}
+			if req.TargetLang != "" {
+				targetLang = req.TargetLang
+			}
+		} else {
+			// Try to unmarshal as simple array of words
+			if err := json.Unmarshal(file, &words); err != nil {
+				return fmt.Errorf("failed to parse JSON: %w", err)
+			}
+		}
+	} else if strings.HasSuffix(fileName, ".csv") {
+		reader := csv.NewReader(bytes.NewReader(file))
+		// Handle potential different delimiters or BOM could be added here
+		for {
+			record, err := reader.Read()
+			if errors.Is(err, io.EOF) {
+				break
+			}
+			if err != nil {
+				return fmt.Errorf("failed to read CSV: %w", err)
+			}
+
+			if len(record) < 2 {
+				continue // Skip invalid lines
+			}
+
+			word := models.WordListResp{
+				SourceWord: record[0],
+				TargetWord: record[1],
+			}
+			if len(record) >= 3 {
+				word.Comment = record[2]
+			}
+			words = append(words, word)
+		}
+	} else {
+		return errors.New("unsupported file format")
+	}
+
+	if len(words) == 0 {
+		return errors.New("no words found in file")
+	}
+
+	return s.CreateBatch(ctx, models.CreateBatchReq{
+		SourceLang: sourceLang,
+		TargetLang: targetLang,
+		Words:      words,
+	}, userID)
 }
 
 func (s *wordsService) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {

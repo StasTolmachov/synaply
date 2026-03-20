@@ -6,7 +6,7 @@ import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3 } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 import { OnboardingModal } from '@/components/OnboardingModal';
@@ -57,6 +57,7 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isSavingBatch, setIsSavingBatch] = useState(false);
   const [batchMessage, setBatchMessage] = useState({ type: '', text: '' });
+  const [isImporting, setIsImporting] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [stats, setStats] = useState({ new: 0, learning: 0, review: 0, relearning: 0 });
@@ -147,10 +148,42 @@ export default function Dashboard() {
       });
       setMessage({ type: 'success', text: 'Word added successfully!' });
       setNewWord({ source_word: '', target_word: '', comment: '' });
+      
+      // Refresh stats
+      fetchApi('/words/stats').then(setStats).catch(console.error);
     } catch (err: unknown) {
       setMessage({ type: 'error', text: err instanceof Error ? err.message : "We couldn't save your new word. Let's try one more time!" });
     } finally {
       setAddingWord(false);
+    }
+  };
+
+  const handleFileImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImporting(true);
+    setMessage({ type: '', text: '' });
+    
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      sendGAEvent('event', 'import_words', { file_type: file.name.split('.').pop() });
+      await fetchApi('/words/import', {
+        method: 'POST',
+        body: formData
+      });
+      setMessage({ type: 'success', text: 'Words imported successfully!' });
+      
+      // Refresh stats after import
+      fetchApi('/words/stats').then(setStats).catch(console.error);
+    } catch (err: unknown) {
+      setMessage({ type: 'error', text: err instanceof Error ? err.message : "Failed to import words." });
+    } finally {
+      setIsImporting(false);
+      // Reset input
+      e.target.value = '';
     }
   };
 
@@ -346,6 +379,23 @@ export default function Dashboard() {
                   <Plus className="w-5 h-5 mr-2 text-blue-500" />
                   Add New Word
                 </h3>
+                <div className="flex items-center gap-2">
+                  <label className="cursor-pointer inline-flex items-center px-3 py-1.5 border border-gray-200 text-xs font-medium rounded-lg text-gray-600 bg-white hover:bg-gray-50 transition-colors shadow-sm">
+                    {isImporting ? (
+                      <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                    ) : (
+                      <FileUp className="w-3.5 h-3.5 mr-1.5" />
+                    )}
+                    Import CSV/JSON
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept=".csv,.json"
+                      onChange={handleFileImport}
+                      disabled={isImporting}
+                    />
+                  </label>
+                </div>
               </div>
               
               <form onSubmit={handleAddWord} className="space-y-4">
