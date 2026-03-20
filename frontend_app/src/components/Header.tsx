@@ -1,17 +1,32 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useScore } from './ScoreContext';
 import { usePathname, useRouter } from 'next/navigation';
 import { sendGAEvent } from '@next/third-parties/google';
-import { LogOut, HelpCircle, User } from 'lucide-react';
+import { LogOut, HelpCircle, User, WifiOff } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const { score } = useScore();
   const pathname = usePathname();
   const router = useRouter();
+  const [isOffline, setIsOffline] = useState(false);
+
+  useEffect(() => {
+    setIsOffline(!navigator.onLine);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const isLandingPage = pathname === '/';
   const isAuthPage = pathname === '/login' || pathname === '/register';
@@ -38,6 +53,12 @@ export function Header() {
             </Link>
           </div>
           <div className="flex items-center space-x-6">
+            {isOffline && (
+              <div className="flex items-center text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded text-xs font-medium animate-pulse border border-amber-100 dark:border-amber-900/50">
+                <WifiOff className="w-3.5 h-3.5 mr-1.5" />
+                Offline Mode
+              </div>
+            )}
             <ThemeToggle />
             {!isHelpPage && (
               <Link
