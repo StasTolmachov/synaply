@@ -108,7 +108,7 @@ export default function PracticePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black pb-12 transition-colors duration-300">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-12">
       <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">

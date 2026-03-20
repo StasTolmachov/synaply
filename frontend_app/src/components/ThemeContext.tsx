@@ -25,15 +25,29 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = window.document.documentElement;
     
     const applyTheme = (t: Theme) => {
-      root.classList.remove('light', 'dark');
+      // Чтобы избежать моргания при первой загрузке, 
+      // блокирующий скрипт в layout.tsx уже мог установить нужный класс.
+      // Здесь мы только синхронизируем состояние.
       
+      const currentClasses = Array.from(root.classList);
+      const hasDark = currentClasses.includes('dark');
+      const hasLight = currentClasses.includes('light');
+
+      let themeToApply: 'light' | 'dark';
       if (t === 'system') {
-        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (isDark) {
-          root.classList.add('dark');
-        }
-      } else if (t === 'dark') {
+        themeToApply = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      } else {
+        themeToApply = t as 'light' | 'dark';
+      }
+
+      root.style.colorScheme = themeToApply;
+
+      if (themeToApply === 'dark' && !hasDark) {
+        root.classList.remove('light');
         root.classList.add('dark');
+      } else if (themeToApply === 'light' && !hasLight) {
+        root.classList.remove('dark');
+        root.classList.add('light');
       }
     };
 

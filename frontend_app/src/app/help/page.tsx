@@ -6,7 +6,7 @@ import { ArrowLeft, BookOpen, Plus, Brain, List, Search, Star, Languages, XCircl
 
 export default function HelpPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium transition-colors">

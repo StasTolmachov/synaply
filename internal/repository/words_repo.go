@@ -26,4 +26,9 @@ type WordsRepository interface {
 	GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error)
 	SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error
 	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
+
+	CreatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) (uuid.UUID, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
+	UpdatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) error
 }
