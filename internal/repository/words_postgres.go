@@ -50,7 +50,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	WITH
 	new_words AS (
 		-- Берем 3 новых слова (State = 0)
-		SELECT id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state = 0
 		ORDER BY created_at ASC
@@ -58,7 +58,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	),
 	review_words AS (
 		-- Берем 7 слов, которые уже в процессе изучения (State != 0)
-		SELECT id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state != 0
 		ORDER BY due ASC -- МАГИЯ ЗДЕСЬ: Сначала те, которые давно пора повторить
@@ -83,7 +83,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 
 func (p *wordsPostgres) GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error) {
 	query := `
-	select id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+	select id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 	from words
 	where id = $1`
 

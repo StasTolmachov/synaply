@@ -38,6 +38,8 @@ type LessonDB struct {
 	SourceWord string    `db:"source_word"`
 	TargetWord string    `db:"target_word"`
 	Comment    string    `db:"comment"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
 
 	// Поля FSRS
 	Due           time.Time  `db:"due"`

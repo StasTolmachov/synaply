@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
-import { Loader2, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, ArrowRight, CheckCircle, XCircle, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { useScore } from '@/components/ScoreContext';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
@@ -13,13 +13,13 @@ export default function Lesson() {
   const router = useRouter();
   const { updateScore } = useScore();
   const [loading, setLoading] = useState(true);
-  const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
+  const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string; source_lang?: string; target_lang?: string } | null>(null);
   const [answer, setAnswer] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; showNextBtn: boolean } | null>(null);
   const [error, setError] = useState('');
   const [lessonFinished, setLessonFinished] = useState(false);
-  const [nextWordData, setNextWordData] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
+  const [nextWordData, setNextWordData] = useState<{ id: string; source_word: string; target_word: string; comment?: string; source_lang?: string; target_lang?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -33,7 +33,8 @@ export default function Lesson() {
       sendGAEvent('event', 'lesson_start', {});
       const data = await fetchApi('/lesson/start');
       if (data) {
-        setWord(data.word || data.Word);
+        const wordData = data.word || data.Word;
+        setWord(wordData);
         if (typeof data.total_correct === 'number') {
           updateScore(data.total_correct);
         }
@@ -76,6 +77,9 @@ export default function Lesson() {
 
       if (data.is_correct) {
         setNextWordData(data.next_word);
+        if (word?.target_word) {
+          speak(word.target_word, word.target_lang);
+        }
       } else if (data.next_word && data.next_word.id !== word?.id) {
         // If the backend returned a DIFFERENT word on failure, store it as next
         setNextWordData(data.next_word);
@@ -108,6 +112,16 @@ export default function Lesson() {
       await fetchApi('/lesson/finish', { method: 'POST' });
     } catch (_e) {}
     router.push('/dashboard');
+  };
+
+  const speak = (text: string, lang?: string) => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    if (lang) {
+      utterance.lang = lang;
+    }
+    window.speechSynthesis.speak(utterance);
   };
 
   if (loading) {
@@ -163,7 +177,9 @@ export default function Lesson() {
 
         <div className="bg-white shadow-sm border border-gray-200 rounded-2xl overflow-hidden p-8">
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-2">{word?.source_word}</h2>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <h2 className="text-4xl font-extrabold text-gray-900">{word?.source_word}</h2>
+            </div>
             {word?.comment && feedback && (
               <p className="text-sm text-gray-500">{word?.comment}</p>
             )}
@@ -195,7 +211,17 @@ export default function Lesson() {
                 )}
                 <div className="flex-1">
                   <p className="font-medium">{feedback.isCorrect ? 'Correct!' : 'Incorrect.'}</p>
-                  <p className="text-sm mt-1">The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong></p>
+                  <p className="text-sm mt-1 flex items-center gap-2">
+                    The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong>
+                    <button
+                      type="button"
+                      onClick={() => word?.target_word && speak(word.target_word, word.target_lang)}
+                      className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                      title="Listen"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
+                  </p>
                 </div>
               </div>
             )}
