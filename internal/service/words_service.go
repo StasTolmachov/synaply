@@ -201,6 +201,8 @@ func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 		SourceWord:    word.SourceWord,
 		TargetWord:    word.TargetWord,
 		Comment:       word.Comment,
+		SourceLang:    word.SourceLang,
+		TargetLang:    word.TargetLang,
 		Due:           newCard.Due,
 		Stability:     newCard.Stability,
 		Difficulty:    newCard.Difficulty,
