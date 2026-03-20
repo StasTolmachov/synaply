@@ -38,6 +38,8 @@ type LessonDB struct {
 	SourceWord string    `db:"source_word"`
 	TargetWord string    `db:"target_word"`
 	Comment    string    `db:"comment"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
 
 	// Поля FSRS
 	Due           time.Time  `db:"due"`
@@ -93,4 +95,39 @@ type UpdateWordReq struct {
 type WordsForGeminiResp struct {
 	SourceWord string `db:"source_word"`
 	TargetWord string `db:"target_word"`
+}
+
+type GeminiWordList struct {
+	ID         uuid.UUID `db:"id"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
+	Level      string    `db:"level"`
+	Topic      string    `db:"topic"`
+	Response   []byte    `db:"response"`
+	CreatedAt  time.Time `db:"created_at"`
+}
+
+type PublicWordList struct {
+	ID          uuid.UUID `db:"id" json:"id"`
+	UserID      uuid.UUID `db:"user_id" json:"user_id"`
+	Title       string    `db:"title" json:"title"`
+	Description string    `db:"description" json:"description"`
+	SourceLang  string    `db:"source_lang" json:"source_lang"`
+	TargetLang  string    `db:"target_lang" json:"target_lang"`
+	CreatedAt   time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
+}
+
+type PublicWordListItem struct {
+	ID         uuid.UUID `db:"id" json:"id"`
+	ListID     uuid.UUID `db:"list_id" json:"list_id"`
+	SourceWord string    `db:"source_word" json:"source_word"`
+	TargetWord string    `db:"target_word" json:"target_word"`
+	Comment    string    `db:"comment" json:"comment"`
+	CreatedAt  time.Time `db:"created_at" json:"created_at"`
+}
+
+type PublicWordListDetail struct {
+	PublicWordList
+	Items []PublicWordListItem `json:"items"`
 }

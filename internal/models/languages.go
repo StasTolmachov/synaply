@@ -207,7 +207,7 @@ var TargetLanguages = map[string]string{
 	"HT":      "Haitian Creole",
 	"HU":      "Hungarian",
 	"HY":      "Armenian",
-	"ID":      "Indonesian",
+	"Slug":    "Indonesian",
 	"IG":      "Igbo",
 	"IS":      "Icelandic",
 	"IT":      "Italian",

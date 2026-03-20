@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository/modelsDB"
 )
 
@@ -18,6 +19,16 @@ type WordsRepository interface {
 	GetWordInfo(ctx context.Context, req *modelsDB.GeminiReq) (*modelsDB.GeminiResp, error)
 	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
 	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	DeleteAllWords(ctx context.Context, userID uuid.UUID) error
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error)
+	CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error
+	GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error)
+	SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error
+	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
+
+	CreatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) (uuid.UUID, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
+	UpdatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) error
 }
