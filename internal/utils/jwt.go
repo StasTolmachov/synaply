@@ -17,7 +17,7 @@ type CustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-// GenerateToken generates a JWT token for the given user ID and role.
+// GenerateToken generates a JWT token for the given user Slug and role.
 func GenerateToken(userID uuid.UUID, role string, jwtCfg config.JWT) (string, error) {
 	claims := CustomClaims{
 		UserID: userID.String(),
