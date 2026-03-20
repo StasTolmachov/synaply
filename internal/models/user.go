@@ -181,6 +181,10 @@ func PermissionCheck(requester *User, target *UserResponse) bool {
 }
 
 type GetMeResponse struct {
+	ID           string       `json:"id"`
+	Email        string       `json:"email"`
+	FirstName    string       `json:"first_name"`
+	LastName     string       `json:"last_name"`
 	LangCodeResp LangCodeResp `json:"langCodeResp"`
 	TotalCorrect int64        `json:"totalCorrect"`
 }

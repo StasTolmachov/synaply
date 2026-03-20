@@ -20,6 +20,8 @@ var allowedUpdateColumns = map[string]bool{
 	"first_name":    true,
 	"last_name":     true,
 	"role":          true,
+	"source_lang":   true,
+	"target_lang":   true,
 }
 
 type userRepo struct {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useScore } from './ScoreContext';
 import { usePathname, useRouter } from 'next/navigation';
 import { sendGAEvent } from '@next/third-parties/google';
-import { LogOut, HelpCircle } from 'lucide-react';
+import { LogOut, HelpCircle, User } from 'lucide-react';
 
 export function Header() {
   const { score } = useScore();
@@ -47,6 +47,13 @@ export function Header() {
                 Help
               </Link>
             )}
+            <Link
+              href="/profile"
+              className="text-gray-500 hover:text-blue-600 flex items-center text-sm font-medium transition-colors"
+            >
+              <User className="w-4 h-4 mr-1" />
+              Profile
+            </Link>
             <div className="text-sm font-medium text-gray-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 shadow-sm">
               Score: <span className="font-bold text-blue-700">{score}</span>
             </div>
