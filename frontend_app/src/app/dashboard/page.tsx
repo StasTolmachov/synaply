@@ -63,6 +63,7 @@ export default function Dashboard() {
   const [isImporting, setIsImporting] = useState(false);
   const [newGeneratedWord, setNewGeneratedWord] = useState({ source_word: '', target_word: '', comment: '' });
   const [isTranslatingNewGenerated, setIsTranslatingNewGenerated] = useState(false);
+  const [isTranslatingManual, setIsTranslatingManual] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [duplicateWords, setDuplicateWords] = useState<Set<string>>(new Set());
   const [userId, setUserId] = useState<string | null>(null);
