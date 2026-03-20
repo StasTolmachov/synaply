@@ -44,6 +44,12 @@ export default function Register() {
     setLoading(true);
     setError('');
 
+    if (formData.source_lang === formData.target_lang) {
+      setError('Learning language cannot be the same as your native language');
+      setLoading(false);
+      return;
+    }
+
     try {
       sendGAEvent('event', 'sign_up', { method: 'email', source_lang: formData.source_lang, target_lang: formData.target_lang });
       await fetchApi('/users/create', {
