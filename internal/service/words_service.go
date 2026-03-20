@@ -1,10 +1,13 @@
 package service
 
 import (
+	"bytes"
 	"context"
+	"encoding/csv"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"math"
 	"strings"
 	"sync"
@@ -27,7 +30,7 @@ var (
 	fsrsScheduler = fsrs.NewFSRS(fsrsParams)
 )
 
-type WordsServiceI interface {
+type WordsService interface {
 	Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error)
 	LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error)
 	CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error)
@@ -39,10 +42,21 @@ type WordsServiceI interface {
 	FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error
 	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
 	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	DeleteAllWords(ctx context.Context, userID uuid.UUID) error
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
+	WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error)
+	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
+	ImportWords(ctx context.Context, file []byte, fileName string, userID uuid.UUID, sourceLang, targetLang string) error
+	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
+
+	CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
+	UpdatePublicWordList(ctx context.Context, listID uuid.UUID, req models.CreatePublicWordListRequest, userID uuid.UUID) error
+	AddPublicListToUser(ctx context.Context, listID uuid.UUID, userID uuid.UUID) error
 }
 
-type WordsService struct {
+type wordsService struct {
 	repo  repository.WordsRepository
 	cache cache.CacheRepositoryI
 	deepl deepl.ServiceI
@@ -50,11 +64,11 @@ type WordsService struct {
 	gem   gemini.Service
 }
 
-func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup, gem gemini.Service) *WordsService {
-	return &WordsService{repo: repo, cache: cache, deepl: deepl, wg: wg, gem: gem}
+func NewWordsService(repo repository.WordsRepository, cache cache.CacheRepositoryI, deepl deepl.ServiceI, wg *sync.WaitGroup, gem gemini.Service) *wordsService {
+	return &wordsService{repo: repo, cache: cache, deepl: deepl, wg: wg, gem: gem}
 }
 
-func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
+func (s *wordsService) Translate(ctx context.Context, req models.TranslateReq) (*models.TranslateResp, error) {
 	var deeplReq deepl.Request
 
 	if req.SourceWord != "" {
@@ -92,7 +106,7 @@ func (s *WordsService) Translate(ctx context.Context, req models.TranslateReq) (
 
 }
 
-func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
+func (s *wordsService) Create(ctx context.Context, req models.CreateReq, userID uuid.UUID) (*models.Response, error) {
 	sourceWord := strings.ToLower(strings.TrimSpace(req.SourceWord))
 	targetWord := strings.ToLower(strings.TrimSpace(req.TargetWord))
 
@@ -105,7 +119,7 @@ func (s *WordsService) Create(ctx context.Context, req models.CreateReq, userID 
 	return models.DBtoResponse(resp), nil
 }
 
-func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
+func (s *wordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*models.Response, error) {
 	key := models.CacheKey(userID)
 	slogger.Log.DebugContext(ctx, "LessonStart is started ")
 
@@ -142,7 +156,7 @@ func (s *WordsService) LessonStart(ctx context.Context, userID uuid.UUID) (*mode
 	return resp, err
 }
 
-func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
+func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, userID uuid.UUID) (bool, *models.Response, error) {
 	key := models.CacheKey(userID)
 	var isCorrect bool
 	lesson := make(map[string]models.Lesson)
@@ -197,6 +211,8 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 		SourceWord:    word.SourceWord,
 		TargetWord:    word.TargetWord,
 		Comment:       word.Comment,
+		SourceLang:    word.SourceLang,
+		TargetLang:    word.TargetLang,
 		Due:           newCard.Due,
 		Stability:     newCard.Stability,
 		Difficulty:    newCard.Difficulty,
@@ -251,7 +267,7 @@ func (s *WordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	return isCorrect, models.LessonWordToResponse(&word), nil
 }
 
-func (s *WordsService) GetNextWordFromCache(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
+func (s *wordsService) GetNextWordFromCache(ctx context.Context, userID uuid.UUID) (*models.Lesson, error) {
 	key := models.CacheKey(userID)
 	data, err := s.cache.Get(ctx, key)
 	if errors.Is(err, cache.ErrCacheMiss) {
@@ -292,7 +308,7 @@ func FindMinIdx(lesson map[string]models.Lesson) string {
 	return nextWordID
 }
 
-func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
+func (s *wordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 
 	err := s.cache.Del(ctx, models.CacheKey(userID))
 	if err != nil {
@@ -303,7 +319,7 @@ func (s *WordsService) Finish(ctx context.Context, userID uuid.UUID) error {
 	return nil
 }
 
-func (s *WordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error) {
+func (s *wordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest) (*gemini.WordInfoResponse, error) {
 
 	searchReq := &modelsDB.GeminiReq{
 		SourceLang: req.SourceLang,
@@ -349,7 +365,7 @@ func (s *WordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest)
 	return &gemini.WordInfoResponse{Response: respString}, nil
 }
 
-func (s *WordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (*gemini.StartPracticeWithGeminiResponse, error) {
+func (s *wordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.PracticeWithGemini, userID uuid.UUID) (*gemini.StartPracticeWithGeminiResponse, error) {
 	temp := &modelsDB.WordsForGeminiReq{
 		UserID:     userID,
 		SourceLang: req.SourceLang,
@@ -397,7 +413,7 @@ func (s *WordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.
 
 	return resp, nil
 }
-func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, userTranslate string) (*gemini.CheckAnswerPracticeWithGeminiResponse, error) {
+func (s *wordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq *gemini.PracticeWithGemini, userID uuid.UUID, userTranslate string) (*gemini.CheckAnswerPracticeWithGeminiResponse, error) {
 	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
 	data, err := s.cache.Get(ctx, key)
 	if errors.Is(err, cache.ErrCacheMiss) {
@@ -427,7 +443,7 @@ func (s *WordsService) CheckAnswerPracticeWithGemini(ctx context.Context, gemReq
 	return resp, nil
 }
 
-func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error {
+func (s *wordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error {
 	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
 	err := s.cache.Del(ctx, key)
 	if err != nil {
@@ -436,14 +452,239 @@ func (s *WordsService) FinishPracticeWithGemini(ctx context.Context, userID uuid
 	return nil
 }
 
-func (s *WordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
+func (s *wordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error) {
 	return s.repo.GetWordsList(ctx, req)
 }
 
-func (s *WordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
+func (s *wordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
 	return s.repo.DeleteWord(ctx, wordID, userID)
 }
 
-func (s *WordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
+func (s *wordsService) DeleteAllWords(ctx context.Context, userID uuid.UUID) error {
+	return s.repo.DeleteAllWords(ctx, userID)
+}
+
+func (s *wordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
 	return s.repo.UpdateWordFields(ctx, req, userID)
+}
+
+func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error) {
+	topicForCache := req.Topic
+	if topicForCache == "" {
+		topicForCache = req.UserTopic
+	}
+
+	// 1. Пытаемся получить из БД
+	cached, err := s.repo.GetGeminiWordList(ctx, user.SourceLang, user.TargetLang, req.Level, topicForCache)
+	if err == nil && cached != nil {
+		var wordListResp []models.WordListResp
+		if err := json.Unmarshal(cached.Response, &wordListResp); err == nil {
+			slogger.Log.DebugContext(ctx, "WordList found in DB cache", "topic", topicForCache)
+			return wordListResp, nil
+		}
+		slogger.Log.ErrorContext(ctx, "Failed to unmarshal cached word list", "error", err)
+	}
+
+	// 2. Если нет в БД, идем в Gemini
+	wordListRespGem, err := s.gem.WordList(ctx, models.WordListReqToGemWordListReq(req))
+	if err != nil {
+		return nil, err
+	}
+
+	wordListResp := make([]models.WordListResp, len(wordListRespGem))
+	for i, word := range wordListRespGem {
+		wordListResp[i] = models.WordListRespGemToWordListResp(word)
+	}
+
+	// 3. Сохраняем в БД для будущего использования
+	respJSON, err := json.Marshal(wordListResp)
+	if err == nil {
+		errSave := s.repo.SaveGeminiWordList(ctx, modelsDB.GeminiWordList{
+			SourceLang: user.SourceLang,
+			TargetLang: user.TargetLang,
+			Level:      req.Level,
+			Topic:      topicForCache,
+			Response:   respJSON,
+		})
+		if errSave != nil {
+			slogger.Log.ErrorContext(ctx, "Failed to save word list to DB cache", "error", errSave)
+		}
+	} else {
+		slogger.Log.ErrorContext(ctx, "Failed to marshal word list for cache", "error", err)
+	}
+
+	return wordListResp, nil
+}
+
+// Добавь в интерфейс WordsService:
+// CreateBatch(ctx context.Context, reqs []models.CreateReq, userID uuid.UUID) error
+
+func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error {
+	var dbReqs []modelsDB.CreateReq
+
+	for _, word := range req.Words {
+		sourceWord := strings.ToLower(strings.TrimSpace(word.SourceWord))
+		targetWord := strings.ToLower(strings.TrimSpace(word.TargetWord))
+
+		dbReqs = append(dbReqs, modelsDB.CreateReq{
+			UserID:     userID,
+			SourceLang: req.SourceLang,
+			TargetLang: req.TargetLang,
+			SourceWord: sourceWord,
+			TargetWord: targetWord,
+			Comment:    word.Comment,
+		})
+	}
+
+	if len(dbReqs) == 0 {
+		return nil // Нечего сохранять
+	}
+
+	return s.repo.CreateBatch(ctx, dbReqs)
+}
+
+func (s *wordsService) ImportWords(ctx context.Context, file []byte, fileName string, userID uuid.UUID, sourceLang, targetLang string) error {
+	var words []models.WordListResp
+
+	if strings.HasSuffix(fileName, ".json") {
+		var req models.CreateBatchReq
+		if err := json.Unmarshal(file, &req); err == nil && len(req.Words) > 0 {
+			words = req.Words
+			// Update languages from request if provided
+			if req.SourceLang != "" {
+				sourceLang = req.SourceLang
+			}
+			if req.TargetLang != "" {
+				targetLang = req.TargetLang
+			}
+		} else {
+			// Try to unmarshal as simple array of words
+			if err := json.Unmarshal(file, &words); err != nil {
+				return fmt.Errorf("failed to parse JSON: %w", err)
+			}
+		}
+	} else if strings.HasSuffix(fileName, ".csv") {
+		reader := csv.NewReader(bytes.NewReader(file))
+		// Handle potential different delimiters or BOM could be added here
+		for {
+			record, err := reader.Read()
+			if errors.Is(err, io.EOF) {
+				break
+			}
+			if err != nil {
+				return fmt.Errorf("failed to read CSV: %w", err)
+			}
+
+			if len(record) < 2 {
+				continue // Skip invalid lines
+			}
+
+			word := models.WordListResp{
+				SourceWord: record[0],
+				TargetWord: record[1],
+			}
+			if len(record) >= 3 {
+				word.Comment = record[2]
+			}
+			words = append(words, word)
+		}
+	} else {
+		return errors.New("unsupported file format")
+	}
+
+	if len(words) == 0 {
+		return errors.New("no words found in file")
+	}
+
+	return s.CreateBatch(ctx, models.CreateBatchReq{
+		SourceLang: sourceLang,
+		TargetLang: targetLang,
+		Words:      words,
+	}, userID)
+}
+
+func (s *wordsService) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {
+	return s.repo.GetProgressStats(ctx, userID)
+}
+
+func (s *wordsService) CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error) {
+	list := modelsDB.PublicWordList{
+		UserID:      userID,
+		Title:       req.Title,
+		Description: req.Description,
+		SourceLang:  req.SourceLang,
+		TargetLang:  req.TargetLang,
+	}
+
+	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
+	for _, w := range req.Words {
+		items = append(items, modelsDB.PublicWordListItem{
+			SourceWord: w.SourceWord,
+			TargetWord: w.TargetWord,
+			Comment:    w.Comment,
+		})
+	}
+
+	return s.repo.CreatePublicWordList(ctx, list, items)
+}
+
+func (s *wordsService) GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error) {
+	return s.repo.GetPublicWordLists(ctx, sourceLang, targetLang)
+}
+
+func (s *wordsService) GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error) {
+	return s.repo.GetPublicWordListByID(ctx, listID)
+}
+
+func (s *wordsService) UpdatePublicWordList(ctx context.Context, listID uuid.UUID, req models.CreatePublicWordListRequest, userID uuid.UUID) error {
+	// Check if list exists and user is the owner
+	detail, err := s.repo.GetPublicWordListByID(ctx, listID)
+	if err != nil {
+		return err
+	}
+
+	if detail.UserID != userID {
+		return errors.New("unauthorized: you can only edit your own lists")
+	}
+
+	list := modelsDB.PublicWordList{
+		ID:          listID,
+		Title:       req.Title,
+		Description: req.Description,
+	}
+
+	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
+	for _, w := range req.Words {
+		items = append(items, modelsDB.PublicWordListItem{
+			SourceWord: w.SourceWord,
+			TargetWord: w.TargetWord,
+			Comment:    w.Comment,
+		})
+	}
+
+	return s.repo.UpdatePublicWordList(ctx, list, items)
+}
+
+func (s *wordsService) AddPublicListToUser(ctx context.Context, listID uuid.UUID, userID uuid.UUID) error {
+	detail, err := s.repo.GetPublicWordListByID(ctx, listID)
+	if err != nil {
+		return err
+	}
+
+	reqs := make([]modelsDB.CreateReq, 0, len(detail.Items))
+	for _, item := range detail.Items {
+		sourceWord := strings.ToLower(strings.TrimSpace(item.SourceWord))
+		targetWord := strings.ToLower(strings.TrimSpace(item.TargetWord))
+
+		reqs = append(reqs, modelsDB.CreateReq{
+			UserID:     userID,
+			SourceLang: detail.SourceLang,
+			TargetLang: detail.TargetLang,
+			SourceWord: sourceWord,
+			TargetWord: targetWord,
+			Comment:    item.Comment,
+		})
+	}
+
+	return s.repo.CreateBatch(ctx, reqs)
 }
