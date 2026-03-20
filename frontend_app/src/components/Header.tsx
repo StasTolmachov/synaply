@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useScore } from './ScoreContext';
 import { usePathname, useRouter } from 'next/navigation';
 import { sendGAEvent } from '@next/third-parties/google';
-import { LogOut, HelpCircle, User, WifiOff } from 'lucide-react';
+import { LogOut, HelpCircle, User, WifiOff, Globe } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
@@ -60,6 +60,13 @@ export function Header() {
               </div>
             )}
             <ThemeToggle />
+            <Link
+              href="/public-lists"
+              className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors"
+            >
+              <Globe className="w-4 h-4 mr-1 text-green-500" />
+              Public Lists
+            </Link>
             {!isHelpPage && (
               <Link
                 href="/help"

@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -112,6 +113,13 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordList", h.WordList)
 				r.With(httprate.LimitByIP(5, 1*time.Minute)).Post("/words/create-batch", h.CreateBatchWords)
 
+				r.Route("/public-lists", func(r chi.Router) {
+					r.Post("/", h.CreatePublicWordList)
+					r.Get("/", h.GetPublicWordLists)
+					r.Get("/{id}", h.GetPublicWordListByID)
+					r.Put("/{id}", h.UpdatePublicWordList)
+					r.Post("/{id}/add", h.AddPublicListToUser)
+				})
 			})
 
 		})
@@ -1194,4 +1202,132 @@ func (h *Handler) GetProgressStats(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusOK, stats)
+}
+
+func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	var req models.CreatePublicWordListRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if req.Title == "" || len(req.Words) == 0 {
+		WriteError(w, http.StatusBadRequest, "Title and words are required")
+		return
+	}
+
+	id, err := h.wordsService.CreatePublicWordList(ctx, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to create public word list")
+		slogger.Log.ErrorContext(ctx, "Failed to create public word list", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
+}
+
+func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	sourceLang := r.URL.Query().Get("source_lang")
+	targetLang := r.URL.Query().Get("target_lang")
+
+	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get public word lists")
+		slogger.Log.ErrorContext(ctx, "Failed to get public word lists", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, lists)
+}
+
+func (h *Handler) GetPublicWordListByID(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	detail, err := h.wordsService.GetPublicWordListByID(ctx, id)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get public word list")
+		slogger.Log.ErrorContext(ctx, "Failed to get public word list", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, detail)
+}
+
+func (h *Handler) UpdatePublicWordList(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	var req models.CreatePublicWordListRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if req.Title == "" || len(req.Words) == 0 {
+		WriteError(w, http.StatusBadRequest, "Title and words are required")
+		return
+	}
+
+	err = h.wordsService.UpdatePublicWordList(ctx, id, req, user.ID)
+	if err != nil {
+		if strings.Contains(err.Error(), "unauthorized") {
+			WriteError(w, http.StatusForbidden, err.Error())
+			return
+		}
+		WriteError(w, http.StatusInternalServerError, "Failed to update public word list")
+		slogger.Log.ErrorContext(ctx, "Failed to update public word list", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) AddPublicListToUser(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	err = h.wordsService.AddPublicListToUser(ctx, id, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to add words to dictionary")
+		slogger.Log.ErrorContext(ctx, "Failed to add public list to user", "err", err, "list_id", id, "user_id", user.ID)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
 }
