@@ -42,12 +42,21 @@ export const metadata: Metadata = {
     siteName: "WordsGo",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "WordsGo AI Language Learning",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "WordsGo Beta",
     description: "Learn new words with spaced repetition",
     creator: "@WordsGoTeam",
+    images: ["/opengraph-image.png"],
   },
   alternates: {
     canonical: "https://wordsgo.tolmachov.dev",
