@@ -43,6 +43,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "WordsGo Beta",
+    description: "Learn new words with spaced repetition",
+    creator: "@WordsGoTeam",
+  },
+  alternates: {
+    canonical: "https://wordsgo.tolmachov.dev",
+  },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
