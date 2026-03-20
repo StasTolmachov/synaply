@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -87,6 +88,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 					r.With(httprate.LimitByIP(20, 1*time.Minute)).Post("/translate", h.Translate)
 					r.Get("/GetMe", h.GetMe)
 					r.Get("/", h.GetWordsList)
+					r.Delete("/all", h.DeleteAllWords)
 					r.Put("/{id}", h.UpdateWordFields)
 					r.Delete("/{id}", h.DeleteWord)
 				})
@@ -104,6 +106,8 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/startPractice", h.StartPracticeWithGemini)
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/practice/checkAnswerPractice", h.CheckAnswerPracticeWithGemini)
 				r.Post("/practice/finishPractice", h.FinishPracticeWithGemini)
+				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordList", h.WordList)
+				r.With(httprate.LimitByIP(5, 1*time.Minute)).Post("/words/create-batch", h.CreateBatchWords)
 
 			})
 
@@ -227,9 +231,9 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusCreated, createdUser)
 }
 
-// GetUserByID Get User By ID
-// @Summary Get user by ID
-// @Description Get User By ID from DB
+// GetUserByID Get User By Slug
+// @Summary Get user by Slug
+// @Description Get User By Slug from DB
 // @Tags users
 // @Accept json
 // @Produce json
@@ -243,8 +247,8 @@ func (h *Handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		WriteError(w, http.StatusBadRequest, "Invalid user ID")
-		slogger.Log.DebugContext(r.Context(), "Invalid user ID", "err", err, "id", chi.URLParam(r, "id"))
+		WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		slogger.Log.DebugContext(r.Context(), "Invalid user Slug", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 
@@ -319,24 +323,24 @@ func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, users)
 }
 
-// Delete User delete by ID
-// @Summary Delete user by ID
-// @Description Delete user by ID from DB
+// Delete User delete by Slug
+// @Summary Delete user by Slug
+// @Description Delete user by Slug from DB
 // @Tags users
 // @Accept json
 // @Produce json
 // @Security BearerAuth
 // @Param id path string true "User UUID" format(uuid)
 // @Success 200 {object} nil
-// @Failure 400 {object} handler.JSONError "Invalid user ID"
+// @Failure 400 {object} handler.JSONError "Invalid user Slug"
 // @Failure 403 {object} handler.JSONError "You can delete only your own account"
 // @Failure 500 {object} handler.JSONError "Failed to delete user"
 // @Router /users/{id} [delete]
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		WriteError(w, http.StatusBadRequest, "Invalid user ID")
-		slogger.Log.DebugContext(r.Context(), "Invalid user ID in Delete", "err", err, "id", chi.URLParam(r, "id"))
+		WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		slogger.Log.DebugContext(r.Context(), "Invalid user Slug in Delete", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 	target, err := h.userService.GetUserByID(r.Context(), targetID)
@@ -377,8 +381,8 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, nil)
 }
 
-// Update User update by ID
-// @Summary Update user by ID
+// Update User update by Slug
+// @Summary Update user by Slug
 // @Description Update user information by its UUID
 // @Tags users
 // @Accept json
@@ -387,7 +391,7 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 // @Param id path string true "User UUID" format(uuid)
 // @Param input body models.UpdateUserRequest true "User update info"
 // @Success 200 {object} models.UserResponse "Successfully updated"
-// @Failure 400 {object} handler.JSONError "Invalid user ID"
+// @Failure 400 {object} handler.JSONError "Invalid user Slug"
 // @Failure 403 {object} handler.JSONError "Permission denied"
 // @Failure 500 {object} handler.JSONError "Failed to update user"
 // @Router /users/{id} [put]
@@ -395,8 +399,8 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		WriteError(w, http.StatusBadRequest, "Invalid user ID")
-		slogger.Log.DebugContext(r.Context(), "Invalid user ID in Update", "err", err, "id", chi.URLParam(r, "id"))
+		WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		slogger.Log.DebugContext(r.Context(), "Invalid user Slug in Update", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 
@@ -551,7 +555,7 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	resp, err := h.wordsService.Translate(ctx, req)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to translate")
-		slogger.Log.ErrorContext(ctx, "Translation failed", "err", err)
+		slogger.Log.ErrorContext(ctx, "Translation failed", "error", err)
 		return
 	}
 	slogger.Log.Debug("translate resp %+v", "resp", resp)
@@ -695,8 +699,8 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	slogger.Log.DebugContext(ctx, "Handler CheckAnswer called with req", "req", req)
 
 	if req.ID == "" {
-		slogger.Log.ErrorContext(ctx, "Handler CheckAnswer called with empty req.ID", "req", req.ID)
-		WriteError(w, http.StatusBadRequest, "Invalid request ID")
+		slogger.Log.ErrorContext(ctx, "Handler CheckAnswer called with empty req.Slug", "req", req.ID)
+		WriteError(w, http.StatusBadRequest, "Invalid request Slug")
 		return
 	}
 	isCorrect, resp, err := h.wordsService.CheckAnswer(ctx, req, user.ID)
@@ -973,8 +977,8 @@ func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		WriteError(w, http.StatusBadRequest, "Invalid ID")
-		slogger.Log.DebugContext(ctx, "Invalid ID in UpdateWordFields", "err", err, "id", idStr)
+		WriteError(w, http.StatusBadRequest, "Invalid Slug")
+		slogger.Log.DebugContext(ctx, "Invalid Slug in UpdateWordFields", "err", err, "id", idStr)
 		return
 	}
 
@@ -1014,4 +1018,107 @@ func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (h *Handler) DeleteAllWords(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
+		return
+	}
+
+	err = h.wordsService.DeleteAllWords(ctx, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Internal server error")
+		slogger.Log.ErrorContext(ctx, "Failed to delete all words", "err", err, "user_id", user.ID)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
+	const wordListTimeout = 120 * time.Second
+	ctx, cancel := context.WithTimeout(r.Context(), wordListTimeout)
+	defer cancel()
+
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
+		return
+	}
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		slogger.Log.ErrorContext(ctx, "Failed to get user", "error", err)
+		return
+	}
+
+	var wordListReq models.WordListReq
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
+	if err := json.NewDecoder(r.Body).Decode(&wordListReq); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
+		return
+	}
+	slogger.Log.DebugContext(ctx, "WordList request body decoded", "req", wordListReq)
+	wordListReq.SourceLang = user.SourceLang
+	wordListReq.TargetLang = user.TargetLang
+
+	if wordListReq.Topic == "" && wordListReq.UserTopic == "" {
+		WriteError(w, http.StatusBadRequest, "Please select a topic or provide a custom request")
+		return
+	}
+
+	slogger.Log.DebugContext(ctx, "WordList request", "req", wordListReq)
+	resp, err := h.wordsService.WordList(ctx, user, wordListReq)
+
+	if err != nil {
+		if errors.Is(err, gemini.ErrLimitExceeded) {
+			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
+			return
+		}
+		// Исправленный текст ошибки
+		WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
+		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "error", err, "req", wordListReq)
+		return
+	}
+	JSONResponse(w, http.StatusOK, resp)
+}
+
+// CreateBatchWords массовое сохранение слов
+func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	var req models.CreateBatchReq
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // Ограничение в 1МБ
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body format")
+		slogger.Log.ErrorContext(ctx, "Invalid request body format in CreateBatchWords", "error", err)
+		return
+	}
+
+	if len(req.Words) > 500 {
+		WriteError(w, http.StatusBadRequest, "Too many words in one batch (maximum is 500)")
+		return
+	}
+
+	err = h.wordsService.CreateBatch(ctx, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to save words")
+		slogger.Log.ErrorContext(ctx, "Failed to CreateBatchWords", "error", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
 }

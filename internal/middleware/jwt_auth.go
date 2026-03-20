@@ -38,8 +38,8 @@ func AuthMidleware(secret string) func(next http.Handler) http.Handler {
 			}
 			id, err := uuid.Parse(claims.UserID)
 			if err != nil {
-				http.Error(w, "Failed to parse user ID", http.StatusInternalServerError)
-				slogger.Log.ErrorContext(r.Context(), "Failed to parse user ID", "err", err)
+				http.Error(w, "Failed to parse user Slug", http.StatusInternalServerError)
+				slogger.Log.ErrorContext(r.Context(), "Failed to parse user Slug", "err", err)
 				return
 			}
 			userCtx := &models.User{
