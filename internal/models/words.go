@@ -280,3 +280,10 @@ func WordListRespGemToWordListResp(req gemini.WordListResp) WordListResp {
 		Comment:    req.Comment,
 	}
 }
+
+type ProgressStats struct {
+	New        int64 `json:"new"`
+	Learning   int64 `json:"learning"`
+	Review     int64 `json:"review"`
+	Relearning int64 `json:"relearning"`
+}

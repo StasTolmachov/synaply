@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository/modelsDB"
 )
 
@@ -24,4 +25,5 @@ type WordsRepository interface {
 	CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error
 	GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error)
 	SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error
+	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
 }
