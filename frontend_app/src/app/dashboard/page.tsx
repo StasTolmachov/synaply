@@ -277,26 +277,26 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Learning {getLanguageName(userLangs.target)} from {getLanguageName(userLangs.source)}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           <div className="md:col-span-1 space-y-6">
-            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2 text-blue-500" />
                 Learning Progress
               </h3>
@@ -307,21 +307,21 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 text-center">
-                    <div className="text-2xl font-bold text-blue-700">{stats.new}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-blue-500">New</div>
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-100 dark:border-blue-800 text-center">
+                    <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{stats.new}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-blue-500 dark:text-blue-400">New</div>
                   </div>
-                  <div className="bg-amber-50 p-3 rounded-lg border border-amber-100 text-center">
-                    <div className="text-2xl font-bold text-amber-700">{stats.learning}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-amber-500">Learning</div>
+                  <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg border border-amber-100 dark:border-amber-800 text-center">
+                    <div className="text-2xl font-bold text-amber-700 dark:text-amber-300">{stats.learning}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-amber-500 dark:text-amber-400">Learning</div>
                   </div>
-                  <div className="bg-green-50 p-3 rounded-lg border border-green-100 text-center">
-                    <div className="text-2xl font-bold text-green-700">{stats.review}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-green-500">Review</div>
+                  <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-100 dark:border-green-800 text-center">
+                    <div className="text-2xl font-bold text-green-700 dark:text-green-300">{stats.review}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-green-500 dark:text-green-400">Review</div>
                   </div>
-                  <div className="bg-red-50 p-3 rounded-lg border border-red-100 text-center">
-                    <div className="text-2xl font-bold text-red-700">{stats.relearning}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-red-500">Relearning</div>
+                  <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-800 text-center">
+                    <div className="text-2xl font-bold text-red-700 dark:text-red-300">{stats.relearning}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-red-500 dark:text-red-400">Relearning</div>
                   </div>
                 </div>
               )}
@@ -329,7 +329,7 @@ export default function Dashboard() {
               <div className="mt-6">
                 <Link 
                   href="/lesson"
-                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                 >
                   <BookOpen className="w-4 h-4 mr-2" />
                   Start Review
@@ -337,33 +337,33 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2 flex items-center">
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
                 <Brain className="w-5 h-5 mr-2 text-purple-500" />
                 AI Practice
               </h3>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                 Improve your vocabulary by translating AI-generated sentences based on any topic or your word list.
               </p>
               <Link 
                 href="/practice"
-                className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 text-sm font-medium rounded-md shadow-sm text-purple-700 bg-purple-50 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
+                className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 dark:border-purple-800 text-sm font-medium rounded-md shadow-sm text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
               >
                 Practice: Sentence Translation
               </Link>
             </div>
 
-            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2 flex items-center">
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
                 <List className="w-5 h-5 mr-2 text-blue-500" />
                 Manage Words
               </h3>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                 View, search, edit or delete words from your collection.
               </p>
               <Link 
                 href="/words"
-                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 text-sm font-medium rounded-md shadow-sm text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 My Words List
               </Link>
@@ -373,14 +373,14 @@ export default function Dashboard() {
           </div>
 
           <div className="md:col-span-2">
-            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
                   <Plus className="w-5 h-5 mr-2 text-blue-500" />
                   Add New Word
                 </h3>
                 <div className="flex items-center gap-2">
-                  <label className="cursor-pointer inline-flex items-center px-3 py-1.5 border border-gray-200 text-xs font-medium rounded-lg text-gray-600 bg-white hover:bg-gray-50 transition-colors shadow-sm">
+                  <label className="cursor-pointer inline-flex items-center px-3 py-1.5 border border-gray-200 dark:border-gray-700 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm">
                     {isImporting ? (
                       <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                     ) : (
@@ -401,24 +401,24 @@ export default function Dashboard() {
               <form onSubmit={handleAddWord} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Word in {getLanguageName(userLangs.source)}
                     </label>
                     <input
                       type="text"
-                      className="block w-full rounded-md border-gray-300 border px-3 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       placeholder="e.g. Hello"
                       value={newWord.source_word}
                       onChange={e => setNewWord({...newWord, source_word: e.target.value})}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Translation in {getLanguageName(userLangs.target)}
                     </label>
                     <input
                       type="text"
-                      className="block w-full rounded-md border-gray-300 border px-3 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       placeholder="e.g. Hola"
                       value={newWord.target_word}
                       onChange={e => setNewWord({...newWord, target_word: e.target.value})}
@@ -430,19 +430,19 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={handleTranslate}
-                    className="text-xs text-blue-600 hover:text-blue-500 font-medium"
+                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium"
                   >
                     Auto-translate empty field
                   </button>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Comment / Context (optional)
                   </label>
                   <input
                     type="text"
-                    className="block w-full rounded-md border-gray-300 border px-3 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                     placeholder="Usage example or notes"
                     value={newWord.comment}
                     onChange={e => setNewWord({...newWord, comment: e.target.value})}
@@ -452,8 +452,8 @@ export default function Dashboard() {
                 {message.text && (
                   <div className={`text-sm p-3 rounded-md border ${
                     message.type === 'success' 
-                      ? 'bg-green-50 text-green-700 border-green-100' 
-                      : 'bg-red-50 text-red-700 border-red-100'
+                      ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-100 dark:border-green-800' 
+                      : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-100 dark:border-red-800'
                   }`}>
                     {message.text}
                   </div>
@@ -463,7 +463,7 @@ export default function Dashboard() {
                   <button
                     type="submit"
                     disabled={addingWord || !newWord.source_word || !newWord.target_word}
-                    className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:bg-gray-400 transition-colors"
+                    className="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500 disabled:bg-gray-400 dark:disabled:bg-gray-700 transition-colors"
                   >
                     {addingWord ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                     Save Word
@@ -472,7 +472,7 @@ export default function Dashboard() {
               </form>
 
               {(newWord.source_word || newWord.target_word) ? (
-                <div className="mt-6 pt-6 border-t border-gray-100">
+                <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
                   <AIWordInfoCard 
                     sourceWord={newWord.source_word} 
                     targetWord={newWord.target_word} 
@@ -481,9 +481,9 @@ export default function Dashboard() {
               ) : null}
             </div>
 
-            <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6 mt-6">
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6 mt-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
                   <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
                   Generate Word List with AI
                 </h3>
@@ -492,7 +492,7 @@ export default function Dashboard() {
               <div className="space-y-6">
                 {/* Proficiency Level */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Proficiency Level</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Proficiency Level</label>
                   <div className="flex flex-wrap gap-2">
                     {proficiencyLevels.map(level => (
                       <button
@@ -501,7 +501,7 @@ export default function Dashboard() {
                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                           selectedLevel === level
                             ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                         }`}
                       >
                         {level}
@@ -512,16 +512,16 @@ export default function Dashboard() {
 
                 {/* Topics */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
-                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1 border border-gray-50 rounded-lg">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Topic</label>
+                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1 border border-gray-50 dark:border-gray-800 rounded-lg">
                     {topicList.map(topic => (
                       <button
                         key={topic.slug}
                         onClick={() => setSelectedTopic(topic.slug === selectedTopic ? '' : topic.slug)}
                         className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                           selectedTopic === topic.slug
-                            ? 'bg-amber-100 text-amber-800 border-amber-200'
-                            : 'bg-white text-gray-600 border-gray-200 hover:border-amber-300 hover:bg-amber-50'
+                            ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+                            : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20'
                         }`}
                       >
                         {topic.title}
@@ -532,10 +532,10 @@ export default function Dashboard() {
 
                 {/* Custom Prompt */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Your own topic or context (optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your own topic or context (optional)</label>
                   <textarea
                     rows={2}
-                    className="block w-full rounded-md border-gray-300 border px-3 py-2 text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                     placeholder="e.g. Words for a business meeting about marketing"
                     value={userTopic}
                     onChange={e => setUserTopic(e.target.value)}
@@ -545,7 +545,7 @@ export default function Dashboard() {
                 <button
                   onClick={handleGenerateWordList}
                   disabled={isGenerating}
-                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:bg-amber-300 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:bg-amber-300 dark:disabled:bg-amber-900/50 transition-colors"
                 >
                   {isGenerating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
                   Generate Words
@@ -553,15 +553,15 @@ export default function Dashboard() {
 
                 {/* Generated List Section */}
                 {generatedWords.length > 0 && (
-                  <div className="mt-8 space-y-4 border-t pt-6">
+                  <div className="mt-8 space-y-4 border-t border-gray-100 dark:border-gray-800 pt-6">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold text-gray-900">Generated Words ({generatedWords.length})</h4>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">Generated Words ({generatedWords.length})</h4>
                       <div className="relative w-48">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
                         <input
                           type="text"
                           placeholder="Search..."
-                          className="pl-9 w-full rounded-md border-gray-300 border px-3 py-1.5 text-xs focus:ring-blue-500 focus:border-blue-500"
+                          className="pl-9 w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-1.5 text-xs text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
                           value={searchTerm}
                           onChange={e => {
                             setSearchTerm(e.target.value);
@@ -571,46 +571,46 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-100">
+                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800">
+                      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+                        <thead className="bg-gray-100 dark:bg-gray-800">
                           <tr>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{getLanguageName(userLangs.source)}</th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{getLanguageName(userLangs.target)}</th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
-                            <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{getLanguageName(userLangs.source)}</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{getLanguageName(userLangs.target)}</th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Comment</th>
+                            <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
                           {currentWords.map((word, idx) => {
                             const isEditing = editingIndex === (currentPage - 1) * wordsPerPage + generatedWords.findIndex(w => w === word);
                             return (
-                              <tr key={idx} className="hover:bg-gray-50">
-                                <td className="px-4 py-3 text-sm text-gray-900">
+                              <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                                   {isEditing ? (
                                     <input
                                       type="text"
-                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
                                       value={editWord?.source_word}
                                       onChange={e => setEditWord(prev => prev ? {...prev, source_word: e.target.value} : null)}
                                     />
                                   ) : word.source_word}
                                 </td>
-                                <td className="px-4 py-3 text-sm text-gray-900">
+                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                                   {isEditing ? (
                                     <input
                                       type="text"
-                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
                                       value={editWord?.target_word}
                                       onChange={e => setEditWord(prev => prev ? {...prev, target_word: e.target.value} : null)}
                                     />
                                   ) : word.target_word}
                                 </td>
-                                <td className="px-4 py-3 text-sm text-gray-900">
+                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                                   {isEditing ? (
                                     <input
                                       type="text"
-                                      className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                      className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
                                       value={editWord?.comment}
                                       onChange={e => setEditWord(prev => prev ? {...prev, comment: e.target.value} : null)}
                                     />
@@ -619,19 +619,19 @@ export default function Dashboard() {
                                 <td className="px-4 py-3 text-right text-sm font-medium space-x-2">
                                   {isEditing ? (
                                     <>
-                                      <button onClick={handleSaveEdit} className="text-green-600 hover:text-green-900">
+                                      <button onClick={handleSaveEdit} className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300">
                                         <Check className="h-4 w-4" />
                                       </button>
-                                      <button onClick={() => setEditingIndex(null)} className="text-red-600 hover:text-red-900">
+                                      <button onClick={() => setEditingIndex(null)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
                                         <X className="h-4 w-4" />
                                       </button>
                                     </>
                                   ) : (
                                     <>
-                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 hover:text-blue-900">
+                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                                         <Edit2 className="h-4 w-4" />
                                       </button>
-                                      <button onClick={() => handleDeleteWord(idx)} className="text-red-600 hover:text-red-900">
+                                      <button onClick={() => handleDeleteWord(idx)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
                                         <Trash2 className="h-4 w-4" />
                                       </button>
                                     </>
@@ -646,26 +646,26 @@ export default function Dashboard() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                      <div className="flex items-center justify-between px-2 py-3 bg-white border-t">
+                      <div className="flex items-center justify-between px-2 py-3 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
                         <div className="flex-1 flex justify-between sm:hidden">
                           <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100"
+                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
                           >
                             Previous
                           </button>
                           <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100"
+                            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
                           >
                             Next
                           </button>
                         </div>
                         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                           <div>
-                            <p className="text-xs text-gray-700">
+                            <p className="text-xs text-gray-700 dark:text-gray-400">
                               Showing page <span className="font-medium">{currentPage}</span> of <span className="font-medium">{totalPages}</span>
                             </p>
                           </div>
@@ -674,14 +674,14 @@ export default function Dashboard() {
                               <button
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
-                                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100"
+                                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
                               >
                                 <ChevronLeft className="h-4 w-4" />
                               </button>
                               <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
-                                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-100"
+                                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
                               >
                                 <ChevronRight className="h-4 w-4" />
                               </button>
@@ -694,8 +694,8 @@ export default function Dashboard() {
                     {batchMessage.text && (
                       <div className={`text-sm p-3 rounded-md border ${
                         batchMessage.type === 'success' 
-                          ? 'bg-green-50 text-green-700 border-green-100' 
-                          : 'bg-red-50 text-red-700 border-red-100'
+                          ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-100 dark:border-green-800' 
+                          : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border-red-100 dark:border-red-800'
                       }`}>
                         {batchMessage.text}
                       </div>
@@ -705,7 +705,7 @@ export default function Dashboard() {
                       <button
                         onClick={handleSaveBatch}
                         disabled={isSavingBatch || generatedWords.length === 0}
-                        className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 transition-all transform hover:scale-[1.01]"
+                        className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300 dark:disabled:bg-green-900/50 transition-all transform hover:scale-[1.01]"
                       >
                         {isSavingBatch ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                         Save All Words to My Learning List

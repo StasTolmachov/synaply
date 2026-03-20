@@ -105,20 +105,20 @@ export default function WordsList() {
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <Link href="/dashboard" className="text-blue-600 hover:text-blue-500 flex items-center text-sm font-medium mb-2">
+            <Link href="/dashboard" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-2 transition-colors">
               <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900">My Words</h1>
-            <p className="text-sm text-gray-500 mt-1">Total: {total} words</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">My Words</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Total: {total} words</p>
           </div>
           {words.length > 0 && (
             <button
               onClick={handleDeleteAll}
-              className="flex items-center px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-medium transition-colors border border-red-100"
+              className="flex items-center px-4 py-2 bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg text-sm font-medium transition-colors border border-red-100 dark:border-red-900/30"
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Clear All Words
@@ -127,19 +127,19 @@ export default function WordsList() {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm font-medium">
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg text-sm font-medium">
             {error}
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="p-4 border-b border-gray-100 bg-gray-50/50">
+        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+          <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search words..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -149,64 +149,64 @@ export default function WordsList() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50 text-gray-500 text-xs uppercase font-semibold">
-                  <th className="px-6 py-3 border-b border-gray-100">Original</th>
-                  <th className="px-6 py-3 border-b border-gray-100">Translation</th>
-                  <th className="px-6 py-3 border-b border-gray-100">Comment</th>
-                  <th className="px-6 py-3 border-b border-gray-100 text-right">Actions</th>
+                <tr className="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs uppercase font-semibold">
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Original</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Translation</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Comment</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                 {loading ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-10 text-center text-gray-400">
+                    <td colSpan={4} className="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
                       <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
                       Loading words...
                     </td>
                   </tr>
                 ) : words.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-10 text-center text-gray-400">
+                    <td colSpan={4} className="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
                       No words found
                     </td>
                   </tr>
                 ) : (
                   words.map((word) => (
-                    <tr key={word.id} className="hover:bg-gray-50/50 transition-colors">
+                    <tr key={word.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
                       <td className="px-6 py-4">
                         {editingId === word.id ? (
                           <input
                             type="text"
-                            className="w-full border rounded px-2 py-1 text-sm"
+                            className="w-full border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                             value={editForm.source_word || ''}
                             onChange={(e) => setEditForm({ ...editForm, source_word: e.target.value })}
                           />
                         ) : (
-                          <span className="text-sm font-medium text-gray-900">{word.source_word}</span>
+                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{word.source_word}</span>
                         )}
                       </td>
                       <td className="px-6 py-4">
                         {editingId === word.id ? (
                           <input
                             type="text"
-                            className="w-full border rounded px-2 py-1 text-sm"
+                            className="w-full border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                             value={editForm.target_word || ''}
                             onChange={(e) => setEditForm({ ...editForm, target_word: e.target.value })}
                           />
                         ) : (
-                          <span className="text-sm text-gray-600">{word.target_word}</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">{word.target_word}</span>
                         )}
                       </td>
                       <td className="px-6 py-4">
                         {editingId === word.id ? (
                           <input
                             type="text"
-                            className="w-full border rounded px-2 py-1 text-sm"
+                            className="w-full border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                             value={editForm.comment || ''}
                             onChange={(e) => setEditForm({ ...editForm, comment: e.target.value })}
                           />
                         ) : (
-                          <span className="text-sm text-gray-400 italic">{word.comment || '-'}</span>
+                          <span className="text-sm text-gray-400 dark:text-gray-500 italic">{word.comment || '-'}</span>
                         )}
                       </td>
                       <td className="px-6 py-4 text-right">
@@ -215,14 +215,14 @@ export default function WordsList() {
                             <>
                               <button
                                 onClick={handleSaveEdit}
-                                className="p-1.5 text-green-600 hover:bg-green-50 rounded"
+                                className="p-1.5 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded"
                                 title="Save"
                               >
                                 <Save className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => setEditingId(null)}
-                                className="p-1.5 text-gray-400 hover:bg-gray-100 rounded"
+                                className="p-1.5 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
                                 title="Cancel"
                               >
                                 <span className="text-xs font-bold uppercase">Esc</span>
@@ -232,13 +232,13 @@ export default function WordsList() {
                             <div className="flex space-x-2">
                               <button
                                 onClick={() => handleStartEdit(word)}
-                                className="px-2 py-1 text-blue-600 hover:bg-blue-50 rounded text-xs font-medium border border-blue-100"
+                                className="px-2 py-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded text-xs font-medium border border-blue-100 dark:border-blue-800"
                               >
                                 Edit
                               </button>
                               <button
                                 onClick={() => handleDelete(word.id)}
-                                className="p-1.5 text-red-600 hover:bg-red-50 rounded"
+                                className="p-1.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
                                 title="Delete"
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -255,7 +255,7 @@ export default function WordsList() {
           </div>
 
           {totalPages > 1 && (
-            <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div className="p-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/50">
               <span className="text-sm text-gray-500">
                 Page {page + 1} of {totalPages}
               </span>
@@ -263,16 +263,16 @@ export default function WordsList() {
                 <button
                   disabled={page === 0}
                   onClick={() => setPage(p => p - 1)}
-                  className="p-1.5 border rounded bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="p-1.5 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 transition-colors"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                 </button>
                 <button
                   disabled={page >= totalPages - 1}
                   onClick={() => setPage(p => p + 1)}
-                  className="p-1.5 border rounded bg-white hover:bg-gray-50 disabled:opacity-50"
+                  className="p-1.5 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 transition-colors"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                 </button>
               </div>
             </div>
