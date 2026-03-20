@@ -39,6 +39,7 @@ type WordsService interface {
 	FinishPracticeWithGemini(ctx context.Context, userID uuid.UUID) error
 	GetWordsList(ctx context.Context, req modelsDB.GetWordsListReq) ([]modelsDB.GetWordsListResp, int, error)
 	DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error
+	DeleteAllWords(ctx context.Context, userID uuid.UUID) error
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error)
 	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
@@ -444,6 +445,10 @@ func (s *wordsService) GetWordsList(ctx context.Context, req modelsDB.GetWordsLi
 
 func (s *wordsService) DeleteWord(ctx context.Context, wordID string, userID uuid.UUID) error {
 	return s.repo.DeleteWord(ctx, wordID, userID)
+}
+
+func (s *wordsService) DeleteAllWords(ctx context.Context, userID uuid.UUID) error {
+	return s.repo.DeleteAllWords(ctx, userID)
 }
 
 func (s *wordsService) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {

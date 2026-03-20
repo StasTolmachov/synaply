@@ -88,6 +88,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 					r.With(httprate.LimitByIP(20, 1*time.Minute)).Post("/translate", h.Translate)
 					r.Get("/GetMe", h.GetMe)
 					r.Get("/", h.GetWordsList)
+					r.Delete("/all", h.DeleteAllWords)
 					r.Put("/{id}", h.UpdateWordFields)
 					r.Delete("/{id}", h.DeleteWord)
 				})
@@ -1013,6 +1014,25 @@ func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to delete word", "err", err, "word_id", idStr)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (h *Handler) DeleteAllWords(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
+		return
+	}
+
+	err = h.wordsService.DeleteAllWords(ctx, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Internal server error")
+		slogger.Log.ErrorContext(ctx, "Failed to delete all words", "err", err, "user_id", user.ID)
 		return
 	}
 
