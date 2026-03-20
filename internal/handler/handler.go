@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -89,6 +90,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 					r.Get("/GetMe", h.GetMe)
 					r.Get("/", h.GetWordsList)
 					r.Get("/stats", h.GetProgressStats)
+					r.Post("/import", h.ImportWords)
 					r.Delete("/all", h.DeleteAllWords)
 					r.Put("/{id}", h.UpdateWordFields)
 					r.Delete("/{id}", h.DeleteWord)
@@ -1122,6 +1124,57 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
+}
+
+func (h *Handler) ImportWords(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	userCtx, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		return
+	}
+
+	// Parse multipart form
+	err = r.ParseMultipartForm(5 << 20) // 5MB limit
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Failed to parse form")
+		return
+	}
+
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "File is required")
+		return
+	}
+	defer file.Close()
+
+	fileBytes, err := io.ReadAll(file)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to read file")
+		return
+	}
+
+	id, err := uuid.Parse(user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to parse user ID")
+		return
+	}
+
+	err = h.wordsService.ImportWords(ctx, fileBytes, header.Filename, id, user.SourceLang, user.TargetLang)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		slogger.Log.ErrorContext(ctx, "Failed to import words", "error", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words imported successfully"})
 }
 
 func (h *Handler) GetProgressStats(w http.ResponseWriter, r *http.Request) {
