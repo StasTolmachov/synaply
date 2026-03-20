@@ -267,6 +267,12 @@ type WordListResp struct {
 	Comment    string `json:"comment"`
 }
 
+type CreateBatchReq struct {
+	SourceLang string         `json:"source_lang"`
+	TargetLang string         `json:"target_lang"`
+	Words      []WordListResp `json:"words"`
+}
+
 func WordListRespGemToWordListResp(req gemini.WordListResp) WordListResp {
 	return WordListResp{
 		SourceWord: req.SourceWord,

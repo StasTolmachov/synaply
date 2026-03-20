@@ -1080,21 +1080,20 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Ожидаем массив запросов на создание
-	var reqs []models.CreateReq
+	var req models.CreateBatchReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // Ограничение в 1МБ
-	if err := json.NewDecoder(r.Body).Decode(&reqs); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body format")
+		slogger.Log.ErrorContext(ctx, "Invalid request body format in CreateBatchWords", "error", err)
 		return
 	}
 
-	if len(reqs) > 500 {
-		// В условии 500, а в тексте ошибки осталось 100 :)
-		WriteError(w, http.StatusBadRequest, "Too many words in one batch (maximum is 100)")
+	if len(req.Words) > 500 {
+		WriteError(w, http.StatusBadRequest, "Too many words in one batch (maximum is 500)")
 		return
 	}
 
-	err = h.wordsService.CreateBatch(ctx, reqs, user.ID)
+	err = h.wordsService.CreateBatch(ctx, req, user.ID)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to save words")
 		slogger.Log.ErrorContext(ctx, "Failed to CreateBatchWords", "error", err)
