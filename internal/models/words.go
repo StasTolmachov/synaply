@@ -73,6 +73,8 @@ func DBtoResponse(word *modelsDB.Word) *Response {
 		SourceWord: word.SourceWord,
 		TargetWord: word.TargetWord,
 		Comment:    word.Comment,
+		SourceLang: word.SourceLang,
+		TargetLang: word.TargetLang,
 	}
 }
 
@@ -81,6 +83,8 @@ type Response struct {
 	SourceWord string `json:"source_word"`
 	TargetWord string `json:"target_word"`
 	Comment    string `json:"comment"`
+	SourceLang string `json:"source_lang"`
+	TargetLang string `json:"target_lang"`
 }
 
 type Lesson struct {
@@ -88,6 +92,8 @@ type Lesson struct {
 	SourceWord string
 	TargetWord string
 	Comment    string
+	SourceLang string
+	TargetLang string
 
 	// Поля FSRS
 	Due           time.Time
@@ -113,6 +119,8 @@ func LessonToLessonDB(lesson *Lesson) modelsDB.LessonDB {
 		SourceWord:    lesson.SourceWord,
 		TargetWord:    lesson.TargetWord,
 		Comment:       lesson.Comment,
+		SourceLang:    lesson.SourceLang,
+		TargetLang:    lesson.TargetLang,
 		Due:           lesson.Due,
 		Stability:     lesson.Stability,
 		Difficulty:    lesson.Difficulty,
@@ -135,6 +143,8 @@ func LessonDBToLesson(lessonDB *modelsDB.LessonDB) Lesson {
 		SourceWord:    lessonDB.SourceWord,
 		TargetWord:    lessonDB.TargetWord,
 		Comment:       lessonDB.Comment,
+		SourceLang:    lessonDB.SourceLang,
+		TargetLang:    lessonDB.TargetLang,
 		Due:           lessonDB.Due,
 		Stability:     lessonDB.Stability,
 		Difficulty:    lessonDB.Difficulty,
@@ -154,6 +164,8 @@ func LessonWordToResponse(word *Lesson) *Response {
 		SourceWord: word.SourceWord,
 		TargetWord: word.TargetWord,
 		Comment:    word.Comment,
+		SourceLang: word.SourceLang,
+		TargetLang: word.TargetLang,
 	}
 	return resp
 }
@@ -279,4 +291,11 @@ func WordListRespGemToWordListResp(req gemini.WordListResp) WordListResp {
 		TargetWord: req.TargetWord,
 		Comment:    req.Comment,
 	}
+}
+
+type ProgressStats struct {
+	New        int64 `json:"new"`
+	Learning   int64 `json:"learning"`
+	Review     int64 `json:"review"`
+	Relearning int64 `json:"relearning"`
 }

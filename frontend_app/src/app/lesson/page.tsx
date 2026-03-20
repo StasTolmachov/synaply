@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
-import { Loader2, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, ArrowRight, CheckCircle, XCircle, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { useScore } from '@/components/ScoreContext';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
@@ -13,13 +13,13 @@ export default function Lesson() {
   const router = useRouter();
   const { updateScore } = useScore();
   const [loading, setLoading] = useState(true);
-  const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
+  const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string; source_lang?: string; target_lang?: string } | null>(null);
   const [answer, setAnswer] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; showNextBtn: boolean } | null>(null);
   const [error, setError] = useState('');
   const [lessonFinished, setLessonFinished] = useState(false);
-  const [nextWordData, setNextWordData] = useState<{ id: string; source_word: string; target_word: string; comment?: string } | null>(null);
+  const [nextWordData, setNextWordData] = useState<{ id: string; source_word: string; target_word: string; comment?: string; source_lang?: string; target_lang?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -33,7 +33,8 @@ export default function Lesson() {
       sendGAEvent('event', 'lesson_start', {});
       const data = await fetchApi('/lesson/start');
       if (data) {
-        setWord(data.word || data.Word);
+        const wordData = data.word || data.Word;
+        setWord(wordData);
         if (typeof data.total_correct === 'number') {
           updateScore(data.total_correct);
         }
@@ -76,6 +77,9 @@ export default function Lesson() {
 
       if (data.is_correct) {
         setNextWordData(data.next_word);
+        if (word?.target_word) {
+          speak(word.target_word, word.target_lang);
+        }
       } else if (data.next_word && data.next_word.id !== word?.id) {
         // If the backend returned a DIFFERENT word on failure, store it as next
         setNextWordData(data.next_word);
@@ -110,24 +114,34 @@ export default function Lesson() {
     router.push('/dashboard');
   };
 
+  const speak = (text: string, lang?: string) => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    if (lang) {
+      utterance.lang = lang;
+    }
+    window.speechSynthesis.speak(utterance);
+  };
+
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
       </div>
     );
   }
 
   if (lessonFinished) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-md w-full text-center space-y-6 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
-          <h2 className="text-2xl font-bold text-gray-900">Lesson Complete!</h2>
-          <p className="text-gray-600">You have no more words to review right now.</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
+        <div className="max-w-md w-full text-center space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+          <CheckCircle className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Lesson Complete!</h2>
+          <p className="text-gray-600 dark:text-gray-400">You have no more words to review right now.</p>
           <button
             onClick={finishLesson}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Back to Dashboard
           </button>
@@ -138,12 +152,12 @@ export default function Lesson() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-md w-full text-center space-y-6 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-          <XCircle className="w-16 h-16 text-red-500 mx-auto" />
-          <h2 className="text-xl font-bold text-gray-900">Oops, an error occurred</h2>
-          <p className="text-gray-600">{error}</p>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
+        <div className="max-w-md w-full text-center space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+          <XCircle className="w-16 h-16 text-red-500 dark:text-red-400 mx-auto" />
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Oops, an error occurred</h2>
+          <p className="text-gray-600 dark:text-gray-400">{error}</p>
+          <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
             Go back
           </Link>
         </div>
@@ -152,20 +166,22 @@ export default function Lesson() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50 flex-col py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950 flex-col py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto w-full">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Vocabulary Review</h1>
-          <button onClick={finishLesson} className="text-sm font-medium text-gray-500 hover:text-gray-700">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Vocabulary Review</h1>
+          <button onClick={finishLesson} className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
             End Lesson
           </button>
         </div>
 
-        <div className="bg-white shadow-sm border border-gray-200 rounded-2xl overflow-hidden p-8">
+        <div className="bg-white dark:bg-gray-900 shadow-sm border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden p-8">
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-2">{word?.source_word}</h2>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <h2 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">{word?.source_word}</h2>
+            </div>
             {word?.comment && feedback && (
-              <p className="text-sm text-gray-500">{word?.comment}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{word?.comment}</p>
             )}
           </div>
 
@@ -180,14 +196,14 @@ export default function Lesson() {
                 onDrop={e => e.preventDefault()}
                 readOnly={!!feedback}
                 placeholder="Type the translation..."
-                className="block w-full text-center text-lg rounded-xl border-gray-300 border-2 px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-blue-500 shadow-sm read-only:bg-gray-50"
+                className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50"
                 autoFocus
                 autoComplete="off"
               />
             </div>
 
             {feedback && (
-              <div className={`p-4 rounded-xl flex items-center ${feedback.isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+              <div className={`p-4 rounded-xl flex items-center ${feedback.isCorrect ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-300'}`}>
                 {feedback.isCorrect ? (
                   <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" />
                 ) : (
@@ -195,7 +211,17 @@ export default function Lesson() {
                 )}
                 <div className="flex-1">
                   <p className="font-medium">{feedback.isCorrect ? 'Correct!' : 'Incorrect.'}</p>
-                  <p className="text-sm mt-1">The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong></p>
+                  <p className="text-sm mt-1 flex items-center gap-2">
+                    The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong>
+                    <button
+                      type="button"
+                      onClick={() => word?.target_word && speak(word.target_word, word.target_lang)}
+                      className="p-1 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      title="Listen"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
+                  </p>
                 </div>
               </div>
             )}
@@ -204,14 +230,14 @@ export default function Lesson() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 transition-colors"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
               >
                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? 'Check Answer' : "Don't remember")}
               </button>
             ) : (
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 dark:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500 transition-colors"
               >
                 Continue
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -220,7 +246,7 @@ export default function Lesson() {
           </form>
 
           {feedback && word?.source_word && word?.target_word && (
-            <div className="mt-8 pt-8 border-t border-gray-100 flex justify-center">
+            <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 flex justify-center">
               <AIWordInfoCard key={word.id} sourceWord={word.source_word} targetWord={word.target_word} />
             </div>
           )}
