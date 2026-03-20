@@ -48,6 +48,12 @@ type WordsService interface {
 	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
 	ImportWords(ctx context.Context, file []byte, fileName string, userID uuid.UUID, sourceLang, targetLang string) error
 	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
+
+	CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
+	UpdatePublicWordList(ctx context.Context, listID uuid.UUID, req models.CreatePublicWordListRequest, userID uuid.UUID) error
+	AddPublicListToUser(ctx context.Context, listID uuid.UUID, userID uuid.UUID) error
 }
 
 type wordsService struct {
@@ -599,4 +605,86 @@ func (s *wordsService) ImportWords(ctx context.Context, file []byte, fileName st
 
 func (s *wordsService) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {
 	return s.repo.GetProgressStats(ctx, userID)
+}
+
+func (s *wordsService) CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error) {
+	list := modelsDB.PublicWordList{
+		UserID:      userID,
+		Title:       req.Title,
+		Description: req.Description,
+		SourceLang:  req.SourceLang,
+		TargetLang:  req.TargetLang,
+	}
+
+	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
+	for _, w := range req.Words {
+		items = append(items, modelsDB.PublicWordListItem{
+			SourceWord: w.SourceWord,
+			TargetWord: w.TargetWord,
+			Comment:    w.Comment,
+		})
+	}
+
+	return s.repo.CreatePublicWordList(ctx, list, items)
+}
+
+func (s *wordsService) GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error) {
+	return s.repo.GetPublicWordLists(ctx, sourceLang, targetLang)
+}
+
+func (s *wordsService) GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error) {
+	return s.repo.GetPublicWordListByID(ctx, listID)
+}
+
+func (s *wordsService) UpdatePublicWordList(ctx context.Context, listID uuid.UUID, req models.CreatePublicWordListRequest, userID uuid.UUID) error {
+	// Check if list exists and user is the owner
+	detail, err := s.repo.GetPublicWordListByID(ctx, listID)
+	if err != nil {
+		return err
+	}
+
+	if detail.UserID != userID {
+		return errors.New("unauthorized: you can only edit your own lists")
+	}
+
+	list := modelsDB.PublicWordList{
+		ID:          listID,
+		Title:       req.Title,
+		Description: req.Description,
+	}
+
+	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
+	for _, w := range req.Words {
+		items = append(items, modelsDB.PublicWordListItem{
+			SourceWord: w.SourceWord,
+			TargetWord: w.TargetWord,
+			Comment:    w.Comment,
+		})
+	}
+
+	return s.repo.UpdatePublicWordList(ctx, list, items)
+}
+
+func (s *wordsService) AddPublicListToUser(ctx context.Context, listID uuid.UUID, userID uuid.UUID) error {
+	detail, err := s.repo.GetPublicWordListByID(ctx, listID)
+	if err != nil {
+		return err
+	}
+
+	reqs := make([]modelsDB.CreateReq, 0, len(detail.Items))
+	for _, item := range detail.Items {
+		sourceWord := strings.ToLower(strings.TrimSpace(item.SourceWord))
+		targetWord := strings.ToLower(strings.TrimSpace(item.TargetWord))
+
+		reqs = append(reqs, modelsDB.CreateReq{
+			UserID:     userID,
+			SourceLang: detail.SourceLang,
+			TargetLang: detail.TargetLang,
+			SourceWord: sourceWord,
+			TargetWord: targetWord,
+			Comment:    item.Comment,
+		})
+	}
+
+	return s.repo.CreateBatch(ctx, reqs)
 }

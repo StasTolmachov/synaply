@@ -55,6 +55,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning={true}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const savedTheme = localStorage.getItem('theme');
+                const root = document.documentElement;
+                root.classList.remove('light', 'dark');
+                let theme = 'light';
+                if (savedTheme === 'dark') {
+                  theme = 'dark';
+                } else if (savedTheme === 'light') {
+                  theme = 'light';
+                } else {
+                  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                root.classList.add(theme);
+                root.style.colorScheme = theme;
+              })()
+            `,
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen`} suppressHydrationWarning={true}>
         <ServiceWorkerRegister />
         <ThemeProvider>

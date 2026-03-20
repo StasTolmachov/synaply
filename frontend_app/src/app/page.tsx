@@ -9,6 +9,16 @@ export default function LandingPage() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const flags = [
+    '🇺🇸', '🇬🇧', '🇩🇪', '🇫🇷', '🇪🇸', '🇮🇹', '🇵🇹', '🇳🇱', '🇵🇱', '🇷🇺', '🇯🇵', '🇰🇷', '🇨🇳', '🇹🇷', '🇮🇩', '🇺🇦', '🇬🇷', '🇨🇿',
+    '🇸🇪', '🇳🇴', '🇩🇰', '🇫🇮', '🇭🇺', '🇷🇴', '🇧🇬', '🇸🇰', '🇭🇷', '🇷🇸', '🇮🇪', '🇦🇹', '🇨🇭', '🇧🇪', '🇲🇽', '🇨🇦', '🇦🇺', '🇳🇿',
+    '🇧🇷', '🇦🇷', '🇨🇱', '🇨🇴', '🇵🇪', '🇿🇦', '🇪🇬', '🇸🇦', '🇦🇪', '🇮🇱', '🇮🇳', '🇵🇰', '🇧🇩', '🇻🇳', '🇹🇭', '🇲🇾', '🇵🇭', '🇸🇬',
+    '🇭🇰', '🇹🇼', '🇰🇿', '🇺🇿', '🇦🇿', '🇬🇪', '🇦🇲', '🇱🇹', '🇱🇻', '🇪🇪', '🇮🇸', '🇱🇺', '🇲🇨', '🇨🇾', '🇲🇹', '🇻🇦', '🇦🇱', '🇲🇪',
+    '🇽🇰', '🇲🇰', '🇧🇦', '🇲🇩', '🇰🇬', '🇹🇯', '🇹🇲', '🇲🇳', '🇳🇵', '🇱🇰', '🇲🇲', '🇰🇭', '🇱🇦', '🇰🇵', '🇲🇦', '🇩🇿', '🇹🇳', '🇱🇧',
+    '🇯🇴', '🇮🇶', '🇰🇼', '🇶🇦', '🇴🇲', '🇾🇪', '🇳🇬', '🇬🇭', '🇰🇪', '🇪🇹', '🇹🇿', '🇺🇬', '🇷🇼', '🇨🇲', '🇨🇮', '🇸🇳', '🇦🇴', '🇲🇿',
+    '🇨🇺', '🇯🇲', '🇵🇷', '🇩🇴', '🇨🇷', '🇵🇦'
+  ]; // Approximately 114 flags (18 + 96 = 114)
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -18,6 +28,33 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+      <style jsx global>{`
+        @keyframes wave {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          25% { transform: translateY(-3px) rotate(-3deg); }
+          75% { transform: translateY(3px) rotate(3deg); }
+        }
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-wave {
+          display: inline-block;
+          animation: wave 3s ease-in-out infinite;
+        }
+        .animate-scroll {
+          display: flex;
+          width: max-content;
+          animation: scroll 40s linear infinite;
+        }
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+        .mask-fade {
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+      `}</style>
       {/* Header/Nav */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,12 +96,12 @@ export default function LandingPage() {
             Next-Gen Language Learning
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent">
-            Learn words the way <br />
-            your brain works
+            Master Any Language <br />
+            with AI & Science
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            An intelligent system that adapts to your memory. 
-            Personalized AI-powered practice for the words you actually need.
+            The intelligent vocabulary builder powered by an <strong>enhanced FSRS+ algorithm</strong> and Gemini AI. 
+            Learn what matters, remember it forever.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
@@ -90,8 +127,23 @@ export default function LandingPage() {
             <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Gemini Integration</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-1">∞</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Infinite Lessons</div>
+            <div className="text-3xl font-bold text-blue-600 mb-1">114</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold text-center relative overflow-hidden">
+              Languages
+              <div className="mt-2 overflow-hidden flex whitespace-nowrap mask-fade">
+                <div className="animate-scroll flex gap-2">
+                  {[...flags, ...flags].map((flag, i) => (
+                    <span 
+                      key={i} 
+                      className="animate-wave text-xl" 
+                      style={{ animationDelay: `${(i % flags.length) * 0.1}s` }}
+                    >
+                      {flag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-blue-600 mb-1">DeepL</div>
@@ -116,14 +168,14 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-8">
                 <Brain className="w-7 h-7 text-purple-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Scientific Approach</h3>
+              <h3 className="text-2xl font-bold mb-4">Advanced FSRS+</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                We use the <strong>FSRS</strong> (Free Spaced Repetition Scheduler) mathematical algorithm. 
-                The system calculates the difficulty of each word and your memory stability to remind you at the perfect moment.
+                We utilize the <strong>FSRS</strong> (Free Spaced Repetition Scheduler), 
+                extensively <strong>enhanced with our proprietary optimization algorithms</strong> to predict your memory decay with unprecedented accuracy.
               </p>
               <div className="flex items-center gap-2 text-purple-600 font-semibold text-sm">
                 <Target className="w-4 h-4" />
-                Minimum effort, maximum result
+                Scientifically proven memory optimization
               </div>
             </div>
 
@@ -131,14 +183,14 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-8">
                 <Infinity className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Smart Learning Flow</h3>
+              <h3 className="text-2xl font-bold mb-4">Public Word Lists</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Our lessons dynamically balance between 30% new words and 70% words for review. 
-                Study for 5 minutes or an hour — the system adjusts to your time.
+                Don&apos;t know where to start? Explore and import themed word lists created by our community. 
+                From TOEFL prep to "Travel Essentials" — find what you need.
               </p>
               <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm">
-                <Zap className="w-4 h-4" />
-                Infinite lesson without boredom
+                <Database className="w-4 h-4" />
+                Ready-to-use vocabulary for any goal
               </div>
             </div>
 
@@ -146,18 +198,18 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-8">
                 <Sparkles className="w-7 h-7 text-amber-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">AI Practice with Gemini</h3>
+              <h3 className="text-2xl font-bold mb-4">Gemini AI Tutor</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Go beyond individual word translations. Practice with real-world sentences created by AI based on your personal vocabulary.
+                Practice in context. Gemini AI generates personalized examples and exercises using the specific words you are currently learning.
               </p>
               <ul className="space-y-3">
                 <li className="flex gap-3 text-sm text-gray-600">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span><strong>Contextual Practice:</strong> Sentences with the words you are learning right now.</span>
+                  <span><strong>Smart Examples:</strong> Sentences tailored to your level.</span>
                 </li>
                 <li className="flex gap-3 text-sm text-gray-600">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span><strong>Feedback:</strong> Instant corrections and explanations from an AI tutor.</span>
+                  <span><strong>Interactive Practice:</strong> Real-time feedback on your usage.</span>
                 </li>
               </ul>
             </div>
@@ -174,15 +226,15 @@ export default function LandingPage() {
                 <Bot className="w-4 h-4" />
                 Artificial Intelligence Magic
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight">More than just a translator</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight">Master language with AI Precision</h2>
               <div className="space-y-8">
                 <div className="flex gap-6">
                   <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
                     <MessageSquare className="w-6 h-6 text-emerald-600" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">Deep Word Understanding</h4>
-                    <p className="text-gray-600">Our AI will tell you about usage nuances, synonyms, and the cultural context of each word. It&apos;s like having a personal linguist in your pocket.</p>
+                    <h4 className="text-xl font-bold mb-2">Personal AI Tutor</h4>
+                    <p className="text-gray-600">Gemini AI analyzes your vocabulary and provides usage nuances, synonyms, and cultural context for every word you learn.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -190,8 +242,8 @@ export default function LandingPage() {
                     <Database className="w-6 h-6 text-emerald-600" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">Thematic List Generation</h4>
-                    <p className="text-gray-600">Want to prepare for a trip or an interview? Just ask the AI to create a list of the most essential words for your goal.</p>
+                    <h4 className="text-xl font-bold mb-2">Smart Public Lists</h4>
+                    <p className="text-gray-600">Join thousands of users sharing their curated word lists. From academic vocabulary to niche professional terms.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -299,10 +351,11 @@ export default function LandingPage() {
               </Link>
             )}
           </div>
-          <div className="mt-16 flex justify-center items-center gap-8 grayscale opacity-50">
+          <div className="mt-16 flex flex-wrap justify-center items-center gap-8 grayscale opacity-50">
              <div className="text-xl font-bold tracking-tighter">AI-POWERED</div>
-             <div className="text-xl font-bold tracking-tighter">FSRS-BASED</div>
+             <div className="text-xl font-bold tracking-tighter">ENHANCED FSRS+</div>
              <div className="text-xl font-bold tracking-tighter">DEEPL-READY</div>
+             <div className="text-xl font-bold tracking-tighter">114 LANGUAGES</div>
           </div>
         </div>
       </section>
