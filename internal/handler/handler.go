@@ -25,11 +25,11 @@ import (
 const ctxWithTimeout time.Duration = time.Second * 5
 
 type Handler struct {
-	wordsService service.WordsServiceI
+	wordsService service.WordsService
 	userService  service.UserService
 }
 
-func NewHandler(ws service.WordsServiceI, us service.UserService) *Handler {
+func NewHandler(ws service.WordsService, us service.UserService) *Handler {
 	return &Handler{wordsService: ws, userService: us}
 }
 
@@ -146,6 +146,10 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.DebugContext(r.Context(), "Invalid request body in Login", "err", err)
+		return
+	}
+	if req.Email == "" || req.Password == "" {
+		WriteError(w, http.StatusBadRequest, "Email and password are required")
 		return
 	}
 
