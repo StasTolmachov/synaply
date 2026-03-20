@@ -195,6 +195,11 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		slogger.Log.DebugContext(r.Context(), "Registration failed: empty fields", "req", req)
 		return
 	}
+	if req.SourceLang == req.TargetLang {
+		WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
+		slogger.Log.DebugContext(r.Context(), "Registration failed: target lang cannot be same as source lang", "req", req)
+		return
+	}
 	if err := utils.ValidatePassword(req.Password); err != nil {
 		WriteError(w, http.StatusBadRequest, err.Error())
 		slogger.Log.DebugContext(r.Context(), "Registration failed: invalid password", "err", err)
@@ -429,6 +434,10 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 			WriteError(w, http.StatusBadRequest, err.Error())
 			return
 		}
+	}
+	if req.SourceLang != nil && req.TargetLang != nil && *req.SourceLang == *req.TargetLang {
+		WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
+		return
 	}
 
 	updatedUser, err := h.userService.Update(ctx, targetID, req)
