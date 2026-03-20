@@ -224,6 +224,12 @@ func (p *wordsPostgres) DeleteWord(ctx context.Context, wordID string, userID uu
 	return err
 }
 
+func (p *wordsPostgres) DeleteAllWords(ctx context.Context, userID uuid.UUID) error {
+	query := `DELETE FROM words WHERE user_id = $1`
+	_, err := p.db.db.ExecContext(ctx, query, userID)
+	return err
+}
+
 func (p *wordsPostgres) UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error {
 	query := `UPDATE words SET source_word = $1, target_word = $2, comment = $3, updated_at = now() 
               WHERE id = $4 AND user_id = $5`
