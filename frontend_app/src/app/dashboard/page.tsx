@@ -6,9 +6,10 @@ import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
+import { OnboardingModal } from '@/components/OnboardingModal';
 
 const proficiencyLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -56,6 +57,8 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isSavingBatch, setIsSavingBatch] = useState(false);
   const [batchMessage, setBatchMessage] = useState({ type: '', text: '' });
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const wordsPerPage = 30;
 
   useEffect(() => {
@@ -70,6 +73,16 @@ export default function Dashboard() {
         const langData = data?.langCodeResp || data?.LangCodeResp;
         if (langData) {
           setUserLangs(langData);
+          
+          // Check for onboarding
+          const id = data.id || data.ID;
+          if (id) {
+            setUserId(id.toString());
+            const hasSeen = localStorage.getItem(`onboarding_seen_${id}`);
+            if (!hasSeen) {
+              setShowOnboarding(true);
+            }
+          }
         }
         setLoading(false);
       })
@@ -613,6 +626,16 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+      {showOnboarding && (
+        <OnboardingModal 
+          onClose={() => {
+            setShowOnboarding(false);
+            if (userId) {
+              localStorage.setItem(`onboarding_seen_${userId}`, 'true');
+            }
+          }} 
+        />
+      )}
     </div>
   );
 }
