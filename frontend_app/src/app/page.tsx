@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare } from 'lucide-react';
+import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold mb-6 animate-fade-in">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold mb-6 animate-fade-in border border-blue-100">
             Next-Gen Language Learning
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent">
@@ -63,99 +63,101 @@ export default function LandingPage() {
             your brain works
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            An intelligent language learning system that adapts to your memory. 
-            Personalized AI-powered practice for words you actually use.
+            An intelligent system that adapts to your memory. 
+            Personalized AI-powered practice for the words you actually need.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
               className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-200 flex items-center justify-center gap-2"
             >
-              Start learning for free
+              Try for free
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Key Question */}
-      <section className="py-20 bg-gray-50 border-y border-gray-100">
+      {/* Stats/Quick Features */}
+      <section className="py-12 border-y border-gray-100 bg-white">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-1">FSRS</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Memory Algorithm</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-1">AI</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Gemini Integration</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-1">∞</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Infinite Lessons</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-1">DeepL</div>
+            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Accurate Translation</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Features */}
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Why does it work better than regular flashcards?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              We don&apos;t force you to repeat the same things in endless loops. 
-              Our system analyzes your every move and builds the perfect learning trajectory.
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold mb-6">Why is WordsGo more effective than regular flashcards?</h2>
+            <p className="text-gray-600 max-w-3xl mx-auto text-xl">
+              We don&apos;t force you to repeat the same things endlessly. 
+              The system analyzes your every answer and builds the perfect learning trajectory.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
-                <Brain className="w-6 h-6 text-purple-600" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-8">
+                <Brain className="w-7 h-7 text-purple-600" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Your personal memory algorithm</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Forget about random lessons. We use the advanced mathematical algorithm of spaced repetition (FSRS). 
-                The system calculates the difficulty level of each word and the stability of your memory.
+              <h3 className="text-2xl font-bold mb-4">Scientific Approach</h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                We use the <strong>FSRS</strong> (Free Spaced Repetition Scheduler) mathematical algorithm. 
+                The system calculates the difficulty of each word and your memory stability to remind you at the perfect moment.
               </p>
-              <p className="text-gray-600 mt-4 italic text-sm">
-                Study less, but remember forever.
-              </p>
+              <div className="flex items-center gap-2 text-purple-600 font-semibold text-sm">
+                <Target className="w-4 h-4" />
+                Minimum effort, maximum result
+              </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-                <Infinity className="w-6 h-6 text-blue-600" />
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-8">
+                <Infinity className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Learn at your own pace. Endlessly.</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Our smart lesson generation algorithm creates the perfect balance: 30% completely new words and 70% words needing review.
+              <h3 className="text-2xl font-bold mb-4">Smart Learning Flow</h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Our lessons dynamically balance between 30% new words and 70% words for review. 
+                Study for 5 minutes or an hour — the system adjusts to your time.
               </p>
-              <p className="text-gray-600 mt-4 text-sm leading-relaxed">
-                Want to study for 5 minutes or 2 hours? Our &quot;endless lesson&quot; system smoothly mixes in words, 
-                dynamically updating their weights in real-time.
-              </p>
+              <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm">
+                <Zap className="w-4 h-4" />
+                Infinite lesson without boredom
+              </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
-                <Sparkles className="w-6 h-6 text-amber-600" />
+            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-8">
+                <Sparkles className="w-7 h-7 text-amber-600" />
               </div>
-              <h3 className="text-xl font-bold mb-4">AI Practice with Gemini</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Take your learning beyond flashcards. Practice translating sentences based on your vocabulary. 
-                Our AI tutor creates tasks that match your current level and chosen topics.
+              <h3 className="text-2xl font-bold mb-4">AI Practice with Gemini</h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Go beyond individual word translations. Practice with real-world sentences created by AI based on your personal vocabulary.
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2">
-                  <CheckCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                  <span><strong>Contextual practice:</strong> Sentences generated using words you've already learned.</span>
+              <ul className="space-y-3">
+                <li className="flex gap-3 text-sm text-gray-600">
+                  <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
+                  <span><strong>Contextual Practice:</strong> Sentences with the words you are learning right now.</span>
                 </li>
-                <li className="flex gap-2">
-                  <CheckCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                  <span><strong>Instant Feedback:</strong> Real-time corrections and explanations from a patient AI teacher.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6">
-                <Bot className="w-6 h-6 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">Artificial intelligence in every word</h3>
-              <p className="text-gray-600 leading-relaxed">
-                A simple dry translation isn&apos;t enough for fluent communication. 
-                Our app is integrated with advanced neural networks.
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span><strong>Perfect translation:</strong> Deep machine learning for accurate native options.</span>
-                </li>
-                <li className="flex gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span><strong>Smart context (AI):</strong> Instant grammar references and usage examples.</span>
+                <li className="flex gap-3 text-sm text-gray-600">
+                  <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
+                  <span><strong>Feedback:</strong> Instant corrections and explanations from an AI tutor.</span>
                 </li>
               </ul>
             </div>
@@ -163,42 +165,105 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* AI Detailed Section */}
+      <section className="py-24 px-4 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <div className="lg:w-1/2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold mb-6">
+                <Bot className="w-4 h-4" />
+                Artificial Intelligence Magic
+              </div>
+              <h2 className="text-4xl font-bold mb-8 leading-tight">More than just a translator</h2>
+              <div className="space-y-8">
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">Deep Word Understanding</h4>
+                    <p className="text-gray-600">Our AI will tell you about usage nuances, synonyms, and the cultural context of each word. It&apos;s like having a personal linguist in your pocket.</p>
+                  </div>
+                </div>
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+                    <Database className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">Thematic List Generation</h4>
+                    <p className="text-gray-600">Want to prepare for a trip or an interview? Just ask the AI to create a list of the most essential words for your goal.</p>
+                  </div>
+                </div>
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+                    <Languages className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-2">DeepL Precision</h4>
+                    <p className="text-gray-600">We use the world&apos;s best translation algorithms to ensure you learn only correct and natural language options.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="lg:w-1/2 relative">
+              <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl">
+                <div className="bg-gray-900 rounded-[2.8rem] overflow-hidden p-8 aspect-video flex flex-col justify-center">
+                  <div className="space-y-4">
+                    <div className="h-2 w-24 bg-blue-500 rounded-full"></div>
+                    <div className="h-4 w-full bg-white/10 rounded-full"></div>
+                    <div className="h-4 w-3/4 bg-white/10 rounded-full"></div>
+                    <div className="pt-6 flex gap-3">
+                       <div className="px-4 py-2 bg-emerald-500/20 border border-emerald-500/50 rounded-lg text-emerald-400 text-xs font-mono">Gemini AI analyzing...</div>
+                    </div>
+                    <div className="mt-4 p-4 bg-white/5 rounded-2xl border border-white/10">
+                      <p className="text-blue-400 text-sm italic">&quot;This word is often used in informal settings, for example...&quot;</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-400/20 blur-3xl rounded-full"></div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-400/20 blur-3xl rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Steps */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">How does it work?</h2>
-            <p className="text-gray-600">3 simple steps to fluency</p>
+            <h2 className="text-4xl font-bold mb-4">How does it work?</h2>
+            <p className="text-gray-600 text-lg">3 simple steps to language fluency</p>
           </div>
 
           <div className="space-y-12">
             {[
               {
                 step: "1",
-                title: "Add or translate words in one click",
-                description: "Met an unfamiliar word in a book, movie, or article? Just type it in. The system will instantly translate it into your language and add it to your personal dictionary."
+                title: "Add or Translate Words",
+                description: "Met an unfamiliar word in a book or movie? Just type it in. The system will instantly translate it via DeepL and add it to your personal dictionary."
               },
               {
                 step: "2",
-                title: "Launch an endless smart lesson",
-                description: "Our algorithm will instantly pull from the database exactly the words your memory needs right now. Study on the subway, in line, or at home — the lesson lasts exactly as long as you have time for."
+                title: "Launch a Smart Lesson",
+                description: "Our algorithm will select exactly those words that your memory is about to forget. Study on the subway, in line, or at home — the lesson lasts as long as you have time."
               },
               {
                 step: "3",
-                title: "Practice with your own AI Tutor",
-                description: "Challenge yourself with custom translation exercises. Our AI uses your vocabulary to build sentences that test your knowledge in real-world contexts."
+                title: "Practice with an AI Tutor",
+                description: "Test your knowledge in a real-world context. The AI will compose sentences using your words and help correct mistakes in real-time."
               },
               {
                 step: "4",
-                title: "Track your progress",
-                description: "Every correct answer and successful practice session boosts your rating. Watch as words move from the \"new\" status to \"learned forever\"."
+                title: "Track Your Progress",
+                description: "Every correct answer increases your rating and memory stability. Watch as words move from \"new\" status to the \"learned forever\" category."
               }
             ].map((item, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row gap-8 items-start">
-                <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">
+              <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
+                <div className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0 shadow-lg shadow-blue-200 group-hover:scale-110 transition-transform">
                   {item.step}
                 </div>
-                <div>
+                <div className="pt-2">
                   <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
                   <p className="text-lg text-gray-600 leading-relaxed">{item.description}</p>
                 </div>
@@ -209,21 +274,36 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gray-900 text-white overflow-hidden relative">
+      <section className="py-24 px-4 bg-gray-900 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500/10 blur-[100px] rounded-full"></div>
         <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-purple-500/10 blur-[100px] rounded-full"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-8">Ready to hack your memory?</h2>
-          <p className="text-xl text-gray-400 mb-12">
-            Join us and try the most scientifically proven system for learning foreign words.
+          <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to hack your memory?</h2>
+          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            Join WordsGo and try the most scientifically proven system for learning foreign words.
           </p>
-          <Link 
-            href={isLoggedIn ? "/dashboard" : "/register"}
-            className="inline-flex px-10 py-5 bg-white text-gray-900 rounded-full font-bold text-lg hover:bg-gray-100 hover:scale-105 transition-all"
-          >
-            Create an account and start
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link 
+              href={isLoggedIn ? "/dashboard" : "/register"}
+              className="px-10 py-5 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-900/40"
+            >
+              Create free account
+            </Link>
+            {!isLoggedIn && (
+              <Link 
+                href="/login"
+                className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
+              >
+                Already have an account? Sign in
+              </Link>
+            )}
+          </div>
+          <div className="mt-16 flex justify-center items-center gap-8 grayscale opacity-50">
+             <div className="text-xl font-bold tracking-tighter">AI-POWERED</div>
+             <div className="text-xl font-bold tracking-tighter">FSRS-BASED</div>
+             <div className="text-xl font-bold tracking-tighter">DEEPL-READY</div>
+          </div>
         </div>
       </section>
     </div>

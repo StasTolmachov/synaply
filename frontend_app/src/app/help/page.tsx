@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Plus, Brain, List, Search, Star, Languages, XCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Plus, Brain, List, Search, Star, Languages, XCircle, Sparkles, GraduationCap, Layers, Lightbulb } from 'lucide-react';
 
 export default function HelpPage() {
   return (
@@ -17,6 +17,33 @@ export default function HelpPage() {
         </div>
 
         <div className="space-y-12">
+          {/* Section: Best Practice */}
+          <section className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-lg p-8 text-white">
+            <h2 className="text-2xl font-bold mb-6 flex items-center">
+              <Lightbulb className="w-6 h-6 mr-3 text-yellow-300" />
+              Best Practice for Success
+            </h2>
+            <div className="space-y-4 text-blue-50">
+              <p className="text-lg leading-relaxed">
+                For the most effective learning experience, we recommend this simple 3-step strategy:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                  <div className="text-2xl font-bold mb-2">01</div>
+                  <p className="text-sm">Add about <strong>100 words</strong> focusing on a <strong>single topic</strong> (e.g., Travel or Business) to create context.</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                  <div className="text-2xl font-bold mb-2">02</div>
+                  <p className="text-sm">Master these words through <strong>daily reviews</strong> until they feel familiar and natural.</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                  <div className="text-2xl font-bold mb-2">03</div>
+                  <p className="text-sm">Switch to <strong>AI Practice</strong> to use your new vocabulary in full sentences and real-world contexts.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Section: Getting Started */}
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
@@ -24,46 +51,53 @@ export default function HelpPage() {
               Getting Started
             </h2>
             <p className="text-gray-600 mb-4 text-lg">
-              WordsGo is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and AI-powered practice.
+              WordsGo is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
               <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
                 <h3 className="font-bold text-blue-900 mb-2">Step 1: Add Words</h3>
-                <p className="text-sm text-blue-800">Start by adding words or phrases you want to learn from your Dashboard.</p>
+                <p className="text-sm text-blue-800">Add words manually or use AI to generate lists by topics and levels.</p>
               </div>
               <div className="p-4 bg-purple-50 rounded-xl border border-purple-100">
-                <h3 className="font-bold text-purple-900 mb-2">Step 2: Review Daily</h3>
-                <p className="text-sm text-purple-800">Use the Vocabulary Review to memorize words using spaced repetition logic.</p>
+                <h3 className="font-bold text-purple-900 mb-2">Step 2: Daily Practice</h3>
+                <p className="text-sm text-purple-800">Use Vocabulary Review to memorize words using the FSRS algorithm.</p>
               </div>
             </div>
           </section>
 
-          {/* Section: Dashboard & Adding Words */}
+          {/* Section: Adding Words */}
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
               <Plus className="w-6 h-6 mr-3 text-blue-600" />
-              Dashboard & Adding Words
+              Adding Words
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div className="flex items-start">
                 <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 mr-4">1</div>
                 <div>
                   <h3 className="font-bold text-gray-900">Manual Entry</h3>
-                  <p className="text-gray-600 text-sm">Enter the word in your native language and its translation. You can also add comments or usage context for better learning.</p>
+                  <p className="text-gray-600 text-sm">Enter the word in the language you are learning and its translation. You can add a comment or context for better memorization.</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 mr-4">2</div>
                 <div>
-                  <h3 className="font-bold text-gray-900">Auto-translation</h3>
-                  <p className="text-gray-600 text-sm">Click the <strong>"Auto-translate empty field"</strong> link to automatically fill the missing translation using our translation service.</p>
+                  <h3 className="font-bold text-gray-900">Auto-translate</h3>
+                  <p className="text-gray-600 text-sm">Use the <strong>"Auto-translate"</strong> feature for instant translation via the DeepL service.</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 mr-4">3</div>
                 <div>
-                  <h3 className="font-bold text-gray-900">AI Insights (Gemini)</h3>
-                  <p className="text-gray-600 text-sm">After entering a word, an AI-powered card will appear below, providing additional information like synonyms, usage examples, and grammatical tips.</p>
+                  <h3 className="font-bold text-gray-900">List Generation (AI Word List)</h3>
+                  <p className="text-gray-600 text-sm">Choose a level (A1-C2) and a topic, and AI (Gemini) will compile a list of relevant words for you, which can be added to your dictionary with one click.</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 mr-4">4</div>
+                <div>
+                  <h3 className="font-bold text-gray-900">AI Insights</h3>
+                  <p className="text-gray-600 text-sm">For each word, AI can provide synonyms, usage examples, and grammatical tips.</p>
                 </div>
               </div>
             </div>
@@ -73,20 +107,19 @@ export default function HelpPage() {
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
               <BookOpen className="w-6 h-6 mr-3 text-green-600" />
-              Vocabulary Review (Spaced Repetition)
+              Spaced Repetition
             </h2>
             <p className="text-gray-600 mb-6 italic">
-              WordsGo uses a spaced repetition algorithm (FSRS) to determine exactly when you should review each word for maximum retention.
+              WordsGo uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.
             </p>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="border-l-4 border-green-200 pl-4 py-2">
-                <h3 className="font-bold text-gray-900">The Review Process</h3>
+                <h3 className="font-bold text-gray-900">Review Process</h3>
                 <ul className="list-disc list-inside text-sm text-gray-600 mt-2 space-y-2">
-                  <li>You will be shown the word in your source language.</li>
-                  <li>Type the translation and press <strong>Enter</strong> or click <strong>Check Answer</strong>.</li>
-                  <li>If you don't remember, click <strong>"Don't remember"</strong> to see the answer.</li>
-                  <li>Review the AI card for the word to reinforce your memory.</li>
-                  <li>The algorithm will reschedule the word based on whether you got it right or wrong.</li>
+                  <li>You are shown a word in the source language.</li>
+                  <li>Enter the translation and press <strong>Enter</strong> or <strong>Check Answer</strong>.</li>
+                  <li>If you don't remember — click <strong>"Don't remember"</strong> to see the answer.</li>
+                  <li>The algorithm will recalculate the next review date based on your response.</li>
                 </ul>
               </div>
             </div>
@@ -95,61 +128,58 @@ export default function HelpPage() {
           {/* Section: AI Practice */}
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Brain className="w-6 h-6 mr-3 text-purple-600" />
+              <Sparkles className="w-6 h-6 mr-3 text-purple-600" />
               AI Practice: Sentence Translation
             </h2>
             <p className="text-gray-600 mb-6">
-              This feature goes beyond just words. It helps you practice grammar and context by translating whole sentences.
+              This feature helps train grammar and context by translating entire sentences composed by AI specifically for you.
             </p>
             <div className="grid grid-cols-1 gap-6">
               <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
                 <h3 className="font-bold text-gray-900 mb-2">How it works:</h3>
                 <ol className="list-decimal list-inside text-sm text-gray-600 space-y-2">
-                  <li>Choose a <strong>topic</strong> (e.g., "Business", "Travel") or leave it blank to use your own word list.</li>
-                  <li>AI generates several sentences for you to translate.</li>
-                  <li>Submit your translation for detailed feedback.</li>
-                  <li>The AI acts as a teacher, highlighting your mistakes and providing an <strong>ideal translation</strong> with explanations.</li>
+                  <li>Select a <strong>topic</strong> (e.g., "Business", "Travel") or leave the field blank.</li>
+                  <li>AI will generate 5 sentences on the selected topic.</li>
+                  <li>Submit your translation and receive a detailed breakdown.</li>
+                  <li>AI will point out mistakes and suggest the <strong>ideal translation</strong> with explanations.</li>
                 </ol>
               </div>
             </div>
           </section>
 
-          {/* Section: Managing Your Words */}
+          {/* Section: Managing Words */}
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
               <List className="w-6 h-6 mr-3 text-blue-500" />
-              Managing Your Words
+              Dictionary Management
             </h2>
             <div className="space-y-4 text-gray-600 text-sm">
               <p className="flex items-center">
                 <Search className="w-4 h-4 mr-2" />
-                <strong>Search:</strong> Use the search bar to find specific words in your collection.
+                <strong>Search:</strong> Use the search bar to quickly find words in your collection.
               </p>
               <p className="flex items-center">
-                <Languages className="w-4 h-4 mr-2" />
-                <strong>Editing:</strong> Click the "Edit" button to change the original word, translation, or comment.
+                <Layers className="w-4 h-4 mr-2" />
+                <strong>Sorting:</strong> View a list of all your words with the option to delete them.
               </p>
               <p className="flex items-center">
                 <XCircle className="w-4 h-4 mr-2 text-red-500" />
-                <strong>Deleting:</strong> Remove words you no longer wish to study.
+                <strong>Delete all words:</strong> Ability to completely clear your dictionary in one click.
               </p>
             </div>
           </section>
 
-          {/* Section: Scoring System */}
+          {/* Section: Progress */}
           <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Star className="w-6 h-6 mr-3 text-blue-600" />
-              Score & Progress
+              <GraduationCap className="w-6 h-6 mr-3 text-blue-600" />
+              Progress and Points
             </h2>
             <p className="text-gray-600 text-sm">
-              Your score (visible in the top header) represents your total number of correctly answered words during review sessions. Keep track of your progress as your vocabulary grows!
+              Your score (in the app header) displays the number of correctly translated words. The higher the score, the more words you have successfully mastered!
             </p>
           </section>
 
-          <div className="text-center pt-8 border-t border-gray-200">
-            <p className="text-gray-400 text-sm">WordsGo - Your AI-Powered Language Learning Assistant</p>
-          </div>
         </div>
       </div>
     </div>
