@@ -95,13 +95,13 @@ export default function LandingPage() {
           <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold mb-6 animate-fade-in border border-blue-100">
             Next-Gen Language Learning
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent">
-            Master Any Language <br />
-            with AI & Science
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent pb-2">
+            Your Personal Path <br />
+            to Language Fluency
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            The intelligent vocabulary builder powered by an <strong>enhanced FSRS+ algorithm</strong> and Gemini AI. 
-            Learn what matters, remember it forever.
+            Stop guessing and start remembering. WordsGo uses advanced cognitive science 
+            to ensure you never forget a word again.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
@@ -111,6 +111,14 @@ export default function LandingPage() {
               Try for free
               <ArrowRight className="w-5 h-5" />
             </Link>
+          </div>
+          <div className="mt-16 relative max-w-5xl mx-auto">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20"></div>
+            <img 
+              src="/opengraph-image.png" 
+              alt="WordsGo App Interface" 
+              className="relative rounded-2xl shadow-2xl border border-gray-100 w-full"
+            />
           </div>
         </div>
       </section>
@@ -156,10 +164,10 @@ export default function LandingPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6">Why is WordsGo more effective than regular flashcards?</h2>
+            <h2 className="text-4xl font-bold mb-6">Built for Long-Term Memory</h2>
             <p className="text-gray-600 max-w-3xl mx-auto text-xl">
-              We don&apos;t force you to repeat the same things endlessly. 
-              The system analyzes your every answer and builds the perfect learning trajectory.
+              Standard flashcards are boring. Our system adapts to your unique learning pace 
+              using data-driven insights.
             </p>
           </div>
 
@@ -224,17 +232,17 @@ export default function LandingPage() {
             <div className="lg:w-1/2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold mb-6">
                 <Bot className="w-4 h-4" />
-                Artificial Intelligence Magic
+                Next-Gen AI Companion
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight">Master language with AI Precision</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight">Beyond Simple Translation</h2>
               <div className="space-y-8">
                 <div className="flex gap-6">
                   <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
                     <MessageSquare className="w-6 h-6 text-emerald-600" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">Personal AI Tutor</h4>
-                    <p className="text-gray-600">Gemini AI analyzes your vocabulary and provides usage nuances, synonyms, and cultural context for every word you learn.</p>
+                    <h4 className="text-xl font-bold mb-2">Infinite Context</h4>
+                    <p className="text-gray-600">Don&apos;t just learn words, learn how to use them. Gemini AI generates real-world examples specifically for your vocabulary.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -258,20 +266,12 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="lg:w-1/2 relative">
-              <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl">
-                <div className="bg-gray-900 rounded-[2.8rem] overflow-hidden p-8 aspect-video flex flex-col justify-center">
-                  <div className="space-y-4">
-                    <div className="h-2 w-24 bg-blue-500 rounded-full"></div>
-                    <div className="h-4 w-full bg-white/10 rounded-full"></div>
-                    <div className="h-4 w-3/4 bg-white/10 rounded-full"></div>
-                    <div className="pt-6 flex gap-3">
-                       <div className="px-4 py-2 bg-emerald-500/20 border border-emerald-500/50 rounded-lg text-emerald-400 text-xs font-mono">Gemini AI analyzing...</div>
-                    </div>
-                    <div className="mt-4 p-4 bg-white/5 rounded-2xl border border-white/10">
-                      <p className="text-blue-400 text-sm italic">&quot;This word is often used in informal settings, for example...&quot;</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl overflow-hidden">
+                <img 
+                  src="/promo-ai-brain-1-1.png" 
+                  alt="WordsGo AI Brain" 
+                  className="w-full h-full object-cover rounded-[2.8rem]"
+                />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-400/20 blur-3xl rounded-full"></div>
               <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-400/20 blur-3xl rounded-full"></div>
