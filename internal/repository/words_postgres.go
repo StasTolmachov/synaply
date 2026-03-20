@@ -260,6 +260,7 @@ func (p *wordsPostgres) CreateBatch(ctx context.Context, reqs []modelsDB.CreateR
 	query := `
 	insert into words (user_id, source_lang, target_lang, source_word, target_word, comment) 
 	values (:user_id, :source_lang, :target_lang, :source_word, :target_word, :comment)
+	on conflict (user_id, source_lang, target_lang, source_word, target_word) do nothing
 	`
 
 	// Но передаем СЛАЙС структур reqs. sqlx сам развернет это в массовую вставку!
