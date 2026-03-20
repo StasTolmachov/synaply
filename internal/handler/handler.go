@@ -486,6 +486,10 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	langCodeResp.Target = user.TargetLang
 
 	response := models.GetMeResponse{
+		ID:           user.ID,
+		Email:        user.Email,
+		FirstName:    user.FirstName,
+		LastName:     user.LastName,
 		LangCodeResp: langCodeResp,
 		TotalCorrect: user.TotalCorrect,
 	}
