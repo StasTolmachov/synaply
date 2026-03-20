@@ -50,7 +50,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	WITH
 	new_words AS (
 		-- Берем 3 новых слова (State = 0)
-		SELECT id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state = 0
 		ORDER BY created_at ASC
@@ -58,7 +58,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	),
 	review_words AS (
 		-- Берем 7 слов, которые уже в процессе изучения (State != 0)
-		SELECT id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state != 0
 		ORDER BY due ASC -- МАГИЯ ЗДЕСЬ: Сначала те, которые давно пора повторить
@@ -83,7 +83,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 
 func (p *wordsPostgres) GetWordByID(ctx context.Context, wordID string) (*modelsDB.LessonDB, error) {
 	query := `
-	select id, source_word, target_word, comment, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+	select id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 	from words
 	where id = $1`
 
@@ -268,4 +268,45 @@ func (p *wordsPostgres) CreateBatch(ctx context.Context, reqs []modelsDB.CreateR
 		return fmt.Errorf("failed to bulk insert words: %w", err)
 	}
 	return nil
+}
+
+func (p *wordsPostgres) GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error) {
+	var wordList modelsDB.GeminiWordList
+	query := `SELECT id, source_lang, target_lang, level, topic, response, created_at 
+              FROM gemini_word_lists 
+              WHERE source_lang = $1 AND target_lang = $2 AND level = $3 AND topic = $4`
+	err := p.db.db.GetContext(ctx, &wordList, query, sourceLang, targetLang, level, topic)
+	if err != nil {
+		return nil, err
+	}
+	return &wordList, nil
+}
+
+func (p *wordsPostgres) SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error {
+	query := `INSERT INTO gemini_word_lists (source_lang, target_lang, level, topic, response) 
+              VALUES ($1, $2, $3, $4, $5)
+              ON CONFLICT (source_lang, target_lang, level, topic) DO UPDATE 
+              SET response = EXCLUDED.response, created_at = CURRENT_TIMESTAMP`
+	_, err := p.db.db.ExecContext(ctx, query, wordList.SourceLang, wordList.TargetLang, wordList.Level, wordList.Topic, wordList.Response)
+	return err
+}
+
+func (p *wordsPostgres) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {
+	query := `
+		SELECT 
+			COUNT(*) FILTER (WHERE state = 0) as new,
+			COUNT(*) FILTER (WHERE state = 1) as learning,
+			COUNT(*) FILTER (WHERE state = 2) as review,
+			COUNT(*) FILTER (WHERE state = 3) as relearning
+		FROM words 
+		WHERE user_id = $1
+	`
+
+	var stats models.ProgressStats
+	err := p.db.db.QueryRowxContext(ctx, query, userID).StructScan(&stats)
+	if err != nil {
+		return nil, fmt.Errorf("error getting progress stats: %w", err)
+	}
+
+	return &stats, nil
 }

@@ -61,7 +61,7 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
           type="button"
           onClick={fetchAIInfo}
           disabled={!sourceWord || !targetWord || !langs}
-          className="inline-flex items-center px-4 py-2 border border-purple-200 text-sm font-medium rounded-full shadow-sm text-purple-700 bg-purple-50 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="inline-flex items-center px-4 py-2 border border-purple-200 dark:border-purple-800 text-sm font-medium rounded-full shadow-sm text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <Sparkles className="w-4 h-4 mr-2" />
           AI Insights
@@ -69,32 +69,32 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
       )}
 
       {isOpen && (
-        <div className="relative bg-purple-50/50 rounded-xl border border-purple-100 p-4 sm:p-6 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="relative bg-purple-50/50 dark:bg-purple-900/10 rounded-xl border border-purple-100 dark:border-purple-800 p-4 sm:p-6 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
           <button
             onClick={closeInfo}
-            className="absolute top-4 right-4 text-purple-400 hover:text-purple-600 transition-colors"
+            className="absolute top-4 right-4 text-purple-400 dark:text-purple-500 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
 
           <div className="pr-6">
-            <h4 className="flex items-center text-sm font-semibold text-purple-900 mb-3">
-              <Sparkles className="w-4 h-4 mr-2 text-purple-600" />
+            <h4 className="flex items-center text-sm font-semibold text-purple-900 dark:text-purple-200 mb-3">
+              <Sparkles className="w-4 h-4 mr-2 text-purple-600 dark:text-purple-400" />
               AI Explanation for &quot;{targetWord}&quot;
             </h4>
 
             {loading ? (
-              <div className="flex items-center text-purple-600 text-sm py-2">
+              <div className="flex items-center text-purple-600 dark:text-purple-400 text-sm py-2">
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                 AI is thinking...
               </div>
             ) : error ? (
-              <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">
+              <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-800">
                 {error}
               </div>
             ) : info ? (
-              <div className="prose prose-sm prose-purple max-w-none text-gray-700">
+              <div className="prose prose-sm prose-purple dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
                 <ReactMarkdown>{info}</ReactMarkdown>
               </div>
             ) : null}

@@ -38,6 +38,8 @@ type LessonDB struct {
 	SourceWord string    `db:"source_word"`
 	TargetWord string    `db:"target_word"`
 	Comment    string    `db:"comment"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
 
 	// Поля FSRS
 	Due           time.Time  `db:"due"`
@@ -93,4 +95,14 @@ type UpdateWordReq struct {
 type WordsForGeminiResp struct {
 	SourceWord string `db:"source_word"`
 	TargetWord string `db:"target_word"`
+}
+
+type GeminiWordList struct {
+	ID         uuid.UUID `db:"id"`
+	SourceLang string    `db:"source_lang"`
+	TargetLang string    `db:"target_lang"`
+	Level      string    `db:"level"`
+	Topic      string    `db:"topic"`
+	Response   []byte    `db:"response"`
+	CreatedAt  time.Time `db:"created_at"`
 }
