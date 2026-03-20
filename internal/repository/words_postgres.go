@@ -290,3 +290,23 @@ func (p *wordsPostgres) SaveGeminiWordList(ctx context.Context, wordList modelsD
 	_, err := p.db.db.ExecContext(ctx, query, wordList.SourceLang, wordList.TargetLang, wordList.Level, wordList.Topic, wordList.Response)
 	return err
 }
+
+func (p *wordsPostgres) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {
+	query := `
+		SELECT 
+			COUNT(*) FILTER (WHERE state = 0) as new,
+			COUNT(*) FILTER (WHERE state = 1) as learning,
+			COUNT(*) FILTER (WHERE state = 2) as review,
+			COUNT(*) FILTER (WHERE state = 3) as relearning
+		FROM words 
+		WHERE user_id = $1
+	`
+
+	var stats models.ProgressStats
+	err := p.db.db.QueryRowxContext(ctx, query, userID).StructScan(&stats)
+	if err != nil {
+		return nil, fmt.Errorf("error getting progress stats: %w", err)
+	}
+
+	return &stats, nil
+}

@@ -43,6 +43,7 @@ type WordsService interface {
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error)
 	CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error
+	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
 }
 
 type wordsService struct {
@@ -528,4 +529,8 @@ func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchRe
 	}
 
 	return s.repo.CreateBatch(ctx, dbReqs)
+}
+
+func (s *wordsService) GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error) {
+	return s.repo.GetProgressStats(ctx, userID)
 }

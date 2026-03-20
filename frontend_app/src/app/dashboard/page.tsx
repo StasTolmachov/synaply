@@ -6,7 +6,7 @@ import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
 import Link from 'next/link';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3 } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 import { OnboardingModal } from '@/components/OnboardingModal';
@@ -59,6 +59,8 @@ export default function Dashboard() {
   const [batchMessage, setBatchMessage] = useState({ type: '', text: '' });
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [stats, setStats] = useState({ new: 0, learning: 0, review: 0, relearning: 0 });
+  const [statsLoading, setStatsLoading] = useState(true);
   const wordsPerPage = 30;
 
   useEffect(() => {
@@ -89,6 +91,18 @@ export default function Dashboard() {
       .catch(err => {
         console.error('Failed to load langs, user might be unauthenticated', err);
         router.push('/login');
+      });
+
+    fetchApi('/words/stats')
+      .then(data => {
+        if (data) {
+          setStats(data);
+        }
+        setStatsLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load stats', err);
+        setStatsLoading(false);
       });
   }, [router]);
 
@@ -249,17 +263,45 @@ export default function Dashboard() {
           
           <div className="md:col-span-1 space-y-6">
             <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Ready to review your words?</h3>
-              <p className="text-sm text-gray-500 mb-6">
-                Start a review session to strengthen your memory using spaced repetition.
-              </p>
-              <Link 
-                href="/lesson"
-                className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-              >
-                <BookOpen className="w-4 h-4 mr-2" />
-                Start Review
-              </Link>
+              <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                <BarChart3 className="w-5 h-5 mr-2 text-blue-500" />
+                Learning Progress
+              </h3>
+              
+              {statsLoading ? (
+                <div className="flex justify-center py-4">
+                  <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 text-center">
+                    <div className="text-2xl font-bold text-blue-700">{stats.new}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-blue-500">New</div>
+                  </div>
+                  <div className="bg-amber-50 p-3 rounded-lg border border-amber-100 text-center">
+                    <div className="text-2xl font-bold text-amber-700">{stats.learning}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-amber-500">Learning</div>
+                  </div>
+                  <div className="bg-green-50 p-3 rounded-lg border border-green-100 text-center">
+                    <div className="text-2xl font-bold text-green-700">{stats.review}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-green-500">Review</div>
+                  </div>
+                  <div className="bg-red-50 p-3 rounded-lg border border-red-100 text-center">
+                    <div className="text-2xl font-bold text-red-700">{stats.relearning}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-red-500">Relearning</div>
+                  </div>
+                </div>
+              )}
+              
+              <div className="mt-6">
+                <Link 
+                  href="/lesson"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Start Review
+                </Link>
+              </div>
             </div>
 
             <div className="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 p-6">
