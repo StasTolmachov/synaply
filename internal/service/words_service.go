@@ -456,15 +456,50 @@ func (s *wordsService) UpdateWordFields(ctx context.Context, req modelsDB.Update
 }
 
 func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, req models.WordListReq) ([]models.WordListResp, error) {
+	topicForCache := req.Topic
+	if topicForCache == "" {
+		topicForCache = req.UserTopic
+	}
 
+	// 1. Пытаемся получить из БД
+	cached, err := s.repo.GetGeminiWordList(ctx, user.SourceLang, user.TargetLang, req.Level, topicForCache)
+	if err == nil && cached != nil {
+		var wordListResp []models.WordListResp
+		if err := json.Unmarshal(cached.Response, &wordListResp); err == nil {
+			slogger.Log.DebugContext(ctx, "WordList found in DB cache", "topic", topicForCache)
+			return wordListResp, nil
+		}
+		slogger.Log.ErrorContext(ctx, "Failed to unmarshal cached word list", "error", err)
+	}
+
+	// 2. Если нет в БД, идем в Gemini
 	wordListRespGem, err := s.gem.WordList(ctx, models.WordListReqToGemWordListReq(req))
 	if err != nil {
 		return nil, err
 	}
+
 	wordListResp := make([]models.WordListResp, len(wordListRespGem))
 	for i, word := range wordListRespGem {
 		wordListResp[i] = models.WordListRespGemToWordListResp(word)
 	}
+
+	// 3. Сохраняем в БД для будущего использования
+	respJSON, err := json.Marshal(wordListResp)
+	if err == nil {
+		errSave := s.repo.SaveGeminiWordList(ctx, modelsDB.GeminiWordList{
+			SourceLang: user.SourceLang,
+			TargetLang: user.TargetLang,
+			Level:      req.Level,
+			Topic:      topicForCache,
+			Response:   respJSON,
+		})
+		if errSave != nil {
+			slogger.Log.ErrorContext(ctx, "Failed to save word list to DB cache", "error", errSave)
+		}
+	} else {
+		slogger.Log.ErrorContext(ctx, "Failed to marshal word list for cache", "error", err)
+	}
+
 	return wordListResp, nil
 }
 

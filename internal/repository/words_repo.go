@@ -22,4 +22,6 @@ type WordsRepository interface {
 	UpdateWordFields(ctx context.Context, req modelsDB.UpdateWordReq, userID uuid.UUID) error
 	GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error)
 	CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error
+	GetGeminiWordList(ctx context.Context, sourceLang, targetLang, level, topic string) (*modelsDB.GeminiWordList, error)
+	SaveGeminiWordList(ctx context.Context, wordList modelsDB.GeminiWordList) error
 }
