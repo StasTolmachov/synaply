@@ -75,15 +75,15 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 py-12">
-      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8 py-12">
+      <div className="w-full max-w-md space-y-8 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
         <div>
-          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {t('register.title')}
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             {t('register.has_account')}{' '}
-            <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link href="/login" className="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-500">
               {t('register.login')}
             </Link>
           </p>
@@ -91,58 +91,58 @@ export default function Register() {
         <form className="mt-8 space-y-4" onSubmit={handleRegister}>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">{t('register.first_name')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('register.first_name')}</label>
               <input
                 type="text"
                 name="first_name"
                 required
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 value={formData.first_name}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">{t('register.last_name')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('register.last_name')}</label>
               <input
                 type="text"
                 name="last_name"
                 required
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 value={formData.last_name}
                 onChange={handleChange}
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">{t('register.email')}</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('register.email')}</label>
             <input
               type="email"
               name="email"
               required
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
               value={formData.email}
               onChange={handleChange}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">{t('register.password')}</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('register.password')}</label>
             <input
               type="password"
               name="password"
               required
               minLength={8}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
               value={formData.password}
               onChange={handleChange}
             />
-            <p className="text-xs text-gray-500 mt-1">{t('register.password_hint')}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t('register.password_hint')}</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">{t('profile.interface_lang')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('profile.interface_lang')}</label>
               <select
                 name="source_lang"
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 value={formData.source_lang}
                 onChange={handleChange}
               >
@@ -152,10 +152,10 @@ export default function Register() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">{t('profile.learning_lang')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('profile.learning_lang')}</label>
               <select
                 name="target_lang"
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 value={formData.target_lang}
                 onChange={handleChange}
               >
@@ -166,7 +166,7 @@ export default function Register() {
             </div>
           </div>
 
-          {error && <div className="text-sm text-red-600 font-medium">{error}</div>}
+          {error && <div className="text-sm text-red-600 dark:text-red-400 font-medium">{error}</div>}
 
           <div className="pt-2">
             <button
