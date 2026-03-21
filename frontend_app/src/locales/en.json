@@ -2,7 +2,7 @@
   "metadata": {
     "title": "WordsGo - Learn Vocabulary with AI & Spaced Repetition",
     "description": "Boost your language skills with AI-powered spaced repetition. Create custom word lists or learn from community-shared public lists.",
-    "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app",
+    "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, learn spanish, learn french, learn german, language proficiency, memorize words, SRS learning",
     "og_title": "WordsGo - Smart Vocabulary Learning",
     "og_description": "Boost your language skills with AI-powered spaced repetition. Learn faster, remember longer.",
     "og_image_alt": "WordsGo AI Language Learning App Interface",
@@ -230,6 +230,7 @@
       "playlists_create": "Create Playlist",
       "playlists_edit": "Edit Playlist",
       "playlists_select_lists": "Select Word Lists",
+      "playlists_list_search_placeholder": "Search word lists...",
       "playlists_no_lists": "No public lists available",
       "playlists_detail": {
         "title": "Playlist Details",
