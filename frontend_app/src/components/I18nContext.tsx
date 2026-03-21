@@ -8,7 +8,7 @@ interface I18nContextProps {
   lang: string;
   setLang: (lang: string, saveToLocal?: boolean) => void;
   resetToSaved: () => void;
-  t: (path: string, params?: Record<string, string>) => string;
+  t: (path: string, params?: Record<string, string | number>) => string;
 }
 
 const I18nContext = createContext<I18nContextProps | undefined>(undefined);
@@ -101,11 +101,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   };
 
   // Адаптер для старого t() метода, чтобы не переписывать все компоненты сразу
-  const t = (path: string, params?: Record<string, string>): string => {
+  const t = (path: string, params?: Record<string, string | number>): string => {
     try {
-      // next-intl по умолчанию парсит теги <TAG> в строке перевода
-      // Если мы хотим вернуть чистый HTML для dangerouslySetInnerHTML,
-      // мы должны передать обработчики для тегов, которые просто вернут тег обратно в строку.
       const htmlHandlers: Record<string, (chunks: ReactNode) => string> = {
         strong: (chunks) => `<strong>${chunks}</strong>`,
         b: (chunks) => `<b>${chunks}</b>`,
@@ -113,8 +110,6 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         br: () => `<br/>`
       };
 
-      // next-intl ожидает, что tNext вернет string, если все переданные значения в params и теги возвращают string
-      // В типах next-intl это может быть сложнее, поэтому приводим к any для вызова.
       return (tNext as any)(path, { ...params, ...htmlHandlers });
     } catch (e) {
       // Если ключ не найден, возвращаем сам путь (как и в старой реализации)
