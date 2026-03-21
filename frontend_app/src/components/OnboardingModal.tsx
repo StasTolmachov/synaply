@@ -29,17 +29,17 @@ export function OnboardingModal({ onClose }: OnboardingModalProps) {
       <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onClick={handleClose} />
       
       {/* Modal Content */}
-      <div className={`relative w-full max-w-2xl transform overflow-hidden rounded-3xl bg-white shadow-2xl transition-all duration-300 ${isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
-        <div className="absolute right-4 top-4">
+      <div className={`relative w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto transform rounded-3xl bg-white shadow-2xl transition-all duration-300 ${isVisible ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'} [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
+        <div className="sticky right-4 top-4 z-10 flex justify-end">
           <button
             onClick={handleClose}
-            className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+            className="m-2 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors bg-white/80 backdrop-blur-sm"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="p-8 sm:p-12">
+        <div className="p-8 sm:p-12 pt-0 sm:pt-0">
           <div className="mb-8 flex items-center gap-3">
             <div className="rounded-2xl bg-blue-600 p-3 shadow-lg shadow-blue-200">
               <Rocket className="h-8 w-8 text-white" />
