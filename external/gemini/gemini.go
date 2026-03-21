@@ -35,23 +35,32 @@ func NewService(key string, model string) (Service, error) {
 	}, nil
 }
 
-const WordInfoPromptTemplate = `Ты — опытный преподаватель иностранных языков. 
-Твоя задача — помочь ученику глубоко понять и выучить новое слово.
+const WordInfoPromptTemplate = `You are a linguistic analysis algorithm.
 
-Язык ученика (язык объяснения): %[1]s.
-Изучаемый язык: %[2]s.
+Source Language Code: "%[1]s"
+Target Language Code: "%[2]s"
 
-Ученик встретил слово на изучаемом языке: "%[4]s".
-Его перевод на язык ученика: "%[3]s".
-Используй этот перевод, чтобы точно понять, в каком именно контексте и значении употребляется это слово.
+Input: The user wants to learn the target word "%[4]s" (Target Language) which translates to "%[3]s" in their native language (Source Language).
+First, identify the actual Source Language based on the code "%[1]s" and the word "%[3]s".
 
-Пожалуйста, предоставь детальную информацию об изучаемом слове по следующей структуре:
-1.**Произношение**: Напиши, как звучит слово "%[4]s", используя только буквы алфавита языка "%[1]s". Строго запрещено использовать международные знаки транскрипции. Пиши маленькими буквами, а ударную гласную обязательно выдели заглавной буквой.
-2. **Грамматика**: Часть речи, род, множественное число (для существительных), формы времени (для глаголов) и т.д.
-3. **Нюансы употребления**: Тонкости перевода, формальность, синонимы.
-4. **Примеры**: 3 примера использования в контексте (предложение на "%[2]s" -> перевод на "%[1]s").
+YOUR TASK: Provide detailed educational information about the word "%[4]s".
 
-Отвечай только на языке "%[1]s" (кроме самих примеров). Используй Markdown.`
+CRITICAL RULES:
+1. ALL explanations MUST be written entirely in the Source Language.
+2. DO NOT use English for explanations unless the Source Language is English.
+3. Pronunciation must be written using ONLY the letters of the Source Language alphabet. Capitalize the stressed vowel.
+4. Keep explanations concise and easy to read.
+
+Format your response exactly like this in Markdown (translate the bold headers to the Source Language):
+
+**[Pronunciation Header]**: [pronunciation]
+**[Grammar & Level Header]**: [CEFR level, part of speech, gender, irregular forms]
+**[Mnemonics Header]**: [Create a short, funny, or vivid phonetic memory hook (association) to help the student remember the word "%[4]s" using words from the Source Language]
+**[Collocations Header]**: [2 or 3 most common word combinations. E.g., "heavy rain", "make a decision"]
+**[Examples Header]**:
+1. [Example in Target Lang] - [Translation in Source Lang]
+2. [Example in Target Lang] - [Translation in Source Lang]
+3. [Example in Target Lang] - [Translation in Source Lang]`
 
 var ErrLimitExceeded = errors.New("gemini limit exceeded")
 
@@ -95,43 +104,34 @@ func BuildGeminiPrompt(req WordInfoRequest) string {
 	)
 }
 
-const StartPracticeWithGeminiPromptTemplate = `You are an experienced foreign language teacher. Your task is to create a translation exercise for your student.
+const StartPracticeWithGeminiPromptTemplate = `You are a test-generating algorithm.
 
-Student's native language (language of the tasks): %[1]s.
-Target language: %[2]s.
-Topic for the sentences: "%[3]s".
+Source Language Code: "%[1]s"
+Target Language Code: "%[2]s"
+Topic: "%[3]s"
 
-As a user message, you will receive a list of words that the student already knows.
+Input: A list of words in "SourceWord - TargetWord" format.
+First, identify the actual languages based on the codes and the provided words (e.g., if "%[1]s" is "UK" or "UKR" and the words are Ukrainian, the language is Ukrainian. If "%[1]s" is "RU", it is Russian).
 
-Follow these steps strictly in order:
-1. Analyze the provided list of words. Estimate the approximate language proficiency level (from A1 to C2) based on the complexity of these words.
-2. Generate exactly 5 sentences in the "%[1]s" language on the given topic "%[3]s".
-3. Main rule: Try to construct the sentences PRIMARILY using the words from the provided list. 
-4. If the list does not contain enough words (or lacks specific parts of speech, like verbs or nouns) to create 5 meaningful and natural sentences on the topic, you are allowed to introduce new words. However, any new words you add MUST match the proficiency level you determined in Step 1.
-5. You are allowed to add a minimal number of new words (prepositions, conjunctions, pronouns, basic linking verbs) only if strictly necessary for the grammatical correctness of the sentences.
-6. The complexity of the grammatical structures in the sentences must correspond to the level you determined in Step 1.
+YOUR TASK: Generate exactly 5 sentences ENTIRELY in the Source Language. 
+The student will translate these sentences into the Target Language ("%[2]s") later. Therefore, you must provide the base sentences to translate.
 
-Reply in Markdown format using the following template:
+CRITICAL RULES:
+1. ALL sentences inside the JSON MUST be written in the Source Language.
+2. DO NOT use the Target Language ("%[2]s") for the sentences.
+3. DO NOT use English (unless the Source Language is actually English).
+4. Construct the sentences primarily using the Source words from the list.
 
-Determined level: [Write the level, e.g., A2]
+FORMATTING RULE: Respond STRICTLY in valid JSON. Do not use markdown code blocks like ` + "```json" + `.
 
-1. Analyze the word list provided (pairs of words or phrases).
-2. Create 5 diverse sentences for translation from "%[1]s" to "%[2]s".
-3. The sentences should be based on the provided vocabulary and the specified topic: "%[3]s".
-4. If no topic is provided, create general sentences using the vocabulary.
-5. Determine the appropriate difficulty level based on the complexity of the vocabulary.
-
-FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `).
-
-Use exactly this JSON schema:
 {
-  "level": "<Determined level, e.g., A2>",
+  "level": "<CEFR level, e.g., A2>",
   "sentences": [
-    "<Sentence 1 in %[1]s>",
-    "<Sentence 2 in %[1]s>",
-    "<Sentence 3 in %[1]s>",
-    "<Sentence 4 in %[1]s>",
-    "<Sentence 5 in %[1]s>"
+    "<Sentence 1 strictly in the Source Language>",
+    "<Sentence 2 strictly in the Source Language>",
+    "<Sentence 3 strictly in the Source Language>",
+    "<Sentence 4 strictly in the Source Language>",
+    "<Sentence 5 strictly in the Source Language>"
   ]
 }
 `
@@ -189,35 +189,38 @@ func (s *service) StartPracticeWithGemini(ctx context.Context, req *PracticeWith
 	return &resp, nil
 }
 
-const CheckAnswerPracticeWithGeminiPromptTemplate = `You are an experienced, patient, and supportive foreign language teacher. Your student has just completed a translation exercise.
+const CheckAnswerPracticeWithGeminiPromptTemplate = `You are an automated language-evaluation algorithm.
 
-Student's native language (language of explanations AND all UI labels): %[1]s.
-Target language (language of the translations): %[2]s.
-Exercise topic: "%[3]s".
+Source Language Code: "%[1]s" (Language for explanations and localized UI text)
+Target Language Code: "%[2]s" (Language of the user's translations)
+Topic: "%[3]s"
 
-As a user message, you will receive the original 5 sentences and the student's translation attempts. 
+First, identify the actual Source Language based on the code "%[1]s" (e.g., if "%[1]s" is "UK" or "UKR", the language is strictly Ukrainian).
 
-Your task is to review their work and provide constructive, detailed feedback. Follow these steps:
-1. Match the student's translations to the original sentences.
-2. Carefully analyze each translated sentence for grammatical correctness.
-3. If a sentence is translated perfectly, praise the student.
-4. If there are mistakes, gently explain *why* it's wrong and how to fix it.
-5. IF THE STUDENT SKIPPED A SENTENCE, set the internal status to "skipped" and just provide the ideal translation.
-6. CRITICAL RULE: Use the "%[1]s" language for all explanations, comments, and localized text.
+Input: You will receive the original 5 sentences in the Source Language and the user's translation attempts in the Target Language.
+
+YOUR TASK: Evaluate the user's translations for grammatical correctness and accuracy.
+
+CRITICAL RULES:
+1. All general feedback, teacher comments, and localized statuses ("status_localized") MUST be written STRICTLY in the Source Language.
+2. DO NOT use English for feedback (unless the Source Language is English).
+3. If a sentence is translated perfectly, generate a short praise in the Source Language.
+4. If there are mistakes, explain them clearly in the Source Language and provide the ideal translation in the Target Language.
+5. IF THE USER SKIPPED A SENTENCE, set the internal status to "skipped", provide the ideal translation, and write "Skipped" (translated to the Source Language) in the comments.
 
 FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `).
 
 Use exactly this JSON schema:
 {
-  "general_comment": "<Your overall encouraging feedback in %[1]s>",
+  "general_comment": "<Overall feedback in the Source Language>",
   "results": [
     {
       "sentence_number": 1,
       "your_version": "<The student's text, or '-' if skipped>",
       "status": "<MUST BE ONE OF: 'correct', 'mistake', 'skipped'>",
-      "status_localized": "<Translate the status to %[1]s. E.g., 'Правильно', 'Есть ошибки', 'Пропущено'>",
-      "teacher_comment": "<Your explanation in %[1]s>",
-      "ideal_translation": "<The correct translation in %[2]s>"
+      "status_localized": "<Translate the status to the Source Language. E.g., 'Правильно', 'Есть ошибки', 'Пропущено'>",
+      "teacher_comment": "<Your explanation in the Source Language>",
+      "ideal_translation": "<The correct translation in the Target Language>"
     }
   ]
 }`
@@ -275,32 +278,38 @@ func (s *service) CheckAnswerPracticeWithGemini(ctx context.Context, req *Practi
 	return &resp, nil
 }
 
-const WordListRespPromptTemplate = `You are an expert foreign language teacher and curriculum designer. 
-Your task is to generate a highly relevant and educational vocabulary list for a student.
+const WordListRespPromptTemplate = `You are a vocabulary-generating algorithm.
 
-Student's native language (Source Language): %[1]s
-Language to learn (Target Language): %[2]s
-Target Proficiency Level: %[3]s
-Predefined Topic: %[4]q
-User's Custom Request: %[5]q
+Source Language Code: "%[1]s"
+Target Language Code: "%[2]s"
+Target Proficiency Level: "%[3]s"
+Predefined Topic: "%[4]q"
+User's Custom Request: "%[5]q"
 
-Follow these instructions STRICTLY:
-1. Create a comprehensive list of ALL necessary vocabulary words for a complete study of the topic at the given language level. The list should be around 100 words. List ONLY words.
-2. The complexity of the words MUST strictly match the requested Proficiency Level (%[3]s). For example, if the level is A1, use basic, everyday words. If C1, use advanced and nuanced vocabulary.
-3. Topic Selection Logic:
-   - If a "Predefined Topic" is provided (e.g., "Technology & Media"), select words that are highly relevant to this topic AND match the proficiency level.
-   - If a "User's Custom Request" is provided, incorporate this specific context into your word selection.
-   - If the "Predefined Topic" is empty or missing, rely ENTIRELY on the "User's Custom Request".
-4. For the "Comment" field, you MUST write the pronunciation of the "TargetWord". Rule for pronunciation: Write how the word sounds using ONLY the letters of the student's native language (%[1]s) alphabet. It is STRICTLY FORBIDDEN to use International Phonetic Alphabet (IPA) symbols. Write in lowercase letters, but you MUST capitalize the stressed vowel.
+First, identify the actual Source and Target languages based on their codes (e.g., if "%[1]s" is "UK" or "UKR", the Source Language is strictly Ukrainian).
+
+YOUR TASK: Generate a highly relevant vocabulary list of around 100 words based on the Topic or Custom Request.
+
+CRITICAL RULES:
+1. The complexity of the words MUST strictly match the requested Proficiency Level (%[3]s).
+2. The "SourceWord" MUST be written in the Source Language.
+3. The "TargetWord" MUST be written in the Target Language.
+4. DO NOT use English for the SourceWord or Comment unless the Source Language is English.
+5. For the "Comment" field, you MUST write the phonetic pronunciation of the TargetWord. CRITICAL: You MUST transliterate how the TargetWord sounds using ONLY the alphabet of the Source Language ("%[1]s"). DO NOT use letters from the Target Language. DO NOT use International Phonetic Alphabet (IPA) symbols. Capitalize the stressed vowel.
+
+Topic Selection Logic:
+- If a "Predefined Topic" is provided, select words relevant to it.
+- If a "User's Custom Request" is provided, incorporate this specific context.
+- If the "Predefined Topic" is empty, rely ENTIRELY on the "User's Custom Request".
 
 FORMATTING RULE: You MUST respond STRICTLY in valid JSON format. Do not include markdown code blocks (like ` + "```json" + `). Do not include any other text.
 
 Use exactly this JSON schema (array of objects):
 [
   {
-    "SourceWord": "<Word or phrase in %[1]s>",
-    "TargetWord": "<Translation in %[2]s>",
-    "Comment": "<Pronunciation generated according to Rule 4>"
+    "SourceWord": "<Word or phrase in the Source Language>",
+    "TargetWord": "<Translation in the Target Language>",
+    "Comment": "<Phonetic pronunciation of TargetWord written STRICTLY using the %[1]s alphabet>"
   }
 ]
 `
