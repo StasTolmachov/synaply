@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { Loader2, Search, Trash2, Save, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslation } from '@/components/I18nContext';
 
 interface Word {
   id: string;
@@ -15,6 +15,7 @@ interface Word {
 
 export default function WordsList() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [words, setWords] = useState<Word[]>([]);
@@ -26,21 +27,25 @@ export default function WordsList() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Word>>({});
 
-  const loadWords = useCallback(async () => {
+  const loadWords = useCallback(async (isMounted: boolean) => {
     try {
       setLoading(true);
       setError('');
       const offset = page * limit;
       const data = await fetchApi(`/words?search=${encodeURIComponent(search)}&limit=${limit}&offset=${offset}`);
+      if (!isMounted) return;
       setWords(data.words || []);
       setTotal(data.total || 0);
     } catch (err: any) {
+      if (!isMounted) return;
       console.error('Failed to load words', err);
-      setError(err.message || "We couldn't load your words right now. Maybe try refreshing the page?");
+      setError(err.message || t('common.loading_error'));
     } finally {
-      setLoading(false);
+      if (isMounted) {
+        setLoading(false);
+      }
     }
-  }, [search, page]);
+  }, [search, page, t]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -48,7 +53,11 @@ export default function WordsList() {
       router.push('/login');
       return;
     }
-    loadWords();
+    let isMounted = true;
+    loadWords(isMounted);
+    return () => {
+      isMounted = false;
+    };
   }, [loadWords, router]);
 
   // Debounced search could be better, but for simplicity we'll use useEffect with search dependency
@@ -57,13 +66,13 @@ export default function WordsList() {
   }, [search]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this word?')) return;
+    if (!confirm(t('dashboard.delete_confirm'))) return;
     try {
       setError('');
       await fetchApi(`/words/${id}`, { method: 'DELETE' });
-      loadWords();
+      loadWords(true);
     } catch (err: any) {
-      setError(err.message || "Oops! We couldn't delete that word. Please try again!");
+      setError(err.message || t('common.error'));
     }
   };
 
@@ -81,22 +90,22 @@ export default function WordsList() {
         body: JSON.stringify(editForm),
       });
       setEditingId(null);
-      loadWords();
+      loadWords(true);
     } catch (err: any) {
-      setError(err.message || "We couldn't update your word. Give it another shot!");
+      setError(err.message || t('common.error'));
     }
   };
 
   const handleDeleteAll = async () => {
-    if (!confirm('Are you sure you want to delete ALL your words? This action cannot be undone.')) return;
+    if (!confirm(t('dashboard.delete_all_confirm'))) return;
     try {
       setLoading(true);
       setError('');
       await fetchApi('/words/all', { method: 'DELETE' });
       setPage(0);
-      loadWords();
+      loadWords(true);
     } catch (err: any) {
-      setError(err.message || "Oops! We couldn't clear your list. Please try again!");
+      setError(err.message || t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -110,10 +119,10 @@ export default function WordsList() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <Link href="/dashboard" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-2 transition-colors">
-              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
+              <ArrowLeft className="w-4 h-4 mr-1" /> {t('common.back_to_dashboard')}
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">My Words</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Total: {total} words</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('dashboard.words_list_title')}</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('dashboard.total_words', { count: total.toString() })}</p>
           </div>
           {words.length > 0 && (
             <button
@@ -121,7 +130,7 @@ export default function WordsList() {
               className="flex items-center px-4 py-2 bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-lg text-sm font-medium transition-colors border border-red-100 dark:border-red-900/30"
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              Clear All Words
+              {t('dashboard.delete_all_btn')}
             </button>
           )}
         </div>
@@ -138,7 +147,7 @@ export default function WordsList() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search words..."
+                placeholder={t('dashboard.search_placeholder')}
                 className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -150,10 +159,10 @@ export default function WordsList() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs uppercase font-semibold">
-                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Original</th>
-                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Translation</th>
-                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">Comment</th>
-                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800 text-right">Actions</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">{t('dashboard.original')}</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">{t('dashboard.translation')}</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800">{t('dashboard.comment')}</th>
+                  <th className="px-6 py-3 border-b border-gray-100 dark:border-gray-800 text-right">{t('dashboard.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -161,13 +170,13 @@ export default function WordsList() {
                   <tr>
                     <td colSpan={4} className="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
                       <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
-                      Loading words...
+                      {t('dashboard.loading_words')}
                     </td>
                   </tr>
                 ) : words.length === 0 ? (
                   <tr>
                     <td colSpan={4} className="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
-                      No words found
+                      {t('dashboard.no_words_found_simple')}
                     </td>
                   </tr>
                 ) : (
@@ -216,16 +225,16 @@ export default function WordsList() {
                               <button
                                 onClick={handleSaveEdit}
                                 className="p-1.5 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded"
-                                title="Save"
+                                title={t('common.save')}
                               >
                                 <Save className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => setEditingId(null)}
                                 className="p-1.5 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-                                title="Cancel"
+                                title={t('common.cancel')}
                               >
-                                <span className="text-xs font-bold uppercase">Esc</span>
+                                <span className="text-xs font-bold uppercase">{t('common.esc')}</span>
                               </button>
                             </>
                           ) : (
@@ -234,12 +243,12 @@ export default function WordsList() {
                                 onClick={() => handleStartEdit(word)}
                                 className="px-2 py-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded text-xs font-medium border border-blue-100 dark:border-blue-800"
                               >
-                                Edit
+                                {t('common.edit')}
                               </button>
                               <button
                                 onClick={() => handleDelete(word.id)}
                                 className="p-1.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
-                                title="Delete"
+                                title={t('common.delete')}
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -257,13 +266,14 @@ export default function WordsList() {
           {totalPages > 1 && (
             <div className="p-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/50">
               <span className="text-sm text-gray-500">
-                Page {page + 1} of {totalPages}
+                {t('dashboard.page_info', { current: (page + 1).toString(), total: totalPages.toString() })}
               </span>
               <div className="flex space-x-2">
                 <button
                   disabled={page === 0}
                   onClick={() => setPage(p => p - 1)}
                   className="p-1.5 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 transition-colors"
+                  title={t('dashboard.previous')}
                 >
                   <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                 </button>
@@ -271,6 +281,7 @@ export default function WordsList() {
                   disabled={page >= totalPages - 1}
                   onClick={() => setPage(p => p + 1)}
                   className="p-1.5 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 transition-colors"
+                  title={t('dashboard.next')}
                 >
                   <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                 </button>

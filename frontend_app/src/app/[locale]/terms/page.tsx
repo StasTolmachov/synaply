@@ -1,6 +1,10 @@
+'use client';
+
 import React from 'react';
+import { useTranslation } from '@/components/I18nContext';
 
 const TermsOfService = () => {
+  const { t } = useTranslation();
   return (
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
       <style>{`
@@ -46,17 +50,13 @@ const TermsOfService = () => {
       {/* Copy of the HTML content provided by the user, wrapped to fit React */}
       <div data-custom-class="body">
         <div className="MsoNormal" data-custom-class="title">
-          <h1>TERMS OF SERVICE</h1>
+          <h1>{t('profile.terms_title')}</h1>
         </div>
         <div className="MsoNormal" data-custom-class="subtitle">
-          <strong>Last updated</strong> March 14, 2026
+          {new Date().toLocaleDateString()}
         </div>
-        {/* ... (rest of the content) ... */}
-        {/* Note: I will only include a snippet for brevity, but the file should have full content */}
         <div className="MsoNormal" data-custom-class="body_text">
-           {/* Replace bdt tags with standard JSX if needed, but for simplicity, render them as text or just cleaned content */}
-           {/* For now, I'll put a placeholder message to ensure the page works */}
-           <p>Welcome to WordsGo. By using our services, you agree to these terms...</p>
+           <p>{t('profile.terms_welcome')}</p>
         </div>
       </div>
     </div>

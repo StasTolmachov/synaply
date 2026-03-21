@@ -43,7 +43,11 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   if (!response.ok) {
     if (response.status === 401 && typeof window !== 'undefined' && !endpoint.includes('/login')) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Redirect to login with current locale
+      const currentPath = window.location.pathname;
+      const localeMatch = currentPath.match(/^\/([a-z]{2})(\/|$)/);
+      const locale = localeMatch ? localeMatch[1] : 'en';
+      window.location.href = `/${locale}/login`;
     }
 
     // Friendly error mapping for specific statuses

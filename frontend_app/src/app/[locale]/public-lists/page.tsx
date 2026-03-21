@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
+import { useTranslation } from '@/components/I18nContext';
 import { getLanguageName } from '@/lib/languages';
 import { Loader2, Search, ArrowLeft, BookOpen, ChevronRight, Globe, Layers } from 'lucide-react';
-import Link from 'next/link';
 
 interface PublicList {
   id: string;
@@ -19,6 +19,7 @@ interface PublicList {
 
 export default function PublicLists() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [lists, setLists] = useState<PublicList[]>([]);
@@ -37,7 +38,7 @@ export default function PublicLists() {
       setLists(data || []);
     } catch (err: any) {
       console.error('Failed to load public lists', err);
-      setError(err.message || "We couldn't load public lists right now.");
+      setError(err.message || t('dashboard.public_lists.load_error'));
     } finally {
       setLoading(false);
     }
@@ -76,14 +77,14 @@ export default function PublicLists() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <Link href="/dashboard" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-2 transition-colors">
-              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
+              <ArrowLeft className="w-4 h-4 mr-1" /> {t('dashboard.public_lists.back_to_dashboard')}
             </Link>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
               <Globe className="w-6 h-6 mr-2 text-blue-500" />
-              Public Word Lists
+              {t('dashboard.public_lists.title')}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Explore word lists created by other users for your languages.
+              {t('dashboard.public_lists.subtitle')}
             </p>
           </div>
         </div>
@@ -98,7 +99,7 @@ export default function PublicLists() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search lists by title or description..."
+            placeholder={t('dashboard.public_lists.search_placeholder')}
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm transition-all"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -108,18 +109,18 @@ export default function PublicLists() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-gray-400">
             <Loader2 className="w-8 h-8 animate-spin mb-4 text-blue-500" />
-            <p>Loading amazing lists...</p>
+            <p>{t('dashboard.public_lists.loading')}</p>
           </div>
         ) : filteredLists.length === 0 ? (
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-dashed border-gray-200 dark:border-gray-800 py-20 text-center">
             <Layers className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No lists found</h3>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">Try a different search or change your language filters.</p>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t('dashboard.public_lists.no_lists_found')}</h3>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">{t('dashboard.public_lists.no_lists_desc')}</p>
             <button 
               onClick={() => loadLists()} 
               className="mt-6 text-blue-600 dark:text-blue-400 font-medium hover:underline"
             >
-              Show lists for all languages
+              {t('dashboard.public_lists.show_all_langs')}
             </button>
           </div>
         ) : (
@@ -140,13 +141,13 @@ export default function PublicLists() {
                 </div>
                 
                 <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-6 h-10">
-                  {list.description || "No description provided."}
+                  {list.description || t('dashboard.public_lists.no_description')}
                 </p>
                 
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50 dark:border-gray-800">
                   <div className="flex items-center text-xs text-gray-400">
                     <BookOpen className="w-3.5 h-3.5 mr-1.5" />
-                    <span>View Words</span>
+                    <span>{t('dashboard.public_lists.view_words')}</span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
                 </div>

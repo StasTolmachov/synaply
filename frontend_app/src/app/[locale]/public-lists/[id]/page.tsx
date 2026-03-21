@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
+import { useTranslation } from '@/components/I18nContext';
 import { Loader2, ArrowLeft, Plus, CheckCircle, Globe, BookOpen, Edit2, Save, X, Trash2, Languages } from 'lucide-react';
-import Link from 'next/link';
 
 interface Word {
   id: string;
@@ -26,6 +26,7 @@ interface PublicListDetail {
 export default function PublicListDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const { id } = use(params);
+  const { t } = useTranslation();
   
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
@@ -72,7 +73,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
         setEditItems(data.items || []);
       } catch (err: any) {
         console.error('Failed to load data', err);
-        setError(err.message || "We couldn't load the list details.");
+        setError(err.message || t('dashboard.public_lists.load_error'));
       } finally {
         setLoading(false);
       }
@@ -108,7 +109,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
       setTimeout(() => setSuccess(false), 5000);
     } catch (err: any) {
       console.error('Failed to add list to user', err);
-      setError(err.message || "Failed to add words to your collection.");
+      setError(err.message || t('dashboard.public_lists.detail.added_error'));
     } finally {
       setAdding(false);
     }
@@ -128,11 +129,11 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
 
   const handleSaveEdit = async () => {
     if (!editTitle.trim()) {
-      setError('Title is required');
+      setError(t('dashboard.list_title_label')); // Fallback to label if no specific error key
       return;
     }
     if (editItems.length === 0) {
-      setError('List must have at least one word');
+      setError(t('dashboard.no_words_to_save'));
       return;
     }
 
@@ -140,7 +141,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
     const words = editItems.map(item => item.source_word.toLowerCase().trim());
     const hasDuplicates = words.some((word, index) => words.indexOf(word) !== index);
     if (hasDuplicates) {
-      setError('Please remove duplicate words before saving');
+      setError(t('dashboard.public_lists.detail.duplicate_error'));
       return;
     }
 
@@ -170,7 +171,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
       setIsEditing(false);
     } catch (err: any) {
       console.error('Failed to update public list', err);
-      setError(err.message || "Failed to save changes.");
+      setError(err.message || t('dashboard.public_lists.detail.added_error'));
     } finally {
       setSaving(false);
     }
@@ -189,7 +190,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
 
   const handleAddItem = () => {
     if (!newItem.source_word.trim() || !newItem.target_word.trim()) {
-      setError('Please provide both original word and translation');
+      setError(t('dashboard.inline_add_error'));
       return;
     }
 
@@ -198,7 +199,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
       item.source_word.toLowerCase().trim() === newItem.source_word.toLowerCase().trim()
     );
     if (isDuplicate) {
-      setError(`Word "${newItem.source_word}" is already in the list`);
+      setError(t('dashboard.duplicate_word_error', { word: newItem.source_word }));
       return;
     }
 
@@ -268,8 +269,8 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
   if (!list) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-4 text-center">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">List not found</h1>
-        <Link href="/public-lists" className="text-blue-600 hover:underline">Return to public lists</Link>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t('common.no_data')}</h1>
+        <Link href="/public-lists" className="text-blue-600 hover:underline">{t('dashboard.public_lists.back_to_dashboard')}</Link>
       </div>
     );
   }
@@ -279,7 +280,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <Link href="/public-lists" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-4 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-1" /> Back to Public Lists
+            <ArrowLeft className="w-4 h-4 mr-1" /> {t('dashboard.public_lists.back_to_dashboard')}
           </Link>
           
           <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden">
@@ -292,7 +293,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                   onClick={handleStartEdit}
                   className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all active:scale-95"
                 >
-                  <Edit2 className="w-4 h-4 mr-2" /> Edit List
+                  <Edit2 className="w-4 h-4 mr-2" /> {t('dashboard.public_lists.detail.edit_list')}
                 </button>
               )}
             </div>
@@ -305,20 +306,20 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
                     className="w-full text-3xl font-bold bg-transparent border-b border-blue-500 focus:outline-none text-gray-900 dark:text-gray-100"
-                    placeholder="List title"
+                    placeholder={t('dashboard.list_title_placeholder')}
                   />
                   <textarea
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
                     className="w-full text-gray-500 dark:text-gray-400 bg-transparent border-b border-gray-200 dark:border-gray-700 focus:outline-none resize-none"
-                    placeholder="Description (optional)"
+                    placeholder={t('dashboard.list_desc_placeholder')}
                     rows={2}
                   />
                 </div>
               ) : (
                 <>
                   <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{list.title}</h1>
-                  <p className="text-gray-500 dark:text-gray-400 mb-8">{list.description || "No description provided."}</p>
+                  <p className="text-gray-500 dark:text-gray-400 mb-8">{list.description || t('dashboard.public_lists.no_description')}</p>
                 </>
               )}
               
@@ -331,14 +332,14 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                       className="flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold transition-all shadow-md active:scale-95 disabled:bg-green-400"
                     >
                       {saving ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Save className="w-5 h-5 mr-2" />}
-                      Save Changes
+                      {t('dashboard.public_lists.detail.save_changes')}
                     </button>
                     <button
                       onClick={handleCancelEdit}
                       className="flex items-center px-6 py-3 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-all hover:bg-gray-300 dark:hover:bg-gray-700 active:scale-95"
                     >
                       <X className="w-5 h-5 mr-2" />
-                      Cancel
+                      {t('dashboard.public_lists.detail.cancel')}
                     </button>
                   </>
                 ) : (
@@ -359,12 +360,12 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                       ) : (
                         <Plus className="w-5 h-5 mr-2" />
                       )}
-                      {success ? 'Added to My Words!' : 'Add to My Words'}
+                      {success ? t('dashboard.public_lists.detail.added_success') : t('dashboard.public_lists.detail.add_to_my_list')}
                     </button>
                     
                     <div className="flex items-center px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-sm font-medium border border-gray-100 dark:border-gray-700">
                       <BookOpen className="w-4 h-4 mr-2 text-gray-400" />
-                      {(list.items || []).length} words
+                      {t('dashboard.public_lists.detail.items_count', { count: (list.items || []).length })}
                     </div>
                   </>
                 )}
@@ -384,9 +385,9 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50/50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 text-[10px] uppercase font-bold tracking-wider">
-                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">Original</th>
-                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">Translation</th>
-                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">Comment</th>
+                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">{t('dashboard.original')}</th>
+                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">{t('dashboard.translation')}</th>
+                  <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800">{t('dashboard.comment')}</th>
                   {isEditing && (
                     <th className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 text-right">
                       {/* Empty header for the add/actions column */}
@@ -400,7 +401,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                     <td className="px-6 py-4">
                       <input
                         type="text"
-                        placeholder="New word..."
+                        placeholder={t('dashboard.new_word_placeholder')}
                         value={newItem.source_word}
                         onChange={(e) => setNewItem({ ...newItem, source_word: e.target.value })}
                         onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
@@ -411,7 +412,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                       <div className="flex items-center gap-2">
                         <input
                           type="text"
-                          placeholder="Translation..."
+                          placeholder={t('dashboard.translation_placeholder_inline')}
                           value={newItem.target_word}
                           onChange={(e) => setNewItem({ ...newItem, target_word: e.target.value })}
                           onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
@@ -422,7 +423,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                             onClick={handleTranslateNew}
                             disabled={isTranslatingNew}
                             className="p-1 text-blue-500 hover:text-blue-600 transition-colors"
-                            title="Translate"
+                            title={t('dashboard.translate')}
                           >
                             {isTranslatingNew ? <Loader2 className="w-4 h-4 animate-spin" /> : <Languages className="w-4 h-4" />}
                           </button>
@@ -432,7 +433,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                     <td className="px-6 py-4">
                       <input
                         type="text"
-                        placeholder="Comment (optional)"
+                        placeholder={t('dashboard.comment_placeholder_inline')}
                         value={newItem.comment}
                         onChange={(e) => setNewItem({ ...newItem, comment: e.target.value })}
                         onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
@@ -444,7 +445,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                         onClick={handleAddItem}
                         className="inline-flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-xl text-sm font-bold hover:bg-blue-700 dark:hover:bg-blue-600 transition-all active:scale-95 shadow-md border border-transparent"
                       >
-                        <Plus className="w-4 h-4 mr-1" /> Add
+                        <Plus className="w-4 h-4 mr-1" /> {t('common.add')}
                       </button>
                     </td>
                   </tr>
@@ -480,7 +481,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                           value={word.comment}
                           onChange={(e) => handleUpdateItem(idx, 'comment', e.target.value)}
                           className="bg-transparent border-b border-blue-500/30 focus:border-blue-500 outline-none w-full"
-                          placeholder="Comment..."
+                          placeholder={t('dashboard.comment_placeholder_inline')}
                         />
                       ) : (word.comment || '-')}
                     </td>
@@ -512,7 +513,7 @@ export default function PublicListDetailPage({ params }: { params: Promise<{ id:
                 {((isEditing ? editItems : (list.items || [])).length === 0) && (
                   <tr>
                     <td colSpan={isEditing ? 4 : 3} className="px-6 py-10 text-center text-gray-500 dark:text-gray-400 italic">
-                      No words found in this list.
+                      {t('dashboard.no_words_found_simple')}
                     </td>
                   </tr>
                 )}

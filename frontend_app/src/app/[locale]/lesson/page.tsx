@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
 import { Loader2, ArrowRight, CheckCircle, XCircle, Volume2 } from 'lucide-react';
-import Link from 'next/link';
 import { useScore } from '@/components/ScoreContext';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
+import { useTranslation } from '@/components/I18nContext';
 
 export default function Lesson() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { updateScore } = useScore();
   const [loading, setLoading] = useState(true);
   const [word, setWord] = useState<{ id: string; source_word: string; target_word: string; comment?: string; source_lang?: string; target_lang?: string } | null>(null);
@@ -43,7 +44,7 @@ export default function Lesson() {
       if (err instanceof Error && err.message?.includes('no words')) {
         setLessonFinished(true);
       } else {
-        setError(err instanceof Error ? err.message : 'Failed to start lesson');
+        setError(err instanceof Error ? err.message : t('common.error'));
       }
     } finally {
       setLoading(false);
@@ -87,7 +88,7 @@ export default function Lesson() {
         setNextWordData(null);
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error checking answer');
+      setError(err instanceof Error ? err.message : t('dashboard.error_occurred'));
     } finally {
       setSubmitting(false);
     }
@@ -137,13 +138,13 @@ export default function Lesson() {
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
         <div className="max-w-md w-full text-center space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
           <CheckCircle className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto" />
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Lesson Complete!</h2>
-          <p className="text-gray-600 dark:text-gray-400">You have no more words to review right now.</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('dashboard.lesson_complete')}</h2>
+          <p className="text-gray-600 dark:text-gray-400">{t('dashboard.lesson_complete_desc')}</p>
           <button
             onClick={finishLesson}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
-            Back to Dashboard
+            {t('common.back_to_dashboard')}
           </button>
         </div>
       </div>
@@ -155,10 +156,10 @@ export default function Lesson() {
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
         <div className="max-w-md w-full text-center space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
           <XCircle className="w-16 h-16 text-red-500 dark:text-red-400 mx-auto" />
-          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Oops, an error occurred</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('dashboard.error_occurred')}</h2>
           <p className="text-gray-600 dark:text-gray-400">{error}</p>
           <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
-            Go back
+            {t('common.back')}
           </Link>
         </div>
       </div>
@@ -169,9 +170,9 @@ export default function Lesson() {
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950 flex-col py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto w-full">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Vocabulary Review</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">{t('dashboard.lesson_title')}</h1>
           <button onClick={finishLesson} className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-            End Lesson
+            {t('dashboard.finish_lesson')}
           </button>
         </div>
 
@@ -195,7 +196,7 @@ export default function Lesson() {
                 onPaste={e => e.preventDefault()}
                 onDrop={e => e.preventDefault()}
                 readOnly={!!feedback}
-                placeholder="Type the translation..."
+                placeholder={t('dashboard.type_translation')}
                 className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50"
                 autoFocus
                 autoComplete="off"
@@ -210,9 +211,9 @@ export default function Lesson() {
                   <XCircle className="w-5 h-5 mr-3 flex-shrink-0" />
                 )}
                 <div className="flex-1">
-                  <p className="font-medium">{feedback.isCorrect ? 'Correct!' : 'Incorrect.'}</p>
+                  <p className="font-medium">{feedback.isCorrect ? t('dashboard.correct') : t('dashboard.incorrect')}</p>
                   <p className="text-sm mt-1 flex items-center gap-2">
-                    The correct answer is: <strong>{feedback.isCorrect ? answer : word?.target_word}</strong>
+                    {t('dashboard.the_answer_was', { answer: feedback.isCorrect ? answer : word?.target_word || '' })}
                     <button
                       type="button"
                       onClick={() => word?.target_word && speak(word.target_word, word.target_lang)}
@@ -232,14 +233,14 @@ export default function Lesson() {
                 disabled={submitting}
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
               >
-                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? 'Check Answer' : "Don't remember")}
+                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? t('dashboard.check_answer') : t('dashboard.dont_remember'))}
               </button>
             ) : (
               <button
                 type="submit"
                 className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 dark:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500 transition-colors"
               >
-                Continue
+                {t('dashboard.continue')}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </button>
             )}

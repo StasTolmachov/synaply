@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useScore } from './ScoreContext';
-import { usePathname, useRouter } from 'next/navigation';
 import { sendGAEvent } from '@next/third-parties/google';
 import { LogOut, HelpCircle, User, WifiOff, Globe } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { useTranslation } from './I18nContext';
 
 export function Header() {
+  const { t } = useTranslation();
   const { score } = useScore();
   const pathname = usePathname();
   const router = useRouter();
@@ -28,9 +29,9 @@ export function Header() {
     };
   }, []);
 
-  const isLandingPage = pathname === '/';
-  const isAuthPage = pathname === '/login' || pathname === '/register';
-  const isHelpPage = pathname === '/help';
+  const isLandingPage = pathname === '/' || pathname === '';
+  const isAuthPage = pathname.endsWith('/login') || pathname.endsWith('/register');
+  const isHelpPage = pathname.endsWith('/help');
 
   if (isAuthPage || isLandingPage) {
     return null;
@@ -49,14 +50,14 @@ export function Header() {
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center group">
               <span className="text-xl font-bold text-blue-600 dark:text-blue-500">WordsGo</span>
-              <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded">Beta</span>
+              <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded">{t('common.beta')}</span>
             </Link>
           </div>
           <div className="flex items-center space-x-6">
             {isOffline && (
               <div className="flex items-center text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded text-xs font-medium animate-pulse border border-amber-100 dark:border-amber-900/50">
                 <WifiOff className="w-3.5 h-3.5 mr-1.5" />
-                Offline Mode
+                {t('common.offline_mode')}
               </div>
             )}
             <ThemeToggle />
@@ -65,7 +66,7 @@ export function Header() {
               className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors"
             >
               <Globe className="w-4 h-4 mr-1 text-green-500" />
-              Public Lists
+              {t('common.public_lists')}
             </Link>
             {!isHelpPage && (
               <Link
@@ -74,7 +75,7 @@ export function Header() {
                 className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors"
               >
                 <HelpCircle className="w-4 h-4 mr-1" />
-                Help
+                {t('common.help')}
               </Link>
             )}
             <Link
@@ -82,17 +83,17 @@ export function Header() {
               className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors"
             >
               <User className="w-4 h-4 mr-1" />
-              Profile
+              {t('common.profile')}
             </Link>
             <div className="text-sm font-medium text-gray-700 dark:text-gray-200 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800 shadow-sm">
-              Score: <span className="font-bold text-blue-700 dark:text-blue-400">{score}</span>
+              {t('common.score')}: <span className="font-bold text-blue-700 dark:text-blue-400">{score}</span>
             </div>
             <button
               onClick={handleLogout}
               className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center text-sm font-medium transition-colors"
             >
               <LogOut className="w-4 h-4 mr-1" />
-              Sign out
+              {t('common.sign_out')}
             </button>
           </div>
         </div>

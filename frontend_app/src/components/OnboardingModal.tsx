@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Lightbulb, Rocket, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from './I18nContext';
 
 interface OnboardingModalProps {
   onClose: () => void;
 }
 
 export function OnboardingModal({ onClose }: OnboardingModalProps) {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -43,42 +45,42 @@ export function OnboardingModal({ onClose }: OnboardingModalProps) {
               <Rocket className="h-8 w-8 text-white" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 leading-tight">Welcome to WordsGo!</h2>
-              <p className="text-blue-600 font-medium text-lg">Your journey to language mastery begins here.</p>
+              <h2 className="text-3xl font-bold text-gray-900 leading-tight">{t('dashboard.onboarding.welcome')}</h2>
+              <p className="text-blue-600 font-medium text-lg">{t('dashboard.onboarding.journey_begins')}</p>
             </div>
           </div>
 
           <div className="mb-10 rounded-2xl bg-blue-50/50 border border-blue-100 p-6">
             <h3 className="mb-4 flex items-center text-xl font-bold text-blue-900">
               <Lightbulb className="mr-3 h-6 w-6 text-yellow-500" />
-              Best Practice for Success
+              {t('dashboard.onboarding.best_practice')}
             </h3>
             <p className="mb-6 text-gray-700 leading-relaxed text-lg font-medium">
-              To get the most out of WordsGo, we recommend this simple strategy:
+              {t('dashboard.onboarding.strategy_desc')}
             </p>
             
             <div className="grid gap-6">
               <div className="flex gap-4 items-start">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white shadow-md">1</div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-lg">Focus on a Topic</h4>
-                  <p className="text-gray-600">Add about <strong>100 words</strong> related to a single topic (e.g., Business or Travel) to build strong context.</p>
+                  <h4 className="font-bold text-gray-900 text-lg">{t('dashboard.onboarding.step1_title')}</h4>
+                  <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: t('dashboard.onboarding.step1_desc') }} />
                 </div>
               </div>
               
               <div className="flex gap-4 items-start">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white shadow-md">2</div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-lg">Daily Reviews</h4>
-                  <p className="text-gray-600">Master these words through <strong>daily repetition</strong> until they feel natural and familiar.</p>
+                  <h4 className="font-bold text-gray-900 text-lg">{t('dashboard.onboarding.step2_title')}</h4>
+                  <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: t('dashboard.onboarding.step2_desc') }} />
                 </div>
               </div>
               
               <div className="flex gap-4 items-start">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white shadow-md">3</div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-lg">AI Practice</h4>
-                  <p className="text-gray-600">Switch to <strong>AI Practice</strong> to use your new vocabulary in full sentences and real-world situations.</p>
+                  <h4 className="font-bold text-gray-900 text-lg">{t('dashboard.onboarding.step3_title')}</h4>
+                  <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: t('dashboard.onboarding.step3_desc') }} />
                 </div>
               </div>
             </div>
@@ -89,7 +91,7 @@ export function OnboardingModal({ onClose }: OnboardingModalProps) {
             className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 py-4 text-xl font-bold text-white shadow-xl shadow-blue-200 hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
             <CheckCircle2 className="h-6 w-6" />
-            Got it, let's start!
+            {t('dashboard.onboarding.got_it')}
           </button>
         </div>
       </div>
