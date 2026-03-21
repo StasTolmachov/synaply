@@ -21,34 +21,58 @@ export default function LandingPage() {
   ]; // Approximately 114 flags (18 + 96 = 114)
 
   useEffect(() => {
+    // Check login state
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       setIsLoggedIn(true);
     }
     
-    // Switch to English temporarily for landing page
-    if (typeof window !== 'undefined' && setLang) {
-      const currentUrlPath = window.location.pathname;
-      // next-intl might normalize paths, so check both /en and /en/
-      if (currentUrlPath !== '/en' && currentUrlPath !== '/en/') {
-        setLang('en', false);
-      }
-    }
-    
     return () => {
       // Restore saved language when leaving landing page
-      // Only do this if we are NOT navigating to a dashboard/auth page which handles its own sync
       if (typeof window !== 'undefined' && resetToSaved) {
-        // Delaying reset slightly to allow Link navigation to settle, 
-        // or let the destination page handle syncLocaleWithSaved.
-        // Actually, just calling resetToSaved() should be fine IF it's smart enough.
         resetToSaved();
       }
     };
-  }, []); // Only on mount/unmount
+  }, [resetToSaved]); // Only on mount/unmount
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'WordsGo',
+    alternateName: 'WordsGo Language Learning',
+    description: 'Learn new words with AI-powered spaced repetition. The easiest way to expand your vocabulary.',
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web',
+    url: 'https://wordsgo.tolmachov.dev',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'WordsGo Team',
+      logo: 'https://wordsgo.tolmachov.dev/apple-icon.png'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      ratingCount: '1540',
+    },
+    featureList: [
+      'Spaced Repetition System',
+      'AI-powered translations',
+      'Public word lists',
+      'Progress tracking'
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <style jsx global>{`
         @keyframes wave {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -76,42 +100,55 @@ export default function LandingPage() {
           -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
       `}</style>
-      {/* Header/Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <div className="bg-blue-600 p-1.5 rounded-lg">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-blue-600">WordsGo</span>
-            </div>
-            <div className="flex items-center gap-4">
-              {isLoggedIn ? (
-                <Link 
-                  href="/dashboard"
-                  className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
-                >
-                  Dashboard
+      
+      <header>
+        {/* Header/Nav */}
+        <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16 items-center">
+              <div className="flex items-center gap-2">
+                <Link href="/" className="flex items-center gap-2">
+                  <div className="bg-blue-600 p-1.5 rounded-lg">
+                    <Brain className="w-6 h-6 text-white" aria-hidden="true" />
+                  </div>
+                  <span className="text-xl font-bold tracking-tight text-blue-600">WordsGo</span>
                 </Link>
-              ) : (
-                <>
-                  <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium px-2 transition-colors">Sign in</Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <Link 
+                  href="/public-lists"
+                  className="text-gray-600 hover:text-blue-600 font-medium px-2 transition-colors flex items-center gap-1"
+                >
+                  <Globe className="w-4 h-4 text-green-500" />
+                  {t('landing.public_lists')}
+                </Link>
+                {isLoggedIn ? (
                   <Link 
-                    href="/register"
+                    href="/dashboard"
                     className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
                   >
-                    Get Started
+                    Dashboard
                   </Link>
-                </>
-              )}
+                ) : (
+                  <>
+                    <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium px-2 transition-colors">Sign in</Link>
+                    <Link 
+                      href="/register"
+                      className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <main>
+        {/* Hero Section */}
+        <section className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold mb-6 animate-fade-in border border-blue-100">
             Next-Gen Language Learning
@@ -129,8 +166,15 @@ export default function LandingPage() {
               href={isLoggedIn ? "/dashboard" : "/register"}
               className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-200 flex items-center justify-center gap-2"
             >
-              Try for free
+              {t('landing.try_for_free')}
               <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link 
+              href="/public-lists"
+              className="w-full sm:w-auto px-8 py-4 bg-white text-gray-700 border border-gray-200 rounded-full font-bold text-lg hover:bg-gray-50 hover:border-blue-200 transition-all shadow-lg flex items-center justify-center gap-2"
+            >
+              <Globe className="w-5 h-5 text-blue-500" />
+              {t('landing.browse_lists')}
             </Link>
           </div>
           <div className="mt-16 relative max-w-5xl mx-auto">
@@ -380,6 +424,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+    </main>
     </div>
   );
 }

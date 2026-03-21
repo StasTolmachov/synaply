@@ -1,7 +1,18 @@
 {
   "metadata": {
-    "title": "WordsGo Beta - Learn new words with spaced repetition",
-    "description": "Learn new words with spaced repetition. The easiest way to expand your vocabulary."
+    "title": "WordsGo - Learn Vocabulary with AI & Spaced Repetition",
+    "description": "Boost your language skills with AI-powered spaced repetition. Create custom word lists or learn from community-shared public lists.",
+    "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app",
+    "og_title": "WordsGo - Smart Vocabulary Learning",
+    "og_description": "Boost your language skills with AI-powered spaced repetition. Learn faster, remember longer.",
+    "og_image_alt": "WordsGo AI Language Learning App Interface",
+    "twitter_title": "WordsGo - Learn New Words Effortlessly",
+    "twitter_description": "Join WordsGo to expand your vocabulary using smart spaced repetition and AI."
+  },
+  "landing": {
+    "public_lists": "Public Lists",
+    "try_for_free": "Try for free",
+    "browse_lists": "Browse Lists"
   },
   "common": {
     "dashboard": "Dashboard",
@@ -27,7 +38,10 @@
     "sign_out": "Sign out",
     "offline_mode": "Offline Mode",
     "beta": "Beta",
-    "esc": "Esc"
+    "esc": "Esc",
+    "filters": "Filters",
+    "all": "All",
+    "reset": "Reset"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -190,6 +204,8 @@
       "no_lists_found": "No lists found",
       "no_lists_desc": "Try a different search or change your language filters.",
       "show_all_langs": "Show lists for all languages",
+      "source_lang": "Original language",
+      "target_lang": "Target language",
       "load_error": "We couldn't load public lists right now.",
       "view_words": "View Words",
       "no_description": "No description provided.",

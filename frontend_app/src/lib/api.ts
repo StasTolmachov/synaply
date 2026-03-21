@@ -41,13 +41,22 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   }
 
   if (!response.ok) {
+    const isPublicRoute = endpoint.includes('/public-lists');
+    
     if (response.status === 401 && typeof window !== 'undefined' && !endpoint.includes('/login')) {
-      localStorage.removeItem('token');
-      // Redirect to login with current locale
-      const currentPath = window.location.pathname;
-      const localeMatch = currentPath.match(/^\/([a-z]{2})(\/|$)/);
-      const locale = localeMatch ? localeMatch[1] : 'en';
-      window.location.href = `/${locale}/login`;
+      if (!isPublicRoute) {
+        localStorage.removeItem('token');
+        // Redirect to login with current locale
+        const currentPath = window.location.pathname;
+        const localeMatch = currentPath.match(/^\/([a-z]{2})(\/|$)/);
+        const locale = localeMatch ? localeMatch[1] : 'en';
+        window.location.href = `/${locale}/login`;
+      } else {
+        // For public routes, if we get 401 (e.g. expired token), 
+        // just return the data if it was successfully parsed, or null
+        // instead of throwing "You've been logged out" error
+        return data;
+      }
     }
 
     // Friendly error mapping for specific statuses
