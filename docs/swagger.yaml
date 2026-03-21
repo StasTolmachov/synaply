@@ -1,10 +1,38 @@
 definitions:
-  internal_handler.JSONError:
+  gemini.CheckAnswerPracticeWithGeminiResponse:
     properties:
-      error:
+      general_comment:
+        type: string
+      results:
+        items:
+          $ref: '#/definitions/gemini.PracticeWithGeminiResult'
+        type: array
+    type: object
+  gemini.PracticeWithGeminiResult:
+    properties:
+      ideal_translation:
+        type: string
+      sentence_number:
+        type: integer
+      status:
+        type: string
+      status_localized:
+        type: string
+      teacher_comment:
+        type: string
+      your_version:
         type: string
     type: object
-  wordsGo_v2_external_gemini.Request:
+  gemini.StartPracticeWithGeminiResponse:
+    properties:
+      level:
+        type: string
+      sentences:
+        items:
+          type: string
+        type: array
+    type: object
+  gemini.WordInfoRequest:
     properties:
       source_lang:
         type: string
@@ -15,28 +43,44 @@ definitions:
       target_word:
         type: string
     type: object
-  wordsGo_v2_external_gemini.Response:
+  gemini.WordInfoResponse:
     properties:
       response:
         type: string
     type: object
-  wordsGo_v2_internal_models.AnswerReq:
+  handler.JSONError:
+    properties:
+      error:
+        type: string
+    type: object
+  models.AnswerReq:
     properties:
       id:
         type: string
       target_word:
         type: string
     type: object
-  wordsGo_v2_internal_models.CheckAnswerResponse:
+  models.CheckAnswerResponse:
     properties:
       is_correct:
         type: boolean
       next_word:
-        $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+        $ref: '#/definitions/models.Response'
       total_correct:
         type: integer
     type: object
-  wordsGo_v2_internal_models.CreateReq:
+  models.CreateBatchReq:
+    properties:
+      source_lang:
+        type: string
+      target_lang:
+        type: string
+      words:
+        items:
+          $ref: '#/definitions/models.WordListResp'
+        type: array
+    type: object
+  models.CreateReq:
     properties:
       comment:
         type: string
@@ -49,7 +93,7 @@ definitions:
       target_word:
         type: string
     type: object
-  wordsGo_v2_internal_models.CreateUserRequest:
+  models.CreateUserRequest:
     properties:
       email:
         example: test@user.com
@@ -78,43 +122,53 @@ definitions:
     - source_lang
     - target_lang
     type: object
-  wordsGo_v2_internal_models.GetMeResponse:
+  models.GetMeResponse:
     properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
       langCodeResp:
-        $ref: '#/definitions/wordsGo_v2_internal_models.LangCodeResp'
+        $ref: '#/definitions/models.LangCodeResp'
+      last_name:
+        type: string
+      source_lang:
+        type: string
       totalCorrect:
         type: integer
     type: object
-  wordsGo_v2_internal_models.LangCodeResp:
+  models.LangCodeResp:
     properties:
       source:
         type: string
       target:
         type: string
     type: object
-  wordsGo_v2_internal_models.LangItem:
+  models.LangItem:
     properties:
       code:
         type: string
       name:
         type: string
     type: object
-  wordsGo_v2_internal_models.LangResponse:
+  models.LangResponse:
     properties:
       source:
         items:
-          $ref: '#/definitions/wordsGo_v2_internal_models.LangItem'
+          $ref: '#/definitions/models.LangItem'
         type: array
       target:
         items:
-          $ref: '#/definitions/wordsGo_v2_internal_models.LangItem'
+          $ref: '#/definitions/models.LangItem'
         type: array
     type: object
-  wordsGo_v2_internal_models.ListOfUsersResponse:
+  models.ListOfUsersResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
+          $ref: '#/definitions/models.UserResponse'
         type: array
       limit:
         type: integer
@@ -125,7 +179,7 @@ definitions:
       total:
         type: integer
     type: object
-  wordsGo_v2_internal_models.LoginRequest:
+  models.LoginRequest:
     properties:
       email:
         example: test@user.com
@@ -137,30 +191,36 @@ definitions:
     - email
     - password
     type: object
-  wordsGo_v2_internal_models.LoginResponse:
+  models.LoginResponse:
     properties:
+      source_lang:
+        type: string
       token:
         type: string
     type: object
-  wordsGo_v2_internal_models.Response:
+  models.Response:
     properties:
       comment:
         type: string
       id:
         type: string
+      source_lang:
+        type: string
       source_word:
+        type: string
+      target_lang:
         type: string
       target_word:
         type: string
     type: object
-  wordsGo_v2_internal_models.StartLessonResponse:
+  models.StartLessonResponse:
     properties:
       total_correct:
         type: integer
       word:
-        $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+        $ref: '#/definitions/models.Response'
     type: object
-  wordsGo_v2_internal_models.TranslateReq:
+  models.TranslateReq:
     properties:
       source_lang:
         type: string
@@ -171,7 +231,7 @@ definitions:
       target_word:
         type: string
     type: object
-  wordsGo_v2_internal_models.TranslateResp:
+  models.TranslateResp:
     properties:
       id:
         type: string
@@ -180,7 +240,7 @@ definitions:
       target_word:
         type: string
     type: object
-  wordsGo_v2_internal_models.UpdateUserRequest:
+  models.UpdateUserRequest:
     properties:
       email:
         type: string
@@ -197,7 +257,7 @@ definitions:
       target_lang:
         type: string
     type: object
-  wordsGo_v2_internal_models.UserResponse:
+  models.UserResponse:
     properties:
       created_at:
         type: string
@@ -220,11 +280,141 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.UserTranslateResponse:
+    properties:
+      translation:
+        type: string
+    type: object
+  models.WordListReq:
+    properties:
+      level:
+        type: string
+      source_lang:
+        type: string
+      target_lang:
+        type: string
+      topic:
+        type: string
+      user_topic:
+        type: string
+    type: object
+  models.WordListResp:
+    properties:
+      comment:
+        type: string
+      source_word:
+        type: string
+      target_word:
+        type: string
+    type: object
+  modelsDB.Playlist:
+    properties:
+      created_at:
+        type: string
+      creator_name:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  modelsDB.PlaylistDetail:
+    properties:
+      created_at:
+        type: string
+      creator_name:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      lists:
+        items:
+          $ref: '#/definitions/modelsDB.PublicWordList'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  modelsDB.PublicWordList:
+    properties:
+      created_at:
+        type: string
+      creator_name:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      level:
+        type: string
+      source_lang:
+        type: string
+      target_lang:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  modelsDB.PublicWordListDetail:
+    properties:
+      created_at:
+        type: string
+      creator_name:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/modelsDB.PublicWordListItem'
+        type: array
+      level:
+        type: string
+      source_lang:
+        type: string
+      target_lang:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  modelsDB.PublicWordListItem:
+    properties:
+      comment:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      list_id:
+        type: string
+      source_word:
+        type: string
+      target_word:
+        type: string
+    type: object
 info:
   contact: {}
-  description: API Server for spaced repetition app
+  description: AI-Powered Language Learning Platform API
   title: WordsGo API
-  version: "1.0"
+  version: "1.1"
 paths:
   /lesson/check:
     post:
@@ -237,26 +427,26 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.AnswerReq'
+          $ref: '#/definitions/models.AnswerReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.CheckAnswerResponse'
+            $ref: '#/definitions/models.CheckAnswerResponse'
         "400":
           description: Invalid request body
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Check the answer for a word
@@ -276,7 +466,7 @@ paths:
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Finish the learning lesson
@@ -291,19 +481,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.StartLessonResponse'
+            $ref: '#/definitions/models.StartLessonResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "404":
-          description: No words found for lesson
+          description: no_words_for_lesson
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Start a learning lesson
@@ -320,21 +510,210 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.LoginRequest'
+          $ref: '#/definitions/models.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.LoginResponse'
+            $ref: '#/definitions/models.LoginResponse'
         "401":
           description: Invalid credentials
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       summary: User Login
       tags:
       - users
+  /playlists:
+    get:
+      description: Returns a list of all playlists (collections of public word lists)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/modelsDB.Playlist'
+            type: array
+      summary: Get playlists
+      tags:
+      - words
+  /playlists/{id}:
+    get:
+      description: Returns detailed information about a playlist, including all its
+        public word lists
+      parameters:
+      - description: Playlist ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/modelsDB.PlaylistDetail'
+      summary: Get playlist by ID
+      tags:
+      - words
+  /practice/checkAnswerPractice:
+    post:
+      consumes:
+      - application/json
+      description: Submits user translations for the generated sentences and returns
+        AI feedback
+      parameters:
+      - description: User translations
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserTranslateResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gemini.CheckAnswerPracticeWithGeminiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "429":
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Check AI practice answer
+      tags:
+      - AI Practice
+  /practice/finishPractice:
+    post:
+      description: Clears the AI practice session from the cache
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Finish AI practice
+      tags:
+      - AI Practice
+  /practice/startPractice:
+    post:
+      consumes:
+      - application/json
+      description: Generates a set of contextual sentences for translation based on
+        a topic using Gemini AI
+      parameters:
+      - description: Topic for practice
+        in: body
+        name: input
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gemini.StartPracticeWithGeminiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "429":
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Start AI practice
+      tags:
+      - AI Practice
+  /public-lists:
+    get:
+      description: Returns a list of all public word lists, optionally filtered by
+        language
+      parameters:
+      - description: Source language code (e.g., 'en')
+        in: query
+        name: source_lang
+        type: string
+      - description: Target language code (e.g., 'ru')
+        in: query
+        name: target_lang
+        type: string
+      - description: Proficiency level (e.g., 'A1')
+        in: query
+        name: level
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/modelsDB.PublicWordList'
+            type: array
+      summary: Get public word lists
+      tags:
+      - words
+  /public-lists/{id}:
+    get:
+      description: Returns detailed information about a public word list, including
+        all its words
+      parameters:
+      - description: Word list ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/modelsDB.PublicWordListDetail'
+      summary: Get public word list by ID
+      tags:
+      - words
   /users:
     get:
       consumes:
@@ -359,11 +738,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.ListOfUsersResponse'
+            $ref: '#/definitions/models.ListOfUsersResponse'
         "500":
           description: Failed to get users
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       summary: Get list of users
       tags:
       - users
@@ -377,26 +756,26 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.CreateUserRequest'
+          $ref: '#/definitions/models.CreateUserRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
+            $ref: '#/definitions/models.UserResponse'
         "400":
           description: Invalid input or validation info
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "409":
           description: User already exists
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       summary: Create a new user
       tags:
       - users
@@ -404,7 +783,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Delete user by ID from DB
+      description: Delete user by Slug from DB
       parameters:
       - description: User UUID
         format: uuid
@@ -418,26 +797,26 @@ paths:
         "200":
           description: OK
         "400":
-          description: Invalid user ID
+          description: Invalid user Slug
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "403":
           description: You can delete only your own account
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Failed to delete user
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
-      summary: Delete user by ID
+      summary: Delete user by Slug
       tags:
       - users
     get:
       consumes:
       - application/json
-      description: Get User By ID from DB
+      description: Get User By Slug from DB
       parameters:
       - description: User UUID
         format: uuid
@@ -451,20 +830,20 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
+            $ref: '#/definitions/models.UserResponse'
         "400":
           description: Invalid UUID
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "404":
           description: User not found
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
-      summary: Get user by ID
+            $ref: '#/definitions/handler.JSONError'
+      summary: Get user by Slug
       tags:
       - users
     put:
@@ -483,29 +862,29 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.UpdateUserRequest'
+          $ref: '#/definitions/models.UpdateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Successfully updated
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.UserResponse'
+            $ref: '#/definitions/models.UserResponse'
         "400":
-          description: Invalid user ID
+          description: Invalid user Slug
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "403":
           description: Permission denied
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Failed to update user
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
-      summary: Update user by ID
+      summary: Update user by Slug
       tags:
       - users
   /users/lang:
@@ -518,7 +897,7 @@ paths:
         "200":
           description: Successfully retrieved languages
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.LangResponse'
+            $ref: '#/definitions/models.LangResponse'
       summary: Get available languages
       tags:
       - users
@@ -534,15 +913,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.GetMeResponse'
+            $ref: '#/definitions/models.GetMeResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Get current user info
@@ -559,37 +938,114 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.CreateReq'
+          $ref: '#/definitions/models.CreateReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.Response'
+            $ref: '#/definitions/models.Response'
         "400":
           description: Invalid request body
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "408":
           description: Database timeout
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "409":
           description: Word already exists
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Create a new word
+      tags:
+      - words
+  /words/create-batch:
+    post:
+      consumes:
+      - application/json
+      description: Adds multiple words (up to 500) to the user's dictionary in a single
+        request
+      parameters:
+      - description: Batch of words to save
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateBatchReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Batch save words
+      tags:
+      - words
+  /words/import:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads and processes a CSV or JSON file to add multiple words
+        to the user's dictionary
+      parameters:
+      - description: CSV or JSON file with words
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Import words
       tags:
       - words
   /words/translate:
@@ -603,26 +1059,26 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_internal_models.TranslateReq'
+          $ref: '#/definitions/models.TranslateReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/wordsGo_v2_internal_models.TranslateResp'
+            $ref: '#/definitions/models.TranslateResp'
         "400":
           description: Invalid request body
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Translate a word
@@ -640,31 +1096,74 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wordsGo_v2_external_gemini.Request'
+          $ref: '#/definitions/gemini.WordInfoRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Successfully generated explanation
           schema:
-            $ref: '#/definitions/wordsGo_v2_external_gemini.Response'
+            $ref: '#/definitions/gemini.WordInfoResponse'
         "400":
           description: Invalid request body
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "401":
           description: Unauthorized
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
         "500":
           description: Internal server error
           schema:
-            $ref: '#/definitions/internal_handler.JSONError'
+            $ref: '#/definitions/handler.JSONError'
       security:
       - BearerAuth: []
       summary: Get word details using AI
       tags:
       - words
+  /words/wordList:
+    post:
+      consumes:
+      - application/json
+      description: Returns a list of thematic words based on user request or predefined
+        topic using Gemini AI
+      parameters:
+      - description: Topic and request for word list generation
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.WordListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.WordListResp'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "429":
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.JSONError'
+      security:
+      - BearerAuth: []
+      summary: Generate word list
+      tags:
+      - AI Features
 securityDefinitions:
   BearerAuth:
     in: header

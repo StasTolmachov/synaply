@@ -28,12 +28,12 @@ func init() {
 func sortLanguagesMap(langMap map[string]string) []LangItem {
 	result := make([]LangItem, 0, len(langMap))
 
-	// Перекладываем данные из мапы в слайс
+	// Copy data from map to slice
 	for code, name := range langMap {
 		result = append(result, LangItem{Code: code, Name: name})
 	}
 
-	// Сортируем слайс по полю Name (по алфавиту)
+	// Sort slice by Name (alphabetically)
 	sort.Slice(result, func(i, j int) bool {
 		return result[i].Name < result[j].Name
 	})
@@ -41,7 +41,7 @@ func sortLanguagesMap(langMap map[string]string) []LangItem {
 	return result
 }
 
-// SourceLanguages содержит языки, С которых можно переводить (Оригинал).
+// SourceLanguages contains languages FROM which you can translate (Original).
 var SourceLanguages = map[string]string{
 	"ACE": "Acehnese",
 	"AF":  "Afrikaans",
@@ -59,7 +59,7 @@ var SourceLanguages = map[string]string{
 	"BS":  "Bosnian",
 	"CA":  "Catalan",
 	"CEB": "Cebuano",
-	"CKB": "Kurdish (Sorani)",
+	"CKB": "Kurdish (Sorani)", //not locale
 	"CS":  "Czech",
 	"CY":  "Welsh",
 	"DA":  "Danish",
@@ -93,7 +93,7 @@ var SourceLanguages = map[string]string{
 	"JV":  "Javanese",
 	"KA":  "Georgian",
 	"KK":  "Kazakh",
-	"KMR": "Kurdish (Kurmanji)",
+	"KMR": "Kurdish (Kurmanji)", //
 	"KO":  "Korean",
 	"KY":  "Kyrgyz",
 	"LA":  "Latin",
@@ -105,7 +105,7 @@ var SourceLanguages = map[string]string{
 	"MAI": "Maithili",
 	"MG":  "Malagasy",
 	"MI":  "Maori",
-	"MK":  "Macedian",
+	"MK":  "Macedonian",
 	"ML":  "Malayalam",
 	"MN":  "Mongolian",
 	"MR":  "Marathi",
@@ -159,8 +159,8 @@ var SourceLanguages = map[string]string{
 	"ZU":  "Zulu",
 }
 
-// TargetLanguages содержит языки, НА которые можно переводить (Перевод).
-// Отличается наличием региональных диалектов (EN-US, PT-BR и т.д.)
+// TargetLanguages contains languages TO which you can translate (Translation).
+// Differs by the presence of regional dialects (EN-GB, PT-BR, etc.)
 var TargetLanguages = map[string]string{
 	"ACE":     "Acehnese",
 	"AF":      "Afrikaans",
@@ -207,7 +207,7 @@ var TargetLanguages = map[string]string{
 	"HT":      "Haitian Creole",
 	"HU":      "Hungarian",
 	"HY":      "Armenian",
-	"Slug":    "Indonesian",
+	"ID":      "Indonesian",
 	"IG":      "Igbo",
 	"IS":      "Icelandic",
 	"IT":      "Italian",
@@ -285,13 +285,13 @@ var TargetLanguages = map[string]string{
 	"ZU":      "Zulu",
 }
 
-// IsValidSourceLanguage проверяет, поддерживается ли язык для исходного текста
+// IsValidSourceLanguage checks if the language is supported for source text
 func IsValidSourceLanguage(code string) bool {
 	_, exists := SourceLanguages[code]
 	return exists
 }
 
-// IsValidTargetLanguage проверяет, поддерживается ли язык для перевода
+// IsValidTargetLanguage checks if the language is supported for translation
 func IsValidTargetLanguage(code string) bool {
 	_, exists := TargetLanguages[code]
 	return exists

@@ -35,17 +35,17 @@ func TestValidatePassword(t *testing.T) {
 func TestHashAndComparePasswords(t *testing.T) {
 	password := "SecretPass123!"
 
-	// 1. Тест хеширования
+	// 1. Hashing test
 	hash, err := HashPassword(password)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, hash)
 	assert.NotEqual(t, password, hash)
 
-	// 2. Тест сравнения (успех)
+	// 2. Comparison test (success)
 	match := ComparePasswords(hash, password)
 	assert.True(t, match, "Password should match hash")
 
-	// 3. Тест сравнения (провал)
+	// 3. Comparison test (failure)
 	match = ComparePasswords(hash, "WrongPass")
 	assert.False(t, match, "Wrong password should not match hash")
 }

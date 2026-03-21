@@ -12,7 +12,7 @@ func TimeoutMiddleware(timeout time.Duration) func(http.Handler) http.Handler {
 			ctx, cancel := context.WithTimeout(r.Context(), timeout)
 			defer cancel()
 
-			// Передаем контекст с таймаутом дальше по цепочке
+			// Pass the context with timeout further down the chain
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}

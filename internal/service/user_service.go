@@ -22,7 +22,7 @@ type UserService interface {
 	Delete(ctx context.Context, targetID uuid.UUID) error
 	Update(ctx context.Context, id uuid.UUID, req models.UpdateUserRequest) (*models.UserResponse, error)
 	GetUsers(ctx context.Context, limit, page uint64, order string) (*models.ListOfUsersResponse, error)
-	Login(ctx context.Context, req models.LoginRequest) (string, error)
+	Login(ctx context.Context, req models.LoginRequest) (string, string, error)
 	SyncAdmin(ctx context.Context, adminCfg config.Admin) error
 	GetUserByEmail(ctx context.Context, email string) (*models.UserResponse, error)
 	GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error)
@@ -58,23 +58,23 @@ func (s *userService) Create(ctx context.Context, req models.CreateUserRequest) 
 
 	return models.FromDBToUserResponse(userDB), nil
 }
-func (s *userService) Login(ctx context.Context, req models.LoginRequest) (string, error) {
+func (s *userService) Login(ctx context.Context, req models.LoginRequest) (string, string, error) {
 	userDB, err := s.repo.GetPasswordHashByEmail(ctx, req.Email)
 	slogger.Log.DebugContext(ctx, "Login request", "userDB", userDB)
 	if err != nil {
 		if errors.Is(err, modelsDB.ErrUserNotFound) {
-			return "", models.ErrInvalidCredentials
+			return "", "", models.ErrInvalidCredentials
 		}
-		return "", fmt.Errorf("failed to get user by email: %w", err)
+		return "", "", fmt.Errorf("failed to get user by email: %w", err)
 	}
 	if !utils.ComparePasswords(userDB.PasswordHash, req.Password) {
-		return "", models.ErrInvalidCredentials
+		return "", "", models.ErrInvalidCredentials
 	}
 	token, err := utils.GenerateToken(userDB.ID, userDB.Role, s.jwt)
 	if err != nil {
-		return "", fmt.Errorf("failed to generate token: %w", err)
+		return "", "", fmt.Errorf("failed to generate token: %w", err)
 	}
-	return token, nil
+	return token, userDB.SourceLang, nil
 }
 func (s *userService) SyncAdmin(ctx context.Context, adminCfg config.Admin) error {
 	slogger.Log.InfoContext(ctx, "Syncing admin user...", "email", adminCfg.Email)

@@ -42,7 +42,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
 			"https://wordsgo.tolmachov.dev",
-			"http://localhost:3000", // для локальной разработки фронтенда
+			"http://localhost:3000", // for local frontend development
 		},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
@@ -78,8 +78,33 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				})
 			})
 		})
-		r.Group(func(r chi.Router) {
+		r.Route("/public-lists", func(r chi.Router) {
+			// Publicly accessible GET routes
+			r.Get("/", h.GetPublicWordLists)
+			r.Get("/{id}", h.GetPublicWordListByID)
 
+			// Authenticated routes
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.AuthMidleware(jwtSecret))
+				r.Post("/", h.CreatePublicWordList)
+				r.Put("/{id}", h.UpdatePublicWordList)
+				r.Post("/{id}/add", h.AddPublicListToUser)
+			})
+		})
+
+		r.Route("/playlists", func(r chi.Router) {
+			r.Get("/", h.GetPlaylists)
+			r.Get("/{id}", h.GetPlaylistByID)
+
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.AuthMidleware(jwtSecret))
+				r.Post("/", h.CreatePlaylist)
+				r.Put("/{id}", h.UpdatePlaylist)
+				r.Delete("/{id}", h.DeletePlaylist)
+			})
+		})
+
+		r.Group(func(r chi.Router) {
 			r.Use(middleware.AuthMidleware(jwtSecret))
 
 			r.Group(func(r chi.Router) {
@@ -112,18 +137,8 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.Post("/practice/finishPractice", h.FinishPracticeWithGemini)
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordList", h.WordList)
 				r.With(httprate.LimitByIP(5, 1*time.Minute)).Post("/words/create-batch", h.CreateBatchWords)
-
-				r.Route("/public-lists", func(r chi.Router) {
-					r.Post("/", h.CreatePublicWordList)
-					r.Get("/", h.GetPublicWordLists)
-					r.Get("/{id}", h.GetPublicWordListByID)
-					r.Put("/{id}", h.UpdatePublicWordList)
-					r.Post("/{id}/add", h.AddPublicListToUser)
-				})
 			})
-
 		})
-
 	})
 
 	return r
@@ -171,7 +186,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	slogger.Log.DebugContext(ctx, "Login request", "req", req)
 
-	token, err := h.userService.Login(ctx, req)
+	token, sourceLang, err := h.userService.Login(ctx, req)
 	slogger.Log.DebugContext(ctx, "Login response", "token", token)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
@@ -183,7 +198,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token})
+	JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token, SourceLang: sourceLang})
 }
 
 // Create creates a new user
@@ -481,7 +496,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} models.GetMeResponse  <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.GetMeResponse
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
 // @Router /words/GetMe [get]
@@ -496,6 +511,10 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -509,6 +528,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 		Email:        user.Email,
 		FirstName:    user.FirstName,
 		LastName:     user.LastName,
+		SourceLang:   user.SourceLang,
 		LangCodeResp: langCodeResp,
 		TotalCorrect: user.TotalCorrect,
 	}
@@ -554,6 +574,10 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -636,9 +660,9 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 // @Tags lesson
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} models.StartLessonResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.StartLessonResponse
 // @Failure 401 {object} handler.JSONError "Unauthorized"
-// @Failure 404 {object} handler.JSONError "No words found for lesson"
+// @Failure 404 {object} handler.JSONError "no_words_for_lesson"
 // @Failure 500 {object} handler.JSONError "Internal server error"
 // @Router /lesson/start [get]
 func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
@@ -654,7 +678,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrNoWordsForLesson):
-			WriteError(w, http.StatusNotFound, "No words found for lesson")
+			WriteError(w, http.StatusNotFound, "no_words_for_lesson")
 			slogger.Log.ErrorContext(ctx, "No words found for lesson", "error", err)
 			return
 		default:
@@ -686,7 +710,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Security BearerAuth
 // @Param input body models.AnswerReq true "Answer data"
-// @Success 200 {object} models.CheckAnswerResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.CheckAnswerResponse
 // @Failure 400 {object} handler.JSONError "Invalid request body"
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -805,6 +829,10 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -827,6 +855,20 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// StartPracticeWithGemini Start a practice session with Gemini
+// @Summary Start AI practice
+// @Description Generates a set of contextual sentences for translation based on a topic using Gemini AI
+// @Tags AI Practice
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body object true "Topic for practice"
+// @Success 200 {object} gemini.StartPracticeWithGeminiResponse
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/startPractice [post]
 func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -838,6 +880,10 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -875,6 +921,20 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// CheckAnswerPracticeWithGemini Check answers for AI practice
+// @Summary Check AI practice answer
+// @Description Submits user translations for the generated sentences and returns AI feedback
+// @Tags AI Practice
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.UserTranslateResponse true "User translations"
+// @Success 200 {object} gemini.CheckAnswerPracticeWithGeminiResponse
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/checkAnswerPractice [post]
 func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -886,6 +946,10 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -916,6 +980,16 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// FinishPracticeWithGemini Finish the AI practice session
+// @Summary Finish AI practice
+// @Description Clears the AI practice session from the cache
+// @Tags AI Practice
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {string} string "ok"
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/finishPractice [post]
 func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -1050,6 +1124,20 @@ func (h *Handler) DeleteAllWords(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
+// WordList Generate a thematic word list using AI
+// @Summary Generate word list
+// @Description Returns a list of thematic words based on user request or predefined topic using Gemini AI
+// @Tags AI Features
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.WordListReq true "Topic and request for word list generation"
+// @Success 200 {array} models.WordListResp
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/wordList [post]
 func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	const wordListTimeout = 120 * time.Second
 	ctx, cancel := context.WithTimeout(r.Context(), wordListTimeout)
@@ -1093,7 +1181,7 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
 			return
 		}
-		// Исправленный текст ошибки
+		// Corrected error message
 		WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
 		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "error", err, "req", wordListReq)
 		return
@@ -1101,7 +1189,19 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, resp)
 }
 
-// CreateBatchWords массовое сохранение слов
+// CreateBatchWords mass save words
+// @Summary Batch save words
+// @Description Adds multiple words (up to 500) to the user's dictionary in a single request
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.CreateBatchReq true "Batch of words to save"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/create-batch [post]
 func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -1112,7 +1212,7 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req models.CreateBatchReq
-	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // Ограничение в 1МБ
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // 1MB limit
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body format")
 		slogger.Log.ErrorContext(ctx, "Invalid request body format in CreateBatchWords", "error", err)
@@ -1134,6 +1234,19 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
 }
 
+// ImportWords Import words from CSV or JSON file
+// @Summary Import words
+// @Description Uploads and processes a CSV or JSON file to add multiple words to the user's dictionary
+// @Tags words
+// @Accept multipart/form-data
+// @Produce json
+// @Security BearerAuth
+// @Param file formData file true "CSV or JSON file with words"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/import [post]
 func (h *Handler) ImportWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -1218,8 +1331,8 @@ func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Title == "" || len(req.Words) == 0 {
-		WriteError(w, http.StatusBadRequest, "Title and words are required")
+	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
+		WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
@@ -1233,12 +1346,23 @@ func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
 }
 
+// GetPublicWordLists returns all public word lists
+// @Summary Get public word lists
+// @Description Returns a list of all public word lists, optionally filtered by language
+// @Tags words
+// @Produce json
+// @Param source_lang query string false "Source language code (e.g., 'en')"
+// @Param target_lang query string false "Target language code (e.g., 'ru')"
+// @Param level query string false "Proficiency level (e.g., 'A1')"
+// @Success 200 {array} modelsDB.PublicWordList
+// @Router /public-lists [get]
 func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	sourceLang := r.URL.Query().Get("source_lang")
 	targetLang := r.URL.Query().Get("target_lang")
+	level := r.URL.Query().Get("level")
 
-	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang)
+	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang, level)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to get public word lists")
 		slogger.Log.ErrorContext(ctx, "Failed to get public word lists", "err", err)
@@ -1248,6 +1372,14 @@ func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, lists)
 }
 
+// GetPublicWordListByID returns a public word list with its items
+// @Summary Get public word list by ID
+// @Description Returns detailed information about a public word list, including all its words
+// @Tags words
+// @Produce json
+// @Param id path string true "Word list ID"
+// @Success 200 {object} modelsDB.PublicWordListDetail
+// @Router /public-lists/{id} [get]
 func (h *Handler) GetPublicWordListByID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := chi.URLParam(r, "id")
@@ -1288,8 +1420,8 @@ func (h *Handler) UpdatePublicWordList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Title == "" || len(req.Words) == 0 {
-		WriteError(w, http.StatusBadRequest, "Title and words are required")
+	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
+		WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
@@ -1326,6 +1458,137 @@ func (h *Handler) AddPublicListToUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to add words to dictionary")
 		slogger.Log.ErrorContext(ctx, "Failed to add public list to user", "err", err, "list_id", id, "user_id", user.ID)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) CreatePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	var req models.CreatePlaylistRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if req.Title == "" {
+		WriteError(w, http.StatusBadRequest, "Title is required")
+		return
+	}
+
+	id, err := h.wordsService.CreatePlaylist(ctx, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to create playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to create playlist", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
+}
+
+// GetPlaylists returns all playlists
+// @Summary Get playlists
+// @Description Returns a list of all playlists (collections of public word lists)
+// @Tags words
+// @Produce json
+// @Success 200 {array} modelsDB.Playlist
+// @Router /playlists [get]
+func (h *Handler) GetPlaylists(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	playlists, err := h.wordsService.GetPlaylists(ctx)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get playlists")
+		slogger.Log.ErrorContext(ctx, "Failed to get playlists", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, playlists)
+}
+
+// GetPlaylistByID returns a playlist with its public word lists
+// @Summary Get playlist by ID
+// @Description Returns detailed information about a playlist, including all its public word lists
+// @Tags words
+// @Produce json
+// @Param id path string true "Playlist ID"
+// @Success 200 {object} modelsDB.PlaylistDetail
+// @Router /playlists/{id} [get]
+func (h *Handler) GetPlaylistByID(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	detail, err := h.wordsService.GetPlaylistByID(ctx, id)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to get playlist", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, detail)
+}
+
+func (h *Handler) UpdatePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	var req models.CreatePlaylistRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	err = h.wordsService.UpdatePlaylist(ctx, id, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to update playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to update playlist", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) DeletePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	err = h.wordsService.DeletePlaylist(ctx, id, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to delete playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to delete playlist", "err", err, "id", id)
 		return
 	}
 

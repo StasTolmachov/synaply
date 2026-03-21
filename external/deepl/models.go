@@ -1,13 +1,13 @@
 package deepl
 
-// Request описывает JSON, который мы отправляем в DeepL
+// Request describes the JSON we send to DeepL
 type Request struct {
 	Text       []string `json:"text"`
 	SourceLang string   `json:"source_lang"`
 	TargetLang string   `json:"target_lang,omitempty"`
 }
 
-// Response описывает JSON, который DeepL возвращает нам
+// Response describes the JSON DeepL returns to us
 type Response struct {
 	Translations []struct {
 		DetectedSourceLanguage string `json:"detected_source_language"`
