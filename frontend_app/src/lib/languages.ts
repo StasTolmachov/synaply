@@ -64,7 +64,7 @@ export const languages: Record<string, string> = {
   "MAI": "Maithili",
   "MG": "Malagasy",
   "MI": "Maori",
-  "MK": "Macedian",
+  "MK": "Macedonian",
   "ML": "Malayalam",
   "MN": "Mongolian",
   "MR": "Marathi",

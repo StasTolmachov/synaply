@@ -9,16 +9,16 @@ create table if not exists words (
     target_word text not null,
     comment text,
 
-    -- НОВЫЕ ПОЛЯ FSRS:
-    due timestamptz not null default now(),      -- Когда R упадет до 90% (пора повторять)
-    stability double precision not null default 0, -- S (Стабильность)
-    difficulty double precision not null default 0, -- D (Сложность)
-    elapsed_days integer not null default 0,      -- Дней с прошлого показа
-    scheduled_days integer not null default 0,    -- На сколько дней было отложено
-    reps integer not null default 0,              -- Всего повторений
-    lapses integer not null default 0,            -- Сколько раз забыл
+    -- NEW FSRS FIELDS:
+    due timestamptz not null default now(),      -- When R drops to 90% (time to review)
+    stability double precision not null default 0, -- S (Stability)
+    difficulty double precision not null default 0, -- D (Difficulty)
+    elapsed_days integer not null default 0,      -- Days since last review
+    scheduled_days integer not null default 0,    -- How many days it was deferred for
+    reps integer not null default 0,              -- Total repetitions
+    lapses integer not null default 0,            -- How many times forgotten
     state integer not null default 0,             -- 0-New, 1-Learning, 2-Review, 3-Relearning
-    last_review timestamptz,                      -- Время последнего ответа
+    last_review timestamptz,                      -- Last review time
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),

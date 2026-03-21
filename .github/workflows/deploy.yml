@@ -1,6 +1,6 @@
 name: Deploy to DigitalOcean
 
-# Правило: запускать этот скрипт только при push в ветку main
+# Rule: run this script only on push to the main branch
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Робот будет работать на Ubuntu
+    runs-on: ubuntu-latest # The robot will work on Ubuntu
 
     steps:
       - name: Deploy to Server via SSH
@@ -18,19 +18,19 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
         
-          # Вот скрипт, который выполнится НА ТВОЕМ СЕРВЕРЕ:
+          # Here is the script that will execute ON YOUR SERVER:
           script: |
-            # ОСТАНАВЛИВАТЬ скрипт при любой ошибке (чтобы GitHub загорелся красным, если что-то пойдет не так)
+            # STOP the script on any error (so GitHub lights up red if something goes wrong)
             set -e
             
-            # Переходим в папку с проектом
+            # Go to the project folder
             cd /root/wordsGo_v2
             
-            # 1. Скачиваем ВСЕ свежие обновления с GitHub в буфер сервера
+            # 1. Download ALL fresh updates from GitHub to the server buffer
             git fetch origin
             
-            # 2. ЖЕСТКО сбрасываем состояние кода на сервере до точной копии ветки main
+            # 2. HARD reset the code state on the server to an exact copy of the main branch
             git reset --hard origin/main
             
-            # Пересобираем и перезапускаем контейнеры в фоне
+            # Rebuild and restart containers in the background
             docker compose up -d --build
