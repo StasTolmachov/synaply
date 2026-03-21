@@ -20,6 +20,7 @@ type User struct {
 	Role         UserRole
 	SourceLang   string
 	TargetLang   string
+	TotalCorrect int64
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    *time.Time
@@ -132,6 +133,7 @@ func ToUserDB(user *User) *modelsDB.UserDB {
 		Role:         string(user.Role),
 		SourceLang:   user.SourceLang,
 		TargetLang:   user.TargetLang,
+		TotalCorrect: user.TotalCorrect,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 		DeletedAt:    user.DeletedAt,
@@ -161,6 +163,7 @@ func UserDBToUser(user *modelsDB.UserDB) *User {
 		Role:         UserRole(user.Role),
 		SourceLang:   user.SourceLang,
 		TargetLang:   user.TargetLang,
+		TotalCorrect: user.TotalCorrect,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 	}

@@ -50,7 +50,7 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	query := `
 	WITH
 	new_words AS (
-		-- Берем 3 новых слова (State = 0)
+		-- Take 3 new words (State = 0)
 		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state = 0
@@ -58,11 +58,11 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 		LIMIT 3
 	),
 	review_words AS (
-		-- Берем 7 слов, которые уже в процессе изучения (State != 0)
+		-- Take 7 words that are already in the process of learning (State != 0)
 		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
 		FROM words
 		WHERE user_id = $1 AND state != 0
-		ORDER BY due ASC -- МАГИЯ ЗДЕСЬ: Сначала те, которые давно пора повторить
+		ORDER BY due ASC -- MAGIC HERE: First those that are long overdue for review
 		LIMIT 7
 	)
 	SELECT * FROM new_words
@@ -257,14 +257,14 @@ limit 500
 }
 
 func (p *wordsPostgres) CreateBatch(ctx context.Context, reqs []modelsDB.CreateReq) error {
-	// Мы пишем запрос так же, как для одной строки
+	// We write the query just like for a single row
 	query := `
 	insert into words (user_id, source_lang, target_lang, source_word, target_word, comment) 
 	values (:user_id, :source_lang, :target_lang, :source_word, :target_word, :comment)
 	on conflict (user_id, source_lang, target_lang, source_word, target_word) do nothing
 	`
 
-	// Но передаем СЛАЙС структур reqs. sqlx сам развернет это в массовую вставку!
+	// But we pass a SLICE of reqs structs. sqlx will expand this into a batch insert!
 	_, err := p.db.db.NamedExecContext(ctx, query, reqs)
 	if err != nil {
 		return fmt.Errorf("failed to bulk insert words: %w", err)

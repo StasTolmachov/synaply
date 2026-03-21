@@ -20,7 +20,7 @@ type Word struct {
 	SourceWord string
 	TargetWord string
 	Comment    string
-	// Поля FSRS
+	// FSRS fields
 	Due           time.Time
 	Stability     float64
 	Difficulty    float64
@@ -37,7 +37,7 @@ type Word struct {
 }
 
 type TranslateReq struct {
-	ID         uuid.UUID `json:"-"` // ID мы берем из контекста, поэтому запрещаем брать его из JSON
+	ID         uuid.UUID `json:"-"` // ID is taken from context, so we forbid taking it from JSON
 	SourceLang string    `json:"source_lang"`
 	TargetLang string    `json:"target_lang"`
 	SourceWord string    `json:"source_word"`
@@ -94,8 +94,7 @@ type Lesson struct {
 	Comment    string
 	SourceLang string
 	TargetLang string
-
-	// Поля FSRS
+	// FSRS fields
 	Due           time.Time
 	Stability     float64
 	Difficulty    float64

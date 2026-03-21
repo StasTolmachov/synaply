@@ -8,4 +8,4 @@ create table if not exists gemini (
 );
 
 create index idx_lang_word on gemini (source_lang, target_lang, source_word, target_word);
-alter table gemini add constraint unique_gemini_куызщтыу unique (source_lang, target_lang, source_word, target_word);
+alter table gemini add constraint unique_gemini_fields unique (source_lang, target_lang, source_word, target_word);
