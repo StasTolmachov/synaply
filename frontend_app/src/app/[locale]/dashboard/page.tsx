@@ -991,24 +991,27 @@ export default function Dashboard() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                      <div className="flex items-center justify-between px-2 py-3 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
-                        <div className="flex-1 flex justify-between sm:hidden">
+                      <div className="flex flex-col sm:flex-row items-center justify-between px-2 py-3 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 gap-3">
+                        <div className="w-full flex items-center justify-between sm:hidden">
                           <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
+                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:bg-gray-100 dark:disabled:bg-gray-900 transition-colors"
                           >
                             {t('dashboard.previous')}
                           </button>
+                          <span className="text-xs text-gray-700 dark:text-gray-400 font-medium">
+                            {t('dashboard.page_info', { current: currentPage, total: totalPages })}
+                          </span>
                           <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:bg-gray-100 dark:disabled:bg-gray-900"
+                            className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:bg-gray-100 dark:disabled:bg-gray-900 transition-colors"
                           >
                             {t('dashboard.next')}
                           </button>
                         </div>
-                        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                           <div>
                             <p className="text-xs text-gray-700 dark:text-gray-400">
                               {t('dashboard.page_info', { current: currentPage, total: totalPages })}
