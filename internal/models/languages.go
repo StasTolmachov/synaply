@@ -152,7 +152,7 @@ var SourceLanguages = map[string]string{
 	"UZ":  "Uzbek",
 	"VI":  "Vietnamese",
 	"WO":  "Wolof",
-	"XH":  "Xhosa", //
+	"XH":  "Xhosa",
 	"YI":  "Yiddish",
 	"YUE": "Cantonese",
 	"ZH":  "Chinese",
