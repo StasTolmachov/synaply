@@ -93,7 +93,7 @@ var SourceLanguages = map[string]string{
 	"JV":  "Javanese",
 	"KA":  "Georgian",
 	"KK":  "Kazakh",
-	"KMR": "Kurdish (Kurmanji)",
+	"KMR": "Kurdish (Kurmanji)", //
 	"KO":  "Korean",
 	"KY":  "Kyrgyz",
 	"LA":  "Latin",
@@ -105,7 +105,7 @@ var SourceLanguages = map[string]string{
 	"MAI": "Maithili",
 	"MG":  "Malagasy",
 	"MI":  "Maori",
-	"MK":  "Macedian",
+	"MK":  "Macedonian",
 	"ML":  "Malayalam",
 	"MN":  "Mongolian",
 	"MR":  "Marathi",
