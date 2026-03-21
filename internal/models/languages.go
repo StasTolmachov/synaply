@@ -139,7 +139,7 @@ var SourceLanguages = map[string]string{
 	"SW":  "Swahili",
 	"TA":  "Tamil",
 	"TE":  "Telugu",
-	"TG":  "Tajik",
+	"TG":  "Tajik", //
 	"TH":  "Thai",
 	"TK":  "Turkmen",
 	"TL":  "Tagalog",
@@ -148,7 +148,7 @@ var SourceLanguages = map[string]string{
 	"TS":  "Tsonga",
 	"TT":  "Tatar",
 	"UK":  "Ukrainian",
-	"UR":  "Urdu",
+	"UR":  "Urdu", //
 	"UZ":  "Uzbek",
 	"VI":  "Vietnamese",
 	"WO":  "Wolof",
