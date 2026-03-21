@@ -28,7 +28,13 @@ type WordsRepository interface {
 	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
 
 	CreatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) (uuid.UUID, error)
-	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang, level string) ([]modelsDB.PublicWordList, error)
 	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
 	UpdatePublicWordList(ctx context.Context, list modelsDB.PublicWordList, items []modelsDB.PublicWordListItem) error
+
+	CreatePlaylist(ctx context.Context, playlist modelsDB.Playlist, listIDs []uuid.UUID) (uuid.UUID, error)
+	GetPlaylists(ctx context.Context) ([]modelsDB.Playlist, error)
+	GetPlaylistByID(ctx context.Context, playlistID uuid.UUID) (*modelsDB.PlaylistDetail, error)
+	UpdatePlaylist(ctx context.Context, playlist modelsDB.Playlist, listIDs []uuid.UUID) error
+	DeletePlaylist(ctx context.Context, playlistID uuid.UUID, userID uuid.UUID) error
 }
