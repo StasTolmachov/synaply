@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, Link } from '@/i18n/routing';
-import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target } from 'lucide-react';
+import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe } from 'lucide-react';
 import { useTranslation } from '@/components/I18nContext';
 
 export default function LandingPage() {
   const router = useRouter();
-  const { setLang, resetToSaved } = useTranslation();
+  const { t, setLang, resetToSaved } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const flags = [

@@ -5,7 +5,7 @@ import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { getLanguageName } from '@/lib/languages';
 import { sendGAEvent } from '@next/third-parties/google';
-import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp, Globe, Languages } from 'lucide-react';
+import { BookOpen, Plus, Loader2, Brain, List, Sparkles, Search, Trash2, Edit2, Check, X, ChevronLeft, ChevronRight, Save, Rocket, BarChart3, FileUp, Globe, Languages, Layers } from 'lucide-react';
 import { AIWordInfoCard } from '@/components/AIWordInfoCard';
 import { BuyMeACoffee } from '@/components/BuyMeACoffee';
 import { OnboardingModal } from '@/components/OnboardingModal';
@@ -126,16 +126,20 @@ export default function Dashboard() {
   }, [router]);
 
 
-  const handleTranslate = async () => {
+  const handleTranslate = async (direction: 'source-to-target' | 'target-to-source' = 'source-to-target') => {
     if (!newWord.source_word && !newWord.target_word) return;
+    const isSourceToTarget = direction === 'source-to-target';
+    
     try {
       sendGAEvent('event', 'translate_word', { source_lang: userLangs.source, target_lang: userLangs.target });
       setMessage({ type: '', text: '' });
       const res = await fetchApi('/words/translate', {
         method: 'POST',
         body: JSON.stringify({
-          source_word: newWord.source_word,
-          target_word: newWord.target_word
+          source_word: isSourceToTarget ? newWord.source_word : '',
+          target_word: isSourceToTarget ? '' : newWord.target_word,
+          source_lang: userLangs.source,
+          target_lang: userLangs.target
         })
       });
       if (res.source_word) setNewWord(prev => ({ ...prev, source_word: res.source_word }));
@@ -322,15 +326,19 @@ export default function Dashboard() {
     setBatchMessage({ type: '', text: '' });
   };
 
-  const handleTranslateNewInline = async () => {
-    if (!newGeneratedWord.source_word) return;
+  const handleTranslateNewInline = async (direction: 'source-to-target' | 'target-to-source' = 'source-to-target') => {
+    if (!newGeneratedWord.source_word && !newGeneratedWord.target_word) return;
+    const isSourceToTarget = direction === 'source-to-target';
+    
     try {
       setIsTranslatingNewGenerated(true);
       const res = await fetchApi('/words/translate', {
         method: 'POST',
         body: JSON.stringify({
-          source_word: newGeneratedWord.source_word,
-          target_word: newGeneratedWord.target_word
+          source_word: isSourceToTarget ? newGeneratedWord.source_word : '',
+          target_word: isSourceToTarget ? '' : newGeneratedWord.target_word,
+          source_lang: userLangs.source,
+          target_lang: userLangs.target
         })
       });
       if (res.source_word || res.target_word) {
@@ -347,15 +355,19 @@ export default function Dashboard() {
     }
   };
 
-  const handleTranslateInline = async () => {
+  const handleTranslateInline = async (direction: 'source-to-target' | 'target-to-source' = 'source-to-target') => {
     if (!editWord || (!editWord.source_word && !editWord.target_word)) return;
+    const isSourceToTarget = direction === 'source-to-target';
+    
     try {
       setIsTranslatingManual(true);
       const res = await fetchApi('/words/translate', {
         method: 'POST',
         body: JSON.stringify({
-          source_word: editWord.source_word,
-          target_word: editWord.target_word
+          source_word: isSourceToTarget ? editWord.source_word : '',
+          target_word: isSourceToTarget ? '' : editWord.target_word,
+          source_lang: userLangs.source,
+          target_lang: userLangs.target
         })
       });
       if (res.source_word || res.target_word) {
@@ -424,6 +436,7 @@ export default function Dashboard() {
           description: publishForm.description,
           source_lang: userLangs.source,
           target_lang: userLangs.target,
+          level: selectedLevel,
           words: generatedWords.map(w => ({
             source_word: w.source_word,
             target_word: w.target_word,
@@ -525,6 +538,32 @@ export default function Dashboard() {
 
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+                <Globe className="w-5 h-5 mr-2 text-blue-500" />
+                {t('dashboard.community_lists')}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                {t('dashboard.community_lists_desc')}
+              </p>
+              <div className="flex flex-col gap-3">
+                <Link 
+                  href="/public-lists"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  <Globe className="w-4 h-4 mr-2" />
+                  {t('dashboard.public_lists.title')}
+                </Link>
+                <Link 
+                  href="/public-lists?tab=playlists"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  <Layers className="w-4 h-4 mr-2" />
+                  {t('common.playlists') || 'Playlists'}
+                </Link>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
                 <List className="w-5 h-5 mr-2 text-blue-500" />
                 {t('dashboard.manage_words')}
               </h3>
@@ -570,36 +609,60 @@ export default function Dashboard() {
               
               <form onSubmit={handleAddWord} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      {t('dashboard.word_in', { lang: getLanguageName(userLangs.target) })}
-                    </label>
-                    <input
-                      type="text"
-                      className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      placeholder={t('dashboard.word_placeholder')}
-                      value={newWord.target_word}
-                      onChange={e => setNewWord({...newWord, target_word: e.target.value})}
-                    />
-                  </div>
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       {t('dashboard.translation_in', { lang: getLanguageName(userLangs.source) })}
                     </label>
-                    <input
-                      type="text"
-                      className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      placeholder={t('dashboard.translation_placeholder')}
-                      value={newWord.source_word}
-                      onChange={e => setNewWord({...newWord, source_word: e.target.value})}
-                    />
+                    <div className="relative group">
+                      <input
+                        type="text"
+                        className="block w-full rounded-md border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder={t('dashboard.word_placeholder')}
+                        value={newWord.source_word}
+                        onChange={e => setNewWord({...newWord, source_word: e.target.value})}
+                      />
+                      {newWord.source_word && !newWord.target_word && (
+                        <button
+                          type="button"
+                          onClick={() => handleTranslate('source-to-target')}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+                          title={t('dashboard.auto_translate')}
+                        >
+                          <Languages className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      {t('dashboard.word_in', { lang: getLanguageName(userLangs.target) })}
+                    </label>
+                    <div className="relative group">
+                      <input
+                        type="text"
+                        className="block w-full rounded-md border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder={t('dashboard.translation_placeholder')}
+                        value={newWord.target_word}
+                        onChange={e => setNewWord({...newWord, target_word: e.target.value})}
+                      />
+                      {newWord.target_word && !newWord.source_word && (
+                        <button
+                          type="button"
+                          onClick={() => handleTranslate('target-to-source')}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+                          title={t('dashboard.auto_translate')}
+                        >
+                          <Languages className="w-4 h-4 rotate-180" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex justify-end">
+                <div className="hidden">
                   <button
                     type="button"
-                    onClick={handleTranslate}
+                    onClick={() => handleTranslate()}
                     className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium"
                   >
                     {t('dashboard.auto_translate')}
@@ -766,14 +829,26 @@ export default function Dashboard() {
                           {/* Top row for adding new words */}
                           <tr className={`bg-blue-50/30 dark:bg-blue-900/10 ${duplicateWords.has(newGeneratedWord.source_word.toLowerCase().trim()) ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
                             <td className="px-4 py-3">
-                              <input
-                                type="text"
-                                placeholder={t('dashboard.new_word_placeholder')}
-                                className={`w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-xs ${duplicateWords.has(newGeneratedWord.source_word.toLowerCase().trim()) ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}
-                                value={newGeneratedWord.source_word}
-                                onChange={e => setNewGeneratedWord(prev => ({...prev, source_word: e.target.value}))}
-                                onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
-                              />
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="text"
+                                  placeholder={t('dashboard.new_word_placeholder')}
+                                  className={`w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-xs ${duplicateWords.has(newGeneratedWord.source_word.toLowerCase().trim()) ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}
+                                  value={newGeneratedWord.source_word}
+                                  onChange={e => setNewGeneratedWord(prev => ({...prev, source_word: e.target.value}))}
+                                  onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
+                                />
+                                {newGeneratedWord.source_word && !newGeneratedWord.target_word && (
+                                  <button
+                                    onClick={() => handleTranslateNewInline('source-to-target')}
+                                    disabled={isTranslatingNewGenerated}
+                                    className="text-blue-500 hover:text-blue-700 disabled:opacity-50"
+                                    title={t('dashboard.auto_translate')}
+                                  >
+                                    {isTranslatingNewGenerated ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
+                                  </button>
+                                )}
+                              </div>
                             </td>
                             <td className="px-4 py-3">
                               <div className="flex items-center space-x-2">
@@ -785,14 +860,14 @@ export default function Dashboard() {
                                   onChange={e => setNewGeneratedWord(prev => ({...prev, target_word: e.target.value}))}
                                   onKeyDown={e => e.key === 'Enter' && handleAddItemInline()}
                                 />
-                                {newGeneratedWord.source_word && (
+                                {newGeneratedWord.target_word && !newGeneratedWord.source_word && (
                                   <button
-                                    onClick={handleTranslateNewInline}
+                                    onClick={() => handleTranslateNewInline('target-to-source')}
                                     disabled={isTranslatingNewGenerated}
                                     className="text-blue-500 hover:text-blue-700 disabled:opacity-50"
                                     title={t('dashboard.auto_translate')}
                                   >
-                                    {isTranslatingNewGenerated ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
+                                    {isTranslatingNewGenerated ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4 rotate-180" />}
                                   </button>
                                 )}
                               </div>
@@ -824,22 +899,46 @@ export default function Dashboard() {
                               <tr key={idx} className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${isDuplicate ? 'bg-red-50 dark:bg-red-900/20' : ''}`}>
                                 <td className={`px-4 py-3 text-sm font-medium ${isDuplicate ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}>
                                   {isEditing ? (
+                                    <div className="flex items-center space-x-2">
                                       <input
                                         type="text"
                                         className={`w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-xs ${duplicateWords.has(editWord?.source_word.toLowerCase().trim() || "") ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}
                                         value={editWord?.source_word}
                                         onChange={e => setEditWord(prev => prev ? {...prev, source_word: e.target.value} : null)}
                                       />
+                                      {editWord?.source_word && !editWord?.target_word && (
+                                        <button
+                                          onClick={() => handleTranslateInline('source-to-target')}
+                                          disabled={isTranslatingManual}
+                                          className="text-blue-500 hover:text-blue-700 disabled:opacity-50"
+                                          title={t('dashboard.auto_translate')}
+                                        >
+                                          {isTranslatingManual ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4" />}
+                                        </button>
+                                      )}
+                                    </div>
                                   ) : word.source_word}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
                                   {isEditing ? (
-                                    <input
-                                      type="text"
-                                      className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
-                                      value={editWord?.target_word}
-                                      onChange={e => setEditWord(prev => prev ? {...prev, target_word: e.target.value} : null)}
-                                    />
+                                    <div className="flex items-center space-x-2">
+                                      <input
+                                        type="text"
+                                        className="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
+                                        value={editWord?.target_word}
+                                        onChange={e => setEditWord(prev => prev ? {...prev, target_word: e.target.value} : null)}
+                                      />
+                                      {editWord?.target_word && !editWord?.source_word && (
+                                        <button
+                                          onClick={() => handleTranslateInline('target-to-source')}
+                                          disabled={isTranslatingManual}
+                                          className="text-blue-500 hover:text-blue-700 disabled:opacity-50"
+                                          title={t('dashboard.auto_translate')}
+                                        >
+                                          {isTranslatingManual ? <Loader2 className="h-4 w-4 animate-spin" /> : <Languages className="h-4 w-4 rotate-180" />}
+                                        </button>
+                                      )}
+                                    </div>
                                   ) : word.target_word}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">
@@ -1018,6 +1117,24 @@ export default function Dashboard() {
                     value={publishForm.title}
                     onChange={e => setPublishForm({...publishForm, title: e.target.value})}
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    {t('dashboard.level') || 'Level'} <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    required
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    value={selectedLevel}
+                    onChange={e => setSelectedLevel(e.target.value)}
+                  >
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.list_desc_label')}</label>

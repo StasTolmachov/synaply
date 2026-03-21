@@ -305,5 +305,12 @@ type CreatePublicWordListRequest struct {
 	Description string         `json:"description"`
 	SourceLang  string         `json:"source_lang"`
 	TargetLang  string         `json:"target_lang"`
+	Level       string         `json:"level"`
 	Words       []WordListResp `json:"words"`
+}
+
+type CreatePlaylistRequest struct {
+	Title       string      `json:"title"`
+	Description string      `json:"description"`
+	ListIDs     []uuid.UUID `json:"list_ids"`
 }

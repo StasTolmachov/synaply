@@ -50,10 +50,16 @@ type WordsService interface {
 	GetProgressStats(ctx context.Context, userID uuid.UUID) (*models.ProgressStats, error)
 
 	CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error)
-	GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error)
+	GetPublicWordLists(ctx context.Context, sourceLang, targetLang, level string) ([]modelsDB.PublicWordList, error)
 	GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error)
 	UpdatePublicWordList(ctx context.Context, listID uuid.UUID, req models.CreatePublicWordListRequest, userID uuid.UUID) error
 	AddPublicListToUser(ctx context.Context, listID uuid.UUID, userID uuid.UUID) error
+
+	CreatePlaylist(ctx context.Context, req models.CreatePlaylistRequest, userID uuid.UUID) (uuid.UUID, error)
+	GetPlaylists(ctx context.Context) ([]modelsDB.Playlist, error)
+	GetPlaylistByID(ctx context.Context, playlistID uuid.UUID) (*modelsDB.PlaylistDetail, error)
+	UpdatePlaylist(ctx context.Context, playlistID uuid.UUID, req models.CreatePlaylistRequest, userID uuid.UUID) error
+	DeletePlaylist(ctx context.Context, playlistID uuid.UUID, userID uuid.UUID) error
 }
 
 type wordsService struct {
@@ -608,12 +614,16 @@ func (s *wordsService) GetProgressStats(ctx context.Context, userID uuid.UUID) (
 }
 
 func (s *wordsService) CreatePublicWordList(ctx context.Context, req models.CreatePublicWordListRequest, userID uuid.UUID) (uuid.UUID, error) {
+	if req.Level == "" {
+		return uuid.Nil, errors.New("level is required")
+	}
 	list := modelsDB.PublicWordList{
 		UserID:      userID,
 		Title:       req.Title,
 		Description: req.Description,
 		SourceLang:  req.SourceLang,
 		TargetLang:  req.TargetLang,
+		Level:       req.Level,
 	}
 
 	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
@@ -628,8 +638,8 @@ func (s *wordsService) CreatePublicWordList(ctx context.Context, req models.Crea
 	return s.repo.CreatePublicWordList(ctx, list, items)
 }
 
-func (s *wordsService) GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error) {
-	return s.repo.GetPublicWordLists(ctx, sourceLang, targetLang)
+func (s *wordsService) GetPublicWordLists(ctx context.Context, sourceLang, targetLang, level string) ([]modelsDB.PublicWordList, error) {
+	return s.repo.GetPublicWordLists(ctx, sourceLang, targetLang, level)
 }
 
 func (s *wordsService) GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error) {
@@ -651,6 +661,7 @@ func (s *wordsService) UpdatePublicWordList(ctx context.Context, listID uuid.UUI
 		ID:          listID,
 		Title:       req.Title,
 		Description: req.Description,
+		Level:       req.Level,
 	}
 
 	items := make([]modelsDB.PublicWordListItem, 0, len(req.Words))
@@ -687,4 +698,35 @@ func (s *wordsService) AddPublicListToUser(ctx context.Context, listID uuid.UUID
 	}
 
 	return s.repo.CreateBatch(ctx, reqs)
+}
+
+func (s *wordsService) CreatePlaylist(ctx context.Context, req models.CreatePlaylistRequest, userID uuid.UUID) (uuid.UUID, error) {
+	playlist := modelsDB.Playlist{
+		UserID:      userID,
+		Title:       req.Title,
+		Description: req.Description,
+	}
+	return s.repo.CreatePlaylist(ctx, playlist, req.ListIDs)
+}
+
+func (s *wordsService) GetPlaylists(ctx context.Context) ([]modelsDB.Playlist, error) {
+	return s.repo.GetPlaylists(ctx)
+}
+
+func (s *wordsService) GetPlaylistByID(ctx context.Context, playlistID uuid.UUID) (*modelsDB.PlaylistDetail, error) {
+	return s.repo.GetPlaylistByID(ctx, playlistID)
+}
+
+func (s *wordsService) UpdatePlaylist(ctx context.Context, playlistID uuid.UUID, req models.CreatePlaylistRequest, userID uuid.UUID) error {
+	playlist := modelsDB.Playlist{
+		ID:          playlistID,
+		UserID:      userID,
+		Title:       req.Title,
+		Description: req.Description,
+	}
+	return s.repo.UpdatePlaylist(ctx, playlist, req.ListIDs)
+}
+
+func (s *wordsService) DeletePlaylist(ctx context.Context, playlistID uuid.UUID, userID uuid.UUID) error {
+	return s.repo.DeletePlaylist(ctx, playlistID, userID)
 }
