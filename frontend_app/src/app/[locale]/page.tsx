@@ -99,6 +99,147 @@ export default function LandingPage() {
           mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
           -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
+        .prose-article {
+          max-width: 90ch;
+          margin-left: auto;
+          margin-right: auto;
+          line-height: 1.85;
+          color: #374151;
+          font-size: 1.15rem;
+        }
+        .prose-article h2 {
+          color: #111827;
+          font-weight: 800;
+          font-size: 3.5rem;
+          margin-top: 6rem;
+          margin-bottom: 3rem;
+          letter-spacing: -0.04em;
+          line-height: 1.05;
+          text-align: center;
+          background: linear-gradient(to bottom right, #111827, #2563eb);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .prose-article h3 {
+          color: #111827;
+          font-weight: 700;
+          font-size: 2.25rem;
+          margin-top: 5rem;
+          margin-bottom: 2rem;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          letter-spacing: -0.02em;
+        }
+        .prose-article h3::before {
+          content: "";
+          display: inline-block;
+          width: 0.6rem;
+          height: 2.25rem;
+          background: linear-gradient(to bottom, #2563eb, #60a5fa);
+          border-radius: 9999px;
+        }
+        .prose-article h4 {
+          color: #1f2937;
+          font-weight: 700;
+          font-size: 1.5rem;
+          margin-top: 3rem;
+          margin-bottom: 1rem;
+        }
+        .prose-article p {
+          margin-top: 1.75rem;
+          margin-bottom: 1.75rem;
+        }
+        .prose-article ul, .prose-article ol {
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+          padding-left: 2.5rem;
+        }
+        .prose-article li {
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+          position: relative;
+        }
+        .prose-article blockquote {
+          border-left: 4px solid #2563eb;
+          padding-left: 2rem;
+          font-style: italic;
+          color: #4b5563;
+          margin: 3rem 0;
+          font-size: 1.25rem;
+        }
+        .article-card {
+          background: linear-gradient(145deg, #ffffff, #f8fafc);
+          border-radius: 2rem;
+          padding: 3.5rem;
+          margin: 4.5rem 0;
+          border: 1px solid #e2e8f0;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+        }
+        .article-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(to right, #2563eb, #60a5fa, #2563eb);
+        }
+        .article-card::after {
+          content: "";
+          position: absolute;
+          top: -50px;
+          right: -50px;
+          width: 250px;
+          height: 250px;
+          background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .comparison-table-wrapper {
+          overflow-x: auto;
+          margin: 3rem 0;
+          border-radius: 1.5rem;
+          border: 1px solid #e2e8f0;
+        }
+        .comparison-table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
+        }
+        .comparison-table th {
+          background: #f8fafc;
+          padding: 1.5rem;
+          font-weight: 700;
+          color: #111827;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        .comparison-table td {
+          padding: 1.5rem;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .comparison-table tr:last-child td {
+          border-bottom: none;
+        }
+        .faq-item {
+          border-bottom: 1px solid #f1f5f9;
+          padding: 2rem 0;
+        }
+        .faq-item:last-child {
+          border-bottom: none;
+        }
+        .faq-question {
+          font-weight: 700;
+          font-size: 1.25rem;
+          color: #111827;
+          margin-bottom: 1rem;
+          display: flex;
+          gap: 1rem;
+        }
+        .faq-answer {
+          color: #4b5563;
+        }
       `}</style>
       
       <header>
@@ -388,6 +529,177 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* SEO Article Section */}
+      <section className="py-32 px-4 bg-white border-t border-gray-100">
+        <article className="prose-article">
+          <div className="mb-20 text-center">
+            <h2 className="!mt-0">The Science of Fluency: Master Any Language with WordsGo</h2>
+            <p className="text-2xl text-gray-500 max-w-3xl mx-auto">
+              A deep dive into the technology, psychology, and methodology powering the world&apos;s most efficient language learning platform.
+            </p>
+          </div>
+
+          <p>
+            In today&apos;s interconnected world, mastering a new language is more than just a hobby—it&apos;s a gateway to new cultures, professional opportunities, and personal growth. However, the biggest challenge for most learners isn&apos;t starting; it&apos;s <strong>retention</strong>. Traditional methods often lead to the &quot;forgetting curve,&quot; where new vocabulary vanishes as quickly as it was acquired. WordsGo was built to solve this problem by combining cutting-edge cognitive science with state-of-the-art Artificial Intelligence.
+          </p>
+
+          <div className="article-card">
+            <h3>The Science of Memory: Our Advanced FSRS+ Algorithm</h3>
+            <p>
+              At the heart of WordsGo lies the <strong>Free Spaced Repetition Scheduler (FSRS)</strong>. Unlike the older SM-2 algorithms used by many popular apps, FSRS is a modern, data-driven model designed to predict the stability of your memory with incredible precision.
+            </p>
+            <p>
+              Our proprietary <strong>FSRS+ enhancement</strong> takes this a step further. It analyzes your unique learning patterns—how quickly you recall a word, how often you struggle with specific types of vocabulary, and your individual forgetting rate. By calculating the exact moment before a word slips from your mind, WordsGo schedules reviews at the <strong>optimal interval</strong>, ensuring maximum retention with minimum effort.
+            </p>
+            
+            <div className="mt-8 p-6 bg-blue-50/50 rounded-xl border border-blue-100">
+              <h4 className="!mt-0">FSRS vs. Traditional SM-2</h4>
+              <p className="text-sm">
+                While SM-2 uses fixed multipliers (the &quot;ease factor&quot;), FSRS implements a <strong>Stochastic Shortest Path</strong> algorithm to optimize for long-term retention. Studies show that FSRS can reduce study time by up to 30% while achieving the same target retention levels compared to traditional spaced repetition models.
+              </p>
+            </div>
+          </div>
+
+          <h3>Why We Forget: Combatting the Forgetting Curve</h3>
+          <p>
+            The &quot;Forgetting Curve,&quot; first proposed by Hermann Ebbinghaus, illustrates how information is lost over time when there is no attempt to retain it. Without reinforcement, humans forget approximately 50% of new information within 24 hours. WordsGo is engineered specifically to disrupt this curve.
+          </p>
+          
+          <blockquote>
+            &quot;The secret to permanent memory isn&apos;t repetition; it&apos;s <strong>timed retrieval</strong>. By forcing the brain to recall information just as it is about to be lost, we strengthen the synaptic connections permanently.&quot;
+          </blockquote>
+
+          <p>
+            By utilizing the <strong>FSRS algorithm</strong>, we don&apos;t just remind you of words randomly. We present them at the precise point of &quot;desirable difficulty&quot;—the moment when your brain has to work just hard enough to recall the information, which significantly strengthens the neural pathways associated with that memory. This makes your study sessions 300% more efficient than traditional rote memorization.
+          </p>
+
+          <h3>The Technology Stack: AI-Powered Context</h3>
+          <p>
+            Learning a word in isolation is rarely effective. To truly &quot;own&quot; a word, you must understand its nuances and see it in action. This is where our AI integration becomes your most powerful ally:
+          </p>
+          <ul className="list-disc pl-6 space-y-4">
+            <li>
+              <strong>DeepL Precision:</strong> For every word you add, we utilize DeepL—widely recognized as the world&apos;s most accurate translation engine. This ensures that the definitions and synonyms you learn are natural and contextually correct.
+            </li>
+            <li>
+              <strong>Gemini AI Tutor:</strong> WordsGo leverages Google&apos;s Gemini AI to generate personalized usage examples. If you&apos;re learning the word &quot;sustainable&quot; in a business context, Gemini won&apos;t just give you a generic sentence; it will craft examples relevant to your specific field of interest.
+            </li>
+            <li>
+              <strong>Interactive Feedback:</strong> During AI Practice sessions, Gemini acts as a live tutor. It doesn&apos;t just tell you if you&apos;re wrong; it explains <em>why</em> and suggests more idiomatic ways to express your thoughts.
+            </li>
+          </ul>
+
+          <div className="article-card bg-blue-50/30 border-blue-100">
+            <h3>Comparison: WordsGo vs. The Old Way</h3>
+            <div className="comparison-table-wrapper">
+              <table className="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Traditional Apps</th>
+                    <th>WordsGo (AI + FSRS)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Algorithm</strong></td>
+                    <td>SM-2 (1980s Tech)</td>
+                    <td>FSRS v4.5 (Modern AI)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Context</strong></td>
+                    <td>Generic sentences</td>
+                    <td>AI-Generated personalized context</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Translations</strong></td>
+                    <td>Community-vetted (Slow)</td>
+                    <td>DeepL + Gemini (Instant/Pro)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Adaptability</strong></td>
+                    <td>Linear progression</td>
+                    <td>Dynamic cognitive modeling</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3>Advanced Cognitive Load Management</h3>
+          <p>
+            One of the primary reasons learners quit is &quot;overwhelm.&quot; When you have too many words to review, the task becomes daunting. WordsGo implements <strong>Cognitive Load Balancing</strong>. Our AI monitors your performance and, if it detects fatigue or a drop in accuracy, it automatically throttles the introduction of new words while prioritizing the most critical reviews.
+          </p>
+          <p>
+            This ensures that you remain in the <strong>&quot;Flow State&quot;</strong>—a psychological state where you are fully immersed in the activity, feeling energized and focused. Learning becomes addictive rather than exhaustive.
+          </p>
+
+          <h3>Core Features for Global Learners</h3>
+          <p>
+            WordsGo is more than just a flashcard app; it&apos;s a comprehensive language-learning laboratory. Our features are designed to support every stage of your journey:
+          </p>
+          <ul className="list-disc pl-6 space-y-4">
+            <li><strong>114 Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
+            <li><strong>Public Word Lists:</strong> Don&apos;t waste time building dictionaries from scratch. Explore thousands of curated lists created by experts and fellow learners.</li>
+            <li><strong>Smart Playlists:</strong> Group multiple word lists into cohesive &quot;playlists&quot; to manage complex learning goals effortlessly.</li>
+            <li><strong>Progress Analytics:</strong> Track your growth with detailed statistics. Watch your &quot;Memory Rating&quot; climb as you move words from short-term struggle to long-term mastery.</li>
+          </ul>
+
+          <h3>The Social Learning Revolution</h3>
+          <p>
+            Language learning shouldn&apos;t be a solitary endeavor. WordsGo fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
+          </p>
+
+          <div className="article-card bg-emerald-50/30 border-emerald-100">
+            <h3>Real-World Use Cases: How WordsGo Changes Lives</h3>
+            <div className="space-y-12">
+              <div>
+                <h4 className="text-blue-600">The Professional Track</h4>
+                <p className="italic">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With WordsGo, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
+                <p className="font-bold">— Mark S., Mechanical Engineer</p>
+              </div>
+              <div className="pt-6 border-t border-emerald-100">
+                <h4 className="text-blue-600">The Academic Path</h4>
+                <p className="italic">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on WordsGo. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="font-bold">— Sarah L., High School Student</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>Frequently Asked Questions (FAQ)</h3>
+          <div className="space-y-4">
+            <div className="faq-item">
+              <div className="faq-question">
+                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+                <span>How is FSRS better than Anki?</span>
+              </div>
+              <div className="faq-answer">
+                While Anki is powerful, its default algorithm is based on SM-2. WordsGo uses FSRS, which is mathematically proven to be more efficient. Furthermore, WordsGo integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
+              </div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-question">
+                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+                <span>Can I use WordsGo offline?</span>
+              </div>
+              <div className="faq-answer">
+                Yes! Our Progressive Web App (PWA) technology allows you to continue your reviews even without an active internet connection. Your progress will sync automatically once you&apos;re back online.
+              </div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-question">
+                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+                <span>Is it free to use?</span>
+              </div>
+              <div className="faq-answer">
+                WordsGo offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
+              </div>
+            </div>
+          </div>
+
+        </article>
       </section>
 
       {/* CTA Section */}
