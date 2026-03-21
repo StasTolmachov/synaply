@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -346,10 +347,21 @@ func (p *wordsPostgres) GetPublicWordLists(ctx context.Context, sourceLang, targ
 	var lists []modelsDB.PublicWordList
 	query := `SELECT id, user_id, title, description, source_lang, target_lang, created_at, updated_at FROM public_word_lists`
 	var args []any
-	if sourceLang != "" && targetLang != "" {
-		query += ` WHERE source_lang = $1 AND target_lang = $2`
-		args = append(args, sourceLang, targetLang)
+	var conditions []string
+
+	if sourceLang != "" {
+		conditions = append(conditions, fmt.Sprintf("source_lang = $%d", len(args)+1))
+		args = append(args, sourceLang)
 	}
+	if targetLang != "" {
+		conditions = append(conditions, fmt.Sprintf("target_lang = $%d", len(args)+1))
+		args = append(args, targetLang)
+	}
+
+	if len(conditions) > 0 {
+		query += " WHERE " + strings.Join(conditions, " AND ")
+	}
+
 	query += ` ORDER BY created_at DESC`
 	err := p.db.db.SelectContext(ctx, &lists, query, args...)
 	return lists, err

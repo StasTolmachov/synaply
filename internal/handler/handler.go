@@ -78,8 +78,21 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				})
 			})
 		})
-		r.Group(func(r chi.Router) {
+		r.Route("/public-lists", func(r chi.Router) {
+			// Publicly accessible GET routes
+			r.Get("/", h.GetPublicWordLists)
+			r.Get("/{id}", h.GetPublicWordListByID)
 
+			// Authenticated routes
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.AuthMidleware(jwtSecret))
+				r.Post("/", h.CreatePublicWordList)
+				r.Put("/{id}", h.UpdatePublicWordList)
+				r.Post("/{id}/add", h.AddPublicListToUser)
+			})
+		})
+
+		r.Group(func(r chi.Router) {
 			r.Use(middleware.AuthMidleware(jwtSecret))
 
 			r.Group(func(r chi.Router) {
@@ -112,18 +125,8 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 				r.Post("/practice/finishPractice", h.FinishPracticeWithGemini)
 				r.With(httprate.LimitByIP(10, 1*time.Minute)).Post("/words/wordList", h.WordList)
 				r.With(httprate.LimitByIP(5, 1*time.Minute)).Post("/words/create-batch", h.CreateBatchWords)
-
-				r.Route("/public-lists", func(r chi.Router) {
-					r.Post("/", h.CreatePublicWordList)
-					r.Get("/", h.GetPublicWordLists)
-					r.Get("/{id}", h.GetPublicWordListByID)
-					r.Put("/{id}", h.UpdatePublicWordList)
-					r.Post("/{id}/add", h.AddPublicListToUser)
-				})
 			})
-
 		})
-
 	})
 
 	return r
