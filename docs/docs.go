@@ -40,7 +40,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.AnswerReq"
+                            "$ref": "#/definitions/models.AnswerReq"
                         }
                     }
                 ],
@@ -48,25 +48,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.CheckAnswerResponse"
+                            "$ref": "#/definitions/models.CheckAnswerResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid request body",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -97,7 +97,7 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -122,25 +122,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.StartLessonResponse"
+                            "$ref": "#/definitions/models.StartLessonResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "404": {
-                        "description": "No words found for lesson",
+                        "description": "no_words_for_lesson",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -166,7 +166,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.LoginRequest"
+                            "$ref": "#/definitions/models.LoginRequest"
                         }
                     }
                 ],
@@ -174,13 +174,300 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.LoginResponse"
+                            "$ref": "#/definitions/models.LoginResponse"
                         }
                     },
                     "401": {
                         "description": "Invalid credentials",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/playlists": {
+            "get": {
+                "description": "Returns a list of all playlists (collections of public word lists)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get playlists",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/modelsDB.Playlist"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/playlists/{id}": {
+            "get": {
+                "description": "Returns detailed information about a playlist, including all its public word lists",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get playlist by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Playlist ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/modelsDB.PlaylistDetail"
+                        }
+                    }
+                }
+            }
+        },
+        "/practice/checkAnswerPractice": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Submits user translations for the generated sentences and returns AI feedback",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI Practice"
+                ],
+                "summary": "Check AI practice answer",
+                "parameters": [
+                    {
+                        "description": "User translations",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserTranslateResponse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gemini.CheckAnswerPracticeWithGeminiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/practice/finishPractice": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Clears the AI practice session from the cache",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI Practice"
+                ],
+                "summary": "Finish AI practice",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/practice/startPractice": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Generates a set of contextual sentences for translation based on a topic using Gemini AI",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI Practice"
+                ],
+                "summary": "Start AI practice",
+                "parameters": [
+                    {
+                        "description": "Topic for practice",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gemini.StartPracticeWithGeminiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/public-lists": {
+            "get": {
+                "description": "Returns a list of all public word lists, optionally filtered by language",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get public word lists",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Source language code (e.g., 'en')",
+                        "name": "source_lang",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Target language code (e.g., 'ru')",
+                        "name": "target_lang",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Proficiency level (e.g., 'A1')",
+                        "name": "level",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/modelsDB.PublicWordList"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/public-lists/{id}": {
+            "get": {
+                "description": "Returns detailed information about a public word list, including all its words",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Get public word list by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Word list ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/modelsDB.PublicWordListDetail"
                         }
                     }
                 }
@@ -223,13 +510,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.ListOfUsersResponse"
+                            "$ref": "#/definitions/models.ListOfUsersResponse"
                         }
                     },
                     "500": {
                         "description": "Failed to get users",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -253,7 +540,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.CreateUserRequest"
+                            "$ref": "#/definitions/models.CreateUserRequest"
                         }
                     }
                 ],
@@ -261,25 +548,25 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
+                            "$ref": "#/definitions/models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid input or validation info",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "409": {
                         "description": "User already exists",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -299,7 +586,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Successfully retrieved languages",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.LangResponse"
+                            "$ref": "#/definitions/models.LangResponse"
                         }
                     }
                 }
@@ -332,25 +619,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
+                            "$ref": "#/definitions/models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid UUID",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "404": {
                         "description": "User not found",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -387,7 +674,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.UpdateUserRequest"
+                            "$ref": "#/definitions/models.UpdateUserRequest"
                         }
                     }
                 ],
@@ -395,25 +682,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Successfully updated",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
+                            "$ref": "#/definitions/models.UserResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid user Slug",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "403": {
                         "description": "Permission denied",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Failed to update user",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -452,19 +739,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Invalid user Slug",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "403": {
                         "description": "You can delete only your own account",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Failed to delete user",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -492,19 +779,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.GetMeResponse"
+                            "$ref": "#/definitions/models.GetMeResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -535,7 +822,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.CreateReq"
+                            "$ref": "#/definitions/models.CreateReq"
                         }
                     }
                 ],
@@ -543,37 +830,155 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                            "$ref": "#/definitions/models.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request body",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "408": {
                         "description": "Database timeout",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "409": {
                         "description": "Word already exists",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/create-batch": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Adds multiple words (up to 500) to the user's dictionary in a single request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Batch save words",
+                "parameters": [
+                    {
+                        "description": "Batch of words to save",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateBatchReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/import": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Uploads and processes a CSV or JSON file to add multiple words to the user's dictionary",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "words"
+                ],
+                "summary": "Import words",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "CSV or JSON file with words",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -604,7 +1009,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.TranslateReq"
+                            "$ref": "#/definitions/models.TranslateReq"
                         }
                     }
                 ],
@@ -612,25 +1017,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_internal_models.TranslateResp"
+                            "$ref": "#/definitions/models.TranslateResp"
                         }
                     },
                     "400": {
                         "description": "Invalid request body",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -661,7 +1066,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_external_gemini.Request"
+                            "$ref": "#/definitions/gemini.WordInfoRequest"
                         }
                     }
                 ],
@@ -669,25 +1074,91 @@ const docTemplate = `{
                     "200": {
                         "description": "Successfully generated explanation",
                         "schema": {
-                            "$ref": "#/definitions/wordsGo_v2_external_gemini.Response"
+                            "$ref": "#/definitions/gemini.WordInfoResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid request body",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "$ref": "#/definitions/internal_handler.JSONError"
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    }
+                }
+            }
+        },
+        "/words/wordList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns a list of thematic words based on user request or predefined topic using Gemini AI",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI Features"
+                ],
+                "summary": "Generate word list",
+                "parameters": [
+                    {
+                        "description": "Topic and request for word list generation",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.WordListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.WordListResp"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.JSONError"
                         }
                     }
                 }
@@ -695,15 +1166,58 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "internal_handler.JSONError": {
+        "gemini.CheckAnswerPracticeWithGeminiResponse": {
             "type": "object",
             "properties": {
-                "error": {
+                "general_comment": {
+                    "type": "string"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/gemini.PracticeWithGeminiResult"
+                    }
+                }
+            }
+        },
+        "gemini.PracticeWithGeminiResult": {
+            "type": "object",
+            "properties": {
+                "ideal_translation": {
+                    "type": "string"
+                },
+                "sentence_number": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "status_localized": {
+                    "type": "string"
+                },
+                "teacher_comment": {
+                    "type": "string"
+                },
+                "your_version": {
                     "type": "string"
                 }
             }
         },
-        "wordsGo_v2_external_gemini.Request": {
+        "gemini.StartPracticeWithGeminiResponse": {
+            "type": "object",
+            "properties": {
+                "level": {
+                    "type": "string"
+                },
+                "sentences": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "gemini.WordInfoRequest": {
             "type": "object",
             "properties": {
                 "source_lang": {
@@ -720,7 +1234,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_external_gemini.Response": {
+        "gemini.WordInfoResponse": {
             "type": "object",
             "properties": {
                 "response": {
@@ -728,7 +1242,15 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.AnswerReq": {
+        "handler.JSONError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AnswerReq": {
             "type": "object",
             "properties": {
                 "id": {
@@ -739,21 +1261,38 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.CheckAnswerResponse": {
+        "models.CheckAnswerResponse": {
             "type": "object",
             "properties": {
                 "is_correct": {
                     "type": "boolean"
                 },
                 "next_word": {
-                    "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                    "$ref": "#/definitions/models.Response"
                 },
                 "total_correct": {
                     "type": "integer"
                 }
             }
         },
-        "wordsGo_v2_internal_models.CreateReq": {
+        "models.CreateBatchReq": {
+            "type": "object",
+            "properties": {
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "words": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.WordListResp"
+                    }
+                }
+            }
+        },
+        "models.CreateReq": {
             "type": "object",
             "properties": {
                 "comment": {
@@ -773,7 +1312,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.CreateUserRequest": {
+        "models.CreateUserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -811,18 +1350,33 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.GetMeResponse": {
+        "models.GetMeResponse": {
             "type": "object",
             "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
                 "langCodeResp": {
-                    "$ref": "#/definitions/wordsGo_v2_internal_models.LangCodeResp"
+                    "$ref": "#/definitions/models.LangCodeResp"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
                 },
                 "totalCorrect": {
                     "type": "integer"
                 }
             }
         },
-        "wordsGo_v2_internal_models.LangCodeResp": {
+        "models.LangCodeResp": {
             "type": "object",
             "properties": {
                 "source": {
@@ -833,7 +1387,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.LangItem": {
+        "models.LangItem": {
             "type": "object",
             "properties": {
                 "code": {
@@ -844,30 +1398,30 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.LangResponse": {
+        "models.LangResponse": {
             "type": "object",
             "properties": {
                 "source": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/wordsGo_v2_internal_models.LangItem"
+                        "$ref": "#/definitions/models.LangItem"
                     }
                 },
                 "target": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/wordsGo_v2_internal_models.LangItem"
+                        "$ref": "#/definitions/models.LangItem"
                     }
                 }
             }
         },
-        "wordsGo_v2_internal_models.ListOfUsersResponse": {
+        "models.ListOfUsersResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/wordsGo_v2_internal_models.UserResponse"
+                        "$ref": "#/definitions/models.UserResponse"
                     }
                 },
                 "limit": {
@@ -884,7 +1438,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.LoginRequest": {
+        "models.LoginRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -901,15 +1455,18 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.LoginResponse": {
+        "models.LoginResponse": {
             "type": "object",
             "properties": {
+                "source_lang": {
+                    "type": "string"
+                },
                 "token": {
                     "type": "string"
                 }
             }
         },
-        "wordsGo_v2_internal_models.Response": {
+        "models.Response": {
             "type": "object",
             "properties": {
                 "comment": {
@@ -918,7 +1475,13 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
+                "source_lang": {
+                    "type": "string"
+                },
                 "source_word": {
+                    "type": "string"
+                },
+                "target_lang": {
                     "type": "string"
                 },
                 "target_word": {
@@ -926,18 +1489,18 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.StartLessonResponse": {
+        "models.StartLessonResponse": {
             "type": "object",
             "properties": {
                 "total_correct": {
                     "type": "integer"
                 },
                 "word": {
-                    "$ref": "#/definitions/wordsGo_v2_internal_models.Response"
+                    "$ref": "#/definitions/models.Response"
                 }
             }
         },
-        "wordsGo_v2_internal_models.TranslateReq": {
+        "models.TranslateReq": {
             "type": "object",
             "properties": {
                 "source_lang": {
@@ -954,7 +1517,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.TranslateResp": {
+        "models.TranslateResp": {
             "type": "object",
             "properties": {
                 "id": {
@@ -968,7 +1531,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.UpdateUserRequest": {
+        "models.UpdateUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -994,7 +1557,7 @@ const docTemplate = `{
                 }
             }
         },
-        "wordsGo_v2_internal_models.UserResponse": {
+        "models.UserResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -1028,6 +1591,205 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "models.UserTranslateResponse": {
+            "type": "object",
+            "properties": {
+                "translation": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.WordListReq": {
+            "type": "object",
+            "properties": {
+                "level": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
+                },
+                "user_topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.WordListResp": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
+        },
+        "modelsDB.Playlist": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "creator_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "modelsDB.PlaylistDetail": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "creator_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modelsDB.PublicWordList"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "modelsDB.PublicWordList": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "creator_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "modelsDB.PublicWordListDetail": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "creator_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modelsDB.PublicWordListItem"
+                    }
+                },
+                "level": {
+                    "type": "string"
+                },
+                "source_lang": {
+                    "type": "string"
+                },
+                "target_lang": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "modelsDB.PublicWordListItem": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "list_id": {
+                    "type": "string"
+                },
+                "source_word": {
+                    "type": "string"
+                },
+                "target_word": {
+                    "type": "string"
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -1041,12 +1803,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "1.1",
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "WordsGo API",
-	Description:      "API Server for spaced repetition app",
+	Description:      "AI-Powered Language Learning Platform API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

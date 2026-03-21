@@ -181,7 +181,7 @@ export default function LandingPage() {
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20"></div>
             <img 
               src="/opengraph-image.png" 
-              alt="WordsGo App Interface" 
+              alt="WordsGo App Interface - AI-powered vocabulary learning dashboard" 
               className="relative rounded-2xl shadow-2xl border border-gray-100 w-full"
             />
           </div>
