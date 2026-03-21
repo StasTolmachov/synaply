@@ -9,7 +9,8 @@ async function getPublicLists() {
       next: { revalidate: 3600 } // Cache for 1 hour
     });
     if (!response.ok) return [];
-    return await response.json();
+    const data = await response.json();
+    return Array.isArray(data) ? data : (data?.lists || []);
   } catch (error) {
     console.error('Error fetching public lists for sitemap:', error);
     return [];

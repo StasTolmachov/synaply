@@ -956,7 +956,7 @@ export default function Dashboard() {
                                     <>
                                       {(editWord?.source_word || editWord?.target_word) && (
                                         <button 
-                                          onClick={handleTranslateInline} 
+                                          onClick={() => handleTranslateInline()} 
                                           disabled={isTranslatingManual}
                                           className="text-blue-500 hover:text-blue-700 disabled:opacity-50" 
                                           title={t('dashboard.auto_translate')}
