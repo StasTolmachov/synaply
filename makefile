@@ -30,7 +30,7 @@ docker-del:
 frontend-dev:
 	cd frontend_app && npm run dev
 
-# Запуск инфраструктуры в Docker и приложения локально
+# Running infrastructure in Docker and the application locally
 dev: db-up redis-up
 	@echo "Waiting for services to start..."
 	@sleep 3

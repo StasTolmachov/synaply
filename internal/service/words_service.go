@@ -342,7 +342,7 @@ func (s *wordsService) WordInfo(ctx context.Context, req gemini.WordInfoRequest)
 
 	respString, err := s.gem.WordInfo(ctx, req)
 	if err != nil {
-		slogger.Log.ErrorContext(ctx, "Gemini упал", "error", err)
+		slogger.Log.ErrorContext(ctx, "Gemini failed", "error", err)
 		return nil, err
 	}
 	slogger.Log.DebugContext(ctx, "3. WordInfo from gemini", "word", respString)
@@ -395,7 +395,7 @@ func (s *wordsService) StartPracticeWithGemini(ctx context.Context, req *gemini.
 
 	key := fmt.Sprintf("PracticeWithGemini:%s", userID)
 
-	// Для кэша сохраняем предложения как одну строку, чтобы CheckAnswer мог их получить
+	// For the cache, we save sentences as a single string so that CheckAnswer can retrieve them
 	var sentencesBuilder strings.Builder
 	for i, s := range resp.Sentences {
 		sentencesBuilder.WriteString(fmt.Sprintf("%d. %s\n", i+1, s))
@@ -480,7 +480,7 @@ func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, 
 		topicForCache = req.UserTopic
 	}
 
-	// 1. Пытаемся получить из БД
+	// 1. Trying to get from DB
 	cached, err := s.repo.GetGeminiWordList(ctx, user.SourceLang, user.TargetLang, req.Level, topicForCache)
 	if err == nil && cached != nil {
 		var wordListResp []models.WordListResp
@@ -491,7 +491,7 @@ func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, 
 		slogger.Log.ErrorContext(ctx, "Failed to unmarshal cached word list", "error", err)
 	}
 
-	// 2. Если нет в БД, идем в Gemini
+	// 2. If not in DB, go to Gemini
 	wordListRespGem, err := s.gem.WordList(ctx, models.WordListReqToGemWordListReq(req))
 	if err != nil {
 		return nil, err
@@ -502,7 +502,7 @@ func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, 
 		wordListResp[i] = models.WordListRespGemToWordListResp(word)
 	}
 
-	// 3. Сохраняем в БД для будущего использования
+	// 3. Save to DB for future use
 	respJSON, err := json.Marshal(wordListResp)
 	if err == nil {
 		errSave := s.repo.SaveGeminiWordList(ctx, modelsDB.GeminiWordList{
@@ -522,7 +522,7 @@ func (s *wordsService) WordList(ctx context.Context, user *models.UserResponse, 
 	return wordListResp, nil
 }
 
-// Добавь в интерфейс WordsService:
+// Add to WordsService interface:
 // CreateBatch(ctx context.Context, reqs []models.CreateReq, userID uuid.UUID) error
 
 func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchReq, userID uuid.UUID) error {
@@ -543,7 +543,7 @@ func (s *wordsService) CreateBatch(ctx context.Context, req models.CreateBatchRe
 	}
 
 	if len(dbReqs) == 0 {
-		return nil // Нечего сохранять
+		return nil // Nothing to save
 	}
 
 	return s.repo.CreateBatch(ctx, dbReqs)

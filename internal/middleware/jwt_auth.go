@@ -53,7 +53,7 @@ func AuthMidleware(secret string) func(next http.Handler) http.Handler {
 	}
 }
 
-// GetUserFromContext безопасно извлекает пользователя из контекста
+// GetUserFromContext safely extracts user from context
 func GetUserFromContext(ctx context.Context) (*models.User, error) {
 	user, ok := ctx.Value(UserCtxKey{}).(*models.User)
 	if !ok {

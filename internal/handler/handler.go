@@ -42,7 +42,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
 			"https://wordsgo.tolmachov.dev",
-			"http://localhost:3000", // для локальной разработки фронтенда
+			"http://localhost:3000", // for local frontend development
 		},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
@@ -496,7 +496,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} models.GetMeResponse  <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.GetMeResponse
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
 // @Router /words/GetMe [get]
@@ -511,6 +511,10 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -570,6 +574,10 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -652,7 +660,7 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 // @Tags lesson
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} models.StartLessonResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.StartLessonResponse
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 404 {object} handler.JSONError "no_words_for_lesson"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -702,7 +710,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Security BearerAuth
 // @Param input body models.AnswerReq true "Answer data"
-// @Success 200 {object} models.CheckAnswerResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
+// @Success 200 {object} models.CheckAnswerResponse
 // @Failure 400 {object} handler.JSONError "Invalid request body"
 // @Failure 401 {object} handler.JSONError "Unauthorized"
 // @Failure 500 {object} handler.JSONError "Internal server error"
@@ -821,6 +829,10 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -854,6 +866,10 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -902,6 +918,10 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			WriteError(w, http.StatusUnauthorized, "User not found")
+			return
+		}
 		WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
@@ -1109,7 +1129,7 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 			WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
 			return
 		}
-		// Исправленный текст ошибки
+		// Corrected error message
 		WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
 		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "error", err, "req", wordListReq)
 		return
@@ -1117,7 +1137,7 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, resp)
 }
 
-// CreateBatchWords массовое сохранение слов
+// CreateBatchWords mass save words
 func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -1128,7 +1148,7 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req models.CreateBatchReq
-	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // Ограничение в 1МБ
+	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // 1MB limit
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		WriteError(w, http.StatusBadRequest, "Invalid request body format")
 		slogger.Log.ErrorContext(ctx, "Invalid request body format in CreateBatchWords", "error", err)

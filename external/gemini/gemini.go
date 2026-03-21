@@ -92,9 +92,9 @@ func (s *service) WordInfo(ctx context.Context, req WordInfoRequest) (string, er
 	return result.Text(), nil
 }
 func BuildGeminiPrompt(req WordInfoRequest) string {
-	// Я использую явную индексацию аргументов %[1]s, %[2]s и т.д.
-	// Это крутая фича Go! Она позволяет передать аргумент один раз,
-	// но использовать его в шаблоне несколько раз, не дублируя в коде.
+	// I use explicit argument indexing %[1]s, %[2]s, etc.
+	// This is a cool Go feature! It allows you to pass an argument once,
+	// but use it in the template multiple times without duplicating it in the code.
 	return fmt.Sprintf(
 		WordInfoPromptTemplate,
 		req.SourceLang, // %[1]s
@@ -218,7 +218,7 @@ Use exactly this JSON schema:
       "sentence_number": 1,
       "your_version": "<The student's text, or '-' if skipped>",
       "status": "<MUST BE ONE OF: 'correct', 'mistake', 'skipped'>",
-      "status_localized": "<Translate the status to the Source Language. E.g., 'Правильно', 'Есть ошибки', 'Пропущено'>",
+      "status_localized": "<Translate the status to the Source Language. E.g., 'Correct', 'Has errors', 'Skipped'>",
       "teacher_comment": "<Your explanation in the Source Language>",
       "ideal_translation": "<The correct translation in the Target Language>"
     }

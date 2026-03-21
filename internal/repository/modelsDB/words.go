@@ -41,7 +41,7 @@ type LessonDB struct {
 	SourceLang string    `db:"source_lang"`
 	TargetLang string    `db:"target_lang"`
 
-	// Поля FSRS
+	// FSRS fields
 	Due           time.Time  `db:"due"`
 	Stability     float64    `db:"stability"`
 	Difficulty    float64    `db:"difficulty"`
@@ -50,7 +50,7 @@ type LessonDB struct {
 	Reps          uint64     `db:"reps"`
 	Lapses        uint64     `db:"lapses"`
 	State         int        `db:"state"`
-	LastReview    *time.Time `db:"last_review"` // Указатель, так как может быть NULL у новых слов
+	LastReview    *time.Time `db:"last_review"` // Pointer because it can be NULL for new words
 }
 
 type GeminiReq struct {
