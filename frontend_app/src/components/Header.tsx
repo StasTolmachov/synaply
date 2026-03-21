@@ -154,7 +154,7 @@ export function Header() {
               </div>
             )}
             
-            <div className="hidden xl:flex items-center bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800 shadow-sm">
+            <div className="hidden md:flex items-center bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800 shadow-sm">
               <Star className="w-3.5 h-3.5 mr-1.5 text-blue-500 fill-blue-500" />
               <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
                 {t('common.score')}: <span className="font-bold text-blue-700 dark:text-blue-400">{score}</span>
