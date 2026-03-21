@@ -56,10 +56,10 @@ var SourceLanguages = map[string]string{
 	"BHO": "Bhojpuri",
 	"BN":  "Bengali",
 	"BR":  "Breton",
-	"BS":  "Bosnian", //
+	"BS":  "Bosnian",
 	"CA":  "Catalan",
 	"CEB": "Cebuano",
-	"CKB": "Kurdish (Sorani)",
+	"CKB": "Kurdish (Sorani)", //not locale
 	"CS":  "Czech",
 	"CY":  "Welsh",
 	"DA":  "Danish",
