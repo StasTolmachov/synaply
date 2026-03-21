@@ -855,6 +855,20 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// StartPracticeWithGemini Start a practice session with Gemini
+// @Summary Start AI practice
+// @Description Generates a set of contextual sentences for translation based on a topic using Gemini AI
+// @Tags AI Practice
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body object true "Topic for practice"
+// @Success 200 {object} gemini.StartPracticeWithGeminiResponse
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/startPractice [post]
 func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -907,6 +921,20 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// CheckAnswerPracticeWithGemini Check answers for AI practice
+// @Summary Check AI practice answer
+// @Description Submits user translations for the generated sentences and returns AI feedback
+// @Tags AI Practice
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.UserTranslateResponse true "User translations"
+// @Success 200 {object} gemini.CheckAnswerPracticeWithGeminiResponse
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/checkAnswerPractice [post]
 func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -952,6 +980,16 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	JSONResponse(w, http.StatusOK, resp)
 }
 
+// FinishPracticeWithGemini Finish the AI practice session
+// @Summary Finish AI practice
+// @Description Clears the AI practice session from the cache
+// @Tags AI Practice
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {string} string "ok"
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /practice/finishPractice [post]
 func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
@@ -1086,6 +1124,20 @@ func (h *Handler) DeleteAllWords(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
+// WordList Generate a thematic word list using AI
+// @Summary Generate word list
+// @Description Returns a list of thematic words based on user request or predefined topic using Gemini AI
+// @Tags AI Features
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.WordListReq true "Topic and request for word list generation"
+// @Success 200 {array} models.WordListResp
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 429 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/wordList [post]
 func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	const wordListTimeout = 120 * time.Second
 	ctx, cancel := context.WithTimeout(r.Context(), wordListTimeout)
@@ -1138,6 +1190,18 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 }
 
 // CreateBatchWords mass save words
+// @Summary Batch save words
+// @Description Adds multiple words (up to 500) to the user's dictionary in a single request
+// @Tags words
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.CreateBatchReq true "Batch of words to save"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/create-batch [post]
 func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
@@ -1170,6 +1234,19 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
 }
 
+// ImportWords Import words from CSV or JSON file
+// @Summary Import words
+// @Description Uploads and processes a CSV or JSON file to add multiple words to the user's dictionary
+// @Tags words
+// @Accept multipart/form-data
+// @Produce json
+// @Security BearerAuth
+// @Param file formData file true "CSV or JSON file with words"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} JSONError
+// @Failure 401 {object} JSONError
+// @Failure 500 {object} JSONError
+// @Router /words/import [post]
 func (h *Handler) ImportWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 

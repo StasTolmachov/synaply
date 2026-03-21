@@ -9,8 +9,8 @@ import (
 )
 
 // @title WordsGo API
-// @version 1.0
-// @description API Server for spaced repetition app
+// @version 1.1
+// @description AI-Powered Language Learning Platform API
 
 // @securityDefinitions.apikey BearerAuth
 // @in header
