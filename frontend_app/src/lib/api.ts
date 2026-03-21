@@ -44,7 +44,7 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
     const isPublicRoute = endpoint.includes('/public-lists');
     
     if (response.status === 401 && typeof window !== 'undefined' && !endpoint.includes('/login')) {
-      if (!isPublicRoute) {
+      if (!isPublicRoute && !endpoint.includes('/words/GetMe')) {
         localStorage.removeItem('token');
         // Redirect to login with current locale
         const currentPath = window.location.pathname;
@@ -52,11 +52,16 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
         const locale = localeMatch ? localeMatch[1] : 'en';
         window.location.href = `/${locale}/login`;
       } else {
-        // For public routes, if we get 401 (e.g. expired token), 
+        // For public routes or GetMe, if we get 401 (e.g. expired token), 
         // just return the data if it was successfully parsed, or null
         // instead of throwing "You've been logged out" error
         return data;
       }
+    }
+
+    // Special handling for lesson start 404
+    if (response.status === 404 && endpoint.includes('/lesson/start') && (data?.error === 'no_words_for_lesson' || data?.error === 'No words found for lesson')) {
+      throw new Error('no_words_for_lesson');
     }
 
     // Friendly error mapping for specific statuses
@@ -73,8 +78,12 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
       504: "The server is taking too long to answer. Maybe try refreshing?",
     };
 
+    if (data?.error) {
+      throw new Error(data.error);
+    }
+
     const friendlyMessage = errorMap[response.status] || "Something went slightly wrong on our end. Please try again!";
-    throw new Error(data?.error || friendlyMessage);
+    throw new Error(friendlyMessage);
   }
 
   return data;
