@@ -68,7 +68,7 @@ The project is fully containerized and ready for deployment via Docker Compose.
 
 Once started, the API will be available at `http://localhost:8080/api/v1`, and the Swagger documentation at `http://localhost:8080/swagger/index.html`.
 
-For a better viewing experience, you can also view the [API Documentation via Redoc](https://wordsgo.tolmachov.dev/docs/index.html) (if deployed).
+For a better viewing experience, you can view the [Interactive API Documentation (GitHub Pages)](https://tolmachovs.github.io/wordsGo/).
 
 ---
 
