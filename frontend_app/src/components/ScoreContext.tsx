@@ -46,7 +46,7 @@ export function ScoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     refreshScore();
-  }, [refreshScore]);
+  }, []);
 
   const updateScore = (newScore: number) => {
     setScore(newScore);
