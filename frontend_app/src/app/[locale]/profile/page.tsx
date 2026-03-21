@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { Loader2, Save, User as UserIcon, Mail, Globe, Lock, LayoutDashboard } from 'lucide-react';
 import { sendGAEvent } from '@next/third-parties/google';
+import { useTranslation } from '@/components/I18nContext';
 
 interface LangItem {
   code: string;
@@ -30,6 +30,7 @@ interface UserData {
 
 export default function Profile() {
   const router = useRouter();
+  const { t, setLang, lang: currentLocale } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
@@ -51,27 +52,38 @@ export default function Profile() {
       return;
     }
 
+    let isMounted = true;
+
     Promise.all([
       fetchApi('/words/GetMe'),
       fetchApi('/users/lang')
     ])
       .then(([userData, langData]) => {
+        if (!isMounted) return;
         setUser(userData);
         setLangs(langData);
+        
+        const sourceLang = userData.langCodeResp?.source || userData.source_lang;
+        
         setFormData({
           first_name: userData.first_name || '',
           last_name: userData.last_name || '',
           email: userData.email || '',
-          source_lang: userData.langCodeResp?.source || '',
-          target_lang: userData.langCodeResp?.target || '',
+          source_lang: sourceLang || '',
+          target_lang: userData.langCodeResp?.target || userData.target_lang || '',
           password: '',
         });
         setLoading(false);
       })
       .catch(err => {
+        if (!isMounted) return;
         console.error('Failed to load profile data', err);
         router.push('/login');
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -98,9 +110,13 @@ export default function Profile() {
         method: 'PUT',
         body: JSON.stringify(updateData),
       });
+      
+      if (formData.source_lang) {
+        setLang(formData.source_lang);
+      }
 
       sendGAEvent('event', 'update_profile', { user_id: user.id });
-      setMessage({ type: 'success', text: 'Profile updated successfully!' });
+      setMessage({ type: 'success', text: t('profile.update_success') });
       setFormData(prev => ({ ...prev, password: '' }));
       
       // Update local user state if needed, or just refetch
@@ -108,7 +124,7 @@ export default function Profile() {
       setUser(updatedUser);
       
     } catch (err: unknown) {
-      setMessage({ type: 'error', text: err instanceof Error ? err.message : 'Failed to update profile' });
+      setMessage({ type: 'error', text: err instanceof Error ? err.message : t('profile.update_error') });
     } finally {
       setSaving(false);
     }
@@ -130,16 +146,16 @@ export default function Profile() {
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
                 <UserIcon className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" />
-                User Profile
+                {t('profile.title')}
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your personal information and language settings</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('profile.subtitle')}</p>
             </div>
             <Link 
               href="/dashboard"
               className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
               <LayoutDashboard className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" />
-              Dashboard
+              {t('common.dashboard')}
             </Link>
           </div>
 
@@ -147,7 +163,7 @@ export default function Profile() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
-                  First Name
+                  {t('profile.first_name')}
                 </label>
                 <input
                   type="text"
@@ -159,7 +175,7 @@ export default function Profile() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
-                  Last Name
+                  {t('profile.last_name')}
                 </label>
                 <input
                   type="text"
@@ -174,7 +190,7 @@ export default function Profile() {
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
                 <Mail className="w-4 h-4 mr-1 text-gray-400" />
-                Email Address
+                {t('profile.email')}
               </label>
               <input
                 type="email"
@@ -189,7 +205,7 @@ export default function Profile() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
                   <Globe className="w-4 h-4 mr-1 text-gray-400" />
-                  Source Language (I speak)
+                  {t('profile.interface_lang')}
                 </label>
                 <select
                   className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
@@ -204,7 +220,7 @@ export default function Profile() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
                   <Globe className="w-4 h-4 mr-1 text-blue-400 dark:text-blue-500" />
-                  Target Language (I learn)
+                  {t('profile.learning_lang')}
                 </label>
                 <select
                   className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
@@ -221,7 +237,7 @@ export default function Profile() {
             <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
                 <Lock className="w-4 h-4 mr-1 text-gray-400" />
-                New Password (leave blank to keep current)
+                {t('profile.change_password')}
               </label>
               <input
                 type="password"
@@ -248,15 +264,24 @@ export default function Profile() {
                 onClick={() => router.back()}
                 className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               >
-                Cancel
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={saving}
                 className="inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
               >
-                {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                Save Changes
+                {saving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    {t('profile.updating')}
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4 mr-2" />
+                    {t('common.save')}
+                  </>
+                )}
               </button>
             </div>
           </form>

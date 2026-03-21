@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
-import Link from 'next/link';
+import { useTranslation } from '@/components/I18nContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,6 +12,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { t, setLang } = useTranslation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +26,9 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
       localStorage.setItem('token', data.token);
+      if (data.source_lang) {
+        setLang(data.source_lang);
+      }
       router.push('/dashboard');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Oops! We couldn't sign you in. Please check your credentials.");
@@ -38,19 +42,19 @@ export default function Login() {
       <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900">
-            Sign in to WordsGo <span className="text-sm font-normal text-gray-400">Beta</span>
+            {t('login.title')} <span className="text-sm font-normal text-gray-400">{t('common.beta')}</span>
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Don't have an account?{' '}
+            {t('login.no_account')}{' '}
             <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Register here
+              {t('login.register')}
             </Link>
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Email address</label>
+              <label className="block text-sm font-medium text-gray-700">{t('login.email')}</label>
               <input
                 type="email"
                 required
@@ -61,7 +65,7 @@ export default function Login() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <label className="block text-sm font-medium text-gray-700">{t('login.password')}</label>
               <input
                 type="password"
                 required
@@ -81,7 +85,7 @@ export default function Login() {
               disabled={loading}
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-400"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? t('login.signing_in') : t('login.sign_in')}
             </button>
           </div>
         </form>

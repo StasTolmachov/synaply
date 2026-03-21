@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, Link } from '@/i18n/routing';
 import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target } from 'lucide-react';
+import { useTranslation } from '@/components/I18nContext';
 
 export default function LandingPage() {
   const router = useRouter();
+  const { setLang, resetToSaved } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const flags = [
@@ -20,11 +21,31 @@ export default function LandingPage() {
   ]; // Approximately 114 flags (18 + 96 = 114)
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+    
+    // Switch to English temporarily for landing page
+    if (typeof window !== 'undefined' && setLang) {
+      const currentUrlPath = window.location.pathname;
+      // next-intl might normalize paths, so check both /en and /en/
+      if (currentUrlPath !== '/en' && currentUrlPath !== '/en/') {
+        setLang('en', false);
+      }
+    }
+    
+    return () => {
+      // Restore saved language when leaving landing page
+      // Only do this if we are NOT navigating to a dashboard/auth page which handles its own sync
+      if (typeof window !== 'undefined' && resetToSaved) {
+        // Delaying reset slightly to allow Link navigation to settle, 
+        // or let the destination page handle syncLocaleWithSaved.
+        // Actually, just calling resetToSaved() should be fine IF it's smart enough.
+        resetToSaved();
+      }
+    };
+  }, []); // Only on mount/unmount
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">

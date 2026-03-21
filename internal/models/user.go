@@ -118,7 +118,8 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	SourceLang string `json:"source_lang"`
 }
 
 func ToUserDB(user *User) *modelsDB.UserDB {
@@ -185,6 +186,7 @@ type GetMeResponse struct {
 	Email        string       `json:"email"`
 	FirstName    string       `json:"first_name"`
 	LastName     string       `json:"last_name"`
+	SourceLang   string       `json:"source_lang"`
 	LangCodeResp LangCodeResp `json:"langCodeResp"`
 	TotalCorrect int64        `json:"totalCorrect"`
 }

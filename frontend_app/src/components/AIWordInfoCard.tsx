@@ -6,6 +6,7 @@ import { Sparkles, Loader2, X } from 'lucide-react';
 import { sendGAEvent } from '@next/third-parties/google';
 import { fetchApi } from '@/lib/api';
 import { useScore } from '@/components/ScoreContext';
+import { useTranslation } from '@/components/I18nContext';
 
 interface AIWordInfoCardProps {
   sourceWord: string;
@@ -14,6 +15,7 @@ interface AIWordInfoCardProps {
 
 export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) {
   const { langs } = useScore();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState<string | null>(null);
@@ -41,10 +43,10 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
       if (data && data.response) {
         setInfo(data.response);
       } else {
-        throw new Error("The AI is taking a quick coffee break. Please try again in a moment!");
+        throw new Error(t('dashboard.ai_word_info.error_coffee_break'));
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Oops! We couldn't get the AI insights. Let's try again!");
+      setError(err instanceof Error ? err.message : t('dashboard.ai_word_info.error_generic'));
     } finally {
       setLoading(false);
     }
@@ -64,7 +66,7 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
           className="inline-flex items-center px-4 py-2 border border-purple-200 dark:border-purple-800 text-sm font-medium rounded-full shadow-sm text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <Sparkles className="w-4 h-4 mr-2" />
-          AI Insights
+          {t('dashboard.ai_word_info.insights')}
         </button>
       )}
 
@@ -81,13 +83,13 @@ export function AIWordInfoCard({ sourceWord, targetWord }: AIWordInfoCardProps) 
           <div className="pr-6">
             <h4 className="flex items-center text-sm font-semibold text-purple-900 dark:text-purple-200 mb-3">
               <Sparkles className="w-4 h-4 mr-2 text-purple-600 dark:text-purple-400" />
-              AI Explanation for &quot;{targetWord}&quot;
+              {t('dashboard.ai_word_info.explanation_for', { word: targetWord })}
             </h4>
 
             {loading ? (
               <div className="flex items-center text-purple-600 dark:text-purple-400 text-sm py-2">
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                AI is thinking...
+                {t('dashboard.ai_word_info.thinking')}
               </div>
             ) : error ? (
               <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-800">

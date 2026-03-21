@@ -171,7 +171,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	slogger.Log.DebugContext(ctx, "Login request", "req", req)
 
-	token, err := h.userService.Login(ctx, req)
+	token, sourceLang, err := h.userService.Login(ctx, req)
 	slogger.Log.DebugContext(ctx, "Login response", "token", token)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
@@ -183,7 +183,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token})
+	JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token, SourceLang: sourceLang})
 }
 
 // Create creates a new user
@@ -509,6 +509,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 		Email:        user.Email,
 		FirstName:    user.FirstName,
 		LastName:     user.LastName,
+		SourceLang:   user.SourceLang,
 		LangCodeResp: langCodeResp,
 		TotalCorrect: user.TotalCorrect,
 	}
