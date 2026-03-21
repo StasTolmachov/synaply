@@ -20,6 +20,7 @@ type User struct {
 	Role         UserRole
 	SourceLang   string
 	TargetLang   string
+	TotalCorrect int64
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    *time.Time
@@ -118,7 +119,8 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	SourceLang string `json:"source_lang"`
 }
 
 func ToUserDB(user *User) *modelsDB.UserDB {
@@ -131,6 +133,7 @@ func ToUserDB(user *User) *modelsDB.UserDB {
 		Role:         string(user.Role),
 		SourceLang:   user.SourceLang,
 		TargetLang:   user.TargetLang,
+		TotalCorrect: user.TotalCorrect,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 		DeletedAt:    user.DeletedAt,
@@ -160,6 +163,7 @@ func UserDBToUser(user *modelsDB.UserDB) *User {
 		Role:         UserRole(user.Role),
 		SourceLang:   user.SourceLang,
 		TargetLang:   user.TargetLang,
+		TotalCorrect: user.TotalCorrect,
 		CreatedAt:    user.CreatedAt,
 		UpdatedAt:    user.UpdatedAt,
 	}
@@ -185,6 +189,7 @@ type GetMeResponse struct {
 	Email        string       `json:"email"`
 	FirstName    string       `json:"first_name"`
 	LastName     string       `json:"last_name"`
+	SourceLang   string       `json:"source_lang"`
 	LangCodeResp LangCodeResp `json:"langCodeResp"`
 	TotalCorrect int64        `json:"totalCorrect"`
 }

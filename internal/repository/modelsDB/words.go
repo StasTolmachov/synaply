@@ -41,7 +41,7 @@ type LessonDB struct {
 	SourceLang string    `db:"source_lang"`
 	TargetLang string    `db:"target_lang"`
 
-	// Поля FSRS
+	// FSRS fields
 	Due           time.Time  `db:"due"`
 	Stability     float64    `db:"stability"`
 	Difficulty    float64    `db:"difficulty"`
@@ -50,7 +50,7 @@ type LessonDB struct {
 	Reps          uint64     `db:"reps"`
 	Lapses        uint64     `db:"lapses"`
 	State         int        `db:"state"`
-	LastReview    *time.Time `db:"last_review"` // Указатель, так как может быть NULL у новых слов
+	LastReview    *time.Time `db:"last_review"` // Pointer because it can be NULL for new words
 }
 
 type GeminiReq struct {
@@ -110,10 +110,12 @@ type GeminiWordList struct {
 type PublicWordList struct {
 	ID          uuid.UUID `db:"id" json:"id"`
 	UserID      uuid.UUID `db:"user_id" json:"user_id"`
+	CreatorName string    `db:"creator_name" json:"creator_name"`
 	Title       string    `db:"title" json:"title"`
 	Description string    `db:"description" json:"description"`
 	SourceLang  string    `db:"source_lang" json:"source_lang"`
 	TargetLang  string    `db:"target_lang" json:"target_lang"`
+	Level       string    `db:"level" json:"level"`
 	CreatedAt   time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
 }
@@ -130,4 +132,19 @@ type PublicWordListItem struct {
 type PublicWordListDetail struct {
 	PublicWordList
 	Items []PublicWordListItem `json:"items"`
+}
+
+type Playlist struct {
+	ID          uuid.UUID `db:"id" json:"id"`
+	UserID      uuid.UUID `db:"user_id" json:"user_id"`
+	CreatorName string    `db:"creator_name" json:"creator_name"`
+	Title       string    `db:"title" json:"title"`
+	Description string    `db:"description" json:"description"`
+	CreatedAt   time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
+}
+
+type PlaylistDetail struct {
+	Playlist
+	Lists []PublicWordList `json:"lists"`
 }

@@ -30,9 +30,9 @@ docker-del:
 frontend-dev:
 	cd frontend_app && npm run dev
 
-# Запуск инфраструктуры в Docker и приложения локально
+# Running infrastructure in Docker and the application locally
 dev: db-up redis-up
 	@echo "Waiting for services to start..."
 	@sleep 3
 	# Run API in background and frontend in foreground
-	go run cmd/api/main.go & cd frontend_app && npm run dev
+	#go run cmd/api/main.go & cd frontend_app && npm run dev
