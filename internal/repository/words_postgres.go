@@ -322,10 +322,10 @@ func (p *wordsPostgres) CreatePublicWordList(ctx context.Context, list modelsDB.
 
 	var listID uuid.UUID
 	queryList := `
-		INSERT INTO public_word_lists (user_id, title, description, source_lang, target_lang)
-		VALUES ($1, $2, $3, $4, $5)
+		INSERT INTO public_word_lists (user_id, title, description, source_lang, target_lang, level)
+		VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING id`
-	err = tx.GetContext(ctx, &listID, queryList, list.UserID, list.Title, list.Description, list.SourceLang, list.TargetLang)
+	err = tx.GetContext(ctx, &listID, queryList, list.UserID, list.Title, list.Description, list.SourceLang, list.TargetLang, list.Level)
 	if err != nil {
 		return uuid.Nil, err
 	}
@@ -343,33 +343,44 @@ func (p *wordsPostgres) CreatePublicWordList(ctx context.Context, list modelsDB.
 	return listID, tx.Commit()
 }
 
-func (p *wordsPostgres) GetPublicWordLists(ctx context.Context, sourceLang, targetLang string) ([]modelsDB.PublicWordList, error) {
+func (p *wordsPostgres) GetPublicWordLists(ctx context.Context, sourceLang, targetLang, level string) ([]modelsDB.PublicWordList, error) {
 	var lists []modelsDB.PublicWordList
-	query := `SELECT id, user_id, title, description, source_lang, target_lang, created_at, updated_at FROM public_word_lists`
+	query := `
+		SELECT l.id, l.user_id, COALESCE(u.first_name || ' ' || u.last_name, '') as creator_name, l.title, l.description, l.source_lang, l.target_lang, l.level, l.created_at, l.updated_at 
+		FROM public_word_lists l
+		JOIN users u ON l.user_id = u.id`
 	var args []any
 	var conditions []string
 
 	if sourceLang != "" {
-		conditions = append(conditions, fmt.Sprintf("source_lang = $%d", len(args)+1))
+		conditions = append(conditions, fmt.Sprintf("l.source_lang = $%d", len(args)+1))
 		args = append(args, sourceLang)
 	}
 	if targetLang != "" {
-		conditions = append(conditions, fmt.Sprintf("target_lang = $%d", len(args)+1))
+		conditions = append(conditions, fmt.Sprintf("l.target_lang = $%d", len(args)+1))
 		args = append(args, targetLang)
+	}
+	if level != "" {
+		conditions = append(conditions, fmt.Sprintf("l.level = $%d", len(args)+1))
+		args = append(args, level)
 	}
 
 	if len(conditions) > 0 {
 		query += " WHERE " + strings.Join(conditions, " AND ")
 	}
 
-	query += ` ORDER BY created_at DESC`
+	query += ` ORDER BY l.created_at DESC`
 	err := p.db.db.SelectContext(ctx, &lists, query, args...)
 	return lists, err
 }
 
 func (p *wordsPostgres) GetPublicWordListByID(ctx context.Context, listID uuid.UUID) (*modelsDB.PublicWordListDetail, error) {
 	var detail modelsDB.PublicWordListDetail
-	queryList := `SELECT id, user_id, title, description, source_lang, target_lang, created_at, updated_at FROM public_word_lists WHERE id = $1`
+	queryList := `
+		SELECT l.id, l.user_id, COALESCE(u.first_name || ' ' || u.last_name, '') as creator_name, l.title, l.description, l.source_lang, l.target_lang, l.level, l.created_at, l.updated_at 
+		FROM public_word_lists l
+		JOIN users u ON l.user_id = u.id
+		WHERE l.id = $1`
 	err := p.db.db.GetContext(ctx, &detail.PublicWordList, queryList, listID)
 	if err != nil {
 		return nil, err
@@ -394,9 +405,9 @@ func (p *wordsPostgres) UpdatePublicWordList(ctx context.Context, list modelsDB.
 	// Update list metadata
 	queryList := `
 		UPDATE public_word_lists 
-		SET title = $1, description = $2, updated_at = CURRENT_TIMESTAMP
-		WHERE id = $3`
-	_, err = tx.ExecContext(ctx, queryList, list.Title, list.Description, list.ID)
+		SET title = $1, description = $2, level = $3, updated_at = CURRENT_TIMESTAMP
+		WHERE id = $4`
+	_, err = tx.ExecContext(ctx, queryList, list.Title, list.Description, list.Level, list.ID)
 	if err != nil {
 		return err
 	}
@@ -420,4 +431,113 @@ func (p *wordsPostgres) UpdatePublicWordList(ctx context.Context, list modelsDB.
 	}
 
 	return tx.Commit()
+}
+
+func (p *wordsPostgres) CreatePlaylist(ctx context.Context, playlist modelsDB.Playlist, listIDs []uuid.UUID) (uuid.UUID, error) {
+	tx, err := p.db.db.BeginTxx(ctx, nil)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	defer tx.Rollback()
+
+	var playlistID uuid.UUID
+	queryPlaylist := `
+		INSERT INTO playlists (user_id, title, description)
+		VALUES ($1, $2, $3)
+		RETURNING id`
+	err = tx.GetContext(ctx, &playlistID, queryPlaylist, playlist.UserID, playlist.Title, playlist.Description)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	queryPlaylistLists := `
+		INSERT INTO playlist_public_lists (playlist_id, list_id, sort_order)
+		VALUES ($1, $2, $3)`
+	for i, listID := range listIDs {
+		_, err = tx.ExecContext(ctx, queryPlaylistLists, playlistID, listID, i)
+		if err != nil {
+			return uuid.Nil, err
+		}
+	}
+
+	return playlistID, tx.Commit()
+}
+
+func (p *wordsPostgres) GetPlaylists(ctx context.Context) ([]modelsDB.Playlist, error) {
+	var playlists []modelsDB.Playlist
+	query := `
+		SELECT p.id, p.user_id, COALESCE(u.first_name || ' ' || u.last_name, '') as creator_name, p.title, p.description, p.created_at, p.updated_at 
+		FROM playlists p
+		JOIN users u ON p.user_id = u.id
+		ORDER BY p.created_at DESC`
+	err := p.db.db.SelectContext(ctx, &playlists, query)
+	return playlists, err
+}
+
+func (p *wordsPostgres) GetPlaylistByID(ctx context.Context, playlistID uuid.UUID) (*modelsDB.PlaylistDetail, error) {
+	var detail modelsDB.PlaylistDetail
+	queryPlaylist := `
+		SELECT p.id, p.user_id, COALESCE(u.first_name || ' ' || u.last_name, '') as creator_name, p.title, p.description, p.created_at, p.updated_at 
+		FROM playlists p
+		JOIN users u ON p.user_id = u.id
+		WHERE p.id = $1`
+	err := p.db.db.GetContext(ctx, &detail.Playlist, queryPlaylist, playlistID)
+	if err != nil {
+		return nil, err
+	}
+
+	queryLists := `
+		SELECT l.id, l.user_id, COALESCE(u.first_name || ' ' || u.last_name, '') as creator_name, l.title, l.description, l.source_lang, l.target_lang, l.level, l.created_at, l.updated_at 
+		FROM public_word_lists l
+		JOIN users u ON l.user_id = u.id
+		JOIN playlist_public_lists pl ON l.id = pl.list_id
+		WHERE pl.playlist_id = $1
+		ORDER BY pl.sort_order`
+	err = p.db.db.SelectContext(ctx, &detail.Lists, queryLists, playlistID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &detail, nil
+}
+
+func (p *wordsPostgres) UpdatePlaylist(ctx context.Context, playlist modelsDB.Playlist, listIDs []uuid.UUID) error {
+	tx, err := p.db.db.BeginTxx(ctx, nil)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	queryUpdate := `
+		UPDATE playlists 
+		SET title = $1, description = $2, updated_at = CURRENT_TIMESTAMP
+		WHERE id = $3 AND user_id = $4`
+	_, err = tx.ExecContext(ctx, queryUpdate, playlist.Title, playlist.Description, playlist.ID, playlist.UserID)
+	if err != nil {
+		return err
+	}
+
+	queryDelete := `DELETE FROM playlist_public_lists WHERE playlist_id = $1`
+	_, err = tx.ExecContext(ctx, queryDelete, playlist.ID)
+	if err != nil {
+		return err
+	}
+
+	queryInsert := `
+		INSERT INTO playlist_public_lists (playlist_id, list_id, sort_order)
+		VALUES ($1, $2, $3)`
+	for i, listID := range listIDs {
+		_, err = tx.ExecContext(ctx, queryInsert, playlist.ID, listID, i)
+		if err != nil {
+			return err
+		}
+	}
+
+	return tx.Commit()
+}
+
+func (p *wordsPostgres) DeletePlaylist(ctx context.Context, playlistID uuid.UUID, userID uuid.UUID) error {
+	query := `DELETE FROM playlists WHERE id = $1 AND user_id = $2`
+	_, err := p.db.db.ExecContext(ctx, query, playlistID, userID)
+	return err
 }

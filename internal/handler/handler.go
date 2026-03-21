@@ -92,6 +92,18 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 			})
 		})
 
+		r.Route("/playlists", func(r chi.Router) {
+			r.Get("/", h.GetPlaylists)
+			r.Get("/{id}", h.GetPlaylistByID)
+
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.AuthMidleware(jwtSecret))
+				r.Post("/", h.CreatePlaylist)
+				r.Put("/{id}", h.UpdatePlaylist)
+				r.Delete("/{id}", h.DeletePlaylist)
+			})
+		})
+
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.AuthMidleware(jwtSecret))
 
@@ -642,7 +654,7 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 // @Security BearerAuth
 // @Success 200 {object} models.StartLessonResponse <--- ИСПРАВЛЕНО ЗДЕСЬ
 // @Failure 401 {object} handler.JSONError "Unauthorized"
-// @Failure 404 {object} handler.JSONError "No words found for lesson"
+// @Failure 404 {object} handler.JSONError "no_words_for_lesson"
 // @Failure 500 {object} handler.JSONError "Internal server error"
 // @Router /lesson/start [get]
 func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
@@ -658,7 +670,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrNoWordsForLesson):
-			WriteError(w, http.StatusNotFound, "No words found for lesson")
+			WriteError(w, http.StatusNotFound, "no_words_for_lesson")
 			slogger.Log.ErrorContext(ctx, "No words found for lesson", "error", err)
 			return
 		default:
@@ -1222,8 +1234,8 @@ func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Title == "" || len(req.Words) == 0 {
-		WriteError(w, http.StatusBadRequest, "Title and words are required")
+	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
+		WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
@@ -1237,12 +1249,23 @@ func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
 }
 
+// GetPublicWordLists returns all public word lists
+// @Summary Get public word lists
+// @Description Returns a list of all public word lists, optionally filtered by language
+// @Tags words
+// @Produce json
+// @Param source_lang query string false "Source language code (e.g., 'en')"
+// @Param target_lang query string false "Target language code (e.g., 'ru')"
+// @Param level query string false "Proficiency level (e.g., 'A1')"
+// @Success 200 {array} modelsDB.PublicWordList
+// @Router /public-lists [get]
 func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	sourceLang := r.URL.Query().Get("source_lang")
 	targetLang := r.URL.Query().Get("target_lang")
+	level := r.URL.Query().Get("level")
 
-	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang)
+	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang, level)
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to get public word lists")
 		slogger.Log.ErrorContext(ctx, "Failed to get public word lists", "err", err)
@@ -1252,6 +1275,14 @@ func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, http.StatusOK, lists)
 }
 
+// GetPublicWordListByID returns a public word list with its items
+// @Summary Get public word list by ID
+// @Description Returns detailed information about a public word list, including all its words
+// @Tags words
+// @Produce json
+// @Param id path string true "Word list ID"
+// @Success 200 {object} modelsDB.PublicWordListDetail
+// @Router /public-lists/{id} [get]
 func (h *Handler) GetPublicWordListByID(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := chi.URLParam(r, "id")
@@ -1292,8 +1323,8 @@ func (h *Handler) UpdatePublicWordList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Title == "" || len(req.Words) == 0 {
-		WriteError(w, http.StatusBadRequest, "Title and words are required")
+	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
+		WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
@@ -1330,6 +1361,137 @@ func (h *Handler) AddPublicListToUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		WriteError(w, http.StatusInternalServerError, "Failed to add words to dictionary")
 		slogger.Log.ErrorContext(ctx, "Failed to add public list to user", "err", err, "list_id", id, "user_id", user.ID)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) CreatePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	var req models.CreatePlaylistRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if req.Title == "" {
+		WriteError(w, http.StatusBadRequest, "Title is required")
+		return
+	}
+
+	id, err := h.wordsService.CreatePlaylist(ctx, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to create playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to create playlist", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
+}
+
+// GetPlaylists returns all playlists
+// @Summary Get playlists
+// @Description Returns a list of all playlists (collections of public word lists)
+// @Tags words
+// @Produce json
+// @Success 200 {array} modelsDB.Playlist
+// @Router /playlists [get]
+func (h *Handler) GetPlaylists(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	playlists, err := h.wordsService.GetPlaylists(ctx)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get playlists")
+		slogger.Log.ErrorContext(ctx, "Failed to get playlists", "err", err)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, playlists)
+}
+
+// GetPlaylistByID returns a playlist with its public word lists
+// @Summary Get playlist by ID
+// @Description Returns detailed information about a playlist, including all its public word lists
+// @Tags words
+// @Produce json
+// @Param id path string true "Playlist ID"
+// @Success 200 {object} modelsDB.PlaylistDetail
+// @Router /playlists/{id} [get]
+func (h *Handler) GetPlaylistByID(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	detail, err := h.wordsService.GetPlaylistByID(ctx, id)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to get playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to get playlist", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, detail)
+}
+
+func (h *Handler) UpdatePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	var req models.CreatePlaylistRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	err = h.wordsService.UpdatePlaylist(ctx, id, req, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to update playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to update playlist", "err", err, "id", id)
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) DeletePlaylist(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	idStr := chi.URLParam(r, "id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		return
+	}
+
+	err = h.wordsService.DeletePlaylist(ctx, id, user.ID)
+	if err != nil {
+		WriteError(w, http.StatusInternalServerError, "Failed to delete playlist")
+		slogger.Log.ErrorContext(ctx, "Failed to delete playlist", "err", err, "id", id)
 		return
 	}
 

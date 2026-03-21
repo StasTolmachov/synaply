@@ -35,4 +35,4 @@ dev: db-up redis-up
 	@echo "Waiting for services to start..."
 	@sleep 3
 	# Run API in background and frontend in foreground
-	go run cmd/api/main.go & cd frontend_app && npm run dev
+	#go run cmd/api/main.go & cd frontend_app && npm run dev
