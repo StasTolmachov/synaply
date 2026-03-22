@@ -36,6 +36,8 @@ func StartServer(cfg config.Config) {
 	}
 	defer redisClient.Close()
 
+	userRepo.SetCache(redisClient)
+
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}
