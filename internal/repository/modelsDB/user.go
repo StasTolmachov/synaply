@@ -49,3 +49,12 @@ type Pagination struct {
 	Limit  uint64
 	Offset uint64
 }
+
+type AdminStatsDB struct {
+	TotalUsers       int64 `db:"total_users"`
+	TotalWords       int64 `db:"total_words"`
+	TotalLessons     int64 `db:"total_lessons"`
+	TotalPublicLists int64 `db:"total_public_lists"`
+	TotalPlaylists   int64 `db:"total_playlists"`
+	NewUsersLast24h  int64 `db:"new_users_24h"`
+}

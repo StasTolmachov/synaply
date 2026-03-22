@@ -104,6 +104,13 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 			})
 		})
 
+		r.Route("/admin", func(r chi.Router) {
+			r.Use(middleware.AuthMidleware(jwtSecret))
+			r.Use(middleware.AdminOnly)
+
+			r.Get("/stats", h.GetAdminStats)
+		})
+
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.AuthMidleware(jwtSecret))
 
@@ -528,6 +535,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 		Email:        user.Email,
 		FirstName:    user.FirstName,
 		LastName:     user.LastName,
+		Role:         user.Role,
 		SourceLang:   user.SourceLang,
 		LangCodeResp: langCodeResp,
 		TotalCorrect: user.TotalCorrect,
@@ -1593,4 +1601,16 @@ func (h *Handler) DeletePlaylist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+}
+
+func (h *Handler) GetAdminStats(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	stats, err := h.userService.GetAdminStats(ctx)
+	if err != nil {
+		slogger.Log.ErrorContext(ctx, "Failed to get admin stats", "err", err)
+		WriteError(w, http.StatusInternalServerError, "Internal Server Error")
+		return
+	}
+
+	JSONResponse(w, http.StatusOK, stats)
 }

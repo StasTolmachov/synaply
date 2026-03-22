@@ -27,6 +27,7 @@ type UserService interface {
 	GetUserByEmail(ctx context.Context, email string) (*models.UserResponse, error)
 	GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error)
 	SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error)
+	GetAdminStats(ctx context.Context) (*models.AdminStats, error)
 }
 
 type userService struct {
@@ -276,4 +277,20 @@ func (s *userService) SetTotalCorrect(ctx context.Context, userID uuid.UUID, tot
 		return 0, fmt.Errorf("failed to SetTotalCorrect: %w", err)
 	}
 	return totalCorrect, nil
+}
+
+func (s *userService) GetAdminStats(ctx context.Context) (*models.AdminStats, error) {
+	statsDB, err := s.repo.GetAdminStats(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get admin stats: %w", err)
+	}
+
+	return &models.AdminStats{
+		TotalUsers:       statsDB.TotalUsers,
+		TotalWords:       statsDB.TotalWords,
+		TotalLessons:     statsDB.TotalLessons,
+		TotalPublicLists: statsDB.TotalPublicLists,
+		TotalPlaylists:   statsDB.TotalPlaylists,
+		NewUsersLast24h:  statsDB.NewUsersLast24h,
+	}, nil
 }

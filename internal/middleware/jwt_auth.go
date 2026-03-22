@@ -61,3 +61,20 @@ func GetUserFromContext(ctx context.Context) (*models.User, error) {
 	}
 	return user, nil
 }
+
+func AdminOnly(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user, err := GetUserFromContext(r.Context())
+		if err != nil {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		if user.Role != models.RoleAdmin {
+			http.Error(w, "Forbidden", http.StatusForbidden)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
