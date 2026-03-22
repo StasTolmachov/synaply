@@ -221,3 +221,23 @@ returning total_correct
 
 	return totalCorrect, nil
 }
+
+func (r *userRepo) GetAdminStats(ctx context.Context) (*modelsDB.AdminStatsDB, error) {
+	query := `
+		SELECT
+			(SELECT count(*) FROM users WHERE deleted_at IS NULL) as total_users,
+			(SELECT count(*) FROM words WHERE deleted_at IS NULL) as total_words,
+			(SELECT count(*) FROM words WHERE state = 2 AND deleted_at IS NULL) as total_lessons,
+			(SELECT count(*) FROM public_word_lists) as total_public_lists,
+			(SELECT count(*) FROM playlists) as total_playlists,
+			(SELECT count(*) FROM users WHERE created_at > now() - interval '24 hours' AND deleted_at IS NULL) as new_users_24h
+	`
+
+	var stats modelsDB.AdminStatsDB
+	err := r.db.db.GetContext(ctx, &stats, query)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get admin stats: %w", err)
+	}
+
+	return &stats, nil
+}

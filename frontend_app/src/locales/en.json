@@ -48,7 +48,8 @@
     "esc": "Esc",
     "filters": "Filters",
     "all": "All",
-    "reset": "Reset"
+    "reset": "Reset",
+    "admin_stats": "Admin Stats"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -371,5 +372,16 @@
       "title": "Progress and Points",
       "desc": "Your score (in the app header) displays the number of correctly translated words. The higher the score, the more words you have successfully mastered!"
     }
+  },
+  "not_authorized_admin": "You do not have administrator permissions to view this page.",
+  "admin": {
+    "title": "Application Statistics",
+    "total_users": "Total Users",
+    "total_words": "Total Words",
+    "total_lessons": "Words Learned",
+    "total_public_lists": "Public Lists",
+    "total_playlists": "Playlists",
+    "new_users_24h": "New (24h)",
+    "refresh": "Refresh"
   }
 }
