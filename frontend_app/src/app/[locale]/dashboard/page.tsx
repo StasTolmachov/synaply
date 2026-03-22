@@ -218,11 +218,7 @@ export default function Dashboard() {
       seen.add(word);
     }
     setDuplicateWords(duplicates);
-    
-    if (duplicates.size === 0 && batchMessage.type === 'error' && (batchMessage.text.includes('already in the list') || batchMessage.text.includes('duplicate words'))) {
-      setBatchMessage({ type: '', text: '' });
-    }
-  }, [generatedWords, batchMessage.type, batchMessage.text]);
+  }, [generatedWords]);
 
   const handleGenerateWordList = async () => {
     if (!selectedTopic && !userTopic.trim()) {
@@ -234,7 +230,7 @@ export default function Dashboard() {
     setGeneratedWords([]);
     setCurrentPage(1);
     try {
-      const data = await fetchApi('/words/wordList', {
+      const data: GeneratedWord[] = await fetchApi('/words/wordList', {
         method: 'POST',
         body: JSON.stringify({
           source_lang: userLangs.source,
@@ -244,7 +240,22 @@ export default function Dashboard() {
           user_topic: userTopic
         })
       });
-      setGeneratedWords(data || []);
+      
+      // Удаляем дубликаты сразу после генерации
+      const uniqueWords: GeneratedWord[] = [];
+      const seen = new Set<string>();
+      
+      if (data && Array.isArray(data)) {
+        for (const word of data) {
+          const key = word.source_word.toLowerCase().trim();
+          if (!seen.has(key)) {
+            seen.add(key);
+            uniqueWords.push(word);
+          }
+        }
+      }
+      
+      setGeneratedWords(uniqueWords);
     } catch (err: unknown) {
       setBatchMessage({ type: 'error', text: err instanceof Error ? err.message : t('dashboard.generate_word_list_error') });
     } finally {
@@ -386,10 +397,18 @@ export default function Dashboard() {
 
   const handleSaveBatch = async () => {
     if (generatedWords.length === 0) return;
-    if (duplicateWords.size > 0) {
-      setBatchMessage({ type: 'error', text: t('dashboard.remove_duplicates_error') });
-      return;
+    
+    // Фильтруем дубликаты перед сохранением на всякий случай
+    const uniqueBatch: GeneratedWord[] = [];
+    const seen = new Set<string>();
+    for (const w of generatedWords) {
+      const key = w.source_word.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueBatch.push(w);
+      }
     }
+
     setIsSavingBatch(true);
     setBatchMessage({ type: '', text: '' });
     try {
@@ -398,14 +417,14 @@ export default function Dashboard() {
         body: JSON.stringify({
           source_lang: userLangs.source,
           target_lang: userLangs.target,
-          words: generatedWords.map(w => ({
+          words: uniqueBatch.map(w => ({
             source_word: w.source_word,
             target_word: w.target_word,
             comment: w.comment
           }))
         })
       });
-      setBatchMessage({ type: 'success', text: t('dashboard.save_batch_success', { count: generatedWords.length }) });
+      setBatchMessage({ type: 'success', text: t('dashboard.save_batch_success', { count: uniqueBatch.length }) });
       setGeneratedWords([]);
     } catch (err: unknown) {
       setBatchMessage({ type: 'error', text: err instanceof Error ? err.message : t('dashboard.save_batch_error') });
@@ -418,17 +437,22 @@ export default function Dashboard() {
     e.preventDefault();
     if (generatedWords.length === 0 || !publishForm.title) return;
     
-    if (duplicateWords.size > 0) {
-      setBatchMessage({ type: 'error', text: t('dashboard.remove_duplicates_publish_error') });
-      setShowPublishModal(false);
-      return;
+    // Фильтруем дубликаты перед публикацией
+    const uniqueBatch: GeneratedWord[] = [];
+    const seen = new Set<string>();
+    for (const w of generatedWords) {
+      const key = w.source_word.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueBatch.push(w);
+      }
     }
     
     setIsPublishing(true);
     setBatchMessage({ type: '', text: '' });
     
     try {
-      sendGAEvent('event', 'publish_list', { word_count: generatedWords.length });
+      sendGAEvent('event', 'publish_list', { word_count: uniqueBatch.length });
       await fetchApi('/public-lists', {
         method: 'POST',
         body: JSON.stringify({
@@ -437,7 +461,7 @@ export default function Dashboard() {
           source_lang: userLangs.source,
           target_lang: userLangs.target,
           level: selectedLevel,
-          words: generatedWords.map(w => ({
+          words: uniqueBatch.map(w => ({
             source_word: w.source_word,
             target_word: w.target_word,
             comment: w.comment

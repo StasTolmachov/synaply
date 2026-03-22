@@ -183,8 +183,6 @@
     "save_batch_success": "Successfully saved {count} words to your list!",
     "save_batch_error": "Failed to save words. Please try again.",
     "no_words_to_save": "No words to save",
-    "remove_duplicates_error": "Please remove duplicate words before saving.",
-    "remove_duplicates_publish_error": "Please remove duplicate words before publishing.",
     "topics": {
       "identity": "Identity & Personal Info",
       "family": "Family & Relationships",
