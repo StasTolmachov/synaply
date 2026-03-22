@@ -382,6 +382,9 @@
     "total_public_lists": "Public Lists",
     "total_playlists": "Playlists",
     "new_users_24h": "New (24h)",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "users_table_title": "User List",
+    "search_users_placeholder": "Search by email or name...",
+    "system_health": "System Health"
   }
 }

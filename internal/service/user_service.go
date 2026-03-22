@@ -27,7 +27,7 @@ type UserService interface {
 	GetUserByEmail(ctx context.Context, email string) (*models.UserResponse, error)
 	GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error)
 	SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error)
-	GetAdminStats(ctx context.Context) (*models.AdminStats, error)
+	GetAdminStats(ctx context.Context, search string) (*models.AdminStats, error)
 }
 
 type userService struct {
@@ -279,10 +279,15 @@ func (s *userService) SetTotalCorrect(ctx context.Context, userID uuid.UUID, tot
 	return totalCorrect, nil
 }
 
-func (s *userService) GetAdminStats(ctx context.Context) (*models.AdminStats, error) {
-	statsDB, err := s.repo.GetAdminStats(ctx)
+func (s *userService) GetAdminStats(ctx context.Context, search string) (*models.AdminStats, error) {
+	statsDB, err := s.repo.GetAdminStats(ctx, search)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get admin stats: %w", err)
+	}
+
+	users := make([]*models.UserResponse, len(statsDB.Users))
+	for i := range statsDB.Users {
+		users[i] = models.FromDBToUserResponse(&statsDB.Users[i])
 	}
 
 	return &models.AdminStats{
@@ -292,5 +297,10 @@ func (s *userService) GetAdminStats(ctx context.Context) (*models.AdminStats, er
 		TotalPublicLists: statsDB.TotalPublicLists,
 		TotalPlaylists:   statsDB.TotalPlaylists,
 		NewUsersLast24h:  statsDB.NewUsersLast24h,
+		Users:            users,
+		Health: models.SystemHealth{
+			Postgres: statsDB.PostgresAlive,
+			Redis:    statsDB.RedisAlive,
+		},
 	}, nil
 }

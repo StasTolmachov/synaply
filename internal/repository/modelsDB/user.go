@@ -51,10 +51,13 @@ type Pagination struct {
 }
 
 type AdminStatsDB struct {
-	TotalUsers       int64 `db:"total_users"`
-	TotalWords       int64 `db:"total_words"`
-	TotalLessons     int64 `db:"total_lessons"`
-	TotalPublicLists int64 `db:"total_public_lists"`
-	TotalPlaylists   int64 `db:"total_playlists"`
-	NewUsersLast24h  int64 `db:"new_users_24h"`
+	TotalUsers       int64    `db:"total_users"`
+	TotalWords       int64    `db:"total_words"`
+	TotalLessons     int64    `db:"total_lessons"`
+	TotalPublicLists int64    `db:"total_public_lists"`
+	TotalPlaylists   int64    `db:"total_playlists"`
+	NewUsersLast24h  int64    `db:"new_users_24h"`
+	Users            []UserDB `db:"-"`
+	PostgresAlive    bool     `db:"-"`
+	RedisAlive       bool     `db:"-"`
 }

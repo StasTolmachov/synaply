@@ -1605,7 +1605,8 @@ func (h *Handler) DeletePlaylist(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) GetAdminStats(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	stats, err := h.userService.GetAdminStats(ctx)
+	search := r.URL.Query().Get("search")
+	stats, err := h.userService.GetAdminStats(ctx, search)
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "Failed to get admin stats", "err", err)
 		WriteError(w, http.StatusInternalServerError, "Internal Server Error")
