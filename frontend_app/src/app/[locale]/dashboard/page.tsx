@@ -562,6 +562,22 @@ export default function Dashboard() {
 
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+                <List className="w-5 h-5 mr-2 text-blue-500" />
+                {t('dashboard.manage_words')}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                {t('dashboard.manage_words_desc')}
+              </p>
+              <Link 
+                href="/words"
+                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                {t('dashboard.my_words_list')}
+              </Link>
+            </div>
+
+            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
                 <Globe className="w-5 h-5 mr-2 text-blue-500" />
                 {t('dashboard.community_lists')}
               </h3>
@@ -584,22 +600,6 @@ export default function Dashboard() {
                   {t('common.playlists') || 'Playlists'}
                 </Link>
               </div>
-            </div>
-
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
-                <List className="w-5 h-5 mr-2 text-blue-500" />
-                {t('dashboard.manage_words')}
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                {t('dashboard.manage_words_desc')}
-              </p>
-              <Link 
-                href="/words"
-                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-              >
-                {t('dashboard.my_words_list')}
-              </Link>
             </div>
 
             <BuyMeACoffee />
