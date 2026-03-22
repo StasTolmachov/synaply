@@ -76,16 +76,19 @@ export default function Lesson() {
 
       setFeedback({ isCorrect: data.is_correct, showNextBtn: true });
 
+      if (word?.target_word) {
+        speak(word.target_word, word.target_lang);
+      }
+
       if (data.is_correct) {
         setNextWordData(data.next_word);
-        if (word?.target_word) {
-          speak(word.target_word, word.target_lang);
-        }
-      } else if (data.next_word && data.next_word.id !== word?.id) {
-        // If the backend returned a DIFFERENT word on failure, store it as next
-        setNextWordData(data.next_word);
       } else {
-        setNextWordData(null);
+        if (data.next_word && data.next_word.id !== word?.id) {
+          // If the backend returned a DIFFERENT word on failure, store it as next
+          setNextWordData(data.next_word);
+        } else {
+          setNextWordData(null);
+        }
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : t('dashboard.error_occurred'));
