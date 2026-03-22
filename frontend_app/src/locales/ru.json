@@ -382,6 +382,9 @@
     "total_public_lists": "Публичных списков",
     "total_playlists": "Плейлистов",
     "new_users_24h": "Новых за 24ч",
-    "refresh": "Обновить"
+  		"refresh": "Обновить",
+  		"users_table_title": "Список пользователей",
+  		"search_users_placeholder": "Поиск по email или имени...",
+  		"system_health": "Состояние системы"
+  	}
   }
-}
