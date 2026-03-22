@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/repository/modelsDB"
 )
 
@@ -18,4 +19,6 @@ type UserRepository interface {
 	GetUserByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error)
 	GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error)
 	SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error)
+	GetAdminStats(ctx context.Context, search string) (*modelsDB.AdminStatsDB, error)
+	SetCache(c cache.CacheRepositoryI)
 }

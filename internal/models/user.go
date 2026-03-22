@@ -149,8 +149,8 @@ func FromDBToUserResponse(user *modelsDB.UserDB) *UserResponse {
 		SourceLang:   user.SourceLang,
 		TargetLang:   user.TargetLang,
 		TotalCorrect: user.TotalCorrect,
-		CreatedAt:    user.CreatedAt.String(),
-		UpdatedAt:    user.UpdatedAt.String(),
+		CreatedAt:    user.CreatedAt.Format(time.RFC3339),
+		UpdatedAt:    user.UpdatedAt.Format(time.RFC3339),
 	}
 }
 func UserDBToUser(user *modelsDB.UserDB) *User {
@@ -189,6 +189,7 @@ type GetMeResponse struct {
 	Email        string       `json:"email"`
 	FirstName    string       `json:"first_name"`
 	LastName     string       `json:"last_name"`
+	Role         string       `json:"role"`
 	SourceLang   string       `json:"source_lang"`
 	LangCodeResp LangCodeResp `json:"langCodeResp"`
 	TotalCorrect int64        `json:"totalCorrect"`

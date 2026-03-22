@@ -22,7 +22,7 @@ create table if not exists words (
 
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
-    deleted_at timestamptz not null default now()
+    deleted_at timestamptz default null
 );
 
 alter table words add constraint unique_user_word unique (user_id, source_lang, target_lang, source_word, target_word);
