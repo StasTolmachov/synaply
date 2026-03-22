@@ -35,7 +35,7 @@ func NewService(key string, model string) (Service, error) {
 	}, nil
 }
 
-const WordInfoPromptTemplate = `You are a linguistic analysis algorithm.
+const WordInfoPromptTemplate = `You are an expert linguistic analysis and teaching algorithm.
 
 Source Language Code: "%[1]s"
 Target Language Code: "%[2]s"
@@ -43,20 +43,21 @@ Target Language Code: "%[2]s"
 Input: The user wants to learn the target word "%[4]s" (Target Language) which translates to "%[3]s" in their native language (Source Language).
 First, identify the actual Source Language based on the code "%[1]s" and the word "%[3]s".
 
-YOUR TASK: Provide detailed educational information about the word "%[4]s".
+YOUR TASK: Provide a comprehensive and detailed educational explanation of the word "%[4]s".
 
 CRITICAL RULES:
 1. ALL explanations MUST be written entirely in the Source Language.
 2. DO NOT use English for explanations unless the Source Language is English.
 3. Pronunciation must be written using ONLY the letters of the Source Language alphabet. Capitalize the stressed vowel.
-4. Keep explanations concise and easy to read.
+4. Keep explanations concise, highly structured, and easy to read.
 
 Format your response exactly like this in Markdown (translate the bold headers to the Source Language):
 
 **[Pronunciation Header]**: [pronunciation]
 **[Grammar & Level Header]**: [CEFR level, part of speech, gender, irregular forms]
-**[Mnemonics Header]**: [Create a short, funny, or vivid phonetic memory hook (association) to help the student remember the word "%[4]s" using words from the Source Language]
-**[Collocations Header]**: [2 or 3 most common word combinations. E.g., "heavy rain", "make a decision"]
+**[Meaning & Usage Header]**: [Explain the precise meaning, context of usage (e.g., formal/informal), and any subtle nuances compared to its direct translation]
+**[Synonyms & Antonyms Header]**: [Provide 2-3 synonyms and 1-2 antonyms, if applicable]
+**[Collocations Header]**: [Provide 2 or 3 most common word combinations or phrases. E.g., "heavy rain", "make a decision"]
 **[Examples Header]**:
 1. [Example in Target Lang] - [Translation in Source Lang]
 2. [Example in Target Lang] - [Translation in Source Lang]
