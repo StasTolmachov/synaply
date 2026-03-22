@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"wordsGo_v2/internal/cache"
 	"wordsGo_v2/internal/models"
 	"wordsGo_v2/internal/repository/modelsDB"
 )
@@ -26,11 +27,16 @@ var allowedUpdateColumns = map[string]bool{
 }
 
 type userRepo struct {
-	db *Postgres
+	db    *Postgres
+	cache cache.CacheRepositoryI
 }
 
 func NewUserRepo(pg *Postgres) UserRepository {
 	return &userRepo{db: pg}
+}
+
+func (r *userRepo) SetCache(c cache.CacheRepositoryI) {
+	r.cache = c
 }
 func (r *userRepo) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.UserDB, error) {
 
@@ -220,4 +226,54 @@ returning total_correct
 	}
 
 	return totalCorrect, nil
+}
+
+func (r *userRepo) GetAdminStats(ctx context.Context, search string) (*modelsDB.AdminStatsDB, error) {
+	queryStats := `
+		SELECT
+			(SELECT count(*) FROM users WHERE deleted_at IS NULL) as total_users,
+			(SELECT count(*) FROM words WHERE deleted_at IS NULL) as total_words,
+			(SELECT count(*) FROM words WHERE state = 2 AND deleted_at IS NULL) as total_lessons,
+			(SELECT count(*) FROM public_word_lists) as total_public_lists,
+			(SELECT count(*) FROM playlists) as total_playlists,
+			(SELECT count(*) FROM users WHERE created_at > now() - interval '24 hours' AND deleted_at IS NULL) as new_users_24h
+	`
+
+	var stats modelsDB.AdminStatsDB
+	err := r.db.db.GetContext(ctx, &stats, queryStats)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get admin stats: %w", err)
+	}
+
+	// Health Checks
+	stats.PostgresAlive = true
+	if err := r.db.db.PingContext(ctx); err != nil {
+		stats.PostgresAlive = false
+	}
+
+	stats.RedisAlive = false
+	if r.cache != nil {
+		if err := r.cache.Ping(ctx); err == nil {
+			stats.RedisAlive = true
+		}
+	}
+
+	queryUsers := `
+		SELECT id, email, first_name, last_name, role, source_lang, target_lang, total_correct, created_at, updated_at
+		FROM users
+		WHERE deleted_at IS NULL
+	`
+	var args []any
+	if search != "" {
+		queryUsers += ` AND (email ILIKE $1 OR first_name ILIKE $1 OR last_name ILIKE $1)`
+		args = append(args, "%"+search+"%")
+	}
+	queryUsers += ` ORDER BY created_at DESC`
+
+	err = r.db.db.SelectContext(ctx, &stats.Users, queryUsers, args...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get users for admin stats: %w", err)
+	}
+
+	return &stats, nil
 }

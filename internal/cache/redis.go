@@ -22,6 +22,7 @@ type CacheRepositoryI interface {
 	Get(ctx context.Context, key string) (string, error)
 	Del(ctx context.Context, key string) error
 	Close() error
+	Ping(ctx context.Context) error
 }
 
 func NewRedisClient(cfg config.Redis) (*Client, error) {
@@ -63,6 +64,10 @@ func (c *Client) Del(ctx context.Context, key string) error {
 
 func (c *Client) Close() error {
 	return c.rdb.Close()
+}
+
+func (c *Client) Ping(ctx context.Context) error {
+	return c.rdb.Ping(ctx).Err()
 }
 
 var ErrCacheMiss = errors.New("cache miss")
