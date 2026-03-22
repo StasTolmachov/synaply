@@ -69,6 +69,49 @@ func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([
 	UNION ALL 
 	SELECT * FROM review_words;
 	`
+
+	//todo
+	/*
+		func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error) {
+			query := `
+			WITH ranked_words AS (
+				-- Присваиваем ранг (порядковый номер) внутри каждой группы
+				SELECT *,
+				       ROW_NUMBER() OVER (
+				           PARTITION BY state = 0
+				           ORDER BY CASE WHEN state = 0 THEN created_at ELSE due END ASC
+				       ) as rn
+				FROM words
+				WHERE user_id = $1
+			),
+			selection AS (
+				-- Выбираем 3 новых (rn <= 3) и 7 сложных (rn <= 7)
+				-- Но если в одной группе слов меньше, мы все равно ограничим общую выборку позже
+				SELECT * FROM ranked_words WHERE (state = 0 AND rn <= 3)
+				UNION ALL
+				SELECT * FROM ranked_words WHERE (state != 0 AND rn <= 7)
+			),
+			filler AS (
+				-- Добираем недостающие слова из общего списка тех, что не попали в основную выборку
+				-- Сначала берем новые, потом сложные, или наоборот, в зависимости от приоритета
+				SELECT * FROM ranked_words
+				WHERE id NOT IN (SELECT id FROM selection)
+				ORDER BY state = 0 DESC, created_at ASC
+				LIMIT 10
+			)
+			-- Финальная выборка: объединяем и берем первые 10
+			SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
+			FROM (
+				SELECT * FROM selection
+				UNION ALL
+				SELECT * FROM filler
+			) final
+			LIMIT 10;
+			`
+			// ... остальной код метода
+		}
+
+	*/
 	var resp []modelsDB.LessonDB
 	err := p.db.db.SelectContext(ctx, &resp, query, userID)
 	if err != nil {
