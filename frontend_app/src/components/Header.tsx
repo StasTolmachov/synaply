@@ -4,9 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useScore } from './ScoreContext';
 import { sendGAEvent } from '@next/third-parties/google';
-import { LogOut, HelpCircle, User, WifiOff, Globe, Layers, LayoutDashboard, Menu, X, Star, BookOpen, Brain, List } from 'lucide-react';
+import { LogOut, HelpCircle, User, WifiOff, Globe, Layers, LayoutDashboard, Menu, X, Star, BookOpen, Brain, List, ShieldCheck } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useTranslation } from './I18nContext';
+import { fetchApi } from '@/lib/api';
 
 export function Header() {
   const { t } = useTranslation();
@@ -16,6 +17,23 @@ export function Header() {
   const [isOffline, setIsOffline] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const userData = await fetchApi('/words/GetMe');
+        if (userData && userData.role === 'admin') {
+          setIsAdmin(true);
+        }
+      } catch (err) {
+        // Silently fail
+      }
+    };
+    checkAdmin();
+  }, [pathname]);
 
   useEffect(() => {
     setIsOffline(!navigator.onLine);
@@ -112,6 +130,15 @@ export function Header() {
         <User className="w-4 h-4 mr-2 md:mr-1 text-gray-400" />
         {t('common.profile')}
       </Link>
+      {isAdmin && (
+        <Link
+          href="/admin/stats"
+          className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md md:flex"
+        >
+          <ShieldCheck className="w-4 h-4 mr-2 text-blue-500" />
+          {t('common.admin_stats')}
+        </Link>
+      )}
       {!isHelpPage && (
         <Link
           href="/help"
