@@ -76,16 +76,19 @@ export default function Lesson() {
 
       setFeedback({ isCorrect: data.is_correct, showNextBtn: true });
 
+      if (word?.target_word) {
+        speak(word.target_word, word.target_lang);
+      }
+
       if (data.is_correct) {
         setNextWordData(data.next_word);
-        if (word?.target_word) {
-          speak(word.target_word, word.target_lang);
-        }
-      } else if (data.next_word && data.next_word.id !== word?.id) {
-        // If the backend returned a DIFFERENT word on failure, store it as next
-        setNextWordData(data.next_word);
       } else {
-        setNextWordData(null);
+        if (data.next_word && data.next_word.id !== word?.id) {
+          // If the backend returned a DIFFERENT word on failure, store it as next
+          setNextWordData(data.next_word);
+        } else {
+          setNextWordData(null);
+        }
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : t('dashboard.error_occurred'));
@@ -218,8 +221,11 @@ export default function Lesson() {
                 )}
                 <div className="flex-1">
                   <p className="font-medium">{feedback.isCorrect ? t('dashboard.correct') : t('dashboard.incorrect')}</p>
-                  <p className="text-sm mt-1 flex items-center gap-2">
-                    {t('dashboard.the_answer_was', { answer: feedback.isCorrect ? answer : word?.target_word || '' })}
+                  <p className="text-sm mt-1 flex items-center gap-2 flex-wrap">
+                    <span className="opacity-70">{t('dashboard.the_answer_was', { answer: '' })}</span>
+                    <span className="text-lg font-bold underline decoration-2 underline-offset-4 tracking-wide">
+                      {feedback.isCorrect ? answer : word?.target_word}
+                    </span>
                     <button
                       type="button"
                       onClick={() => word?.target_word && speak(word.target_word, word.target_lang)}
