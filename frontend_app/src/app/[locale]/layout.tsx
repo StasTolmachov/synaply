@@ -35,11 +35,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   Object.keys(languages).forEach((langCode) => {
     const code = langCode.toLowerCase();
-    languageAlternates[code] = `${baseUrl}/${code}`;
+    const url = code === 'en' ? baseUrl : `${baseUrl}/${code}`;
+    languageAlternates[code] = url;
   });
 
   // Добавляем x-default (fallback на английский)
-  languageAlternates['x-default'] = `${baseUrl}/en`;
+  languageAlternates['x-default'] = baseUrl;
 
   // Специфические для Next.js настройки Open Graph локали
   const ogLocales: Record<string, string> = {
@@ -73,7 +74,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
-      url: `${baseUrl}/${locale}`,
+      url: locale === 'en' ? baseUrl : `${baseUrl}/${locale}`,
       siteName: "Synaply",
       locale: ogLocales[locale] || locale,
       type: "website",
@@ -94,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: ["/opengraph-image.png"],
     },
     alternates: {
-      canonical: `${baseUrl}/${locale}`,
+      canonical: locale === 'en' ? baseUrl : `${baseUrl}/${locale}`,
       languages: languageAlternates,
     },
     verification: {
