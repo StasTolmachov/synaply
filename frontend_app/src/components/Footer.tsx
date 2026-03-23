@@ -30,7 +30,7 @@ const Footer = () => {
           <p>
             {t('dashboard.footer_help_text')}
             {' '}
-            <a href="mailto:support@synaply.me" className="text-blue-600 dark:text-blue-400 hover:underline">support@synaply.me</a>
+            <a href="mailto:support@tolmachov.dev" className="text-blue-600 dark:text-blue-400 hover:underline">support@tolmachov.dev</a>
           </p>
         </div>
       </div>
