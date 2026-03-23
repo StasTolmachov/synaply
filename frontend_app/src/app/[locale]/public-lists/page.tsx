@@ -22,6 +22,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default function PublicListsPage() {
-  return <PublicListsClient />;
+export default async function PublicListsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const tLists = await getTranslations({ locale, namespace: 'dashboard.public_lists' });
+  const baseUrl = "https://synaply.me";
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: tLists('title'),
+        item: `${baseUrl}/${locale}/public-lists`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <PublicListsClient />
+    </>
+  );
 }

@@ -6,15 +6,54 @@ import { getTranslations } from 'next-intl/server';
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'common' });
+  const baseUrl = "https://synaply.me";
   
   return {
     title: `${t('terms')} | Synaply`,
     description: 'Terms of Service and Privacy Policy for Synaply.',
+    alternates: {
+      canonical: `${baseUrl}/${locale}/terms`,
+    },
+    openGraph: {
+      title: `${t('terms')} | Synaply`,
+      description: 'Terms of Service and Privacy Policy for Synaply.',
+      url: `${baseUrl}/${locale}/terms`,
+      type: 'website',
+    },
   };
 }
 
-const TermsOfService = () => {
-  return <TermsOfServiceClient />;
-};
+export default async function TermsOfService({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'common' });
+  const baseUrl = "https://synaply.me";
 
-export default TermsOfService;
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('terms'),
+        item: `${baseUrl}/${locale}/terms`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <TermsOfServiceClient />
+    </>
+  );
+}
