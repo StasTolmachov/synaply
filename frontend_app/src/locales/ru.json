@@ -324,7 +324,7 @@
     "signing_up": "Регистрация...",
     "has_account": "Уже есть аккаунт?",
     "login": "Войти здесь",
-    "terms_acceptance_prefix": "Я согласен с ",
+    "terms_acceptance_prefix": "Я согласен с",
     "terms_acceptance_link": "Условиями использования",
     "terms_acceptance_suffix": ""
   },
@@ -405,9 +405,9 @@
     "total_public_lists": "Публичных списков",
     "total_playlists": "Плейлистов",
     "new_users_24h": "Новых за 24ч",
-  		"refresh": "Обновить",
-  		"users_table_title": "Список пользователей",
-  		"search_users_placeholder": "Поиск по email или имени...",
-  		"system_health": "Состояние системы"
-  	}
+    "refresh": "Обновить",
+    "users_table_title": "Список пользователей",
+    "search_users_placeholder": "Поиск по email или имени...",
+    "system_health": "Состояние системы"
   }
+}
