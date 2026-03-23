@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Dysgu Geirfa gydag AI ac Ailadrodd Bylchog",
+    "title": "Synaply - Dysgu Geirfa gydag AI ac Ailadrodd Bylchog",
     "description": "Hybu eich sgiliau iaith gydag ailadrodd bylchog wedi'i bweru gan AI. Crëwch restr geiriau arferol neu dysgwch o restrau cyhoeddus a rannwyd gan y gymuned.",
     "keywords": "dysgu saesneg, ailadrodd bylchog, adeiladwr geirfa, fflach-gardiau, dysgu iaith AI, rhestrau geiriau, ap astudio iaith, dysgu sbaeneg, dysgu ffrangeg, dysgu almaeneg, hyfedredd iaith, cofnodi geiriau, dysgu SRS",
-    "og_title": "WordsGo - Dysgu Geirfa Clyfar",
+    "og_title": "Synaply - Dysgu Geirfa Clyfar",
     "og_description": "Hybu eich sgiliau iaith gydag ailadrodd bylchog wedi'i bweru gan AI. Dysgu'n gyflymach, cofnodi'n hirach.",
-    "og_image_alt": "Rhyngwyneb Ap Dysgu Iaith WordsGo AI",
-    "twitter_title": "WordsGo - Dysgu Geiriau Newydd heb Ymdrech",
-    "twitter_description": "Ymunwch â WordsGo i ehangu eich geirfa gan ddefnyddio ailadrodd bylchog clyfar ac AI."
+    "og_image_alt": "Rhyngwyneb Ap Dysgu Iaith Synaply AI",
+    "twitter_title": "Synaply - Dysgu Geiriau Newydd heb Ymdrech",
+    "twitter_description": "Ymunwch â Synaply i ehangu eich geirfa gan ddefnyddio ailadrodd bylchog clyfar ac AI."
   },
   "landing": {
     "public_lists": "Rhestrau Cyhoeddus",
@@ -144,10 +144,10 @@
     "support_title": "Cefnogi'r Prosiect",
     "support_desc": "Os ydych chi'n hoffi'r ap hwn, gallwch gefnogi ei ddatblygiad.",
     "onboarding": {
-      "welcome": "Croeso i WordsGo!",
+      "welcome": "Croeso i Synaply!",
       "journey_begins": "Mae eich taith i feistroli iaith yn dechrau yma.",
       "best_practice": "Arfer Gorau ar gyfer Llwyddiant",
-      "strategy_desc": "I gael y gorau o WordsGo, rydym yn argymell y strategaeth syml hon:",
+      "strategy_desc": "I gael y gorau o Synaply, rydym yn argymell y strategaeth syml hon:",
       "step1_title": "Ffocws ar Bwnc",
       "step1_desc": "Ychwanegwch tua <strong>100 gair</strong> yn ymwneud ag un pwnc (e.e., Busnes neu Deithio) i adeiladu cyd-destun cryf.",
       "step2_title": "Adolygiadau Dyddiol",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Telerau Gwasanaeth",
-    "terms_welcome": "Croeso i WordsGo. Drwy ddefnyddio ein gwasanaethau, rydych chi'n cytuno i'r telerau hyn...",
+    "terms_welcome": "Croeso i Synaply. Drwy ddefnyddio ein gwasanaethau, rydych chi'n cytuno i'r telerau hyn...",
     "title": "Gosodiadau Proffil",
     "first_name": "Enw Cyntaf",
     "last_name": "Cyfenw",
@@ -286,7 +286,7 @@
     "subtitle": "Rheolwch eich gwybodaeth bersonol a'ch gosodiadau iaith"
   },
   "login": {
-    "title": "Mewngofnodi i wordsGo",
+    "title": "Mewngofnodi i synaply",
     "email": "Cyfeiriad e-bost",
     "password": "Cyfrinair",
     "sign_in": "Mewngofnodi",
@@ -307,7 +307,7 @@
     "login": "Mewngofnodi yma"
   },
   "help": {
-    "title": "Sut i ddefnyddio WordsGo",
+    "title": "Sut i ddefnyddio Synaply",
     "best_practice": {
       "title": "Arfer Gorau ar gyfer Llwyddiant",
       "strategy_desc": "Ar gyfer y profiad dysgu mwyaf effeithiol, rydym yn argymell y strategaeth 3-cham syml hon:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Dechrau Arni",
-      "desc": "Offeryn pwerus yw WordsGo wedi'i gynllunio i'ch helpu i ehangu eich geirfa a gwella eich sgiliau iaith gan ddefnyddio ailadrodd bylchog a deallusrwydd artiffisial.",
+      "desc": "Offeryn pwerus yw Synaply wedi'i gynllunio i'ch helpu i ehangu eich geirfa a gwella eich sgiliau iaith gan ddefnyddio ailadrodd bylchog a deallusrwydd artiffisial.",
       "step1_title": "Cam 1: Ychwanegu Geiriau",
       "step1_desc": "Ychwanegwch eiriau â llaw neu ddefnyddiwch AI i gynhyrchu rhestrau yn ôl pynciau a lefelau.",
       "step2_title": "Cam 2: Ymarfer Dyddiol",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Ailadrodd Bylchog",
-      "desc": "Mae WordsGo yn defnyddio algorithm FSRS (Free Spaced Repetition Scheduler) i gyfrifo'r amser delfrydol i ailadrodd pob gair.",
+      "desc": "Mae Synaply yn defnyddio algorithm FSRS (Free Spaced Repetition Scheduler) i gyfrifo'r amser delfrydol i ailadrodd pob gair.",
       "process_title": "Proses Adolygu",
       "step1": "Dangosir gair i chi yn yr iaith wreiddiol.",
       "step2": "Nodwch y cyfieithiad a gwasgwch <strong>Enter</strong> neu <strong>Gwirio'r Ateb</strong>.",

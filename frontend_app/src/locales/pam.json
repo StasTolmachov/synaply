@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Magaral Vocabulary gamit ing AI & Spaced Repetition",
+    "title": "Synaply - Magaral Vocabulary gamit ing AI & Spaced Repetition",
     "description": "I-boost ing kekang kabyasnan king amanu gamit ing AI-powered spaced repetition. Gawa kang sariling listahan ding amanu o magaral kareng public list a sinese ning komunidad.",
     "keywords": "magaral English, spaced repetition, vocabulary builder, flashcards, AI pamagaral amanu, listahan ding amanu, language study app, magaral Spanish, magaral French, magaral German, kabyasnan king amanu, tandaan ding amanu, SRS learning",
-    "og_title": "WordsGo - Masulung a Pamagaral Vocabulary",
+    "og_title": "Synaply - Masulung a Pamagaral Vocabulary",
     "og_description": "I-boost ing kekang kabyasnan king amanu gamit ing AI-powered spaced repetition. Magaral mas mabilis, tandaan mas matalub.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Magaral Bayung Amanu king Mayap a Paraan",
-    "twitter_description": "Makiabe king WordsGo para palakbangon ing kekang vocabulary gamit ing matalino a spaced repetition at AI."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Magaral Bayung Amanu king Mayap a Paraan",
+    "twitter_description": "Makiabe king Synaply para palakbangon ing kekang vocabulary gamit ing matalino a spaced repetition at AI."
   },
   "landing": {
     "public_lists": "Listahan ning Publiku",
@@ -144,10 +144,10 @@
     "support_title": "Suportan ing Proyekto",
     "support_desc": "Nung buri mu ining app, malyari mung suportan ing kayang panyulung.",
     "onboarding": {
-      "welcome": "Malaus king WordsGo!",
+      "welcome": "Malaus king Synaply!",
       "journey_begins": "Keni mag-umpisa ing kekang pamanigaral amanu.",
       "best_practice": "Pinakamayap a Paraan para king Tagumpay",
-      "strategy_desc": "Para makinabang kang mayap king WordsGo, i-rekomenda mi ining simpling istratehiya:",
+      "strategy_desc": "Para makinabang kang mayap king Synaply, i-rekomenda mi ining simpling istratehiya:",
       "step1_title": "Tumutok king Paksa",
       "step1_desc": "Mag-dagdag mga <strong>100 amanu</strong> tungkul king metung a paksa (alimbawa: Bisnes o Pamaglakbe) para mika matas a konteksto.",
       "step2_title": "Aldoldo a Rebyu",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Kasunduan king Serbisyo",
-    "terms_welcome": "Malaus king WordsGo. King pamagamit mu king serbisyo tamu, payabe ka kening kasunduan...",
+    "terms_welcome": "Malaus king Synaply. King pamagamit mu king serbisyo tamu, payabe ka kening kasunduan...",
     "title": "Settings ning Profile",
     "first_name": "Lagyu",
     "last_name": "Apelyidu",
@@ -286,7 +286,7 @@
     "subtitle": "I-manage ing kekang personal a impormasyon at language settings"
   },
   "login": {
-    "title": "Mag-sign in king wordsGo",
+    "title": "Mag-sign in king synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Mag-sign in",
@@ -307,7 +307,7 @@
     "login": "Mag-login keni"
   },
   "help": {
-    "title": "Makananu yang gamitan ing WordsGo",
+    "title": "Makananu yang gamitan ing Synaply",
     "best_practice": {
       "title": "Pinakamayap a Paraan para king Tagumpay",
       "strategy_desc": "Para king pinaka-epektibung pamanigaral, i-rekomenda mi ining simpling 3-hakbang a istratehiya:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Pamag-umpisa",
-      "desc": "Ing WordsGo metung yang masulung a gamit para saupan kang palakbangon ing kekang vocabulary at i-improve ing kabyasnan mu king amanu gamit ing spaced repetition at AI.",
+      "desc": "Ing Synaply metung yang masulung a gamit para saupan kang palakbangon ing kekang vocabulary at i-improve ing kabyasnan mu king amanu gamit ing spaced repetition at AI.",
       "step1_title": "Hakbang 1: Mag-dagdag Amanu",
       "step1_desc": "Mag-dagdag amanu king sariling paraan o gamitan ing AI para gawang listahan basi king paksa at level.",
       "step2_title": "Hakbang 2: Aldoldo a Pratiks",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "Ing WordsGo gagamit yang FSRS (Free Spaced Repetition Scheduler) algorithm para i-kalkula ing pinakamayap a oras para ulitan ing balang amanu.",
+      "desc": "Ing Synaply gagamit yang FSRS (Free Spaced Repetition Scheduler) algorithm para i-kalkula ing pinakamayap a oras para ulitan ing balang amanu.",
       "process_title": "Proseso ning Rebyu",
       "step1": "I-pakit daka ring amanu king source language mu.",
       "step2": "I-type ya ing pamanaliwa at i-press ing <strong>Enter</strong> o <strong>Check Answer</strong>.",

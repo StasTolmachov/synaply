@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Koyi Kalmomi tare da AI & Maimaitawa Mai Tsari",
+    "title": "Synaply - Koyi Kalmomi tare da AI & Maimaitawa Mai Tsari",
     "description": "Haɓaka ƙwarewar yarenku tare da maimaitawa mai tsari mai amfani da AI. Ƙirƙiri jerin kalmominku ko koyi daga jerin sunayen jama'a.",
     "keywords": "koyi turanci, maimaitawa mai tsari, gina kalmomi, flashcards, AI koyon yare, jerin kalmomi, manhajar koyon yare, koyi sifen, koyi faransanci, koyi jamusanci, ƙwarewar yare, haddace kalmomi, SRS koyo",
-    "og_title": "WordsGo - Koyon Kalmomi Masu Wayo",
+    "og_title": "Synaply - Koyon Kalmomi Masu Wayo",
     "og_description": "Haɓaka ƙwarewar yarenku tare da maimaitawa mai tsari mai amfani da AI. Koyi cikin sauri, tunawa na lokaci mai tsawo.",
-    "og_image_alt": "WordsGo AI Manhajar Koyon Yare Interface",
-    "twitter_title": "WordsGo - Koyi Sabbin Kalmomi Cikin Sauƙi",
-    "twitter_description": "Kasance tare da WordsGo don faɗaɗa kalmominku ta amfani da maimaitawa mai tsari da AI."
+    "og_image_alt": "Synaply AI Manhajar Koyon Yare Interface",
+    "twitter_title": "Synaply - Koyi Sabbin Kalmomi Cikin Sauƙi",
+    "twitter_description": "Kasance tare da Synaply don faɗaɗa kalmominku ta amfani da maimaitawa mai tsari da AI."
   },
   "landing": {
     "public_lists": "Jerin Sunayen Jama'a",
@@ -144,10 +144,10 @@
     "support_title": "Tallafawa Shirin",
     "support_desc": "If you like this app, you can support its development.",
     "onboarding": {
-      "welcome": "Barka da zuwa WordsGo!",
+      "welcome": "Barka da zuwa Synaply!",
       "journey_begins": "Tafiyarku ta ƙwarewar yare tana farawa a nan.",
       "best_practice": "Mafi Kyawun Aiki don Nasara",
-      "strategy_desc": "Don samun mafi kyau daga WordsGo, muna ba da shawarar wannan hanya mai sauƙi:",
+      "strategy_desc": "Don samun mafi kyau daga Synaply, muna ba da shawarar wannan hanya mai sauƙi:",
       "step1_title": "Mayar da Hankali kan Wani Fanni",
       "step1_desc": "Ƙara kusan <strong>kalmomi 100</strong> masu alaƙa da fanni guda (misali, Kasuwanci ko Tafiya) don gina mahalli mai ƙarfi.",
       "step2_title": "Bita ta Kullum",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Sharuddan Sabis",
-    "terms_welcome": "Barka da zuwa WordsGo. Ta amfani da sabis ɗinmu, kun yarda da waɗannan sharuddan...",
+    "terms_welcome": "Barka da zuwa Synaply. Ta amfani da sabis ɗinmu, kun yarda da waɗannan sharuddan...",
     "title": "Saitunan Profile",
     "first_name": "Suna",
     "last_name": "Suna na Biyu",
@@ -286,7 +286,7 @@
     "subtitle": "Sarrafa bayanan kanku da saitunan yare"
   },
   "login": {
-    "title": "Shiga wordsGo",
+    "title": "Shiga synaply",
     "email": "Adireshin email",
     "password": "Password",
     "sign_in": "Shiga",
@@ -307,7 +307,7 @@
     "login": "Shiga a nan"
   },
   "help": {
-    "title": "Yadda ake amfani da WordsGo",
+    "title": "Yadda ake amfani da Synaply",
     "best_practice": {
       "title": "Mafi Kyawun Aiki don Nasara",
       "strategy_desc": "Don mafi kyawun ƙwarewar koyo, muna ba da shawarar wannan dabarar mataki-3 mai sauƙi:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Fara Koyon",
-      "desc": "WordsGo kayan aiki ne mai ƙarfi da aka tsara don taimaka muku faɗaɗa kalmomin ku da inganta ƙwarewar yarenku ta amfani da maimaitawa mai tsari da basirar wucin gadi (AI).",
+      "desc": "Synaply kayan aiki ne mai ƙarfi da aka tsara don taimaka muku faɗaɗa kalmomin ku da inganta ƙwarewar yarenku ta amfani da maimaitawa mai tsari da basirar wucin gadi (AI).",
       "step1_title": "Mataki na 1: Ƙara Kalmomi",
       "step1_desc": "Ƙara kalmomi da kanku ko amfani da AI don samar da jerin sunaye ta fannoni da matakai.",
       "step2_title": "Mataki na 2: Aiwatarwa ta Kullum",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Maimaitawa Mai Tsari",
-      "desc": "WordsGo yana amfani da algorithm na FSRS (Free Spaced Repetition Scheduler) don lissafin lokacin da ya dace don maimaita kowace kalma.",
+      "desc": "Synaply yana amfani da algorithm na FSRS (Free Spaced Repetition Scheduler) don lissafin lokacin da ya dace don maimaita kowace kalma.",
       "process_title": "Tsarin Bita",
       "step1": "Ana nuna muku kalma a yaren asali.",
       "step2": "Shigar da fassarar sannan ku danna <strong>Enter</strong> ko <strong>Duba Amsa</strong>.",

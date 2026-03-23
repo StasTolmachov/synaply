@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI we aralykly gaýtalamak arkaly söz baýlygyny öwreniň",
+    "title": "Synaply - AI we aralykly gaýtalamak arkaly söz baýlygyny öwreniň",
     "description": "AI-goldawly aralykly gaýtalamak arkaly dil başarnyklaryňyzy ýokarlandyryň. Hususy söz sanawlaryny dörediň ýa-da jemgyýetçilik köpçülikleýin sanawlaryndan öwreniň.",
     "keywords": "iňlis dilini öwrenmek, aralykly gaýtalamak, söz baýlygyny ösdürmek, flesh-kartlar, AI dil öwrenmek, söz sanawlary, dil öwrenmek programmasy, ispan dilini öwrenmek, fransuz dilini öwrenmek, nemis dilini öwrenmek, dil başarnygy, sözleri ýatda saklamak, SRS öwrenmek",
-    "og_title": "WordsGo - Akylly söz baýlygyny öwrenmek",
+    "og_title": "Synaply - Akylly söz baýlygyny öwrenmek",
     "og_description": "AI-goldawly aralykly gaýtalamak arkaly dil başarnyklaryňyzy ýokarlandyryň. Çalt öwreniň, uzak wagtlap ýatda saklaň.",
-    "og_image_alt": "WordsGo AI dil öwrenmek programmasynyň interfeýsi",
-    "twitter_title": "WordsGo - Täze sözleri aňsatlyk bilen öwreniň",
-    "twitter_description": "Akylly aralykly gaýtalamak we AI ulanyp, söz baýlygyňyzy giňeltmek üçin WordsGo-a goşulyň."
+    "og_image_alt": "Synaply AI dil öwrenmek programmasynyň interfeýsi",
+    "twitter_title": "Synaply - Täze sözleri aňsatlyk bilen öwreniň",
+    "twitter_description": "Akylly aralykly gaýtalamak we AI ulanyp, söz baýlygyňyzy giňeltmek üçin Synaply-a goşulyň."
   },
   "landing": {
     "public_lists": "Köpçülikleýin sanawlar",
@@ -144,10 +144,10 @@
     "support_title": "Taslamany goldaň",
     "support_desc": "Bu programmany halan bolsaňyz, onuň ösmegine goldaw berip bilersiňiz.",
     "onboarding": {
-      "welcome": "WordsGo-a hoş geldiňiz!",
+      "welcome": "Synaply-a hoş geldiňiz!",
       "journey_begins": "Dili kämilleşdiriş syýahatyňyz şu ýerden başlanýar.",
       "best_practice": "Üstünlik üçin iň gowy tejribe",
-      "strategy_desc": "WordsGo-dan iň ýokary netijäni almak üçin şu ýönekeý strategiýany maslahat berýäris:",
+      "strategy_desc": "Synaply-dan iň ýokary netijäni almak üçin şu ýönekeý strategiýany maslahat berýäris:",
       "step1_title": "Mowzuga üns beriň",
       "step1_desc": "Güýçli kontekst döretmek üçin ýeke-täk mowzuga (mysal üçin, Biznes ýa-da Syýahat) degişli takmynan <strong>100 söz</strong> goşuň.",
       "step2_title": "Gündelik gaýtalamalar",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Hyzmat şertleri",
-    "terms_welcome": "WordsGo-a hoş geldiňiz. Biziň hyzmatlarymyzy ulanmak bilen, siz bu şertlere razy bolýarsyňyz...",
+    "terms_welcome": "Synaply-a hoş geldiňiz. Biziň hyzmatlarymyzy ulanmak bilen, siz bu şertlere razy bolýarsyňyz...",
     "title": "Profil sazlamalary",
     "first_name": "Ady",
     "last_name": "Familiýasy",
@@ -286,7 +286,7 @@
     "subtitle": "Şahsy maglumatlaryňyzy we dil sazlamalaryňyzy dolandyryň"
   },
   "login": {
-    "title": "WordsGo-a giriň",
+    "title": "Synaply-a giriň",
     "email": "Email adresi",
     "password": "Parol",
     "sign_in": "Giriş",
@@ -307,7 +307,7 @@
     "login": "Şu ýerden giriň"
   },
   "help": {
-    "title": "WordsGo nähili ulanylýar",
+    "title": "Synaply nähili ulanylýar",
     "best_practice": {
       "title": "Üstünlik üçin iň gowy tejribe",
       "strategy_desc": "Iň täsirli öwreniş tejribesi için şu ýönekeý 3 ädimli strategiýany maslahat berýäris:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Başlangyç",
-      "desc": "WordsGo, aralykly gaýtalamak we emeli intellekt ulanyp, söz baýlygyňyzy giňeltmäge we dil başarnyklaryňyzy ýokarlandyrmaga kömek etmek üçin döredilen güýçli guraldyr.",
+      "desc": "Synaply, aralykly gaýtalamak we emeli intellekt ulanyp, söz baýlygyňyzy giňeltmäge we dil başarnyklaryňyzy ýokarlandyrmaga kömek etmek üçin döredilen güýçli guraldyr.",
       "step1_title": "1-nji ädim: Söz goşmak",
       "step1_desc": "Sözleri el bilen goşuň ýa-da mowzuklar we derejeler boýunça sanaw döretmek üçin AI ulanyň.",
       "step2_title": "2-nji ädim: Gündelik praktika",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Aralykly gaýtalamak",
-      "desc": "WordsGo, her bir sözi gaýtalamak üçin iň amatly wagty hasaplamak üçin FSRS (Free Spaced Repetition Scheduler) algoritmini ulanýar.",
+      "desc": "Synaply, her bir sözi gaýtalamak üçin iň amatly wagty hasaplamak üçin FSRS (Free Spaced Repetition Scheduler) algoritmini ulanýar.",
       "process_title": "Gaýtalamak prosesi",
       "step1": "Size original dildäki söz görkezilýär.",
       "step2": "Terjimesini giriziň we <strong>Enter</strong> ýa-da <strong>Jogaby barla</strong> basyň.",

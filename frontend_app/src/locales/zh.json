@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - 使用 AI 和间隔复习学习词汇",
+    "title": "Synaply - 使用 AI 和间隔复习学习词汇",
     "description": "通过 AI 驱动的间隔复习提升您的语言技能。创建自定义词汇表或从社区共享的公开列表中学习。",
     "keywords": "学习英语, 间隔复习, 词汇构建器, 闪卡, AI 语言学习, 词汇表, 语言学习应用, 学习西班牙语, 学习法语, 学习德语, 语言熟练度, 记忆单词, SRS 学习",
-    "og_title": "WordsGo - 智能词汇学习",
+    "og_title": "Synaply - 智能词汇学习",
     "og_description": "通过 AI 驱动的间隔复习提升您的语言技能。学得更快，记得更牢。",
-    "og_image_alt": "WordsGo AI 语言学习应用界面",
-    "twitter_title": "WordsGo - 轻松学习新单词",
-    "twitter_description": "加入 WordsGo，使用智能间隔复习和 AI 扩展您的词汇量。"
+    "og_image_alt": "Synaply AI 语言学习应用界面",
+    "twitter_title": "Synaply - 轻松学习新单词",
+    "twitter_description": "加入 Synaply，使用智能间隔复习和 AI 扩展您的词汇量。"
   },
   "landing": {
     "public_lists": "公开列表",
@@ -144,10 +144,10 @@
     "support_title": "支持本项目",
     "support_desc": "如果您喜欢这个应用，可以支持它的开发。",
     "onboarding": {
-      "welcome": "欢迎使用 WordsGo！",
+      "welcome": "欢迎使用 Synaply！",
       "journey_begins": "您的语言精进之旅从此开始。",
       "best_practice": "成功的最佳实践",
-      "strategy_desc": "为了充分利用 WordsGo，我们推荐以下简单策略：",
+      "strategy_desc": "为了充分利用 Synaply，我们推荐以下简单策略：",
       "step1_title": "专注于一个主题",
       "step1_desc": "添加大约 <strong>100 个单词</strong>，这些单词与单个主题（如商务或旅行）相关，以建立强大的上下文环境。",
       "step2_title": "每日复习",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "服务条款",
-    "terms_welcome": "欢迎来到 WordsGo。通过使用我们的服务，您同意以下条款...",
+    "terms_welcome": "欢迎来到 Synaply。通过使用我们的服务，您同意以下条款...",
     "title": "个人资料设置",
     "first_name": "名字",
     "last_name": "姓氏",
@@ -286,7 +286,7 @@
     "subtitle": "管理您的个人信息和语言设置"
   },
   "login": {
-    "title": "登录 wordsGo",
+    "title": "登录 synaply",
     "email": "电子邮箱地址",
     "password": "密码",
     "sign_in": "登录",
@@ -307,7 +307,7 @@
     "login": "在此登录"
   },
   "help": {
-    "title": "如何使用 WordsGo",
+    "title": "如何使用 Synaply",
     "best_practice": {
       "title": "成功的最佳实践",
       "strategy_desc": "为了获得最有效的学习体验，我们建议采用以下简单的 3 步策略：",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "入门指南",
-      "desc": "WordsGo 是一款功能强大的工具，旨在通过间隔复习和人工智能帮助您扩展词汇量并提高语言技能。",
+      "desc": "Synaply 是一款功能强大的工具，旨在通过间隔复习和人工智能帮助您扩展词汇量并提高语言技能。",
       "step1_title": "第 1 步：添加单词",
       "step1_desc": "手动添加单词或使用 AI 根据主题和等级生成词汇表。",
       "step2_title": "第 2 步：每日练习",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "间隔复习",
-      "desc": "WordsGo 使用 FSRS (自由间隔复习调度) 算法来计算每个单词的理想重复时间。",
+      "desc": "Synaply 使用 FSRS (自由间隔复习调度) 算法来计算每个单词的理想重复时间。",
       "process_title": "复习流程",
       "step1": "系统会向您显示一个源语言单词。",
       "step2": "输入翻译并按 <strong>Enter</strong> 或 <strong>“检查答案”</strong>。",

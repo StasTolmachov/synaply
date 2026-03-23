@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Sun'iy intellekt va intervalli takrorlash yordamida so'z boyligini oshirish",
+    "title": "Synaply - Sun'iy intellekt va intervalli takrorlash yordamida so'z boyligini oshirish",
     "description": "Sun'iy intellektga asoslangan intervalli takrorlash orqali til ko'nikmalaringizni oshiring. Maxsus so'z ro'yxatlarini yarating yoki jamiyat tomonidan baham ko'rilgan ommaviy ro'yxatlardan o'rganing.",
     "keywords": "ingliz tilini o'rganish, intervalli takrorlash, so'z boyligi, fleshkartalar, AI til o'rganish, so'z ro'yxatlari, til o'rganish ilovasi, ispan tilini o'rganish, fransuz tilini o'rganish, nemis tilini o'rganish, tilni bilish darajasi, so'zlarni yodlash, SRS o'rganish",
-    "og_title": "WordsGo - Aqlli so'z boyligini oshirish",
+    "og_title": "Synaply - Aqlli so'z boyligini oshirish",
     "og_description": "Sun'iy intellektga asoslangan intervalli takrorlash orqali til ko'nikmalaringizni oshiring. Tezroq o'rganing, uzoqroq eslab qoling.",
-    "og_image_alt": "WordsGo AI til o'rganish ilovasi interfeysi",
-    "twitter_title": "WordsGo - Yangi so'zlarni qiyinchiliksiz o'rganing",
-    "twitter_description": "Aqlli intervalli takrorlash va sun'iy intellektdan foydalangan holda so'z boyligingizni kengaytirish uchun WordsGo-ga qo'shiling."
+    "og_image_alt": "Synaply AI til o'rganish ilovasi interfeysi",
+    "twitter_title": "Synaply - Yangi so'zlarni qiyinchiliksiz o'rganing",
+    "twitter_description": "Aqlli intervalli takrorlash va sun'iy intellektdan foydalangan holda so'z boyligingizni kengaytirish uchun Synaply-ga qo'shiling."
   },
   "landing": {
     "public_lists": "Ommaviy ro'yxatlar",
@@ -144,10 +144,10 @@
     "support_title": "Loyihani qo'llab-quvvatlang",
     "support_desc": "Agar sizga ushbu ilova yoqqan bo'lsa, uning rivojlanishini qo'llab-quvvatlashingiz mumkin.",
     "onboarding": {
-      "welcome": "WordsGo-ga xush kelibsiz!",
+      "welcome": "Synaply-ga xush kelibsiz!",
       "journey_begins": "Tilni mukammal o'rganish sari sayohatingiz shu yerdan boshlanadi.",
       "best_practice": "Muvaffaqiyat uchun eng yaxshi usul",
-      "strategy_desc": "WordsGo-dan maksimal darajada foydalanish uchun biz ushbu oddiy strategiyani tavsiya qilamiz:",
+      "strategy_desc": "Synaply-dan maksimal darajada foydalanish uchun biz ushbu oddiy strategiyani tavsiya qilamiz:",
       "step1_title": "Mavzuga e'tibor qaratish",
       "step1_desc": "Kuchli kontekst yaratish uchun bitta mavzuga (masalan, Biznes yoki Sayohat) oid <strong>100 tacha so'z</strong> qo'shing.",
       "step2_title": "Kundalik takrorlash",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Xizmat ko'rsatish shartlari",
-    "terms_welcome": "WordsGo-ga xush kelibsiz. Bizning xizmatlarimizdan foydalanish orqali siz ushbu shartlarga rozilik bildirasiz...",
+    "terms_welcome": "Synaply-ga xush kelibsiz. Bizning xizmatlarimizdan foydalanish orqali siz ushbu shartlarga rozilik bildirasiz...",
     "title": "Profil sozlamalari",
     "first_name": "Ism",
     "last_name": "Familiya",
@@ -286,7 +286,7 @@
     "subtitle": "Shaxsiy ma'lumotlaringiz va til sozlamalarini boshqaring"
   },
   "login": {
-    "title": "WordsGo-ga kirish",
+    "title": "Synaply-ga kirish",
     "email": "Elektron pochta manzili",
     "password": "Parol",
     "sign_in": "Kirish",
@@ -307,7 +307,7 @@
     "login": "Shu yerda kiring"
   },
   "help": {
-    "title": "WordsGo-dan qanday foydalanish kerak",
+    "title": "Synaply-dan qanday foydalanish kerak",
     "best_practice": {
       "title": "Muvaffaqiyat uchun eng yaxshi usul",
       "strategy_desc": "Eng samarali o'rganish tajribasi uchun biz ushbu oddiy 3 bosqichli strategiyani tavsiya qilamiz:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ishni boshlash",
-      "desc": "WordsGo - intervalli takrorlash va sun'iy intellektdan foydalangan holda so'z boyligingizni kengaytirish va til ko'nikmalaringizni oshirishga yordam berish uchun mo'ljallangan kuchli vosita.",
+      "desc": "Synaply - intervalli takrorlash va sun'iy intellektdan foydalangan holda so'z boyligingizni kengaytirish va til ko'nikmalaringizni oshirishga yordam berish uchun mo'ljallangan kuchli vosita.",
       "step1_title": "1-qadam: So'zlarni qo'shish",
       "step1_desc": "So'zlarni qo'lda qo'shing yoki mavzular va darajalar bo'yicha ro'yxatlar yaratish uchun sun'iy intellektdan foydalaning.",
       "step2_title": "2-qadam: Kundalik mashg'ulot",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Intervalli takrorlash",
-      "desc": "WordsGo har bir so'zni takrorlash uchun ideal vaqtni hisoblash uchun FSRS (Free Spaced Repetition Scheduler) algoritmidan foydalanadi.",
+      "desc": "Synaply har bir so'zni takrorlash uchun ideal vaqtni hisoblash uchun FSRS (Free Spaced Repetition Scheduler) algoritmidan foydalanadi.",
       "process_title": "Takrorlash jarayoni",
       "step1": "Sizga asl tildagi so'z ko'rsatiladi.",
       "step2": "Tarjimani kiriting va <strong>Enter</strong> yoki <strong>Javobni tekshirish</strong> tugmasini bosing.",

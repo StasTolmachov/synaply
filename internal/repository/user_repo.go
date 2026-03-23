@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"wordsGo_v2/internal/cache"
-	"wordsGo_v2/internal/repository/modelsDB"
+	"synaply_v2/internal/cache"
+	"synaply_v2/internal/repository/modelsDB"
 )
 
 type UserRepository interface {

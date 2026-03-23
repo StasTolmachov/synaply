@@ -46,7 +46,7 @@ const jsonLd = {
   description: 'Browse and learn from public word lists shared by the community.',
   publisher: {
     '@type': 'Organization',
-    name: 'WordsGo'
+    name: 'Synaply'
   }
 };
 
@@ -230,12 +230,12 @@ export default function PublicListsClient() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             {isLoggedIn && (
-              <Link href="/dashboard" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-2 transition-colors">
+              <Link href="/dashboard" className="text-synaply-blue dark:text-synaply-cyan hover:opacity-80 flex items-center text-sm font-medium mb-2 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" /> {t('dashboard.public_lists.back_to_dashboard')}
               </Link>
             )}
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-              <Globe className="w-6 h-6 mr-2 text-blue-500" />
+              <Globe className="w-6 h-6 mr-2 text-synaply-blue dark:text-synaply-cyan" />
               {activeTab === 'lists' ? t('dashboard.public_lists.title') : (t('dashboard.public_lists.playlists_title') || 'Playlists')}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -254,7 +254,7 @@ export default function PublicListsClient() {
                   setLoadingListsForPlaylist(false);
                 }
               }}
-              className="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-95"
+              className="flex items-center px-4 py-2 bg-synaply-blue hover:opacity-90 text-white rounded-full text-sm font-bold shadow-lg shadow-synaply-blue/20 transition-all active:scale-95"
             >
               <Plus className="w-4 h-4 mr-2" />
               {t('common.create')}
@@ -270,7 +270,7 @@ export default function PublicListsClient() {
             }}
             className={`px-6 py-3 text-sm font-medium transition-colors relative ${
               activeTab === 'lists'
-                ? 'text-blue-600 dark:text-blue-400'
+                ? 'text-synaply-blue dark:text-synaply-cyan'
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
             }`}
           >
@@ -279,7 +279,7 @@ export default function PublicListsClient() {
               {t('dashboard.public_lists.title')}
             </div>
             {activeTab === 'lists' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-synaply-blue dark:bg-synaply-cyan" />
             )}
           </button>
           <button
@@ -289,7 +289,7 @@ export default function PublicListsClient() {
             }}
             className={`px-6 py-3 text-sm font-medium transition-colors relative ${
               activeTab === 'playlists'
-                ? 'text-blue-600 dark:text-blue-400'
+                ? 'text-synaply-blue dark:text-synaply-cyan'
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
             }`}
           >
@@ -298,7 +298,7 @@ export default function PublicListsClient() {
               {t('dashboard.public_lists.playlists_title') || 'Playlists'}
             </div>
             {activeTab === 'playlists' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-synaply-blue dark:bg-synaply-cyan" />
             )}
           </button>
         </div>
@@ -334,14 +334,14 @@ export default function PublicListsClient() {
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
                 className={`px-4 py-2.5 border rounded-xl text-sm font-medium transition-colors flex items-center justify-center whitespace-nowrap ${
                   isFilterOpen || userLangs.source || userLangs.target || filterLevel
-                    ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400'
+                    ? 'bg-synaply-blue/5 dark:bg-synaply-cyan/10 border-synaply-blue/20 dark:border-synaply-cyan/30 text-synaply-blue dark:text-synaply-cyan'
                     : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {t('common.filters')}
                 {(userLangs.source || userLangs.target || filterLevel) && (
-                  <span className="ml-2 w-2 h-2 rounded-full bg-blue-500"></span>
+                  <span className="ml-2 w-2 h-2 rounded-full bg-synaply-blue dark:bg-synaply-cyan"></span>
                 )}
               </button>
               {(userLangs.source || userLangs.target || filterLevel || searchTerm) && (
@@ -436,7 +436,7 @@ export default function PublicListsClient() {
                   setFilterLevel('');
                   loadLists('', '', '');
                 }}
-                className="text-xs font-medium text-gray-500 hover:text-blue-600 transition-colors"
+                className="text-xs font-medium text-gray-500 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors"
               >
                 {t('common.reset')}
               </button>
@@ -446,7 +446,7 @@ export default function PublicListsClient() {
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-            <Loader2 className="w-8 h-8 animate-spin mb-4 text-blue-500" />
+            <Loader2 className="w-8 h-8 animate-spin mb-4 text-synaply-blue dark:text-synaply-cyan" />
             <p>{activeTab === 'lists' ? t('dashboard.public_lists.loading') : (t('dashboard.public_lists.playlists_loading') || 'Loading playlists...')}</p>
           </div>
         ) : activeTab === 'lists' ? (
@@ -462,14 +462,14 @@ export default function PublicListsClient() {
                 <Link 
                   key={list.id} 
                   href={`/public-lists/${list.id}`}
-                  className="group bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-blue-200 dark:hover:border-blue-900 transition-all"
+                  className="group bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-synaply-blue/20 dark:hover:border-synaply-cyan/20 transition-all"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-synaply-blue dark:group-hover:text-synaply-cyan transition-colors line-clamp-1">
                       {list.title}
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      <div className="flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800">
+                      <div className="flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-synaply-blue/5 dark:bg-synaply-cyan/10 text-synaply-blue dark:text-synaply-cyan border border-synaply-blue/10 dark:border-synaply-cyan/20">
                         {list.source_lang} → {list.target_lang}
                       </div>
                       <div className="flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-800">
@@ -494,7 +494,7 @@ export default function PublicListsClient() {
                       <BookOpen className="w-3.5 h-3.5 mr-1.5" />
                       <span>{t('dashboard.public_lists.view_words')}</span>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-synaply-blue dark:group-hover:text-synaply-cyan transition-colors" />
                   </div>
                 </Link>
               ))}
@@ -546,7 +546,7 @@ export default function PublicListsClient() {
                             setLoadingListsForPlaylist(false);
                           }
                         }}
-                        className="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-synaply-blue hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-lg transition-colors"
                         title={t('common.edit')}
                       >
                         <Edit className="w-4 h-4" />
@@ -570,7 +570,7 @@ export default function PublicListsClient() {
                       <BookOpen className="w-3.5 h-3.5 mr-1.5" />
                       <span>{t('dashboard.public_lists.playlists_view_collections') || 'View collections'}</span>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-synaply-blue dark:group-hover:text-synaply-cyan transition-colors" />
                   </Link>
                 </div>
               ))}
@@ -585,7 +585,7 @@ export default function PublicListsClient() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-                  {editingPlaylistId ? <Save className="w-5 h-5 mr-2 text-blue-500" /> : <Plus className="w-5 h-5 mr-2 text-blue-500" />}
+                  {editingPlaylistId ? <Save className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" /> : <Plus className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />}
                   {editingPlaylistId ? t('dashboard.public_lists.playlists_edit') : t('dashboard.public_lists.playlists_create')}
                 </h3>
                 <button onClick={() => {
@@ -603,7 +603,7 @@ export default function PublicListsClient() {
                   <input
                     type="text"
                     required
-                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan sm:text-sm"
                     placeholder={t('common.title')}
                     value={newPlaylist.title}
                     onChange={e => setNewPlaylist({...newPlaylist, title: e.target.value})}
@@ -613,7 +613,7 @@ export default function PublicListsClient() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('common.description')}</label>
                   <textarea
                     rows={2}
-                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan sm:text-sm"
                     placeholder={t('common.description')}
                     value={newPlaylist.description}
                     onChange={e => setNewPlaylist({...newPlaylist, description: e.target.value})}
@@ -627,7 +627,7 @@ export default function PublicListsClient() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-9 pr-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                      className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-9 pr-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan"
                       placeholder={t('dashboard.public_lists.playlists_list_search_placeholder') || "Search word lists..."}
                       value={listSearchTerm}
                       onChange={e => setListSearchTerm(e.target.value)}

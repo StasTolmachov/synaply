@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI ukhamarak Spaced Repetition ukanakamp vocabulario yatiqañataki",
+    "title": "Synaply - AI ukhamarak Spaced Repetition ukanakamp vocabulario yatiqañataki",
     "description": "Arunaka yatiqañataki ch'amancht'aña AI-powered spaced repetition ukanakamp. Sapa mayni arunaka lutanaka luraña jan ukax jaqinakamp uñt'ayata lutanakat yatiqaña.",
     "keywords": "inglés yatiqaña, spaced repetition, vocabulario luraña, flashcards, AI arunaka yatiqaña, arunaka lutanaka, arunaka yatiqañataki app, español yatiqaña, francés yatiqaña, alemán yatiqaña, arunaka uñt'aña, arunaka amtaña, SRS yatiqaña",
-    "og_title": "WordsGo - Vocabulario Yatiqaña Yatiñamp",
+    "og_title": "Synaply - Vocabulario Yatiqaña Yatiñamp",
     "og_description": "Arunaka yatiqañataki ch'amancht'aña AI-powered spaced repetition ukanakamp. Juk'amp jank'aki yatiqaña, juk'amp pacha amtaña.",
-    "og_image_alt": "WordsGo AI Arunaka Yatiqaña App Interface",
-    "twitter_title": "WordsGo - Arunaka Machaqanaka Yatiqaña Ch'ama lurañampi",
-    "twitter_description": "WordsGo ukaruw uñt'ayasiñama vocabulario jach'anchayañataki smart spaced repetition ukhamarak AI ukanakamp."
+    "og_image_alt": "Synaply AI Arunaka Yatiqaña App Interface",
+    "twitter_title": "Synaply - Arunaka Machaqanaka Yatiqaña Ch'ama lurañampi",
+    "twitter_description": "Synaply ukaruw uñt'ayasiñama vocabulario jach'anchayañataki smart spaced repetition ukhamarak AI ukanakamp."
   },
   "landing": {
     "public_lists": "Jaqinakatak Lutanaka",
@@ -144,10 +144,10 @@
     "support_title": "Proyectoru Yanapaña",
     "support_desc": "Aka app munaxtaxa, lurañanakaparu yanapt'aspa.",
     "onboarding": {
-      "welcome": "¡WordsGo ukaru jutam!",
+      "welcome": "¡Synaply ukaru jutam!",
       "journey_begins": "Arunaka yatiqawimax akat qallti.",
       "best_practice": "Nayraru sartañataki suma luraña",
-      "strategy_desc": "WordsGo suma apnaqañataki, aka estrategia iyawsapxsmawa:",
+      "strategy_desc": "Synaply suma apnaqañataki, aka estrategia iyawsapxsmawa:",
       "step1_title": "Mä Temaru ch'amancht'aña",
       "step1_desc": "Mä <strong>100 arunaka</strong> mä temaru (sañataki: Negocios jan ukax Saräwinaka) yapaña.",
       "step2_title": "Sapa uru Uñakipt'aña",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Servicio de Arunaka",
-    "terms_welcome": "WordsGo ukaru jutam. Aka servicio apnaqasaxa, aka arunaka iyawsta...",
+    "terms_welcome": "Synaply ukaru jutam. Aka servicio apnaqasaxa, aka arunaka iyawsta...",
     "title": "Perfil Configuración",
     "first_name": "Nayra Suti",
     "last_name": "Apatchira",
@@ -286,7 +286,7 @@
     "subtitle": "Sapa mayni uñt'ayawinaka ukhamarak aru configuración apnaqaña"
   },
   "login": {
-    "title": "WordsGo ukaru mantaña",
+    "title": "Synaply ukaru mantaña",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "sign_in": "Mantayaña",
@@ -307,7 +307,7 @@
     "login": "Akat mantaña"
   },
   "help": {
-    "title": "Kunjam WordsGo apnaqaña",
+    "title": "Kunjam Synaply apnaqaña",
     "best_practice": {
       "title": "Nayraru sartañataki suma luraña",
       "strategy_desc": "Suma yatiqañataki, aka 3-step estrategia iyawsapxsmawa:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Qalltañataki",
-      "desc": "WordsGo mä ch'amani herramienta ukawa vocabulario jach'anchayañataki spaced repetition ukhamarak artificial intelligence ukanakamp.",
+      "desc": "Synaply mä ch'amani herramienta ukawa vocabulario jach'anchayañataki spaced repetition ukhamarak artificial intelligence ukanakamp.",
       "step1_title": "1 Luraña: Arunaka Yapaña",
       "step1_desc": "Arunaka sapa mayni yapaña jan ukax AI-mp lutanaka luraña.",
       "step2_title": "2 Luraña: Sapa uru Yant'aña",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo FSRS algorithm apnaqi pacha amtañataki sapa aru.",
+      "desc": "Synaply FSRS algorithm apnaqi pacha amtañataki sapa aru.",
       "process_title": "Uñakipt'awi Luraña",
       "step1": "Mä aru uñacht'ayatamawa.",
       "step2": "Jaqukiptawi qillqaña ukhamarak <strong>Enter</strong> jan ukax <strong>Arsuwi Uñakipt'aña</strong> ch'iqaña.",

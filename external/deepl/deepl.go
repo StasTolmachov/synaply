@@ -42,7 +42,7 @@ func (s *Service) Translate(ctx context.Context, req Request) (*Response, error)
 	// 3. Set headers as specified in your example
 	httpReq.Header.Set("Content-Type", "application/json")
 	httpReq.Header.Set("Authorization", "DeepL-Auth-Key "+s.Key)
-	httpReq.Header.Set("User-Agent", "WordsGo/1.0") // It is recommended to specify the name of your application
+	httpReq.Header.Set("User-Agent", "Synaply/1.0") // It is recommended to specify the name of your application
 
 	resp, err := s.Client.Do(httpReq)
 	if err != nil {

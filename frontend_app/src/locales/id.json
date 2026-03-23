@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Belajar Kosakata dengan AI & Spaced Repetition",
+    "title": "Synaply - Belajar Kosakata dengan AI & Spaced Repetition",
     "description": "Tingkatkan keterampilan bahasa Anda dengan spaced repetition yang didukung AI. Buat daftar kata khusus atau belajar dari daftar publik yang dibagikan komunitas.",
     "keywords": "belajar bahasa inggris, spaced repetition, pembangun kosakata, flashcards, pembelajaran bahasa AI, daftar kata, aplikasi belajar bahasa, belajar bahasa spanyol, belajar bahasa prancis, belajar bahasa jerman, kemahiran bahasa, menghafal kata, pembelajaran SRS",
-    "og_title": "WordsGo - Pembelajaran Kosakata Cerdas",
+    "og_title": "Synaply - Pembelajaran Kosakata Cerdas",
     "og_description": "Tingkatkan keterampilan bahasa Anda dengan spaced repetition yang didukung AI. Belajar lebih cepat, ingat lebih lama.",
-    "og_image_alt": "Antarmuka Aplikasi Pembelajaran Bahasa WordsGo AI",
-    "twitter_title": "WordsGo - Pelajari Kata-kata Baru dengan Mudah",
-    "twitter_description": "Bergabunglah di WordsGo untuk memperluas kosakata Anda menggunakan spaced repetition cerdas dan AI."
+    "og_image_alt": "Antarmuka Aplikasi Pembelajaran Bahasa Synaply AI",
+    "twitter_title": "Synaply - Pelajari Kata-kata Baru dengan Mudah",
+    "twitter_description": "Bergabunglah di Synaply untuk memperluas kosakata Anda menggunakan spaced repetition cerdas dan AI."
   },
   "landing": {
     "public_lists": "Daftar Publik",
@@ -144,10 +144,10 @@
     "support_title": "Dukung Proyek Ini",
     "support_desc": "Jika Anda menyukai aplikasi ini, Anda dapat mendukung pengembangannya.",
     "onboarding": {
-      "welcome": "Selamat datang di WordsGo!",
+      "welcome": "Selamat datang di Synaply!",
       "journey_begins": "Perjalanan Anda menuju penguasaan bahasa dimulai di sini.",
       "best_practice": "Praktik Terbaik untuk Keberhasilan",
-      "strategy_desc": "Untuk mendapatkan hasil maksimal dari WordsGo, kami menyarankan strategi sederhana ini:",
+      "strategy_desc": "Untuk mendapatkan hasil maksimal dari Synaply, kami menyarankan strategi sederhana ini:",
       "step1_title": "Fokus pada Topik",
       "step1_desc": "Tambahkan sekitar <strong>100 kata</strong> yang terkait dengan satu topik (misal: Bisnis atau Perjalanan) untuk membangun konteks yang kuat.",
       "step2_title": "Tinjauan Harian",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Ketentuan Layanan",
-    "terms_welcome": "Selamat datang di WordsGo. Dengan menggunakan layanan kami, Anda menyetujui ketentuan ini...",
+    "terms_welcome": "Selamat datang di Synaply. Dengan menggunakan layanan kami, Anda menyetujui ketentuan ini...",
     "title": "Pengaturan Profil",
     "first_name": "Nama Depan",
     "last_name": "Nama Belakang",
@@ -286,7 +286,7 @@
     "subtitle": "Kelola informasi pribadi dan pengaturan bahasa Anda"
   },
   "login": {
-    "title": "Masuk ke wordsGo",
+    "title": "Masuk ke synaply",
     "email": "Alamat email",
     "password": "Kata sandi",
     "sign_in": "Masuk",
@@ -307,7 +307,7 @@
     "login": "Masuk di sini"
   },
   "help": {
-    "title": "Cara menggunakan WordsGo",
+    "title": "Cara menggunakan Synaply",
     "best_practice": {
       "title": "Praktik Terbaik untuk Keberhasilan",
       "strategy_desc": "Untuk pengalaman belajar yang paling efektif, kami merekomendasikan strategi 3 langkah sederhana ini:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Memulai",
-      "desc": "WordsGo adalah alat yang ampuh yang dirancang untuk membantu Anda memperluas kosakata dan meningkatkan keterampilan bahasa Anda menggunakan spaced repetition dan kecerdasan buatan.",
+      "desc": "Synaply adalah alat yang ampuh yang dirancang untuk membantu Anda memperluas kosakata dan meningkatkan keterampilan bahasa Anda menggunakan spaced repetition dan kecerdasan buatan.",
       "step1_title": "Langkah 1: Tambahkan Kata",
       "step1_desc": "Tambahkan kata secara manual atau gunakan AI untuk menghasilkan daftar berdasarkan topik dan level.",
       "step2_title": "Langkah 2: Latihan Harian",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo menggunakan algoritma FSRS (Free Spaced Repetition Scheduler) untuk menghitung waktu ideal untuk mengulang setiap kata.",
+      "desc": "Synaply menggunakan algoritma FSRS (Free Spaced Repetition Scheduler) untuk menghitung waktu ideal untuk mengulang setiap kata.",
       "process_title": "Proses Tinjauan",
       "step1": "Anda diperlihatkan sebuah kata dalam bahasa sumber.",
       "step2": "Masukkan terjemahannya dan tekan <strong>Enter</strong> atau <strong>Periksa Jawaban</strong>.",

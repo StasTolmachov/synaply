@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Aprende vocabulario con IA y repetición espaciada",
-    "description": "Mejora tus habilidades lingüísticas con la repetición espaciada potenciada por IA. Crea listas de palabras personalizadas o aprende de listas públicas compartidas por la comunidad.",
-    "keywords": "aprender inglés, repetición espaciada, constructor de vocabulario, flashcards, aprendizaje de idiomas con IA, listas de palabras, aplicación de estudio de idiomas, aprender español, aprender francés, aprender alemán, competencia lingüística, memorizar palabras, aprendizaje SRS",
-    "og_title": "WordsGo - Aprendizaje inteligente de vocabulario",
+    "title": "Synaply - Construye sinapsis con algoritmos potenciados por IA",
+    "description": "Domina cualquier idioma con nuestro algoritmo científico que crea y fortalece las sinapsis neuronales, reforzado por una IA avanzada.",
+    "keywords": "construcción de sinapsis, aprendizaje neuronal de idiomas, repetición espaciada científica, algoritmo FSRS, vocabulario IA, aprendizaje basado en el cerebro, ciencia de la mémorización",
+    "og_title": "Synaply - Aprendizaje inteligente de vocabulario",
     "og_description": "Mejora tus habilidades lingüísticas con la repetición espaciada potenciada por IA. Aprende más rápido, recuerda por más tiempo.",
-    "og_image_alt": "Interfaz de la aplicación de aprendizaje de idiomas WordsGo AI",
-    "twitter_title": "WordsGo - Aprende nuevas palabras sin esfuerzo",
-    "twitter_description": "Únete a WordsGo para ampliar tu vocabulario utilizando la repetición espaciada inteligente y la IA."
+    "og_image_alt": "Interfaz de la aplicación de aprendizaje de idiomas Synaply AI",
+    "twitter_title": "Synaply - Aprende nuevas palabras sin esfuerzo",
+    "twitter_description": "Únete a Synaply para ampliar tu vocabulario utilizando la repetición espaciada inteligente y la IA."
   },
   "landing": {
     "public_lists": "Listas públicas",
@@ -144,17 +144,17 @@
     "support_title": "Apoya el proyecto",
     "support_desc": "Si te gusta esta aplicación, puedes apoyar su desarrollo.",
     "onboarding": {
-      "welcome": "¡Bienvenido a WordsGo!",
-      "journey_begins": "Tu viaje hacia el dominio del idioma comienza aquí.",
+      "welcome": "¡Bienvenido a Synaply!",
+      "journey_begins": "Empieza a crear conexiones neuronales duraderas hoy mismo.",
       "best_practice": "Mejores prácticas para el éxito",
-      "strategy_desc": "Para sacar el máximo provecho de WordsGo, recomendamos esta sencilla estrategia:",
-      "step1_title": "Enfócate en un tema",
-      "step1_desc": "Añade unas <strong>100 palabras</strong> relacionadas con un solo tema (ej. Negocios o Viajes) para construir un contexto sólido.",
-      "step2_title": "Revisiones diarias",
-      "step2_desc": "Domina estas palabras mediante la <strong>repetición diaria</strong> hasta que formen parte de tu vocabulario.",
+      "strategy_desc": "Para sacar el máximo provecho de Synaply, recomendamos esta sencilla estrategia:",
+      "step1_title": "Enfoque en un tema",
+      "step1_desc": "Añade unas <strong>100 palabras</strong> relacionadas con un solo tema (p. ej., Negocios o Viajes) para construir un contexto sólido.",
+      "step2_title": "Construir sinapsis",
+      "step2_desc": "Fortalece las vías neuronales mediante la <strong>repetición científica</strong> hasta que las palabras queden grabadas en tu memoria.",
       "step3_title": "Práctica con IA",
-      "step3_desc": "Cambia a la <strong>Práctica con IA</strong> para usar tu nuevo vocabulario en frases completas y situaciones del mundo real.",
-      "got_it": "¡Entendido, empecemos!"
+      "step3_desc": "Cambia a la <strong>Práctica con IA</strong> para usar tu nuevo vocabulario en frases completas y situaciones reales.",
+      "got_it": "Entendido, ¡vamos!"
     },
     "generate_ai_title": "Generar lista de palabras con IA",
     "proficiency_level": "Nivel de competencia",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Términos de servicio",
-    "terms_welcome": "Bienvenido a WordsGo. Al utilizar nuestros servicios, aceptas estos términos...",
+    "terms_welcome": "Bienvenido a Synaply. Al utilizar nuestros servicios, aceptas estos términos...",
     "title": "Configuración del perfil",
     "first_name": "Nombre",
     "last_name": "Apellido",
@@ -286,7 +286,7 @@
     "subtitle": "Gestiona tu información personal y los ajustes de idioma"
   },
   "login": {
-    "title": "Inicia sesión en WordsGo",
+    "title": "Inicia sesión en Synaply",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "sign_in": "Iniciar sesión",
@@ -307,7 +307,7 @@
     "login": "Inicia sesión aquí"
   },
   "help": {
-    "title": "Cómo usar WordsGo",
+    "title": "Cómo usar Synaply",
     "best_practice": {
       "title": "Mejores prácticas para el éxito",
       "strategy_desc": "Para la experiencia de aprendizaje más efectiva, recomendamos esta sencilla estrategia de 3 pasos:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Primeros pasos",
-      "desc": "WordsGo es una poderosa herramienta diseñada para ayudarte a ampliar tu vocabulario y mejorar tus habilidades lingüísticas utilizando la repetición espaciada y la inteligencia artificial.",
+      "desc": "Synaply es una poderosa herramienta diseñada para ayudarte a ampliar tu vocabulario y mejorar tus habilidades lingüísticas utilizando la repetición espaciada y la inteligencia artificial.",
       "step1_title": "Paso 1: Añadir palabras",
       "step1_desc": "Añade palabras manualmente o usa la IA para generar listas por temas y niveles.",
       "step2_title": "Paso 2: Práctica diaria",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetición espaciada",
-      "desc": "WordsGo utiliza el algoritmo FSRS (Free Spaced Repetition Scheduler) para calcular el momento ideal para repetir cada palabra.",
+      "desc": "Synaply utiliza el algoritmo FSRS (Free Spaced Repetition Scheduler) para calcular el momento ideal para repetir cada palabra.",
       "process_title": "Proceso de revisión",
       "step1": "Se te muestra una palabra en el idioma de origen.",
       "step2": "Introduce la traducción y pulsa <strong>Enter</strong> o <strong>Comprobar respuesta</strong>.",

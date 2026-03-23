@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Ucz się słownictwa z AI i powtarzaniem w odstępach",
+    "title": "Synaply - Ucz się słownictwa z AI i powtarzaniem w odstępach",
     "description": "Zwiększ swoje umiejętności językowe dzięki powtarzaniu w odstępach wspomaganemu przez AI. Twórz własne listy słów lub ucz się z publicznych list udostępnianych przez społeczność.",
     "keywords": "nauka angielskiego, powtarzanie w odstępach, budowanie słownictwa, fiszki, nauka języka AI, listy słów, aplikacja do nauki języków, nauka hiszpańskiego, nauka francuskiego, nauka niemieckiego, biegłość językowa, zapamiętywanie słów, nauka SRS",
-    "og_title": "WordsGo - Inteligentna nauka słownictwa",
+    "og_title": "Synaply - Inteligentna nauka słownictwa",
     "og_description": "Zwiększ swoje umiejętności językowe dzięki powtarzaniu w odstępach wspomaganemu przez AI. Ucz się szybciej, pamiętaj dłużej.",
-    "og_image_alt": "Interfejs aplikacji do nauki języków WordsGo AI",
-    "twitter_title": "WordsGo - Ucz się nowych słów bez wysiłku",
-    "twitter_description": "Dołącz do WordsGo, aby poszerzyć swoje słownictwo, korzystając z inteligentnego powtarzania w odstępach i AI."
+    "og_image_alt": "Interfejs aplikacji do nauki języków Synaply AI",
+    "twitter_title": "Synaply - Ucz się nowych słów bez wysiłku",
+    "twitter_description": "Dołącz do Synaply, aby poszerzyć swoje słownictwo, korzystając z inteligentnego powtarzania w odstępach i AI."
   },
   "landing": {
     "public_lists": "Listy publiczne",
@@ -144,10 +144,10 @@
     "support_title": "Wesprzyj projekt",
     "support_desc": "Jeśli podoba Ci się ta aplikacja, możesz wesprzeć jej rozwój.",
     "onboarding": {
-      "welcome": "Witaj w WordsGo!",
+      "welcome": "Witaj w Synaply!",
       "journey_begins": "Twoja podróż ku mistrzostwu językowemu zaczyna się tutaj.",
       "best_practice": "Najlepsze praktyki dla sukcesu",
-      "strategy_desc": "Aby w pełni wykorzystać WordsGo, polecamy tę prostą strategię:",
+      "strategy_desc": "Aby w pełni wykorzystać Synaply, polecamy tę prostą strategię:",
       "step1_title": "Skup się na temacie",
       "step1_desc": "Dodaj około <strong>100 słów</strong> związanych z jednym tematem (np. Biznes lub Podróże), aby zbudować silny kontekst.",
       "step2_title": "Codzienne powtórki",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Warunki korzystania",
-    "terms_welcome": "Witaj w WordsGo. Korzystając z naszych usług, zgadzasz się na poniższe warunki...",
+    "terms_welcome": "Witaj w Synaply. Korzystając z naszych usług, zgadzasz się na poniższe warunki...",
     "title": "Ustawienia profilu",
     "first_name": "Imię",
     "last_name": "Nazwisko",
@@ -286,7 +286,7 @@
     "subtitle": "Zarządzaj swoimi danymi osobowymi i ustawieniami językowymi"
   },
   "login": {
-    "title": "Zaloguj się do WordsGo",
+    "title": "Zaloguj się do Synaply",
     "email": "Adres e-mail",
     "password": "Hasło",
     "sign_in": "Zaloguj się",
@@ -306,7 +306,7 @@
     "login": "Zaloguj się tutaj"
   },
   "help": {
-    "title": "Jak korzystać z WordsGo",
+    "title": "Jak korzystać z Synaply",
     "best_practice": {
       "title": "Najlepsze praktyki dla sukcesu",
       "strategy_desc": "Dla najskuteczniejszej nauki polecamy tę prostą strategię 3 kroków:",
@@ -319,7 +319,7 @@
     },
     "getting_started": {
       "title": "Pierwsze kroki",
-      "desc": "WordsGo to potężne narzędzie zaprojektowane, aby pomóc Ci poszerzyć słownictwo i poprawić umiejętności językowe przy użyciu powtarzania w odstępach i sztucznej inteligencji.",
+      "desc": "Synaply to potężne narzędzie zaprojektowane, aby pomóc Ci poszerzyć słownictwo i poprawić umiejętności językowe przy użyciu powtarzania w odstępach i sztucznej inteligencji.",
       "step1_title": "Krok 1: Dodaj słowa",
       "step1_desc": "Dodawaj słowa ręcznie lub używaj AI do generowania list według tematów i poziomów.",
       "step2_title": "Krok 2: Codzienna praktyka",
@@ -346,7 +346,7 @@
     },
     "spaced_repetition": {
       "title": "Powtarzanie w odstępach",
-      "desc": "WordsGo używa algorytmu FSRS (Free Spaced Repetition Scheduler), aby obliczyć idealny czas na powtórzenie każdego słowa.",
+      "desc": "Synaply używa algorytmu FSRS (Free Spaced Repetition Scheduler), aby obliczyć idealny czas na powtórzenie każdego słowa.",
       "process_title": "Proces powtórki",
       "step1": "Wyświetlane jest słowo w języku źródłowym.",
       "step2": "Wpisz tłumaczenie i naciśnij <strong>Enter</strong> lub <strong>Sprawdź odpowiedź</strong>.",

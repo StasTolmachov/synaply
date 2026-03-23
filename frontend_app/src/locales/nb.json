@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Lær ordforråd med AI og repetisjon med mellomrom",
+    "title": "Synaply - Lær ordforråd med AI og repetisjon med mellomrom",
     "description": "Øk språkferdighetene dine med AI-drevet repetisjon med mellomrom. Lag egne ordlister eller lær fra fellesskapets offentlige lister.",
     "keywords": "lær engelsk, repetisjon med mellomrom, ordforrådsbygger, flashcards, AI-språklæring, ordlister, språkstudie-app, lær spansk, lær fransk, lær tysk, språkferdighet, memorere ord, SRS-læring",
-    "og_title": "WordsGo - Smart ordforrådslæring",
+    "og_title": "Synaply - Smart ordforrådslæring",
     "og_description": "Øk språkferdighetene dine med AI-drevet repetisjon med mellomrom. Lær raskere, husk lenger.",
-    "og_image_alt": "WordsGo AI språklærings-app-grensesnitt",
-    "twitter_title": "WordsGo - Lær nye ord uanstrengt",
-    "twitter_description": "Bli med i WordsGo for å utvide ordforrådet ditt ved hjelp av smart repetisjon med mellomrom og AI."
+    "og_image_alt": "Synaply AI språklærings-app-grensesnitt",
+    "twitter_title": "Synaply - Lær nye ord uanstrengt",
+    "twitter_description": "Bli med i Synaply for å utvide ordforrådet ditt ved hjelp av smart repetisjon med mellomrom og AI."
   },
   "landing": {
     "public_lists": "Offentlige lister",
@@ -144,10 +144,10 @@
     "support_title": "Støtt prosjektet",
     "support_desc": "Hvis du liker denne appen, kan du støtte utviklingen av den.",
     "onboarding": {
-      "welcome": "Velkommen til WordsGo!",
+      "welcome": "Velkommen til Synaply!",
       "journey_begins": "Reisen din mot språkbeherskelse starter her.",
       "best_practice": "Beste praksis for suksess",
-      "strategy_desc": "For å få mest mulig ut av WordsGo, anbefaler vi denne enkle strategien:",
+      "strategy_desc": "For å få mest mulig ut av Synaply, anbefaler vi denne enkle strategien:",
       "step1_title": "Fokuser på et emne",
       "step1_desc": "Legg til omtrent <strong>100 ord</strong> relatert til ett enkelt emne (f.eks. forretning eller reise) for å bygge sterk kontekst.",
       "step2_title": "Daglige gjennomganger",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Vilkår for bruk",
-    "terms_welcome": "Velkommen til WordsGo. Ved å bruke våre tjenester godtar du disse vilkårene...",
+    "terms_welcome": "Velkommen til Synaply. Ved å bruke våre tjenester godtar du disse vilkårene...",
     "title": "Profilinnstillinger",
     "first_name": "Fornavn",
     "last_name": "Etternavn",
@@ -286,7 +286,7 @@
     "subtitle": "Administrer din personlige informasjon og språkinnstillinger"
   },
   "login": {
-    "title": "Logg inn på wordsGo",
+    "title": "Logg inn på synaply",
     "email": "E-postadresse",
     "password": "Passord",
     "sign_in": "Logg inn",
@@ -307,7 +307,7 @@
     "login": "Logg inn her"
   },
   "help": {
-    "title": "Hvordan bruke WordsGo",
+    "title": "Hvordan bruke Synaply",
     "best_practice": {
       "title": "Beste praksis for suksess",
       "strategy_desc": "For den mest effektive læringsopplevelsen anbefaler vi denne enkle 3-trinns strategien:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kom i gang",
-      "desc": "WordsGo er et kraftig verktøy designet for å hjelpe deg med å utvide ordforrådet ditt og forbedre språkferdighetene dine ved hjelp av repetisjon med mellomrom og kunstig intelligens.",
+      "desc": "Synaply er et kraftig verktøy designet for å hjelpe deg med å utvide ordforrådet ditt og forbedre språkferdighetene dine ved hjelp av repetisjon med mellomrom og kunstig intelligens.",
       "step1_title": "Trinn 1: Legg til ord",
       "step1_desc": "Legg til ord manuelt eller bruk AI til å generere lister etter emner og nivåer.",
       "step2_title": "Trinn 2: Daglig øvelse",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetisjon med mellomrom",
-      "desc": "WordsGo bruker FSRS-algoritmen (Free Spaced Repetition Scheduler) for å beregne det ideelle tidspunktet for å gjenta hvert ord.",
+      "desc": "Synaply bruker FSRS-algoritmen (Free Spaced Repetition Scheduler) for å beregne det ideelle tidspunktet for å gjenta hvert ord.",
       "process_title": "Gjennomgangsprosess",
       "step1": "Du blir vist et ord på kildespråket.",
       "step2": "Skriv inn oversettelsen og trykk på <strong>Enter</strong> eller <strong>Sjekk svar</strong>.",

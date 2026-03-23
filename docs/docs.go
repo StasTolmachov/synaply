@@ -1807,7 +1807,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "WordsGo API",
+	Title:            "Synaply API",
 	Description:      "AI-Powered Language Learning Platform API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

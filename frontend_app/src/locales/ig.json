@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Mụta Okwu site na AI & Nkwughachi Achịkọrọ",
+    "title": "Synaply - Mụta Okwu site na AI & Nkwughachi Achịkọrọ",
     "description": "Mee ka nkà asụsụ gị ka mma site na nkwughachi achịkọrọ nke AI na-akwado. Mepụta ndepụta okwu nke gị ma ọ bụ mụta ihe site na ndepụta ọha nke ndị ọzọ kerịtara.",
     "keywords": "mụta Bekee, nkwughachi achịkọrọ, onye na-ewu okwu, flashcards, mmụta asụsụ AI, ndepụta okwu, ngwa mmụta asụsụ, mụta Spanish, mụta French, mụta German, amamihe asụsụ, iburu okwu n'isi, mmụta SRS",
-    "og_title": "WordsGo - Mmụta Okwu Ndị Mara Mma",
+    "og_title": "Synaply - Mmụta Okwu Ndị Mara Mma",
     "og_description": "Mee ka nkà asụsụ gị ka mma site na nkwughachi achịkọrọ nke AI na-akwado. Mụta ngwa ngwa, cheta ogologo oge.",
-    "og_image_alt": "Interface ngwa mmụta asụsụ WordsGo AI",
-    "twitter_title": "WordsGo - Mụta Okwu Ọhụrụ n'Ezigbo Mgbalị",
-    "twitter_description": "Soro WordsGo ka ị gbasaa okwu gị site na iji nkwughachi achịkọrọ mara mma na AI."
+    "og_image_alt": "Interface ngwa mmụta asụsụ Synaply AI",
+    "twitter_title": "Synaply - Mụta Okwu Ọhụrụ n'Ezigbo Mgbalị",
+    "twitter_description": "Soro Synaply ka ị gbasaa okwu gị site na iji nkwughachi achịkọrọ mara mma na AI."
   },
   "landing": {
     "public_lists": "Ndepụta Ọha",
@@ -144,10 +144,10 @@
     "support_title": "Kwado Project a",
     "support_desc": "Ọ bụrụ na ngwa a amasị gị, ị nwere ike ịkwado mmepe ya.",
     "onboarding": {
-      "welcome": "Nnọọ na WordsGo!",
+      "welcome": "Nnọọ na Synaply!",
       "journey_begins": "Njem gị gaa na amamihe asụsụ na-amalite ebe a.",
       "best_practice": "Omume Kachasị Mma maka Ọganihu",
-      "strategy_desc": "Iji nweta ihe kachasị mma na WordsGo, anyị na-akwado atụmatụ dị mfe a:",
+      "strategy_desc": "Iji nweta ihe kachasị mma na Synaply, anyị na-akwado atụmatụ dị mfe a:",
       "step1_title": "Leba anya n'Isiokwu",
       "step1_desc": "Tinye ihe dị ka <strong>okwu 100</strong> metụtara otu isiokwu (dịka, Azụmahịa ma ọ bụ Njem) iji wuo ntọala siri ike.",
       "step2_title": "Ntụle kwa Ụbọchị",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Usoro Ọrụ",
-    "terms_welcome": "Nnọọ na WordsGo. Site n'iji ọrụ anyị, ị kwetara na usoro ndị a...",
+    "terms_welcome": "Nnọọ na Synaply. Site n'iji ọrụ anyị, ị kwetara na usoro ndị a...",
     "title": "Nhazi Profaịlụ",
     "first_name": "Aha Mbụ",
     "last_name": "Aha Ikpeazụ",
@@ -286,7 +286,7 @@
     "subtitle": "Jikwaa ozi onwe gị na nhazi asụsụ"
   },
   "login": {
-    "title": "Banye na wordsGo",
+    "title": "Banye na synaply",
     "email": "Adreesị email",
     "password": "Password",
     "sign_in": "Banye",
@@ -307,7 +307,7 @@
     "login": "Banye ebe a"
   },
   "help": {
-    "title": "Otu esi eji WordsGo",
+    "title": "Otu esi eji Synaply",
     "best_practice": {
       "title": "Omume Kachasị Mma maka Ọganihu",
       "strategy_desc": "Maka mmụta kachasị mma, anyị na-akwado atụmatụ dị mfe nke nwere usoro 3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ịmalite",
-      "desc": "WordsGo bụ ngwa ọrụ siri ike emere iji nyere gị aka ịgbasa okwu gị na ime ka nkà asụsụ gị ka mma site na iji nkwughachi achịkọrọ na AI.",
+      "desc": "Synaply bụ ngwa ọrụ siri ike emere iji nyere gị aka ịgbasa okwu gị na ime ka nkà asụsụ gị ka mma site na iji nkwughachi achịkọrọ na AI.",
       "step1_title": "Usoro 1: Tinye Okwu",
       "step1_desc": "Tinye okwu n'onwe gị ma ọ bụ jiri AI mepụta ndepụta site na isiokwu na ọkwa.",
       "step2_title": "Usoro 2: Omume kwa Ụbọchị",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Nkwughachi Achịkọrọ",
-      "desc": "WordsGo na-eji FSRS (Free Spaced Repetition Scheduler) algorithm gbakọọ oge kachasị mma iji kwughachi okwu ọ bụla.",
+      "desc": "Synaply na-eji FSRS (Free Spaced Repetition Scheduler) algorithm gbakọọ oge kachasị mma iji kwughachi okwu ọ bụla.",
       "process_title": "Usoro Ntụle",
       "step1": "A na-egosi gị okwu n'asụsụ mbụ.",
       "step2": "Tinye ntụgharị ya ma pịa <strong>Enter</strong> ma ọ bụ <strong>Lelee Azịza</strong>.",

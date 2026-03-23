@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Learn Vocabulary with AI & Spaced Repetition",
-    "description": "Boost your language skills with AI-powered spaced repetition. Create custom word lists or learn from community-shared public lists.",
-    "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, learn spanish, learn french, learn german, language proficiency, memorize words, SRS learning",
-    "og_title": "WordsGo - Smart Vocabulary Learning",
+    "title": "Synaply - Build Synapses with AI-Powered Algorithms",
+    "description": "Master any language with our scientific algorithm that creates and strengthens neural synapses, reinforced by advanced AI context.",
+    "keywords": "synapse building, neural language learning, scientific spaced repetition, FSRS algorithm, AI vocabulary, brain-based learning, memorization science",
+    "og_title": "Synaply - Smart Vocabulary Learning",
     "og_description": "Boost your language skills with AI-powered spaced repetition. Learn faster, remember longer.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Learn New Words Effortlessly",
-    "twitter_description": "Join WordsGo to expand your vocabulary using smart spaced repetition and AI."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Learn New Words Effortlessly",
+    "twitter_description": "Join Synaply to expand your vocabulary using smart spaced repetition and AI."
   },
   "landing": {
     "public_lists": "Public Lists",
@@ -49,7 +49,10 @@
     "filters": "Filters",
     "all": "All",
     "reset": "Reset",
-    "admin_stats": "Admin Stats"
+    "admin_stats": "Admin Stats",
+    "terms": "Terms of Service",
+    "all_rights_reserved": "All rights reserved.",
+    "footer_help_text": "Help us improve! Share your ideas, report bugs, or request features:"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -139,20 +142,17 @@
     "teacher_comment": "Teacher's comment",
     "ideal_translation": "Ideal translation",
     "sentence": "Sentence",
-    "terms": "Terms of Service",
-    "all_rights_reserved": "All rights reserved.",
-    "footer_help_text": "Help us improve! Share your ideas, report bugs, or request features:",
     "support_title": "Support the Project",
     "support_desc": "If you like this app, you can support its development.",
     "onboarding": {
-      "welcome": "Welcome to WordsGo!",
-      "journey_begins": "Your journey to language mastery begins here.",
+      "welcome": "Welcome to Synaply!",
+      "journey_begins": "Start building lasting neural connections today.",
       "best_practice": "Best Practice for Success",
-      "strategy_desc": "To get the most out of WordsGo, we recommend this simple strategy:",
+      "strategy_desc": "To get the most out of Synaply, we recommend this simple strategy:",
       "step1_title": "Focus on a Topic",
       "step1_desc": "Add about <strong>100 words</strong> related to a single topic (e.g., Business or Travel) to build strong context.",
-      "step2_title": "Daily Reviews",
-      "step2_desc": "Master these words through <strong>daily repetition</strong> until they become part of your vocabulary.",
+      "step2_title": "Build Synapses",
+      "step2_desc": "Strengthen neural pathways through <strong>scientific repetition</strong> until words are hard-wired into your memory.",
       "step3_title": "AI Practice",
       "step3_desc": "Switch to <strong>AI Practice</strong> to use your new vocabulary in full sentences and real-world situations.",
       "got_it": "Got it, let's start!"
@@ -268,7 +268,24 @@
   },
   "profile": {
     "terms_title": "Terms of Service",
-    "terms_welcome": "Welcome to WordsGo. By using our services, you agree to these terms...",
+    "terms_last_updated": "Last updated: March 23, 2026",
+    "terms_beta_warning": "Important Beta Notice: Synaply is currently in its beta testing phase. By using this service, you acknowledge that you are participating in a testing period and understand the risks associated with pre-release software.",
+    "terms_intro_title": "1. Acceptance of Terms",
+    "terms_intro_text": "By accessing or using Synaply, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.",
+    "terms_beta_title": "2. Beta Disclaimer and Data Loss",
+    "terms_beta_text": "Synaply is provided on an \"as is\" and \"as available\" basis for beta testing purposes. You explicitly acknowledge and agree that: (a) The service may contain bugs, errors, and experience frequent interruptions. (b) We reserve the right to modify, suspend, or discontinue any part of the service at any time without notice. (c) CRITICAL: During the beta period, we may perform database resets or deletions. This means all your data, including progress, word lists, and account information, may be permanently deleted without prior warning. You are responsible for maintaining your own backups of any important data.",
+    "terms_accounts_title": "3. User Accounts",
+    "terms_accounts_text": "To use certain features, you must register for an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You must notify us immediately of any unauthorized use of your account.",
+    "terms_content_title": "4. Content and Intellectual Property",
+    "terms_content_text": "Our service allows you to post, link, store, share and otherwise make available certain information, text, graphics, or other material. You are responsible for the content you post. Synaply retains all rights to its original content, features, and functionality, which are protected by international copyright, trademark, and other intellectual property laws.",
+    "terms_conduct_title": "5. Prohibited Conduct",
+    "terms_conduct_text": "You agree not to use the service for any unlawful purpose or to solicit others to perform or participate in any unlawful acts. You shall not attempt to interfere with the proper working of the service, including through viruses, denial of service attacks, or any other harmful technology.",
+    "terms_liability_title": "6. Limitation of Liability",
+    "terms_liability_text": "In no event shall Synaply, nor its directors, employees, partners, or agents, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the service.",
+    "terms_changes_title": "7. Changes to Terms",
+    "terms_changes_text": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will try to provide at least 30 days' notice prior to any new terms taking effect for significant changes. What constitutes a material change will be determined at our sole discretion.",
+    "terms_contact_title": "8. Contact Us",
+    "terms_contact_text": "If you have any questions about these Terms, please contact us through the support channels provided on the website.",
     "title": "Profile Settings",
     "first_name": "First Name",
     "last_name": "Last Name",
@@ -285,7 +302,7 @@
     "subtitle": "Manage your personal information and language settings"
   },
   "login": {
-    "title": "Sign in to wordsGo",
+    "title": "Sign in",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Sign in",
@@ -303,10 +320,13 @@
     "sign_up": "Sign up",
     "signing_up": "Signing up...",
     "has_account": "Already have an account?",
-    "login": "Login here"
+    "login": "Login here",
+    "terms_acceptance_prefix": "I agree to the ",
+    "terms_acceptance_link": "Terms of Service",
+    "terms_acceptance_suffix": ""
   },
   "help": {
-    "title": "How to use WordsGo",
+    "title": "How to use Synaply",
     "best_practice": {
       "title": "Best Practice for Success",
       "strategy_desc": "For the most effective learning experience, we recommend this simple 3-step strategy:",
@@ -319,7 +339,7 @@
     },
     "getting_started": {
       "title": "Getting Started",
-      "desc": "WordsGo is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
+      "desc": "Synaply is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
       "step1_title": "Step 1: Add Words",
       "step1_desc": "Add words manually or use AI to generate lists by topics and levels.",
       "step2_title": "Step 2: Daily Practice",
@@ -346,7 +366,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
+      "desc": "Synaply uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
       "process_title": "Review Process",
       "step1": "You are shown a word in the source language.",
       "step2": "Enter the translation and press <strong>Enter</strong> or <strong>Check Answer</strong>.",

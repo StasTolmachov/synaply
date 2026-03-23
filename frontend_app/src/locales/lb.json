@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Vocabelen léiere mat AI & Spaced Repetition",
+    "title": "Synaply - Vocabelen léiere mat AI & Spaced Repetition",
     "description": "Verbessert Är Sproochkenntnisser mat AI-gestëtzter Spaced Repetition. Erstellt personaliséiert Wuertlëschten oder léiert aus ëffentleche Lëschten, déi vun der Gemeinschaft gedeelt ginn.",
     "keywords": "Englesch léieren, spaced repetition, Vokabeltrainer, Flashkaarten, AI Sprooche léieren, Wuertlëschten, Sprooche-App, Spuenesch léieren, Franséisch léieren, Däitsch léieren, Sproochkompetenz, Wierder memoriséieren, SRS léieren",
-    "og_title": "WordsGo - Smart Vokabelen léieren",
+    "og_title": "Synaply - Smart Vokabelen léieren",
     "og_description": "Verbessert Är Sproochkenntnisser mat AI-gestëtzter Spaced Repetition. Méi séier léieren, méi laang behalen.",
-    "og_image_alt": "WordsGo AI Sprooche-App Interface",
-    "twitter_title": "WordsGo - Wierder ouni Méi léieren",
-    "twitter_description": "Maacht mat bei WordsGo fir Äre Vokabular mat smarter Spaced Repetition an AI ze erweideren."
+    "og_image_alt": "Synaply AI Sprooche-App Interface",
+    "twitter_title": "Synaply - Wierder ouni Méi léieren",
+    "twitter_description": "Maacht mat bei Synaply fir Äre Vokabular mat smarter Spaced Repetition an AI ze erweideren."
   },
   "landing": {
     "public_lists": "Ëffentlech Lëschten",
@@ -144,10 +144,10 @@
     "support_title": "Ënnerstëtzt de Projet",
     "support_desc": "Wann Iech dës App gefält, kënnt Dir hir Entwécklung ënnerstëtzen.",
     "onboarding": {
-      "welcome": "Wëllkomm bei WordsGo!",
+      "welcome": "Wëllkomm bei Synaply!",
       "journey_begins": "Är Rees fir eng Sprooch ze meeschteren fänkt hei un.",
       "best_practice": "Beschten Praktiken fir den Erfolleg",
-      "strategy_desc": "Fir dat Bescht aus WordsGo erauszehuelen, recommandéiere mir dës einfach Strategie:",
+      "strategy_desc": "Fir dat Bescht aus Synaply erauszehuelen, recommandéiere mir dës einfach Strategie:",
       "step1_title": "Fokus op en Thema",
       "step1_desc": "Setzt ongeféier <strong>100 Wierder</strong> dobäi, déi zu engem Thema gehéieren (z. B. Geschäft oder Rees), fir e staarke Kontext ze schafen.",
       "step2_title": "Deeglech Widerhuelungen",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Notzungsbedéngungen",
-    "terms_welcome": "Wëllkomm bei WordsGo. Mam Gebrauch vun eise Servicer erkläert Dir Iech mat dëse Bedéngungen averstanen...",
+    "terms_welcome": "Wëllkomm bei Synaply. Mam Gebrauch vun eise Servicer erkläert Dir Iech mat dëse Bedéngungen averstanen...",
     "title": "Profil-Astellungen",
     "first_name": "Virnumm",
     "last_name": "Familljennumm",
@@ -286,7 +286,7 @@
     "subtitle": "Verwalte Är perséinlech Informatiounen a Sprooch-Astellungen"
   },
   "login": {
-    "title": "Bei WordsGo anloggen",
+    "title": "Bei Synaply anloggen",
     "email": "E-Mail-Adress",
     "password": "Passwuert",
     "sign_in": "Anloggen",
@@ -307,7 +307,7 @@
     "login": "Hei anloggen"
   },
   "help": {
-    "title": "Wéi benotzt een WordsGo",
+    "title": "Wéi benotzt een Synaply",
     "best_practice": {
       "title": "Beschten Praktiken fir den Erfolleg",
       "strategy_desc": "Für déi effektivsten Léiererfahrung recommandéiere mir dës einfach Strategie an 3 Schrëtt:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Éischt Schrëtt",
-      "desc": "WordsGo ass e mächtegt Tool, dat entwéckelt gouf, fir Iech ze hëllefen Äre Vokabular ze erweideren an Är Sproochkenntnisser mat Spaced Repetition an kënschtlecher Intelligenz ze verbesseren.",
+      "desc": "Synaply ass e mächtegt Tool, dat entwéckelt gouf, fir Iech ze hëllefen Äre Vokabular ze erweideren an Är Sproochkenntnisser mat Spaced Repetition an kënschtlecher Intelligenz ze verbesseren.",
       "step1_title": "Schrëtt 1: Wierder dobäisetzen",
       "step1_desc": "Setzt Wierder manuell dobäi oder benotzt d'AI, fir Lëschten no Themen an Niveauen ze generéieren.",
       "step2_title": "Schrëtt 2: Deeglech Übung",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo benotzt de FSRS (Free Spaced Repetition Scheduler) Algorithmus, fir den ideale Moment fir d'Widerhuelung vun all Wuert ze berechnen.",
+      "desc": "Synaply benotzt de FSRS (Free Spaced Repetition Scheduler) Algorithmus, fir den ideale Moment fir d'Widerhuelung vun all Wuert ze berechnen.",
       "process_title": "Widerhuelungsprozess",
       "step1": "Iech gëtt e Wuert an der Quellsprooch ugewisen.",
       "step2": "Gitt d'Iwwersetzung an an dréckt <strong>Enter</strong> oder <strong>Äntwert iwwerpréiwen</strong>.",

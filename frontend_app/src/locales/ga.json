@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Foclóir a Fhoghlaim le AI & Atreagrú Spásáilte",
+    "title": "Synaply - Foclóir a Fhoghlaim le AI & Atreagrú Spásáilte",
     "description": "Treoraigh do scileanna teanga le hatreagrú spásáilte cumhachtaithe ag AI. Cruthaigh liostaí focal saincheaptha nó foghlaim ó liostaí poiblí roinnte ag an bpobal.",
     "keywords": "foghlaim Béarla, atreagrú spásáilte, tógálaí foclóra, splanc-chártaí, foghlaim teanga AI, liostaí focal, aip staidéir teanga, foghlaim Spáinnis, foghlaim Fraincis, foghlaim Gearmáinis, inniúlacht teanga, focail a mheabhrú, foghlaim SRS",
-    "og_title": "WordsGo - Foghlaim Foclóra Chliste",
+    "og_title": "Synaply - Foghlaim Foclóra Chliste",
     "og_description": "Treoraigh do scileanna teanga le hatreagrú spásáilte cumhachtaithe ag AI. Foghlaim níos gasta, cuimhnigh níos faide.",
-    "og_image_alt": "Comhéadan Aip Foghlama Teanga WordsGo AI",
-    "twitter_title": "WordsGo - Foghlaim Focail Nua gan Dua",
-    "twitter_description": "Bí páirteach in WordsGo chun do fhoclóir a leathnú ag baint úsáide as atreagrú spásáilte cliste agus AI."
+    "og_image_alt": "Comhéadan Aip Foghlama Teanga Synaply AI",
+    "twitter_title": "Synaply - Foghlaim Focail Nua gan Dua",
+    "twitter_description": "Bí páirteach in Synaply chun do fhoclóir a leathnú ag baint úsáide as atreagrú spásáilte cliste agus AI."
   },
   "landing": {
     "public_lists": "Liostaí Poiblí",
@@ -144,10 +144,10 @@
     "support_title": "Tacaigh leis an Tionscadal",
     "support_desc": "Más maith leat an aip seo, is féidir leat tacú lena forbairt.",
     "onboarding": {
-      "welcome": "Fáilte go dtí WordsGo!",
+      "welcome": "Fáilte go dtí Synaply!",
       "journey_begins": "Tosaíonn do thuras i dtreo máistreacht teanga anseo.",
       "best_practice": "An Cleachtas is Fearr le haghaidh Rathúlachta",
-      "strategy_desc": "Chun the tairbhe is mó a bhaint as WordsGo, molaimid an straitéis shimplí seo:",
+      "strategy_desc": "Chun the tairbhe is mó a bhaint as Synaply, molaimid an straitéis shimplí seo:",
       "step1_title": "Dírigh ar Ábhar",
       "step1_desc": "Cuir thart ar <strong>100 focal</strong> a bhaineann le hábhar amháin (m.sh., Gnó nó Taisteal) leis chun comhthéacs láidir a thógáil.",
       "step2_title": "Athbhreithniú Laethúil",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Téarmaí Seirbhíse",
-    "terms_welcome": "Fáilte go WordsGo. Trí úsáid a bhaint as ár seirbhísí, aontaíonn tú leis na téarmaí seo...",
+    "terms_welcome": "Fáilte go Synaply. Trí úsáid a bhaint as ár seirbhísí, aontaíonn tú leis na téarmaí seo...",
     "title": "Socruithe Próifíle",
     "first_name": "Céadainm",
     "last_name": "Sloinne",
@@ -286,7 +286,7 @@
     "subtitle": "Bainistigh do chuid faisnéise pearsanta agus socruithe teanga"
   },
   "login": {
-    "title": "Logáil isteach go wordsGo",
+    "title": "Logáil isteach go synaply",
     "email": "Seoladh ríomhphoist",
     "password": "Pasfhocal",
     "sign_in": "Logáil isteach",
@@ -307,7 +307,7 @@
     "login": "Logáil isteach anseo"
   },
   "help": {
-    "title": "Conas WordsGo a úsáid",
+    "title": "Conas Synaply a úsáid",
     "best_practice": {
       "title": "An Cleachtas is Fearr le haghaidh Rathúlachta",
       "strategy_desc": "Le haghaidh an taithí foghlama is éifeachtaí, molaimid an straitéis shimplí 3-chéim seo:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ag Tosú",
-      "desc": "Is uirlis chumhachtach é WordsGo atá deartha chun cabhrú leat do fhoclóir a leathnú agus do scileanna teanga a fheabhsú trí úsáid a bhaint as atreagrú spásáilte agus hintleacht shaorga.",
+      "desc": "Is uirlis chumhachtach é Synaply atá deartha chun cabhrú leat do fhoclóir a leathnú agus do scileanna teanga a fheabhsú trí úsáid a bhaint as atreagrú spásáilte agus hintleacht shaorga.",
       "step1_title": "Céim 1: Cuir Focail Leis",
       "step1_desc": "Cuir focail leis de láimh nó úsáid AI chun liostaí a ghiniúint de réir ábhar agus leibhéal.",
       "step2_title": "Céim 2: Cleachtadh Laethúil",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Atreagrú Spásáilte",
-      "desc": "Úsáideann WordsGo an t-algartam FSRS (Free Spaced Repetition Scheduler) chun an t-am iontach chun gach focal a athdhéanamh a ríomh.",
+      "desc": "Úsáideann Synaply an t-algartam FSRS (Free Spaced Repetition Scheduler) chun an t-am iontach chun gach focal a athdhéanamh a ríomh.",
       "process_title": "Próiseas Athbhreithnithe",
       "step1": "Taispeántar focal duit sa bhunteanga.",
       "step2": "Cuir isteach an t-aistriúchán agus brúigh <strong>Enter</strong> nó <strong>Seiceáil an Freagra</strong>.",

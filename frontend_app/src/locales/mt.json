@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Tgħallem il-Vokabularju bl-AI u r-Repetizzjoni Spazjata",
+    "title": "Synaply - Tgħallem il-Vokabularju bl-AI u r-Repetizzjoni Spazjata",
     "description": "Saħħaħ il-ħiliet lingwistiċi tiegħek bir-repetizzjoni spazjata mħaddma mill-AI. Oħloq listi ta' kliem personalizzati jew tgħallem minn listi pubbliċi kondiviżi mill-komunità.",
     "keywords": "tgħallem l-Ingliż, repetizzjoni spazjata, bennej tal-vokabularju, flashcards, tagħlim tal-lingwa bl-AI, listi ta' kliem, app għall-istudju tal-lingwa, tgħallem l-Ispanjol, tgħallem il-Franċiż, tgħallem il-Ġermaniż, profiċjenza lingwistika, memorizza kliem, tagħlim SRS",
-    "og_title": "WordsGo - Tagħlim Intelliġenti tal-Vokabularju",
+    "og_title": "Synaply - Tagħlim Intelliġenti tal-Vokabularju",
     "og_description": "Saħħaħ il-ħiliet lingwistiċi tiegħek bir-repetizzjoni spazjata mħaddma mill-AI. Tgħallem aktar malajr, ftakar aktar fit-tul.",
-    "og_image_alt": "Interfaċċja tal-App tat-Tagħlim tal-Lingwa WordsGo AI",
-    "twitter_title": "WordsGo - Tgħallem Kliem Ġdid mingħajr Sforz",
-    "twitter_description": "Ingħaqad ma' WordsGo biex tespandi l-vokabularju tiegħek billi tuża repetizzjoni spazjata intelliġenti u AI."
+    "og_image_alt": "Interfaċċja tal-App tat-Tagħlim tal-Lingwa Synaply AI",
+    "twitter_title": "Synaply - Tgħallem Kliem Ġdid mingħajr Sforz",
+    "twitter_description": "Ingħaqad ma' Synaply biex tespandi l-vokabularju tiegħek billi tuża repetizzjoni spazjata intelliġenti u AI."
   },
   "landing": {
     "public_lists": "Listi Pubbliċi",
@@ -144,10 +144,10 @@
     "support_title": "Appoġġja l-Proġett",
     "support_desc": "Jekk tħobb din l-app, tista' tappoġġja l-iżvilupp tagħha.",
     "onboarding": {
-      "welcome": "Merħba f'WordsGo!",
+      "welcome": "Merħba f'Synaply!",
       "journey_begins": "Il-vjaġġ tiegħek lejn il-padrunanza tal-lingwa jibda hawn.",
       "best_practice": "L-Aħjar Prattika għas-Suċċess",
-      "strategy_desc": "Biex tieħu l-aħjar minn WordsGo, nirrakkomandaw din l-istrateġija sempliċi:",
+      "strategy_desc": "Biex tieħu l-aħjar minn Synaply, nirrakkomandaw din l-istrateġija sempliċi:",
       "step1_title": "Iffoka fuq Suġġett",
       "step1_desc": "Żid madwar <strong>100 kelma</strong> relatati ma' suġġett wieħed (eż., Negozju jew Safar) biex tibni kuntest b'saħħtu.",
       "step2_title": "Reviżjonijiet ta' Kuljum",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Termini tas-Servizz",
-    "terms_welcome": "Merħba f'WordsGo. Billi tuża s-servizzi tagħna, inti taqbel ma' dawn it-termini...",
+    "terms_welcome": "Merħba f'Synaply. Billi tuża s-servizzi tagħna, inti taqbel ma' dawn it-termini...",
     "title": "Settings tal-Profil",
     "first_name": "Isem",
     "last_name": "Kunjom",
@@ -286,7 +286,7 @@
     "subtitle": "Immaniġġja l-informazzjoni personali tiegħek u s-settings tal-lingwa"
   },
   "login": {
-    "title": "Idħol f'wordsGo",
+    "title": "Idħol f'synaply",
     "email": "Indirizz tal-email",
     "password": "Password",
     "sign_in": "Idħol",
@@ -307,7 +307,7 @@
     "login": "Idħol hawn"
   },
   "help": {
-    "title": "Kif tuża WordsGo",
+    "title": "Kif tuża Synaply",
     "best_practice": {
       "title": "L-Aħjar Prattika għas-Suċċess",
       "strategy_desc": "Għall-aktar esperjenza ta' tagħlim effettiva, nirrakkomandaw din l-istrateġija sempliċi bi 3 passi:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kif Tibda",
-      "desc": "WordsGo huwa għodda b'saħħitha ddisinjata biex tgħinek tespandi l-vokabularju tiegħek u ttejjeb il-ħiliet lingwistiċi tiegħek billi tuża repetizzjoni spazjata u intelliġenza artifiċjali.",
+      "desc": "Synaply huwa għodda b'saħħitha ddisinjata biex tgħinek tespandi l-vokabularju tiegħek u ttejjeb il-ħiliet lingwistiċi tiegħek billi tuża repetizzjoni spazjata u intelliġenza artifiċjali.",
       "step1_title": "Pass 1: Żid il-Kliem",
       "step1_desc": "Żid il-kliem manwalment uża l-AI biex tiġġenera listi skont is-suġġetti u l-livelli.",
       "step2_title": "Pass 2: Prattika ta' Kuljum",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetizzjoni Spazjata",
-      "desc": "WordsGo juża l-algoritmu FSRS (Free Spaced Repetition Scheduler) biex jikkalkula l-ħin ideali biex tirrepeti kull kelma.",
+      "desc": "Synaply juża l-algoritmu FSRS (Free Spaced Repetition Scheduler) biex jikkalkula l-ħin ideali biex tirrepeti kull kelma.",
       "process_title": "Proċess ta' Reviżjoni",
       "step1": "Tintwera kelma fil-lingwa oriġinali.",
       "step2": "Daħħal it-traduzzjoni u agħfas <strong>Enter</strong> jew <strong>Iċċekkja t-Tweġiba</strong>.",

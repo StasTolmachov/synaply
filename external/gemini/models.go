@@ -1,7 +1,7 @@
 package gemini
 
 import (
-	"wordsGo_v2/internal/repository/modelsDB"
+	"synaply_v2/internal/repository/modelsDB"
 )
 
 type WordInfoRequest struct {
