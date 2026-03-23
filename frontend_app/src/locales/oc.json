@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Aprendre lo vocabulari amb l'IA e la repeticion espaciada",
+    "title": "Synaply - Aprendre lo vocabulari amb l'IA e la repeticion espaciada",
     "description": "Melhoratz vòstras competéncias lingüisticas amb la repeticion espaciada basada sus l'IA. Creatz vòstras pròprias listas de mots o aprendre de las listas publicas partejadas per la comunautat.",
     "keywords": "aprendre l'anglés, repeticion espaciada, bastidor de vocabulari, flashcards, aprendissatge de las lengas per IA, listas de mots, aplicacion d'estudi de las lengas, aprendre l'espanhòl, aprendre lo francés, aprendre l'alemand, competéncia lingüistica, memorizar de mots, aprendissatge SRS",
-    "og_title": "WordsGo - Aprendissatge intelligent del vocabulari",
+    "og_title": "Synaply - Aprendissatge intelligent del vocabulari",
     "og_description": "Melhoratz vòstras competéncias lingüisticas amb la repeticion espaciada basada sus l'IA. Aprendre mai lèu, se remembrat mai longtemps.",
-    "og_image_alt": "Interfàcia de l'aplicacion d'aprendissatge de las lengas per IA WordsGo",
-    "twitter_title": "WordsGo - Aprendre de mots nòus sens esfòrç",
-    "twitter_description": "Rejonhetz WordsGo per espandir vòstre vocabulari en utilizant la repeticion espaciada intelligenta e l'IA."
+    "og_image_alt": "Interfàcia de l'aplicacion d'aprendissatge de las lengas per IA Synaply",
+    "twitter_title": "Synaply - Aprendre de mots nòus sens esfòrç",
+    "twitter_description": "Rejonhetz Synaply per espandir vòstre vocabulari en utilizant la repeticion espaciada intelligenta e l'IA."
   },
   "landing": {
     "public_lists": "Listas publicas",
@@ -144,10 +144,10 @@
     "support_title": "Sosténer lo projècte",
     "support_desc": "Se vos agrada aquesta aplicacion, podètz sosténer son desvolopament.",
     "onboarding": {
-      "welcome": "Benvenguda sus WordsGo !",
+      "welcome": "Benvenguda sus Synaply !",
       "journey_begins": "Vòstre viatge vèrs la mestreja de la lenga començar aicí.",
       "best_practice": "Melhora practica pel succès",
-      "strategy_desc": "Per tirar lo melhor partit de WordsGo, vos recomandam aquesta estrategia simpla :",
+      "strategy_desc": "Per tirar lo melhor partit de Synaply, vos recomandam aquesta estrategia simpla :",
       "step1_title": "Se concentrar sus un tèma",
       "step1_desc": "Apondètz aperaquí <strong>100 mots</strong> ligats a un sol tèma (ex: Afars o Viatge) per bastir un contèxte fòrt.",
       "step2_title": "Revisions quotidianas",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Condicions d'usatge",
-    "terms_welcome": "Benvenguda sus WordsGo. En utilizant nòstres servicis, acceptatz aquestas condicions...",
+    "terms_welcome": "Benvenguda sus Synaply. En utilizant nòstres servicis, acceptatz aquestas condicions...",
     "title": "Paramètres del perfil",
     "first_name": "Prenom",
     "last_name": "Nom",
@@ -286,7 +286,7 @@
     "subtitle": "Gerissètz vòstras informacions personalas e vòstres paramètres de lenga"
   },
   "login": {
-    "title": "Se connectar a WordsGo",
+    "title": "Se connectar a Synaply",
     "email": "Adreça electronica",
     "password": "Mot de passa",
     "sign_in": "Se connectar",
@@ -307,7 +307,7 @@
     "login": "Connectatz-vos aicí"
   },
   "help": {
-    "title": "Cossí utilizar WordsGo",
+    "title": "Cossí utilizar Synaply",
     "best_practice": {
       "title": "Melhora practica pel succès",
       "strategy_desc": "Per l'experiéncia d'aprendissatge mai eficaça, vos recomandam aquesta estrategia simpla en 3 etapas :",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Començar",
-      "desc": "WordsGo es una aisina potenta concebuda per vos ajudar a espandir vòstre vocabulari e a melhorar vòstras competéncias lingüisticas en utilizant la repeticion espaciada e l'intelligéncia artificiala.",
+      "desc": "Synaply es una aisina potenta concebuda per vos ajudar a espandir vòstre vocabulari e a melhorar vòstras competéncias lingüisticas en utilizant la repeticion espaciada e l'intelligéncia artificiala.",
       "step1_title": "Etapa 1 : Apondre de mots",
       "step1_desc": "Apondètz de mots manualament o utilizatz l'IA per generar de listas per tèmas e nivèls.",
       "step2_title": "Etapa 2 : Practica quotidiana",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repeticion espaciada",
-      "desc": "WordsGo utiliza l'algoritme FSRS (Free Spaced Repetition Scheduler) per calcular lo moment ideal per repetir cada mot.",
+      "desc": "Synaply utiliza l'algoritme FSRS (Free Spaced Repetition Scheduler) per calcular lo moment ideal per repetir cada mot.",
       "process_title": "Processús de revision",
       "step1": "Un mot vos es mostrat dins la lenga d'origina.",
       "step2": "Picatz la traduccion e quichatz sus <strong>Entrada</strong> o <strong>Verificar la responsa</strong>.",

@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Ñe'ẽndy Jehekombo'e AI ha Spaced Repetition rupive",
+    "title": "Synaply - Ñe'ẽndy Jehekombo'e AI ha Spaced Repetition rupive",
     "description": "Emombarete ne ñe'ẽ kuaapy AI-powered spaced repetition rupive. Ejapo ne ñe'ẽndy teete térã ehekombo'e umi lista opavave mba'évagui.",
     "keywords": "inglés ñe'ẽ jehekombo'e, spaced repetition, ñe'ẽndy mopu'ãha, flashcards, AI ñe'ẽ jehekombo'e, ñe'ẽndy rysýi, ñe'ẽ jehekombo'e tembipuru, español ñe'ẽ jehekombo'e, francés ñe'ẽ jehekombo'e, alemán ñe'ẽ jehekombo'e, ñe'ẽ kuaapy, ñe'ẽ ñemongua, SRS jehekombo'e",
-    "og_title": "WordsGo - Ñe'ẽndy Jehekombo'e Arandu",
+    "og_title": "Synaply - Ñe'ẽndy Jehekombo'e Arandu",
     "og_description": "Emombarete ne ñe'ẽ kuaapy AI-powered spaced repetition rupive. Eñemoarandu pya'eve, nemandu'a areve.",
-    "og_image_alt": "WordsGo AI Ñe'ẽ Jehekombo'e Tembipuru Rova",
-    "twitter_title": "WordsGo - Eñemoarandu Ñe'ẽ Pyahu rehe Kane'õ'ỹre",
-    "twitter_description": "Eju WordsGo-pe embotuicha hag̃ua ne ñe'ẽndy reipurúvo spaced repetition arandu ha AI."
+    "og_image_alt": "Synaply AI Ñe'ẽ Jehekombo'e Tembipuru Rova",
+    "twitter_title": "Synaply - Eñemoarandu Ñe'ẽ Pyahu rehe Kane'õ'ỹre",
+    "twitter_description": "Eju Synaply-pe embotuicha hag̃ua ne ñe'ẽndy reipurúvo spaced repetition arandu ha AI."
   },
   "landing": {
     "public_lists": "Lista Opavave mba'éva",
@@ -144,10 +144,10 @@
     "support_title": "Emopytyvõ ko Proyectope",
     "support_desc": "Oguerohorýramo ko tembipuru, ikatu emopytyvõ hi'aremive hag̃ua.",
     "onboarding": {
-      "welcome": "¡Eguahẽ porãite WordsGo-pe!",
+      "welcome": "¡Eguahẽ porãite Synaply-pe!",
       "journey_begins": "Ne guata ñe'ẽ kuaapýpe oñepyrũ ko'ápe.",
       "best_practice": "Mba'eapoporã Tenonde hag̃ua",
-      "strategy_desc": "Eipuru porãve hag̃ua WordsGo, rorekomenda ko estrategia simple:",
+      "strategy_desc": "Eipuru porãve hag̃ua Synaply, rorekomenda ko estrategia simple:",
       "step1_title": "Eñepy'ã peteĩ Mbo'ére",
       "step1_desc": "Emoĩ amo <strong>100 ñe'ẽ</strong> oñemopyendáva peteĩ mbo'ére (techapyrã, Ñemu térã Viare) embotuicha hag̃ua contexto.",
       "step2_title": "Jehechajey Ára ha Árape",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Tembipuru Rekotee",
-    "terms_welcome": "Eguahẽ porãite WordsGo-pe. Reipurúvo orerepytyvõ, reñe'ẽme'ẽ ko'ã tembipuru rekoteére...",
+    "terms_welcome": "Eguahẽ porãite Synaply-pe. Reipurúvo orerepytyvõ, reñe'ẽme'ẽ ko'ã tembipuru rekoteére...",
     "title": "Tembipuru Jave Ñemboheko",
     "first_name": "Téra",
     "last_name": "Terajoapy",
@@ -286,7 +286,7 @@
     "subtitle": "Eñangareko ne marandu teete ha ñe'ẽ ñembohekóre"
   },
   "login": {
-    "title": "Eike WordsGo-pe",
+    "title": "Eike Synaply-pe",
     "email": "Email",
     "password": "Ñe'ẽñemi",
     "sign_in": "Eike",
@@ -307,7 +307,7 @@
     "login": "Eike ko'ápe"
   },
   "help": {
-    "title": "Mba'éichapa eipuru WordsGo",
+    "title": "Mba'éichapa eipuru Synaply",
     "best_practice": {
       "title": "Mba'eapoporã Tenonde hag̃ua",
       "strategy_desc": "Ñemoarandu porãve hag̃ua, rorekomenda ko estrategia simple 3 mbytepýpe:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Eñepyrũ hag̃ua",
-      "desc": "WordsGo ha'e peteĩ tembipuru mbaretéva oñemopyendáva nepytyvõ hag̃ua embotuicha ne ñe'ẽndy ha emoporã ne ñe'ẽ kuaapy spaced repetition ha inteligencia artificial rupive.",
+      "desc": "Synaply ha'e peteĩ tembipuru mbaretéva oñemopyendáva nepytyvõ hag̃ua embotuicha ne ñe'ẽndy ha emoporã ne ñe'ẽ kuaapy spaced repetition ha inteligencia artificial rupive.",
       "step1_title": "Mbytepy 1: Moĩ Ñe'ẽnguéra",
       "step1_desc": "Emoĩ ñe'ẽnguéra ne mba'eteete térã eipuru AI ejapo hag̃ua rysýi mbo'e ha nivel rupive.",
       "step2_title": "Mbytepy 2: Ñeha'ã Ára ha Árape",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo oipuru FSRS (Free Spaced Repetition Scheduler) algoritmo oipapa hag̃ua aravo porãite rehechajey hag̃ua opaite ñe'ẽ.",
+      "desc": "Synaply oipuru FSRS (Free Spaced Repetition Scheduler) algoritmo oipapa hag̃ua aravo porãite rehechajey hag̃ua opaite ñe'ẽ.",
       "process_title": "Jehechajey Rekove",
       "step1": "Ojehechauka ndéve peteĩ ñe'ẽ upe ñe'ẽ teetégui.",
       "step2": "Emoinge mbohasa ha eipyasã <strong>Enter</strong> térã <strong>Ehecha Mbohovái</strong>.",

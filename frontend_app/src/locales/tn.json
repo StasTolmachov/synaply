@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Ithute tlotlotšhoko ka AI le Poeletšo e Katologantšwego",
+    "title": "Synaply - Ithute tlotlotšhoko ka AI le Poeletšo e Katologantšwego",
     "description": "Tokafatša bokgoni bja gago bja polelo ka poeletšo e katologantšwego e hlohleleditšwego ke AI. Hlama malokelelo a mantšu a gago goba o ithute go tšwa go malokelelo a phatlalatša ao a abelanwago ke setšhaba.",
     "keywords": "ithute seisemane, poeletšo e katologantšwego, seagi sa tlotlotšhoko, dikarata tša go ithuta, go ithuta polelo ka AI, malokelelo a mantšu, lenaneo la thuto ya polelo, ithute sespania, ithute sefora, ithute sejeremane, bokgoni bja polelo, gopola mantšu, go ithuta ka SRS",
-    "og_title": "WordsGo - Thuto ya Tlotlotšhoko e bohlale",
+    "og_title": "Synaply - Thuto ya Tlotlotšhoko e bohlale",
     "og_description": "Tokafatša bokgoni bja gago bja polelo ka poeletšo e katologantšwego e hlohleleditšwego ke AI. Ithute ka lebelo, o gopole nako e teletšana.",
-    "og_image_alt": "Sešupatsela sa Lenaneo la Thuto ya Polelo la WordsGo AI",
-    "twitter_title": "WordsGo - Ithute Mantšu a Mafsa ntle le boiteko",
-    "twitter_description": "Ikopolanye le WordsGo go katološa tlotlotšhoko ya gago o diriša poeletšo e katologantšwego e bohlale le AI."
+    "og_image_alt": "Sešupatsela sa Lenaneo la Thuto ya Polelo la Synaply AI",
+    "twitter_title": "Synaply - Ithute Mantšu a Mafsa ntle le boiteko",
+    "twitter_description": "Ikopolanye le Synaply go katološa tlotlotšhoko ya gago o diriša poeletšo e katologantšwego e bohlale le AI."
   },
   "landing": {
     "public_lists": "Malokelelo a Phatlalatša",
@@ -144,10 +144,10 @@
     "support_title": "Thekga Phrotšheke",
     "support_desc": "Ge o rata lenaneo le, o ka thekga tšwelopele ya lona.",
     "onboarding": {
-      "welcome": "O amogetšwe go WordsGo!",
+      "welcome": "O amogetšwe go Synaply!",
       "journey_begins": "Leeto la gago la go ba setswiri sa polelo le thoma mo.",
       "best_practice": "Tsela ye e Botse kudu ya Katlego",
-      "strategy_desc": "Go hwetša tše dintši go tšwa go WordsGo, re go eletša go diriša leano le le bonolo le:",
+      "strategy_desc": "Go hwetša tše dintši go tšwa go Synaply, re go eletša go diriša leano le le bonolo le:",
       "step1_title": "Tsepamiša maikutlo go Sehlogo",
       "step1_desc": "Oketša mantšu a ka bago <strong>a 100</strong> ao a amanago le sehlogo se tee (mohlala, Kgwebo goba Maeto) go aga mooko o matla.",
       "step2_title": "Dipoeletšo tša Tšatši le tšatši",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Melao ya Tirelo",
-    "terms_welcome": "O amogetšwe go WordsGo. Ka go diriša ditirelo tša rena, o dumalana le melao ye...",
+    "terms_welcome": "O amogetšwe go Synaply. Ka go diriša ditirelo tša rena, o dumalana le melao ye...",
     "title": "Peakanyo ya Phrofaele",
     "first_name": "Leina",
     "last_name": "Sefane",
@@ -286,7 +286,7 @@
     "subtitle": "Laola tshedimošo ya gago le peakanyo ya polelo"
   },
   "login": {
-    "title": "Tsena go wordsGo",
+    "title": "Tsena go synaply",
     "email": "Aterese ya Imeile",
     "password": "Sephiri",
     "sign_in": "Tsena",
@@ -307,7 +307,7 @@
     "login": "Tsena mo"
   },
   "help": {
-    "title": "Tsela ya go diriša WordsGo",
+    "title": "Tsela ya go diriša Synaply",
     "best_practice": {
       "title": "Tsela ye e Botse kudu ya Katlego",
       "strategy_desc": "Bakeng sa boitemogelo bja go ithuta bja maleba, re go eletša go diriša leano le le bonolo la dikgato tše 3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Go Thoma",
-      "desc": "WordsGo ke sedirišwa se matla seo se hlametšwego go go thuša go katološa tlotlotšhoko ya gago le go tokafatša bokgoni bja gago bja polelo o diriša poeletšo e katologantšwego le bohlale bja go itirela.",
+      "desc": "Synaply ke sedirišwa se matla seo se hlametšwego go go thuša go katološa tlotlotšhoko ya gago le go tokafatša bokgoni bja gago bja polelo o diriša poeletšo e katologantšwego le bohlale bja go itirela.",
       "step1_title": "Kgato ya 1: Oketša Mantšu",
       "step1_desc": "Oketša mantšu ka gago goba o diriše AI go hlama malokelelo go ya ka dihlogo le maemo.",
       "step2_title": "Kgato ya 2: Tšhidullo ya Tšatši le tšatši",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Poeletšo e Katologantšwego",
-      "desc": "WordsGo e diriša algorithm ya FSRS (Free Spaced Repetition Scheduler) go balela nako ye e botse ya go boeletša lentšu le lengwe le le lengwe.",
+      "desc": "Synaply e diriša algorithm ya FSRS (Free Spaced Repetition Scheduler) go balela nako ye e botse ya go boeletša lentšu le lengwe le le lengwe.",
       "process_title": "Tshepedišo ya Poeletšo",
       "step1": "O bontšhwa lentšu ka polelo ya mathomo.",
       "step2": "Tsenya phetolelo gomme o kgotle <strong>Enter</strong> goba <strong>Hlahloba Karabo</strong>.",

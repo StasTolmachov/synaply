@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Learn Vocabulary with AI & Spaced Repetition",
+    "title": "Synaply - Learn Vocabulary with AI & Spaced Repetition",
     "description": "Boost your language skills with AI-powered spaced repetition. Create custom word lists or learn from community-shared public lists.",
     "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, learn spanish, learn french, learn german, language proficiency, memorize words, SRS learning",
-    "og_title": "WordsGo - Smart Vocabulary Learning",
+    "og_title": "Synaply - Smart Vocabulary Learning",
     "og_description": "Boost your language skills with AI-powered spaced repetition. Learn faster, remember longer.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Learn New Words Effortlessly",
-    "twitter_description": "Join WordsGo to expand your vocabulary using smart spaced repetition and AI."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Learn New Words Effortlessly",
+    "twitter_description": "Join Synaply to expand your vocabulary using smart spaced repetition and AI."
   },
   "landing": {
     "public_lists": "Public Lists",
@@ -144,10 +144,10 @@
     "support_title": "Support the Project",
     "support_desc": "If you like this app, you can support its development.",
     "onboarding": {
-      "welcome": "Welcome to WordsGo!",
+      "welcome": "Welcome to Synaply!",
       "journey_begins": "Your journey to language mastery begins here.",
       "best_practice": "Best Practice for Success",
-      "strategy_desc": "To get the most out of WordsGo, we recommend this simple strategy:",
+      "strategy_desc": "To get the most out of Synaply, we recommend this simple strategy:",
       "step1_title": "Focus on a Topic",
       "step1_desc": "Add about <strong>100 words</strong> related to a single topic (e.g., Business or Travel) to build strong context.",
       "step2_title": "Daily Reviews",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Terms of Service",
-    "terms_welcome": "Welcome to WordsGo. By using our services, you agree to these terms...",
+    "terms_welcome": "Welcome to Synaply. By using our services, you agree to these terms...",
     "title": "Profile Settings",
     "first_name": "First Name",
     "last_name": "Last Name",
@@ -286,7 +286,7 @@
     "subtitle": "Manage your personal information and language settings"
   },
   "login": {
-    "title": "Sign in to wordsGo",
+    "title": "Sign in to synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Sign in",
@@ -307,7 +307,7 @@
     "login": "Login here"
   },
   "help": {
-    "title": "How to use WordsGo",
+    "title": "How to use Synaply",
     "best_practice": {
       "title": "Best Practice for Success",
       "strategy_desc": "For the most effective learning experience, we recommend this simple 3-step strategy:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Getting Started",
-      "desc": "WordsGo is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
+      "desc": "Synaply is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
       "step1_title": "Step 1: Add Words",
       "step1_desc": "Add words manually or use AI to generate lists by topics and levels.",
       "step2_title": "Step 2: Daily Practice",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
+      "desc": "Synaply uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
       "process_title": "Review Process",
       "step1": "You are shown a word in the source language.",
       "step2": "Enter the translation and press <strong>Enter</strong> or <strong>Check Answer</strong>.",

@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Aprender vocabulario con IA y repetición espaciada",
+    "title": "Synaply - Aprender vocabulario con IA y repetición espaciada",
     "description": "Millora as tuyas habilidatz lingüisticas con a repetición espaciada empentada por IA. Crea listas de parolas personalizadas o aprende de listas publicas compartidas por a comunidat.",
     "keywords": "aprender anglés, repetición espaciada, constructor de vocabulario, flashcards, aprendizache de luengas con IA, listas de parolas, aplicación d'estudio de luengas, aprender castellano, aprender francés, aprender alemán, competencia lingüistica, memorizar parolas, aprendizache SRS",
-    "og_title": "WordsGo - Aprendizache intelichent de vocabulario",
+    "og_title": "Synaply - Aprendizache intelichent de vocabulario",
     "og_description": "Millora as tuyas habilidatz lingüisticas con a repetición espaciada empentada por IA. Aprende más rápido, recuerda mientres más tiempo.",
-    "og_image_alt": "Interfaz de l'aplicación d'aprendizache de luengas WordsGo AI",
-    "twitter_title": "WordsGo - Aprende nuevas parolas sin esforzo",
-    "twitter_description": "Une-te a WordsGo pa enamplar o tuyo vocabulario fendo servir a repetición espaciada intelichent y a IA."
+    "og_image_alt": "Interfaz de l'aplicación d'aprendizache de luengas Synaply AI",
+    "twitter_title": "Synaply - Aprende nuevas parolas sin esforzo",
+    "twitter_description": "Une-te a Synaply pa enamplar o tuyo vocabulario fendo servir a repetición espaciada intelichent y a IA."
   },
   "landing": {
     "public_lists": "Listas publicas",
@@ -144,10 +144,10 @@
     "support_title": "Apoya o prochecto",
     "support_desc": "Si te fa goyo ista aplicación, puedes apoyar o suyo desenvuelve.",
     "onboarding": {
-      "welcome": "¡Bienveniu a WordsGo!",
+      "welcome": "¡Bienveniu a Synaply!",
       "journey_begins": "O tuyo viache enta o dominio d'a luenga comienza aquí.",
       "best_practice": "Millors practicas pa l'exito",
-      "strategy_desc": "Pa sacar o maximo partiu a WordsGo, te recomendamos ista estratechia simpla:",
+      "strategy_desc": "Pa sacar o maximo partiu a Synaply, te recomendamos ista estratechia simpla:",
       "step1_title": "Centra-te en un tema",
       "step1_desc": "Adhibe arredol de <strong>100 parolas</strong> relacionadas con un solo tema (p. ex., Negocios u Viaches) pa creyar un contexto fuerte.",
       "step2_title": "Revisions diarias",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Termins de servicio",
-    "terms_welcome": "Bienveniu a WordsGo. En fer servir os nuestros servicios, aceptas istos termins...",
+    "terms_welcome": "Bienveniu a Synaply. En fer servir os nuestros servicios, aceptas istos termins...",
     "title": "Configuración d'o perfil",
     "first_name": "Nombre",
     "last_name": "Apellius",
@@ -286,7 +286,7 @@
     "subtitle": "Chestiona a tuya información personal y a configuración d'as luengas"
   },
   "login": {
-    "title": "Iniciar sesión en wordsGo",
+    "title": "Iniciar sesión en synaply",
     "email": "Correu electronico",
     "password": "Clau",
     "sign_in": "Iniciar sesión",
@@ -307,7 +307,7 @@
     "login": "Inicia sesión aquí"
   },
   "help": {
-    "title": "Cómo fer servir WordsGo",
+    "title": "Cómo fer servir Synaply",
     "best_practice": {
       "title": "Millors practicas pa l'exito",
       "strategy_desc": "Pa la experiencia d'aprendizache más efectiva, te recomendamos ista estratechia simpla de 3 pasos:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Primeros pasos",
-      "desc": "WordsGo ye una ferramienta poderosa diseñada pa aduyar-te a enamplar o tuyo vocabulario y millorar as tuyas habilidatz lingüisticas fendo servir a repetición espaciada y a intelichencia artificial.",
+      "desc": "Synaply ye una ferramienta poderosa diseñada pa aduyar-te a enamplar o tuyo vocabulario y millorar as tuyas habilidatz lingüisticas fendo servir a repetición espaciada y a intelichencia artificial.",
       "step1_title": "Paso 1: Adhibir parolas",
       "step1_desc": "Adhibe parolas manualment u fer servir a IA pa chenerar listas por temas y nivels.",
       "step2_title": "Paso 2: Practica diaria",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetición espaciada",
-      "desc": "WordsGo fa servir l'algoritmo FSRS (Free Spaced Repetition Scheduler) pa calcular o momento ideal pa repetir cada parola.",
+      "desc": "Synaply fa servir l'algoritmo FSRS (Free Spaced Repetition Scheduler) pa calcular o momento ideal pa repetir cada parola.",
       "process_title": "Proceso de revisión",
       "step1": "Se t'amuestra una parola en a luenga d'orichen.",
       "step2": "Escribe a traducción y pulsa <strong>Enter</strong> u <strong>Comprebar respuesta</strong>.",

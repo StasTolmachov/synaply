@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Aprann Vokabilè ak AI & Repetisyon Espase",
+    "title": "Synaply - Aprann Vokabilè ak AI & Repetisyon Espase",
     "description": "Amelyore konpetans lang ou ak repetisyon espase ki mache ak AI. Kreye lis mo koutim oswa aprann nan lis piblik kominote a pataje.",
     "keywords": "aprann anglè, repetisyon espase, bati vokabilè, flashcards, aprantisaj lang AI, lis mo, aplikasyon etid lang, aprann panyòl, aprann franse, aprann alman, konpetans nan lang, memorize mo, aprantisaj SRS",
-    "og_title": "WordsGo - Aprantisaj Vokabilè Entelijan",
+    "og_title": "Synaply - Aprantisaj Vokabilè Entelijan",
     "og_description": "Amelyore konpetans lang ou ak repetisyon espase ki mache ak AI. Aprann pi vit, sonje pi lontan.",
-    "og_image_alt": "Entèfas Aplikasyon Aprantisaj Lang WordsGo AI",
-    "twitter_title": "WordsGo - Aprann Nouvo Mo san Efò",
-    "twitter_description": "Rejwenn WordsGo pou elaji vokabilè ou lè l sèvi avèk repetisyon espase entelijan ak AI."
+    "og_image_alt": "Entèfas Aplikasyon Aprantisaj Lang Synaply AI",
+    "twitter_title": "Synaply - Aprann Nouvo Mo san Efò",
+    "twitter_description": "Rejwenn Synaply pou elaji vokabilè ou lè l sèvi avèk repetisyon espase entelijan ak AI."
   },
   "landing": {
     "public_lists": "Lis Piblik",
@@ -144,10 +144,10 @@
     "support_title": "Sipòte Pwojè a",
     "support_desc": "Si ou renmen aplikasyon sa a, ou ka sipòte devlopman li.",
     "onboarding": {
-      "welcome": "Byenveni nan WordsGo!",
+      "welcome": "Byenveni nan Synaply!",
       "journey_begins": "Vwayaj ou nan metriz lang kòmanse isit la.",
       "best_practice": "Pi bon Pratik pou Siksè",
-      "strategy_desc": "Pou jwenn pi plis nan WordsGo, nou rekòmande estrateji senp sa a:",
+      "strategy_desc": "Pou jwenn pi plis nan Synaply, nou rekòmande estrateji senp sa a:",
       "step1_title": "Konsantre sou yon Sijè",
       "step1_desc": "Ajoute apeprè <strong>100 mo</strong> ki gen rapò ak yon sèl sijè (egz. Biznis oswa Vwayaj) pou bati yon kontèks solid.",
       "step2_title": "Revizyon Chak Jou",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Kondisyon Itilizasyon",
-    "terms_welcome": "Byenveni nan WordsGo. Lè w sèvi ak sèvis nou yo, ou dakò ak kondisyon sa yo...",
+    "terms_welcome": "Byenveni nan Synaply. Lè w sèvi ak sèvis nou yo, ou dakò ak kondisyon sa yo...",
     "title": "Anviwònman Pwofil",
     "first_name": "Prenon",
     "last_name": "Siyati",
@@ -286,7 +286,7 @@
     "subtitle": "Manje enfòmasyon pèsonèl ou ak anviwònman lang ou"
   },
   "login": {
-    "title": "Konekte nan wordsGo",
+    "title": "Konekte nan synaply",
     "email": "Adrès imèl",
     "password": "Modpas",
     "sign_in": "Konekte",
@@ -307,7 +307,7 @@
     "login": "Konekte isit la"
   },
   "help": {
-    "title": "Kijan pou itilize WordsGo",
+    "title": "Kijan pou itilize Synaply",
     "best_practice": {
       "title": "Pi bon Pratik pou Siksè",
       "strategy_desc": "Pou eksperyans aprantisaj ki pi efikas, nou rekòmande estrateji senp 3-etap sa a:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kòmanse",
-      "desc": "WordsGo se yon zouti pwisan ki fèt pou ede w elaji vokabilè w ak amelyore konpetans lang ou lè w sèvi ak repetisyon espase ak entèlijans atifisyèl.",
+      "desc": "Synaply se yon zouti pwisan ki fèt pou ede w elaji vokabilè w ak amelyore konpetans lang ou lè w sèvi ak repetisyon espase ak entèlijans atifisyèl.",
       "step1_title": "Etap 1: Ajoute Mo",
       "step1_desc": "Ajoute mo manyèlman oswa itilize AI pou jenere lis pa sijè ak nivo.",
       "step2_title": "Etap 2: Pratik Chak Jou",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetisyon Espase",
-      "desc": "WordsGo sèvi ak algorithm FSRS (Free Spaced Repetition Scheduler) pou kalkile tan ideyal pou repete cada mo.",
+      "desc": "Synaply sèvi ak algorithm FSRS (Free Spaced Repetition Scheduler) pou kalkile tan ideyal pou repete cada mo.",
       "process_title": "Pwosesis Revizyon",
       "step1": "Yo montre w yon mo nan lang sous la.",
       "step2": "Antre tradiksyon an epi peze <strong>Enter</strong> oswa <strong>Verifye Repons</strong>.",

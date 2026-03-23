@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Mësoni Fjalorin me AI dhe Përsëritjen e Hapësiruar",
+    "title": "Synaply - Mësoni Fjalorin me AI dhe Përsëritjen e Hapësiruar",
     "description": "Përmirësoni aftësitë tuaja gjuhësore me përsëritjen e hapësiruar të fuqizuar nga AI. Krijoni lista fjalësh të personalizuara ose mësoni nga listat publike të ndara nga komuniteti.",
     "keywords": "mëso anglisht, përsëritje e hapësiruar, ndërtues fjalori, flashcards, mësimi i gjuhës me AI, lista fjalësh, aplikacion për studimin e gjuhës, mëso spanjisht, mëso frëngjisht, mëso gjermanisht, rrjedhshmëri gjuhësore, memorizo fjalë, mësimi SRS",
-    "og_title": "WordsGo - Mësimi i Mençur i Fjalorit",
+    "og_title": "Synaply - Mësimi i Mençur i Fjalorit",
     "og_description": "Përmirësoni aftësitë tuaja gjuhësore me përsëritjen e hapësiruar të fuqizuar nga AI. Mësoni më shpejt, mbani mend më gjatë.",
-    "og_image_alt": "Ndërfaqja e Aplikacionit të Mësimit të Gjuhës WordsGo AI",
-    "twitter_title": "WordsGo - Mësoni Fjalë të Reja pa Mundim",
-    "twitter_description": "Bashkohuni me WordsGo për të zgjeruar fjalorin tuaj duke përdorur përsëritjen e mençur të hapësiruar dhe AI."
+    "og_image_alt": "Ndërfaqja e Aplikacionit të Mësimit të Gjuhës Synaply AI",
+    "twitter_title": "Synaply - Mësoni Fjalë të Reja pa Mundim",
+    "twitter_description": "Bashkohuni me Synaply për të zgjeruar fjalorin tuaj duke përdorur përsëritjen e mençur të hapësiruar dhe AI."
   },
   "landing": {
     "public_lists": "Listat Publike",
@@ -144,10 +144,10 @@
     "support_title": "Mbështeteni Projektin",
     "support_desc": "Nëse ju pëlqen ky aplikacion, mund të mbështesni zhvillimin e tij.",
     "onboarding": {
-      "welcome": "Mirësevini në WordsGo!",
+      "welcome": "Mirësevini në Synaply!",
       "journey_begins": "Udhëtimi juaj drejt zotërimit të gjuhës fillon këtu.",
       "best_practice": "Praktika më e mirë për sukses",
-      "strategy_desc": "Për të përfituar sa më shumë nga WordsGo, ne rekomandojmë këtë strategji të thjeshtë:",
+      "strategy_desc": "Për të përfituar sa më shumë nga Synaply, ne rekomandojmë këtë strategji të thjeshtë:",
       "step1_title": "Fokusohuni në një temë",
       "step1_desc": "Shtoni rreth <strong>100 fjalë</strong> lidhur me një temë të vetme (p.sh., Biznes ose Udhëtim) për të ndërtuar një kontekst të fortë.",
       "step2_title": "Rishikime ditore",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Kushtet e Shërbimit",
-    "terms_welcome": "Mirësevini në WordsGo. Duke përdorur shërbimet tona, ju pranoni këto kushte...",
+    "terms_welcome": "Mirësevini në Synaply. Duke përdorur shërbimet tona, ju pranoni këto kushte...",
     "title": "Cilësimet e Profilit",
     "first_name": "Emri",
     "last_name": "Mbiemri",
@@ -286,7 +286,7 @@
     "subtitle": "Menaxhoni informacionin tuaj personal dhe cilësimet e gjuhës"
   },
   "login": {
-    "title": "Identifikohuni në wordsGo",
+    "title": "Identifikohuni në synaply",
     "email": "Adresa e email-it",
     "password": "Fjalëkalimi",
     "sign_in": "Identifikohu",
@@ -307,7 +307,7 @@
     "login": "Identifikohuni këtu"
   },
   "help": {
-    "title": "Si të përdorni WordsGo",
+    "title": "Si të përdorni Synaply",
     "best_practice": {
       "title": "Praktika më e mirë për sukses",
       "strategy_desc": "Për përvojën më efektive të mësimit, ne rekomandojmë këtë strategji të thjeshtë me 3 hapa:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Fillimi",
-      "desc": "WordsGo është një mjet i fuqishëm i krijuar për t'ju ndihmuar të zgjeroni fjalorin tuaj dhe të përmirësoni aftësitë tuaja gjuhësore duke përdorur përsëritjen e hapësiruar dhe inteligjencën artificiale.",
+      "desc": "Synaply është një mjet i fuqishëm i krijuar për t'ju ndihmuar të zgjeroni fjalorin tuaj dhe të përmirësoni aftësitë tuaja gjuhësore duke përdorur përsëritjen e hapësiruar dhe inteligjencën artificiale.",
       "step1_title": "Hapi 1: Shtoni Fjalë",
       "step1_desc": "Shtoni fjalë manualisht ose përdorni AI për të gjeneruar lista sipas temave dhe niveleve.",
       "step2_title": "Hapi 2: Praktika Ditore",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Përsëritja e Hapësiruar",
-      "desc": "WordsGo përdor algoritmin FSRS (Free Spaced Repetition Scheduler) për të llogaritur kohën ideale për të përsëritur çdo fjalë.",
+      "desc": "Synaply përdor algoritmin FSRS (Free Spaced Repetition Scheduler) për të llogaritur kohën ideale për të përsëritur çdo fjalë.",
       "process_title": "Procesi i Rishikimit",
       "step1": "Ju shfaqet një fjalë në gjuhën burimore.",
       "step2": "Vendosni përkthimin dhe shtypni <strong>Enter</strong> ose <strong>Kontrollo Përgjigjen</strong>.",

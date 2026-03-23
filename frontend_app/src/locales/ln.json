@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Koyekola mongongo na AI mpe Bokundoli na ndelo",
+    "title": "Synaply - Koyekola mongongo na AI mpe Bokundoli na ndelo",
     "description": "Bakisa mayele na yo ya lokota na lisalisi ya bokundoli na ndelo oyo ezali na nguya ya AI. Kela milongo ya maloba na yo moko to yekola na milongo ya bato nionso oyo ekabolami.",
     "keywords": "koyekola lingelesi, bokundoli na ndelo, kotonga mongongo, ba flashcards, koyekola lokota na AI, milongo ya maloba, app ya koyekola lokota, koyekola espagnol, koyekola français, koyekola allemand, boyekoli ya lokota, kokanga maloba na motó, boyekoli ya SRS",
-    "og_title": "WordsGo - Boyekoli ya mayele ya maloba",
+    "og_title": "Synaply - Boyekoli ya mayele ya maloba",
     "og_description": "Bakisa mayele na yo ya lokota na lisalisi ya bokundoli na ndelo oyo ezali na nguya ya AI. Yekola noki, kobosana te mpo na ntango molai.",
-    "og_image_alt": "Interface ya App ya koyekola lokota ya WordsGo AI",
-    "twitter_title": "WordsGo - Yekola maloba ya sika kozanga mpasi",
-    "twitter_description": "Join WordsGo mpo na koyeba maloba ebele na kosalelaka bokundoli ya mayele mpe AI."
+    "og_image_alt": "Interface ya App ya koyekola lokota ya Synaply AI",
+    "twitter_title": "Synaply - Yekola maloba ya sika kozanga mpasi",
+    "twitter_description": "Join Synaply mpo na koyeba maloba ebele na kosalelaka bokundoli ya mayele mpe AI."
   },
   "landing": {
     "public_lists": "Milongo ya bato nionso",
@@ -144,10 +144,10 @@
     "support_title": "Sunga projet",
     "support_desc": "Soki olingi app oyo, okoki kusunga bokende na yango.",
     "onboarding": {
-      "welcome": "Boyei malamu na WordsGo!",
+      "welcome": "Boyei malamu na Synaply!",
       "journey_begins": "Mobembo na yo mpo na boyebi ya lokota ebandi awa.",
       "best_practice": "Mayele mpo na kolonga",
-      "strategy_desc": "Mpo na kozwa litomba mingi na WordsGo, tokopesa yo mibeko oyo ya pete:",
+      "strategy_desc": "Mpo na kozwa litomba mingi na Synaply, tokopesa yo mibeko oyo ya pete:",
       "step1_title": "Tyá likebi na likambo moko",
       "step1_desc": "Bakisa soki <strong>maloba 100</strong> oyo etali likambo moko (ndakisa: Mombongo to Mibembo) mpo na kotonga contexte ya makasi.",
       "step2_title": "Kozongela mokolo na mokolo",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Mibeko ya mosala",
-    "terms_welcome": "Boyei malamu na WordsGo. Na kosalelaka misala na biso, ozali kondima mibeko oyo...",
+    "terms_welcome": "Boyei malamu na Synaply. Na kosalelaka misala na biso, ozali kondima mibeko oyo...",
     "title": "Bobongisi ya Profil",
     "first_name": "Nkombo ya liboso",
     "last_name": "Nkombo ya nsuka",
@@ -286,7 +286,7 @@
     "subtitle": "Kamba makambo na yo mpe bobongisi ya nkota"
   },
   "login": {
-    "title": "Kota na wordsGo",
+    "title": "Kota na synaply",
     "email": "Adresse Email",
     "password": "Mot de passe",
     "sign_in": "Kota",
@@ -307,7 +307,7 @@
     "login": "Kota awa"
   },
   "help": {
-    "title": "Ndenge ya kosalela WordsGo",
+    "title": "Ndenge ya kosalela Synaply",
     "best_practice": {
       "title": "Mayele mpo na kolonga",
       "strategy_desc": "Mpo na boyekoli ya malamu mpenza, tokopesa yo mibeko oyo ya pete na biteni 3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ebandeli",
-      "desc": "WordsGo ezali esaleli ya nguya oyo esalemi mpo na kosalisa yo oyeba maloba mingi mpe obongisa mayele na yo ya lokota na kosalelaka bokundoli na ndelo mpe intelligence artificielle.",
+      "desc": "Synaply ezali esaleli ya nguya oyo esalemi mpo na kosalisa yo oyeba maloba mingi mpe obongisa mayele na yo ya lokota na kosalelaka bokundoli na ndelo mpe intelligence artificielle.",
       "step1_title": "Eteni 1: Bakisa Maloba",
       "step1_desc": "Bakisa maloba na maboko to salela AI mpo na kokela milongo kotalela likambo mpe niveau.",
       "step2_title": "Eteni 2: Mekano ya mokolo na mokolo",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Bokundoli na ndelo",
-      "desc": "WordsGo esalelaka algo FSRS (Free Spaced Repetition Scheduler) mpo na kotala ntango ya malamu ya kozongela liloba mokomoko.",
+      "desc": "Synaply esalelaka algo FSRS (Free Spaced Repetition Scheduler) mpo na kotala ntango ya malamu ya kozongela liloba mokomoko.",
       "process_title": "Ndenge ya kozongela",
       "step1": "Balakisi yo liloba moko na lokota ya ebandeli.",
       "step2": "Komá libongoli mpe finá <strong>Enter</strong> to <strong>Tala eyano</strong>.",

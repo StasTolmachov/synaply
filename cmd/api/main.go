@@ -3,12 +3,12 @@ package main
 import (
 	"log"
 
-	"wordsGo_v2/internal/config"
-	"wordsGo_v2/internal/server"
-	"wordsGo_v2/slogger"
+	"synaply_v2/internal/config"
+	"synaply_v2/internal/server"
+	"synaply_v2/slogger"
 )
 
-// @title WordsGo API
+// @title Synaply API
 // @version 1.1
 // @description AI-Powered Language Learning Platform API
 

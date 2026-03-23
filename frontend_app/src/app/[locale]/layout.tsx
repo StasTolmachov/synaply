@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
@@ -52,24 +52,29 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('title'),
     description: t('description'),
     keywords: t('keywords').split(','),
-    authors: [{ name: "WordsGo Team" }],
+    authors: [{ name: "Synaply Team" }],
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://synaply.me'),
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
-      title: "WordsGo",
+      title: "Synaply",
     },
     formatDetection: {
       telephone: false,
     },
     icons: {
-      apple: "/apple-icon.png",
+      icon: [
+        { url: "/favicon.ico?v=2", type: "image/x-icon" },
+        { url: "/favicon.png?v=2", type: "image/png" },
+        { url: "/favicon.png?v=2", type: "image/png", rel: "shortcut icon" }
+      ],
+      apple: "/apple-icon.png?v=2",
     },
     openGraph: {
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
       url: `${baseUrl}/${locale}`,
-      siteName: "WordsGo",
+      siteName: "Synaply",
       locale: ogLocales[locale] || locale,
       type: "website",
       images: [
@@ -77,7 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: "/opengraph-image.png",
           width: 1200,
           height: 630,
-          alt: t('og_image_alt') || "WordsGo AI Language Learning",
+          alt: t('og_image_alt') || "Synaply AI Language Learning",
         },
       ],
     },
@@ -85,7 +90,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: t('twitter_title') || t('title'),
       description: t('twitter_description') || t('description'),
-      creator: "@WordsGoTeam",
+      creator: "@SynaplyTeam",
       images: ["/opengraph-image.png"],
     },
     alternates: {
@@ -97,6 +102,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
   };
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
 
 export default async function RootLayout({
   children,
@@ -142,7 +157,9 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen`} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-synaply-light text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen relative`} suppressHydrationWarning>
+        <div className="fixed inset-0 bg-mesh -z-10" />
+        <div className="fixed inset-0 mesh-grid -z-10 opacity-60" />
         <ServiceWorkerRegister />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>

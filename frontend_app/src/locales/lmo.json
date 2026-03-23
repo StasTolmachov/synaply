@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Imparà i vocaboli cont l'IA e la Repetizzion Spazziada",
+    "title": "Synaply - Imparà i vocaboli cont l'IA e la Repetizzion Spazziada",
     "description": "Mejora i tò abilità lenguistegh cont la repetizzion spazziada potenziada de l'IA. Crea i tò liste de paròlle o impara de i liste publegh spartid de la comunità.",
     "keywords": "imparà l'ingles, repetizzion spazziada, costruttor de vocaboli, flashcards, apprendiment lenguistegh IA, liste de paròlle, app per studià i lengue, imparà l'ispagnol, imparà el frances, imparà el tedesch, competenza lenguistega, memorizzà i paròlle, apprendiment SRS",
-    "og_title": "WordsGo - Apprendiment de i Vocaboli Intelligent",
+    "og_title": "Synaply - Apprendiment de i Vocaboli Intelligent",
     "og_description": "Mejora i tò abilità lenguistegh cont la repetizzion spazziada potenziada de l'IA. Impara pussee in pressa, reguarda pussee a longh.",
-    "og_image_alt": "Interfaccia de l'App WordsGo per l'Apprendiment Lenguistegh IA",
-    "twitter_title": "WordsGo - Impara Paròlle Noeuve senza Sforz",
-    "twitter_description": "Unissess a WordsGo per slargà i tò vocaboli cont la repetizzion spazziada intelligent e l'IA."
+    "og_image_alt": "Interfaccia de l'App Synaply per l'Apprendiment Lenguistegh IA",
+    "twitter_title": "Synaply - Impara Paròlle Noeuve senza Sforz",
+    "twitter_description": "Unissess a Synaply per slargà i tò vocaboli cont la repetizzion spazziada intelligent e l'IA."
   },
   "landing": {
     "public_lists": "Liste Publegh",
@@ -144,10 +144,10 @@
     "support_title": "Sostegn el Progett",
     "support_desc": "Se te piass questa app, te poeudet sostegner el sò desvilup.",
     "onboarding": {
-      "welcome": "Benvegnud in WordsGo!",
+      "welcome": "Benvegnud in Synaply!",
       "journey_begins": "El tò viagg vers la padronanza de la lengua l'inizia chì.",
       "best_practice": "I Mejore Prategh per el Success",
-      "strategy_desc": "Per ottegnì el massim de WordsGo, te raccomandom questa strategia semplis:",
+      "strategy_desc": "Per ottegnì el massim de Synaply, te raccomandom questa strategia semplis:",
       "step1_title": "Concentrass sora un Argoment",
       "step1_desc": "Sgionta circa <strong>100 paròlle</strong> ligad a un unegh argoment (es. Affar o Viagg) per costruì un contest fort.",
       "step2_title": "Repass de tucc i dì",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Termin del Servizzi",
-    "terms_welcome": "Benvegnud in WordsGo. Cont el doprà i noster servizzi, te dait el consens a questi termin...",
+    "terms_welcome": "Benvegnud in Synaply. Cont el doprà i noster servizzi, te dait el consens a questi termin...",
     "title": "Configurazzion del Profil",
     "first_name": "Nom",
     "last_name": "Cognom",
@@ -286,7 +286,7 @@
     "subtitle": "Gestiss i tò informazzion personai e i impostazzion de la lengua"
   },
   "login": {
-    "title": "Entra in wordsGo",
+    "title": "Entra in synaply",
     "email": "Indirizz email",
     "password": "Password",
     "sign_in": "Entra",
@@ -307,7 +307,7 @@
     "login": "Login chì"
   },
   "help": {
-    "title": "Cumpù doprà WordsGo",
+    "title": "Cumpù doprà Synaply",
     "best_practice": {
       "title": "I Mejore Prategh per el Success",
       "strategy_desc": "Per l'esperenza de apprendiment pussee efficazza, te raccomandom questa strategia semplis in 3 passagg:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Iniziemm",
-      "desc": "WordsGo l'è un istrument potent desviluppad per aiutàt a slargà el tò vocabolarì e mejorà i tò abilità lenguistegh cont la doprà la repetizzion spazziada e l'intelligenza artificial.",
+      "desc": "Synaply l'è un istrument potent desviluppad per aiutàt a slargà el tò vocabolarì e mejorà i tò abilità lenguistegh cont la doprà la repetizzion spazziada e l'intelligenza artificial.",
       "step1_title": "Passagg 1: Sgionta Paròlle",
       "step1_desc": "Sgionta paròlle a man o dopra l'IA per generà liste per argoment e livell.",
       "step2_title": "Passagg 2: Pratega Quotidiana",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetizzion Spazziada",
-      "desc": "WordsGo el dopra l'algoritmo FSRS (Free Spaced Repetition Scheduler) per calcolà el temp ideal per repet ogni paròlla.",
+      "desc": "Synaply el dopra l'algoritmo FSRS (Free Spaced Repetition Scheduler) per calcolà el temp ideal per repet ogni paròlla.",
       "process_title": "Process de Repass",
       "step1": "Te vegnarà mostrada una paròlla in la lengua de partenza.",
       "step2": "Inseriss la traduzzion e schiscia <strong>Invio</strong> o <strong>Verifega Risposta</strong>.",

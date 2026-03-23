@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Învățați vocabularul cu AI și repetiție spațiată",
+    "title": "Synaply - Învățați vocabularul cu AI și repetiție spațiată",
     "description": "Îmbunătățiți-vă abilitățile lingvistice cu repetiție spațiată susținută de AI. Creați liste de cuvinte personalizate sau învățați din listele publice partajate de comunitate.",
     "keywords": "învățare engleză, repetiție spațiată, constructor vocabular, flashcards, învățare limbi AI, liste de cuvinte, aplicație studiu limbi, învățare spaniolă, învățare franceză, învățare germană, competență lingvistică, memorare cuvinte, învățare SRS",
-    "og_title": "WordsGo - Învățare inteligentă a vocabularului",
+    "og_title": "Synaply - Învățare inteligentă a vocabularului",
     "og_description": "Îmbunătățiți-vă abilitățile lingvistice cu repetiție spațiată susținută de AI. Învățați mai repede, rețineți mai mult timp.",
-    "og_image_alt": "Interfața aplicației WordsGo AI pentru învățarea limbilor",
-    "twitter_title": "WordsGo - Învățați cuvinte noi fără efort",
-    "twitter_description": "Alăturați-vă WordsGo pentru a vă extinde vocabularul folosind repetiția spațiată inteligentă și AI."
+    "og_image_alt": "Interfața aplicației Synaply AI pentru învățarea limbilor",
+    "twitter_title": "Synaply - Învățați cuvinte noi fără efort",
+    "twitter_description": "Alăturați-vă Synaply pentru a vă extinde vocabularul folosind repetiția spațiată inteligentă și AI."
   },
   "landing": {
     "public_lists": "Liste publice",
@@ -144,10 +144,10 @@
     "support_title": "Susțineți proiectul",
     "support_desc": "Dacă vă place această aplicație, puteți susține dezvoltarea ei.",
     "onboarding": {
-      "welcome": "Bun venit la WordsGo!",
+      "welcome": "Bun venit la Synaply!",
       "journey_begins": "Călătoria ta către stăpânirea limbii începe aici.",
       "best_practice": "Cele mai bune practici pentru succes",
-      "strategy_desc": "Pentru a profita la maximum de WordsGo, recomandăm această strategie simplă:",
+      "strategy_desc": "Pentru a profita la maximum de Synaply, recomandăm această strategie simplă:",
       "step1_title": "Concentrează-te pe un subiect",
       "step1_desc": "Adaugă aproximativ <strong>100 de cuvinte</strong> legate de un singur subiect (ex. Afaceri sau Călătorii) pentru a construi un context solid.",
       "step2_title": "Recapitulări zilnice",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Termeni și condiții",
-    "terms_welcome": "Bun venit la WordsGo. Prin utilizarea serviciilor noastre, sunteți de acord cu acești termeni...",
+    "terms_welcome": "Bun venit la Synaply. Prin utilizarea serviciilor noastre, sunteți de acord cu acești termeni...",
     "title": "Setări profil",
     "first_name": "Prenume",
     "last_name": "Nume",
@@ -286,7 +286,7 @@
     "subtitle": "Gestionați informațiile personale și setările de limbă"
   },
   "login": {
-    "title": "Autentificare în wordsGo",
+    "title": "Autentificare în synaply",
     "email": "Adresă de email",
     "password": "Parolă",
     "sign_in": "Autentificare",
@@ -307,7 +307,7 @@
     "login": "Autentificați-vă aici"
   },
   "help": {
-    "title": "Cum se folosește WordsGo",
+    "title": "Cum se folosește Synaply",
     "best_practice": {
       "title": "Cele mai bune practici pentru succes",
       "strategy_desc": "Pentru cea mai eficientă experiență de învățare, recomandăm această strategie simplă în 3 pași:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Noțiuni introductive",
-      "desc": "WordsGo este un instrument puternic conceput pentru a vă ajuta să vă extindeți vocabularul și să vă îmbunătățiți abilitățile lingvistice folosind repetiția spațiată și inteligența artificială.",
+      "desc": "Synaply este un instrument puternic conceput pentru a vă ajuta să vă extindeți vocabularul și să vă îmbunătățiți abilitățile lingvistice folosind repetiția spațiată și inteligența artificială.",
       "step1_title": "Pasul 1: Adăugați cuvinte",
       "step1_desc": "Adăugați cuvinte manual sau folosiți AI pentru a genera liste pe subiecte și niveluri.",
       "step2_title": "Pasul 2: Practica zilnică",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetiție spațiată",
-      "desc": "WordsGo folosește algoritmul FSRS (Free Spaced Repetition Scheduler) pentru a calcula momentul ideal pentru a repeta fiecare cuvânt.",
+      "desc": "Synaply folosește algoritmul FSRS (Free Spaced Repetition Scheduler) pentru a calcula momentul ideal pentru a repeta fiecare cuvânt.",
       "process_title": "Procesul de recapitulare",
       "step1": "Vi se arată un cuvânt în limba sursă.",
       "step2": "Introduceți traducerea și apăsați <strong>Enter</strong> sau <strong>Verifică răspunsul</strong>.",
