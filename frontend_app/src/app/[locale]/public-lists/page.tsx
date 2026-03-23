@@ -5,7 +5,7 @@ import PublicListsClient from './PublicListsClient';
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const tLists = await getTranslations({ locale, namespace: 'dashboard.public_lists' });
-  const baseUrl = "https://wordsgo.tolmachov.dev";
+  const baseUrl = "https://synaply.me";
 
   return {
     title: `${tLists('title')} | WordsGo`,
