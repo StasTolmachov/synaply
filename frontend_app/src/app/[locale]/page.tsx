@@ -284,50 +284,43 @@ export default function LandingPage() {
         {/* Header/Nav */}
         <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16 items-center">
-              <div className="flex items-center gap-2">
-                <Link href="/" className="flex items-center group">
-                  <Image
-                    src="/logo-Header.png"
-                    alt="Synaply Logo"
-                    width={32}
-                    height={40}
-                    className="w-auto h-8 mr-2"
-                  />
-                  <span className="text-xl font-bold tracking-tight text-synaply-blue dark:text-blue-400">
-                    synaply<span className="text-synaply-cyan dark:text-blue-300">.me</span>
-                  </span>
-                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 dark:bg-blue-900/30 border border-synaply-blue/10 dark:border-blue-800 rounded">{t('common.beta')}</span>
-                </Link>
-              </div>
-              <div className="flex items-center gap-4">
-                <Link 
-                  href="/public-lists"
-                  className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-sm uppercase tracking-wider px-2 transition-colors flex items-center gap-1"
-                >
-                  <Globe className="w-4 h-4 text-synaply-cyan" />
-                  {t('landing.public_lists')}
-                </Link>
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="flex items-center group">
+                <Image
+                  src="/logo-Header.png"
+                  alt="Synaply Logo"
+                  width={32}
+                  height={40}
+                  className="w-auto h-8 mr-2"
+                />
+                <span className="hidden xs:inline text-xl font-bold tracking-tight text-synaply-blue dark:text-blue-400">
+                  synaply<span className="text-synaply-cyan dark:text-blue-300">.me</span>
+                </span>
+                <span className="hidden sm:inline ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 dark:bg-blue-900/30 border border-synaply-blue/10 dark:border-blue-800 rounded">{t('common.beta')}</span>
+              </Link>
+            </div>
+              <div className="flex items-center gap-2 sm:gap-4">
                 {mounted && (isLoggedIn ? (
                   <Link 
                     href="/dashboard"
-                    className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
+                    className="px-4 sm:px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
                   >
                     Dashboard
                   </Link>
                 ) : (
                   <>
-                    <Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-sm uppercase tracking-wider px-2 transition-colors">Sign in</Link>
+                    <Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-xs sm:text-sm uppercase tracking-wider px-2 transition-colors">Sign in</Link>
                     <Link 
                       href="/register"
-                      className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
+                      className="px-4 sm:px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
                     >
                       Get Started
                     </Link>
                   </>
                 ))}
                 {!mounted && (
-                  <div className="h-10 w-32 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-full" />
+                  <div className="h-10 w-24 sm:w-32 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-full" />
                 )}
               </div>
             </div>
@@ -357,13 +350,6 @@ export default function LandingPage() {
             >
               {t('landing.try_for_free')}
               <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link 
-              href="/public-lists"
-              className="w-full sm:w-auto px-10 py-4 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-200 border border-white/50 dark:border-gray-700 rounded-full font-bold text-lg hover:bg-white dark:hover:bg-gray-800 hover:border-synaply-blue/20 transition-all shadow-xl flex items-center justify-center gap-2"
-            >
-              <Globe className="w-5 h-5 text-synaply-cyan" />
-              {t('landing.browse_lists')}
             </Link>
           </div>
           <div className="mt-16 relative max-w-5xl mx-auto">
@@ -445,16 +431,16 @@ export default function LandingPage() {
 
             <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
               <div className="w-14 h-14 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-2xl flex items-center justify-center mb-8">
-                <Infinity className="w-7 h-7 text-synaply-cyan" />
+                <Globe className="w-7 h-7 text-synaply-cyan" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Public Word Lists</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">114+ Languages</h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                Don&apos;t know where to start? Explore and import themed word lists created by our community. 
-                From TOEFL prep to "Travel Essentials" — find what you need.
+                From Spanish and French to more niche languages like Icelandic or Vietnamese — Synaply supports 
+                a global community of learners.
               </p>
               <div className="flex items-center gap-2 text-synaply-cyan font-bold text-sm">
-                <Database className="w-4 h-4" />
-                Ready-to-use vocabulary for any goal
+                <Target className="w-4 h-4" />
+                Master any language you desire
               </div>
             </div>
 
@@ -503,11 +489,11 @@ export default function LandingPage() {
                 </div>
                 <div className="flex gap-6">
                   <div className="w-12 h-12 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-xl flex items-center justify-center shrink-0">
-                    <Database className="w-6 h-6 text-synaply-cyan" />
+                    <Target className="w-6 h-6 text-synaply-cyan" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Smart Public Lists</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Join thousands of users sharing their curated word lists. From academic vocabulary to niche professional terms.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Personalized Learning</h4>
+                    <p className="text-gray-600 dark:text-gray-400">Our system adapts to your pace, ensuring you focus on the words that need the most attention.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -693,15 +679,15 @@ export default function LandingPage() {
             Synaply is more than just a flashcard app; it&apos;s a comprehensive AI-powered language-learning ecosystem. Our features are designed to support every stage of your journey:
           </p>
           <ul className="list-disc pl-6 space-y-4">
-            <li><strong>114 Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
-            <li><strong>Public Word Lists:</strong> Don&apos;t waste time building dictionaries from scratch. Explore thousands of curated lists created by experts and fellow learners.</li>
+            <li><strong>114+ Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
+            <li><strong>AI-Powered Practice:</strong> Master your vocabulary with context-aware exercises generated by Gemini AI, tailored to your learning progress.</li>
             <li><strong>Smart Playlists:</strong> Group multiple word lists into cohesive &quot;playlists&quot; to manage complex learning goals effortlessly.</li>
             <li><strong>Progress Analytics:</strong> Track your growth with detailed statistics. Watch your &quot;Memory Rating&quot; climb as you move words from short-term struggle to long-term mastery.</li>
           </ul>
 
           <h3>The Social Learning Revolution</h3>
           <p>
-            Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
+            Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where learners exchange insights, usage examples, and study strategies. Get exposure to real-world language usage beyond textbooks—from regional slang to highly technical professional terms.
           </p>
 
           <div className="article-card bg-synaply-blue/5 dark:bg-synaply-blue/10 border-synaply-blue/10 dark:border-synaply-blue/20">
@@ -714,7 +700,7 @@ export default function LandingPage() {
               </div>
               <div className="pt-6 border-t border-synaply-blue/10 dark:border-synaply-blue/20">
                 <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Academic Path</h4>
-                <p className="italic text-gray-800 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="italic text-gray-800 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare. Synaply helped me organize my study routine, and the FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
                 <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Sarah L., High School Student</p>
               </div>
             </div>
