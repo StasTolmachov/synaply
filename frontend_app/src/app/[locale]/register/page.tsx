@@ -1,11 +1,19 @@
 'use client';
 
+import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
 import { useTranslation } from '@/components/I18nContext';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function Register() {
   const [formData, setFormData] = useState({

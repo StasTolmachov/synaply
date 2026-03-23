@@ -7,6 +7,13 @@ import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
 import { useTranslation } from '@/components/I18nContext';
 
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
