@@ -52,12 +52,40 @@ const TermsOfServiceClient = () => {
         <div className="MsoNormal" data-custom-class="title">
           <h1>{t('profile.terms_title')}</h1>
         </div>
-        <div className="MsoNormal" data-custom-class="subtitle">
-          {new Date().toLocaleDateString()}
+        <div className="MsoNormal" data-custom-class="subtitle" style={{ marginBottom: '20px' }}>
+          {t('profile.terms_last_updated')}
         </div>
-        <div className="MsoNormal" data-custom-class="body_text">
-           <p>{t('profile.terms_welcome')}</p>
+
+        <div className="MsoNormal" data-custom-class="body_text" style={{ 
+          padding: '15px', 
+          backgroundColor: '#fff3cd', 
+          border: '1px solid #ffeeba', 
+          borderRadius: '4px', 
+          marginBottom: '25px',
+          color: '#856404'
+        }}>
+           <p><strong>{t('profile.terms_beta_warning')}</strong></p>
         </div>
+
+        {[
+          { title: 'intro_title', text: 'intro_text' },
+          { title: 'beta_title', text: 'beta_text' },
+          { title: 'accounts_title', text: 'accounts_text' },
+          { title: 'content_title', text: 'content_text' },
+          { title: 'conduct_title', text: 'conduct_text' },
+          { title: 'liability_title', text: 'liability_text' },
+          { title: 'changes_title', text: 'changes_text' },
+          { title: 'contact_title', text: 'contact_text' }
+        ].map((section, index) => (
+          <div key={index} style={{ marginBottom: '20px' }}>
+            <div className="MsoNormal" data-custom-class="heading_1" style={{ fontWeight: 'bold', marginBottom: '10px' }}>
+              {t(`profile.terms_${section.title}`)}
+            </div>
+            <div className="MsoNormal" data-custom-class="body_text">
+              <p>{t(`profile.terms_${section.text}`)}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
