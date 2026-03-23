@@ -212,7 +212,7 @@ export default function Register() {
             </div>
             <label htmlFor="terms" className="text-xs text-gray-600 dark:text-gray-400 leading-normal cursor-pointer">
               {t('register.terms_acceptance_prefix')}
-              <Link href="/terms" className="font-semibold text-synaply-blue dark:text-synaply-cyan hover:underline">
+              <Link href="/terms" className="font-semibold text-synaply-blue dark:text-synaply-cyan hover:underline mx-1">
                 {t('register.terms_acceptance_link')}
               </Link>
               {t('register.terms_acceptance_suffix')}
