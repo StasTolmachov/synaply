@@ -70,6 +70,17 @@ export default function LandingPage() {
     ]
   };
 
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-16 h-16 bg-blue-600 rounded-xl mb-4"></div>
+          <div className="h-4 w-32 bg-gray-200 dark:bg-gray-800 rounded"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans selection:bg-blue-100 dark:selection:bg-blue-900 selection:text-blue-900 dark:selection:text-blue-100">
       <script
@@ -107,12 +118,11 @@ export default function LandingPage() {
           margin-left: auto;
           margin-right: auto;
           line-height: 1.85;
-          color: #374151;
+          color: #1f2937;
           font-size: 1.15rem;
+          font-weight: 400;
         }
-        @media (prefers-color-scheme: dark) {
-          .prose-article { color: #d1d5db; }
-        }
+        :global(.dark) .prose-article { color: #d1d5db; }
         .prose-article h2 {
           color: #111827;
           font-weight: 800;
@@ -126,11 +136,9 @@ export default function LandingPage() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        @media (prefers-color-scheme: dark) {
-          .prose-article h2 {
-            background: linear-gradient(to bottom right, #f3f4f6, #60a5fa);
-            -webkit-background-clip: text;
-          }
+        :global(.dark) .prose-article h2 {
+          background: linear-gradient(to bottom right, #f3f4f6, #60a5fa);
+          -webkit-background-clip: text;
         }
         .prose-article h3 {
           color: #111827;
@@ -143,9 +151,7 @@ export default function LandingPage() {
           gap: 1rem;
           letter-spacing: -0.02em;
         }
-        @media (prefers-color-scheme: dark) {
-          .prose-article h3 { color: #f3f4f6; }
-        }
+        :global(.dark) .prose-article h3 { color: #f3f4f6; }
         .prose-article h3::before {
           content: "";
           display: inline-block;
@@ -161,9 +167,7 @@ export default function LandingPage() {
           margin-top: 3rem;
           margin-bottom: 1rem;
         }
-        @media (prefers-color-scheme: dark) {
-          .prose-article h4 { color: #e5e7eb; }
-        }
+        :global(.dark) .prose-article h4 { color: #e5e7eb; }
         .prose-article p {
           margin-top: 1.75rem;
           margin-bottom: 1.75rem;
@@ -186,9 +190,7 @@ export default function LandingPage() {
           margin: 3rem 0;
           font-size: 1.25rem;
         }
-        @media (prefers-color-scheme: dark) {
-          .prose-article blockquote { color: #9ca3af; }
-        }
+        :global(.dark) .prose-article blockquote { color: #9ca3af; }
         .article-card {
           background: linear-gradient(145deg, #ffffff, #f8fafc);
           border-radius: 2rem;
@@ -199,12 +201,10 @@ export default function LandingPage() {
           overflow: hidden;
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
-        @media (prefers-color-scheme: dark) {
-          .article-card {
-            background: linear-gradient(145deg, #111827, #1f2937);
-            border-color: #374151;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-          }
+        :global(.dark) .article-card {
+          background: linear-gradient(145deg, #111827, #1f2937);
+          border-color: #374151;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
         .article-card::before {
           content: "";
@@ -231,9 +231,7 @@ export default function LandingPage() {
           border-radius: 1.5rem;
           border: 1px solid #e2e8f0;
         }
-        @media (prefers-color-scheme: dark) {
-          .comparison-table-wrapper { border-color: #374151; }
-        }
+        :global(.dark) .comparison-table-wrapper { border-color: #374151; }
         .comparison-table {
           width: 100%;
           border-collapse: collapse;
@@ -246,20 +244,16 @@ export default function LandingPage() {
           color: #111827;
           border-bottom: 1px solid #e2e8f0;
         }
-        @media (prefers-color-scheme: dark) {
-          .comparison-table th {
-            background: #1f2937;
-            color: #f3f4f6;
-            border-bottom-color: #374151;
-          }
+        :global(.dark) .comparison-table th {
+          background: #1f2937;
+          color: #f3f4f6;
+          border-bottom-color: #374151;
         }
         .comparison-table td {
           padding: 1.5rem;
           border-bottom: 1px solid #f1f5f9;
         }
-        @media (prefers-color-scheme: dark) {
-          .comparison-table td { border-bottom-color: #374151; }
-        }
+        :global(.dark) .comparison-table td { border-bottom-color: #374151; }
         .comparison-table tr:last-child td {
           border-bottom: none;
         }
@@ -267,9 +261,7 @@ export default function LandingPage() {
           border-bottom: 1px solid #f1f5f9;
           padding: 2rem 0;
         }
-        @media (prefers-color-scheme: dark) {
-          .faq-item { border-bottom-color: #374151; }
-        }
+        :global(.dark) .faq-item { border-bottom-color: #374151; }
         .faq-item:last-child {
           border-bottom: none;
         }
@@ -281,15 +273,11 @@ export default function LandingPage() {
           display: flex;
           gap: 1rem;
         }
-        @media (prefers-color-scheme: dark) {
-          .faq-question { color: #f3f4f6; }
-        }
+        :global(.dark) .faq-question { color: #f3f4f6; }
         .faq-answer {
           color: #4b5563;
         }
-        @media (prefers-color-scheme: dark) {
-          .faq-answer { color: #9ca3af; }
-        }
+        :global(.dark) .faq-answer { color: #9ca3af; }
       `}</style>
       
       <header>
@@ -396,15 +384,15 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="text-center">
             <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">FSRS</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Memory Algorithm</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Memory Algorithm</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">AI</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Gemini Integration</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Gemini Integration</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">114</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold text-center relative overflow-hidden">
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold text-center relative overflow-hidden">
               Languages
               <div className="mt-2 overflow-hidden flex whitespace-nowrap mask-fade">
                 <div className="animate-scroll flex gap-2">
@@ -423,7 +411,7 @@ export default function LandingPage() {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">DeepL</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Accurate Translation</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Accurate Translation</div>
           </div>
         </div>
       </section>
@@ -449,7 +437,7 @@ export default function LandingPage() {
                 We utilize the <strong>FSRS</strong> algorithm, 
                 enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.
               </p>
-              <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-semibold text-sm">
+              <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-bold text-sm">
                 <Target className="w-4 h-4" />
                 Scientifically proven memory optimization
               </div>
@@ -464,7 +452,7 @@ export default function LandingPage() {
                 Don&apos;t know where to start? Explore and import themed word lists created by our community. 
                 From TOEFL prep to "Travel Essentials" — find what you need.
               </p>
-              <div className="flex items-center gap-2 text-synaply-cyan font-semibold text-sm">
+              <div className="flex items-center gap-2 text-synaply-cyan font-bold text-sm">
                 <Database className="w-4 h-4" />
                 Ready-to-use vocabulary for any goal
               </div>
@@ -721,12 +709,12 @@ export default function LandingPage() {
             <div className="space-y-12">
               <div>
                 <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Professional Track</h4>
-                <p className="italic text-gray-700 dark:text-gray-300">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
+                <p className="italic text-gray-800 dark:text-gray-300">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
                 <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Mark S., Mechanical Engineer</p>
               </div>
               <div className="pt-6 border-t border-synaply-blue/10 dark:border-synaply-blue/20">
                 <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Academic Path</h4>
-                <p className="italic text-gray-700 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="italic text-gray-800 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
                 <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Sarah L., High School Student</p>
               </div>
             </div>
@@ -794,10 +782,10 @@ export default function LandingPage() {
             )}
           </div>
           <div className="mt-16 flex flex-wrap justify-center items-center gap-8 grayscale opacity-50">
-             <div className="text-xl font-bold tracking-tighter">AI-POWERED</div>
-             <div className="text-xl font-bold tracking-tighter">ENHANCED FSRS+</div>
-             <div className="text-xl font-bold tracking-tighter">DEEPL-READY</div>
-             <div className="text-xl font-bold tracking-tighter">114 LANGUAGES</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">AI-POWERED</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">ENHANCED FSRS+</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">DEEPL-READY</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">114 LANGUAGES</div>
           </div>
         </div>
       </section>
