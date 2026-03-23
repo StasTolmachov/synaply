@@ -273,7 +273,7 @@ export default function LandingPage() {
                   <Globe className="w-4 h-4 text-synaply-cyan" />
                   {t('landing.public_lists')}
                 </Link>
-                {isLoggedIn ? (
+                {mounted && (isLoggedIn ? (
                   <Link 
                     href="/dashboard"
                     className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
@@ -290,6 +290,9 @@ export default function LandingPage() {
                       Get Started
                     </Link>
                   </>
+                ))}
+                {!mounted && (
+                  <div className="h-10 w-32 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-full" />
                 )}
               </div>
             </div>
