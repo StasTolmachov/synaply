@@ -16,10 +16,10 @@
 
   --color-synaply-blue: #023a78; /* Темно-синий из логотипа */
   --color-synaply-cyan: #06b6d4; /* Бирюзовый из логотипа */
-  --color-synaply-light-blue: #3b82f6; /* Светло-синий (blue-500) */
-  --color-synaply-purple: #7c3aed; /* Фиолетовый (violet-600) для новой гаммы */
-  --color-synaply-purple-shadow: rgba(124, 58, 237, 0.2);
-  --color-synaply-blue-shadow: rgba(2, 58, 120, 0.2);
+  --color-synaply-light-blue: #4f86f7; /* Более мягкий светло-синий */
+  --color-synaply-purple: #6d28d9; /* Более глубокий и менее кричащий фиолетовый */
+  --color-synaply-purple-shadow: rgba(109, 40, 217, 0.15); /* Мягкая тень */
+  --color-synaply-blue-shadow: rgba(2, 58, 120, 0.15); /* Мягкая тень */
   --color-synaply-light: #f8fafc; /* Светлый фон */
 
   --color-gray-950: #020617;
