@@ -35,11 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   Object.keys(languages).forEach((langCode) => {
     const code = langCode.toLowerCase();
-    const url = code === 'en' ? baseUrl : `${baseUrl}/${code}`;
-    languageAlternates[code] = url;
+    languageAlternates[code] = `${baseUrl}/${code}`;
   });
 
-  // Добавляем x-default (fallback на английский)
+  // Добавляем x-default (отправляет на корень /)
   languageAlternates['x-default'] = baseUrl;
 
   // Специфические для Next.js настройки Open Graph локали
@@ -74,7 +73,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
-      url: locale === 'en' ? baseUrl : `${baseUrl}/${locale}`,
+      url: `${baseUrl}/${locale}`,
       siteName: "Synaply",
       locale: ogLocales[locale] || locale,
       type: "website",
@@ -95,7 +94,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: ["/opengraph-image.png"],
     },
     alternates: {
-      canonical: locale === 'en' ? baseUrl : `${baseUrl}/${locale}`,
+      canonical: `${baseUrl}/${locale}`,
       languages: languageAlternates,
     },
     verification: {
@@ -131,9 +130,42 @@ export default async function RootLayout({
   // Получаем сообщения для провайдера
   const messages = await getMessages();
 
+  const baseUrl = "https://synaply.me";
+  const orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Synaply',
+    url: baseUrl,
+    logo: `${baseUrl}/apple-icon.png`,
+    sameAs: [
+      'https://twitter.com/SynaplyTeam',
+      // 'https://github.com/synaply', // add if exists
+    ],
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Synaply',
+    url: baseUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${baseUrl}/{locale}/public-lists?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   return (
     <html lang={locale} className="h-full" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
