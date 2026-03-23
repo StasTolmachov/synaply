@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
-  const baseUrl = "https://wordsgo.tolmachov.dev";
+  const baseUrl = "https://synaply.me";
 
   return {
     title: `${list.title} | WordsGo`,
