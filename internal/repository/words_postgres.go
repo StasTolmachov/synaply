@@ -9,9 +9,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
 
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository/modelsDB"
-	"synaply_v2/slogger"
+	"synaply/internal/models"
+	"synaply/internal/repository/modelsDB"
+	"synaply/slogger"
 )
 
 type wordsPostgres struct {

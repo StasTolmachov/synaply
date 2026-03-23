@@ -10,7 +10,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
 
-	"synaply_v2/internal/config"
+	"synaply/internal/config"
 )
 
 type Postgres struct {
