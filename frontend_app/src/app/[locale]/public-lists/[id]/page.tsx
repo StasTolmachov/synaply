@@ -20,6 +20,7 @@ async function getPublicList(id: string) {
 export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }): Promise<Metadata> {
   const { id, locale } = await params;
   const list = await getPublicList(id);
+  const t = await getTranslations({ locale, namespace: 'common' });
   
   if (!list) {
     return {
@@ -61,6 +62,34 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function PublicListDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
   const { id, locale } = await params;
   const list = await getPublicList(id);
+  const t = await getTranslations({ locale, namespace: 'dashboard.public_lists' });
+  const tCommon = await getTranslations({ locale, namespace: 'common' });
+  const baseUrl = "https://synaply.me";
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('title'),
+        item: `${baseUrl}/${locale}/public-lists`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: list?.title || id,
+        item: `${baseUrl}/${locale}/public-lists/${id}`,
+      },
+    ],
+  };
 
   const jsonLd = list ? {
     '@context': 'https://schema.org',
@@ -82,6 +111,12 @@ export default async function PublicListDetailPage({ params }: { params: Promise
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       )}
       <PublicListDetailClient id={id} />
