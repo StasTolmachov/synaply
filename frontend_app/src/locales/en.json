@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Synaply - Learn Vocabulary with AI & Spaced Repetition",
-    "description": "Boost your language skills with AI-powered spaced repetition. Create custom word lists or learn from community-shared public lists.",
-    "keywords": "learn english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, learn spanish, learn french, learn german, language proficiency, memorize words, SRS learning",
+    "title": "Synaply - Build Synapses with AI-Powered Algorithms",
+    "description": "Master any language with our scientific algorithm that creates and strengthens neural synapses, reinforced by advanced AI context.",
+    "keywords": "synapse building, neural language learning, scientific spaced repetition, FSRS algorithm, AI vocabulary, brain-based learning, memorization science",
     "og_title": "Synaply - Smart Vocabulary Learning",
     "og_description": "Boost your language skills with AI-powered spaced repetition. Learn faster, remember longer.",
     "og_image_alt": "Synaply AI Language Learning App Interface",
@@ -146,13 +146,13 @@
     "support_desc": "If you like this app, you can support its development.",
     "onboarding": {
       "welcome": "Welcome to Synaply!",
-      "journey_begins": "Your journey to language mastery begins here.",
+      "journey_begins": "Start building lasting neural connections today.",
       "best_practice": "Best Practice for Success",
       "strategy_desc": "To get the most out of Synaply, we recommend this simple strategy:",
       "step1_title": "Focus on a Topic",
       "step1_desc": "Add about <strong>100 words</strong> related to a single topic (e.g., Business or Travel) to build strong context.",
-      "step2_title": "Daily Reviews",
-      "step2_desc": "Master these words through <strong>daily repetition</strong> until they become part of your vocabulary.",
+      "step2_title": "Build Synapses",
+      "step2_desc": "Strengthen neural pathways through <strong>scientific repetition</strong> until words are hard-wired into your memory.",
       "step3_title": "AI Practice",
       "step3_desc": "Switch to <strong>AI Practice</strong> to use your new vocabulary in full sentences and real-world situations.",
       "got_it": "Got it, let's start!"

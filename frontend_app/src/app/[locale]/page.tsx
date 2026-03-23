@@ -40,7 +40,7 @@ export default function LandingPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Synaply',
-    alternateName: 'Synaply Language Learning',
+    alternateName: 'Synaply AI',
     description: 'Learn new words with AI-powered spaced repetition. The easiest way to expand your vocabulary.',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
@@ -300,12 +300,12 @@ export default function LandingPage() {
             Next-Gen Language Learning
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent pb-2">
-            Your Personal Path <br />
-            to Language Fluency
+            Build Neural Synapses <br />
+            for Language Fluency
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Stop guessing and start remembering. Synaply uses advanced cognitive science 
-            to ensure you never forget a word again.
+            Synaply uses a scientific algorithm that creates synapses in your brain, 
+            reinforced by AI to ensure you never forget a word again.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
@@ -375,10 +375,10 @@ export default function LandingPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6">Built for Long-Term Memory</h2>
+            <h2 className="text-4xl font-bold mb-6">Algorithm That Builds Synapses</h2>
             <p className="text-gray-600 max-w-3xl mx-auto text-xl">
-              Standard flashcards are boring. Our system adapts to your unique learning pace 
-              using data-driven insights.
+              Our system focuses on the neurological process of memory. We use scientific algorithms 
+              to create lasting synaptic connections for every word you learn.
             </p>
           </div>
 
@@ -387,10 +387,10 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-8">
                 <Brain className="w-7 h-7 text-purple-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Advanced FSRS+</h3>
+              <h3 className="text-2xl font-bold mb-4">Neural FSRS+</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
-                We utilize the <strong>FSRS</strong> (Free Spaced Repetition Scheduler), 
-                extensively <strong>enhanced with our proprietary optimization algorithms</strong> to predict your memory decay with unprecedented accuracy.
+                We utilize the <strong>FSRS</strong> algorithm, 
+                enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.
               </p>
               <div className="flex items-center gap-2 text-purple-600 font-semibold text-sm">
                 <Target className="w-4 h-4" />
@@ -479,8 +479,8 @@ export default function LandingPage() {
             <div className="lg:w-1/2 relative">
               <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl overflow-hidden">
                 <img 
-                  src="/promo-ai-brain-1-1.png" 
-                  alt="Synaply AI Brain" 
+                  src="/synaply.png" 
+                  alt="Synaply - Smart language learning platform" 
                   className="w-full h-full object-cover rounded-[2.8rem]"
                 />
               </div>
@@ -503,23 +503,23 @@ export default function LandingPage() {
             {[
               {
                 step: "1",
-                title: "Add or Translate Words",
-                description: "Met an unfamiliar word in a book or movie? Just type it in. The system will instantly translate it via DeepL and add it to your personal dictionary."
+                title: "Initialize Neural Paths",
+                description: "Met an unfamiliar word? Add it to your collection. Our system begins mapping the neural path for this new information immediately."
               },
               {
                 step: "2",
-                title: "Launch a Smart Lesson",
-                description: "Our algorithm will select exactly those words that your memory is about to forget. Study on the subway, in line, or at home — the lesson lasts as long as you have time."
+                title: "Create Synapses",
+                description: "Our algorithm selects words at the precise moment before they fade. Each review strengthens the synapse, making the memory permanent."
               },
               {
                 step: "3",
-                title: "Practice with an AI Tutor",
-                description: "Test your knowledge in a real-world context. The AI will compose sentences using your words and help correct mistakes in real-time."
+                title: "Reinforce with AI",
+                description: "Apply your knowledge in context. The AI Tutor generates sentences that force your brain to use the newly formed synapses in real-world scenarios."
               },
               {
                 step: "4",
-                title: "Track Your Progress",
-                description: "Every correct answer increases your rating and memory stability. Watch as words move from \"new\" status to the \"learned forever\" category."
+                title: "Seal the Memory",
+                description: "Track your progress. Once the synapse is fully formed and reinforced, the word moves from \"new\" to the \"permanent knowledge\" category."
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
@@ -540,9 +540,9 @@ export default function LandingPage() {
       <section className="py-32 px-4 bg-white border-t border-gray-100">
         <article className="prose-article">
           <div className="mb-20 text-center">
-            <h2 className="!mt-0">The Science of Fluency: Master Any Language with Synaply</h2>
+            <h2 className="!mt-0">Synaptic Learning: The Science Behind Synaply</h2>
             <p className="text-2xl text-gray-500 max-w-3xl mx-auto">
-              A deep dive into the technology, psychology, and methodology powering the world&apos;s most efficient language learning platform.
+              How our scientific algorithm creates and strengthens neural connections, reinforced by Artificial Intelligence.
             </p>
           </div>
 
@@ -643,7 +643,7 @@ export default function LandingPage() {
 
           <h3>Core Features for Global Learners</h3>
           <p>
-            Synaply is more than just a flashcard app; it&apos;s a comprehensive language-learning laboratory. Our features are designed to support every stage of your journey:
+            Synaply is more than just a flashcard app; it&apos;s a comprehensive AI-powered language-learning ecosystem. Our features are designed to support every stage of your journey:
           </p>
           <ul className="list-disc pl-6 space-y-4">
             <li><strong>114 Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
@@ -715,7 +715,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to hack your memory?</h2>
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Join Synaply and try the most scientifically proven system for learning foreign words.
+            Join Synaply and try the most advanced AI-powered system for learning foreign words.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
