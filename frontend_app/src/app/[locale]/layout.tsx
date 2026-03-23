@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
@@ -62,20 +62,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     formatDetection: {
       telephone: false,
     },
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 5,
-      themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-        { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-      ],
-    },
     icons: {
-      icon: "/favicon.png",
-      apple: "/apple-icon.png",
+      icon: [
+        { url: "/favicon.ico?v=2", type: "image/x-icon" },
+        { url: "/favicon.png?v=2", type: "image/png" },
+        { url: "/favicon.png?v=2", type: "image/png", rel: "shortcut icon" }
+      ],
+      apple: "/apple-icon.png?v=2",
     },
-    manifest: "/manifest.json",
     openGraph: {
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
@@ -108,6 +102,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
   };
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
 
 export default async function RootLayout({
   children,
