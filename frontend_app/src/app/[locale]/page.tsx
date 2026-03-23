@@ -300,7 +300,9 @@ export default function LandingPage() {
                 <span className="hidden sm:inline ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 dark:bg-blue-900/30 border border-synaply-blue/10 dark:border-blue-800 rounded">{t('common.beta')}</span>
               </Link>
             </div>
-              <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
+                <Link href="/public-lists" className="hidden md:inline text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors">{t('dashboard.public_lists.title')}</Link>
+                <Link href="/help" className="hidden md:inline text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors">{t('common.help')}</Link>
                 {mounted && (isLoggedIn ? (
                   <Link 
                     href="/dashboard"
