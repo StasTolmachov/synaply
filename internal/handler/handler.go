@@ -53,6 +53,8 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 
 	r.Use(middleware.LoggerMiddleware)
 
+	r.Get("/health", h.Health)
+
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	r.Route("/api/v1/", func(r chi.Router) {
@@ -158,6 +160,11 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 // @Produce json
 // @Success 200 {object} models.LangResponse "Successfully retrieved languages"
 // @Router /users/lang [get]
+func (h *Handler) Health(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
+}
+
 func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
 
 	var Response models.LangResponse
