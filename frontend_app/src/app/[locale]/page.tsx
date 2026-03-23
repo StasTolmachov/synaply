@@ -71,7 +71,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans selection:bg-blue-100 dark:selection:bg-blue-900 selection:text-blue-900 dark:selection:text-blue-100">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -110,6 +110,9 @@ export default function LandingPage() {
           color: #374151;
           font-size: 1.15rem;
         }
+        @media (prefers-color-scheme: dark) {
+          .prose-article { color: #d1d5db; }
+        }
         .prose-article h2 {
           color: #111827;
           font-weight: 800;
@@ -123,6 +126,12 @@ export default function LandingPage() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
+        @media (prefers-color-scheme: dark) {
+          .prose-article h2 {
+            background: linear-gradient(to bottom right, #f3f4f6, #60a5fa);
+            -webkit-background-clip: text;
+          }
+        }
         .prose-article h3 {
           color: #111827;
           font-weight: 700;
@@ -133,6 +142,9 @@ export default function LandingPage() {
           align-items: center;
           gap: 1rem;
           letter-spacing: -0.02em;
+        }
+        @media (prefers-color-scheme: dark) {
+          .prose-article h3 { color: #f3f4f6; }
         }
         .prose-article h3::before {
           content: "";
@@ -148,6 +160,9 @@ export default function LandingPage() {
           font-size: 1.5rem;
           margin-top: 3rem;
           margin-bottom: 1rem;
+        }
+        @media (prefers-color-scheme: dark) {
+          .prose-article h4 { color: #e5e7eb; }
         }
         .prose-article p {
           margin-top: 1.75rem;
@@ -171,6 +186,9 @@ export default function LandingPage() {
           margin: 3rem 0;
           font-size: 1.25rem;
         }
+        @media (prefers-color-scheme: dark) {
+          .prose-article blockquote { color: #9ca3af; }
+        }
         .article-card {
           background: linear-gradient(145deg, #ffffff, #f8fafc);
           border-radius: 2rem;
@@ -180,6 +198,13 @@ export default function LandingPage() {
           position: relative;
           overflow: hidden;
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+        }
+        @media (prefers-color-scheme: dark) {
+          .article-card {
+            background: linear-gradient(145deg, #111827, #1f2937);
+            border-color: #374151;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+          }
         }
         .article-card::before {
           content: "";
@@ -206,6 +231,9 @@ export default function LandingPage() {
           border-radius: 1.5rem;
           border: 1px solid #e2e8f0;
         }
+        @media (prefers-color-scheme: dark) {
+          .comparison-table-wrapper { border-color: #374151; }
+        }
         .comparison-table {
           width: 100%;
           border-collapse: collapse;
@@ -218,9 +246,19 @@ export default function LandingPage() {
           color: #111827;
           border-bottom: 1px solid #e2e8f0;
         }
+        @media (prefers-color-scheme: dark) {
+          .comparison-table th {
+            background: #1f2937;
+            color: #f3f4f6;
+            border-bottom-color: #374151;
+          }
+        }
         .comparison-table td {
           padding: 1.5rem;
           border-bottom: 1px solid #f1f5f9;
+        }
+        @media (prefers-color-scheme: dark) {
+          .comparison-table td { border-bottom-color: #374151; }
         }
         .comparison-table tr:last-child td {
           border-bottom: none;
@@ -228,6 +266,9 @@ export default function LandingPage() {
         .faq-item {
           border-bottom: 1px solid #f1f5f9;
           padding: 2rem 0;
+        }
+        @media (prefers-color-scheme: dark) {
+          .faq-item { border-bottom-color: #374151; }
         }
         .faq-item:last-child {
           border-bottom: none;
@@ -240,8 +281,14 @@ export default function LandingPage() {
           display: flex;
           gap: 1rem;
         }
+        @media (prefers-color-scheme: dark) {
+          .faq-question { color: #f3f4f6; }
+        }
         .faq-answer {
           color: #4b5563;
+        }
+        @media (prefers-color-scheme: dark) {
+          .faq-answer { color: #9ca3af; }
         }
       `}</style>
       
@@ -273,7 +320,7 @@ export default function LandingPage() {
                   <Globe className="w-4 h-4 text-synaply-cyan" />
                   {t('landing.public_lists')}
                 </Link>
-                {isLoggedIn ? (
+                {mounted && (isLoggedIn ? (
                   <Link 
                     href="/dashboard"
                     className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
@@ -290,6 +337,9 @@ export default function LandingPage() {
                       Get Started
                     </Link>
                   </>
+                ))}
+                {!mounted && (
+                  <div className="h-10 w-32 bg-gray-100 dark:bg-gray-800 animate-pulse rounded-full" />
                 )}
               </div>
             </div>
@@ -308,7 +358,7 @@ export default function LandingPage() {
             Build Neural Synapses <br />
             for Language Fluency
           </h1>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             Synaply uses a scientific algorithm that creates synapses in your brain, 
             reinforced by AI to ensure you never forget a word again.
           </p>
@@ -342,19 +392,19 @@ export default function LandingPage() {
       </section>
 
       {/* Stats/Quick Features */}
-      <section className="py-12 border-y border-gray-100 bg-white/50 backdrop-blur-sm">
+      <section className="py-12 border-y border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue mb-1">FSRS</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Memory Algorithm</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">FSRS</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Memory Algorithm</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue mb-1">AI</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Gemini Integration</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">AI</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Gemini Integration</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue mb-1">114</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold text-center relative overflow-hidden">
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">114</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold text-center relative overflow-hidden">
               Languages
               <div className="mt-2 overflow-hidden flex whitespace-nowrap mask-fade">
                 <div className="animate-scroll flex gap-2">
@@ -372,45 +422,45 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue mb-1">DeepL</div>
-            <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Accurate Translation</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">DeepL</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Accurate Translation</div>
           </div>
         </div>
       </section>
 
       {/* Main Features */}
-      <section className="py-24 bg-white/40 backdrop-blur-sm">
+      <section className="py-24 bg-white/40 dark:bg-gray-950/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6 text-synaply-blue">Algorithm That Builds Synapses</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-xl">
+            <h2 className="text-4xl font-bold mb-6 text-synaply-blue dark:text-blue-400">Algorithm That Builds Synapses</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-xl">
               Our system focuses on the neurological process of memory. We use scientific algorithms 
               to create lasting synaptic connections for every word you learn.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-synaply-blue/10 rounded-2xl flex items-center justify-center mb-8">
-                <Brain className="w-7 h-7 text-synaply-blue" />
+            <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-8">
+                <Brain className="w-7 h-7 text-synaply-blue dark:text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Neural FSRS+</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Neural FSRS+</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                 We utilize the <strong>FSRS</strong> algorithm, 
                 enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.
               </p>
-              <div className="flex items-center gap-2 text-synaply-blue font-semibold text-sm">
+              <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-semibold text-sm">
                 <Target className="w-4 h-4" />
                 Scientifically proven memory optimization
               </div>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-synaply-cyan/10 rounded-2xl flex items-center justify-center mb-8">
+            <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-2xl flex items-center justify-center mb-8">
                 <Infinity className="w-7 h-7 text-synaply-cyan" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Public Word Lists</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Public Word Lists</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                 Don&apos;t know where to start? Explore and import themed word lists created by our community. 
                 From TOEFL prep to "Travel Essentials" — find what you need.
               </p>
@@ -420,20 +470,20 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-amber-100/50 rounded-2xl flex items-center justify-center mb-8">
-                <Sparkles className="w-7 h-7 text-amber-600" />
+            <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-amber-100/50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-8">
+                <Sparkles className="w-7 h-7 text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Gemini AI Tutor</h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Gemini AI Tutor</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                 Practice in context. Gemini AI generates personalized examples and exercises using the specific words you are currently learning.
               </p>
               <ul className="space-y-3">
-                <li className="flex gap-3 text-sm text-gray-600">
+                <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
                   <span><strong>Smart Examples:</strong> Sentences tailored to your level.</span>
                 </li>
-                <li className="flex gap-3 text-sm text-gray-600">
+                <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
                   <span><strong>Interactive Practice:</strong> Real-time feedback on your usage.</span>
                 </li>
@@ -444,7 +494,7 @@ export default function LandingPage() {
       </section>
 
       {/* AI Detailed Section */}
-      <section className="py-24 px-4 bg-white overflow-hidden">
+      <section className="py-24 px-4 bg-white dark:bg-gray-950 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
@@ -452,33 +502,33 @@ export default function LandingPage() {
                 <Bot className="w-4 h-4" />
                 Next-Gen AI Companion
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue">Beyond Simple Translation</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue dark:text-blue-400">Beyond Simple Translation</h2>
               <div className="space-y-8">
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-synaply-blue/10 rounded-xl flex items-center justify-center shrink-0">
-                    <MessageSquare className="w-6 h-6 text-synaply-blue" />
+                  <div className="w-12 h-12 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">Infinite Context</h4>
-                    <p className="text-gray-600">Don&apos;t just learn words, learn how to use them. Gemini AI generates real-world examples specifically for your vocabulary.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Infinite Context</h4>
+                    <p className="text-gray-600 dark:text-gray-400">Don&apos;t just learn words, learn how to use them. Gemini AI generates real-world examples specifically for your vocabulary.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-synaply-cyan/10 rounded-xl flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-xl flex items-center justify-center shrink-0">
                     <Database className="w-6 h-6 text-synaply-cyan" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">Smart Public Lists</h4>
-                    <p className="text-gray-600">Join thousands of users sharing their curated word lists. From academic vocabulary to niche professional terms.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Smart Public Lists</h4>
+                    <p className="text-gray-600 dark:text-gray-400">Join thousands of users sharing their curated word lists. From academic vocabulary to niche professional terms.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-synaply-blue/10 rounded-xl flex items-center justify-center shrink-0">
-                    <Languages className="w-6 h-6 text-synaply-blue" />
+                  <div className="w-12 h-12 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center shrink-0">
+                    <Languages className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">DeepL Precision</h4>
-                    <p className="text-gray-600">We use the world&apos;s best translation algorithms to ensure you learn only correct and natural language options.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">DeepL Precision</h4>
+                    <p className="text-gray-600 dark:text-gray-400">We use the world&apos;s best translation algorithms to ensure you learn only correct and natural language options.</p>
                   </div>
                 </div>
               </div>
@@ -501,11 +551,11 @@ export default function LandingPage() {
       </section>
 
       {/* Steps */}
-      <section className="py-24 px-4 bg-white/50 backdrop-blur-sm">
+      <section className="py-24 px-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-synaply-blue">How does it work?</h2>
-            <p className="text-gray-600 text-lg">4 simple steps to language fluency</p>
+            <h2 className="text-4xl font-bold mb-4 text-synaply-blue dark:text-blue-400">How does it work?</h2>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">4 simple steps to language fluency</p>
           </div>
 
           <div className="space-y-12">
@@ -532,12 +582,12 @@ export default function LandingPage() {
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
-                <div className="w-14 h-14 bg-synaply-blue text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0 shadow-lg shadow-synaply-blue/20 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 bg-synaply-blue dark:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0 shadow-lg shadow-synaply-blue/20 dark:shadow-blue-900/40 group-hover:scale-110 transition-transform">
                   {item.step}
                 </div>
                 <div className="pt-2">
-                  <h3 className="text-2xl font-bold mb-3 text-synaply-blue">{item.title}</h3>
-                  <p className="text-lg text-gray-600 leading-relaxed">{item.description}</p>
+                  <h3 className="text-2xl font-bold mb-3 text-synaply-blue dark:text-blue-400">{item.title}</h3>
+                  <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -546,11 +596,11 @@ export default function LandingPage() {
       </section>
 
       {/* SEO Article Section */}
-      <section className="py-32 px-4 bg-white border-t border-gray-100">
+      <section className="py-32 px-4 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
         <article className="prose-article">
           <div className="mb-20 text-center">
             <h2 className="!mt-0">Synaptic Learning: The Science Behind Synaply</h2>
-            <p className="text-2xl text-gray-500 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
               How our scientific algorithm creates and strengthens neural connections, reinforced by Artificial Intelligence.
             </p>
           </div>
@@ -568,9 +618,9 @@ export default function LandingPage() {
               Our proprietary <strong>FSRS+ enhancement</strong> takes this a step further. It analyzes your unique learning patterns—how quickly you recall a word, how often you struggle with specific types of vocabulary, and your individual forgetting rate. By calculating the exact moment before a word slips from your mind, Synaply schedules reviews at the <strong>optimal interval</strong>, ensuring maximum retention with minimum effort.
             </p>
             
-            <div className="mt-8 p-6 bg-blue-50/50 rounded-xl border border-blue-100">
+            <div className="mt-8 p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800">
               <h4 className="!mt-0">FSRS vs. Traditional SM-2</h4>
-              <p className="text-sm">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 While SM-2 uses fixed multipliers (the &quot;ease factor&quot;), FSRS implements a <strong>Stochastic Shortest Path</strong> algorithm to optimize for long-term retention. Studies show that FSRS can reduce study time by up to 30% while achieving the same target retention levels compared to traditional spaced repetition models.
               </p>
             </div>
@@ -605,7 +655,7 @@ export default function LandingPage() {
             </li>
           </ul>
 
-          <div className="article-card bg-blue-50/30 border-blue-100">
+          <div className="article-card bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800">
             <h3>Comparison: Synaply vs. The Old Way</h3>
             <div className="comparison-table-wrapper">
               <table className="comparison-table">
@@ -666,18 +716,18 @@ export default function LandingPage() {
             Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
           </p>
 
-          <div className="article-card bg-synaply-blue/5 border-synaply-blue/10">
-            <h3 className="text-synaply-blue">Real-World Use Cases: How Synaply Changes Lives</h3>
+          <div className="article-card bg-synaply-blue/5 dark:bg-synaply-blue/10 border-synaply-blue/10 dark:border-synaply-blue/20">
+            <h3 className="text-synaply-blue dark:text-blue-400">Real-World Use Cases: How Synaply Changes Lives</h3>
             <div className="space-y-12">
               <div>
-                <h4 className="text-synaply-blue font-bold">The Professional Track</h4>
-                <p className="italic text-gray-700">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
-                <p className="font-bold text-synaply-blue/80">— Mark S., Mechanical Engineer</p>
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Professional Track</h4>
+                <p className="italic text-gray-700 dark:text-gray-300">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Mark S., Mechanical Engineer</p>
               </div>
-              <div className="pt-6 border-t border-synaply-blue/10">
-                <h4 className="text-synaply-blue font-bold">The Academic Path</h4>
-                <p className="italic text-gray-700">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
-                <p className="font-bold text-synaply-blue/80">— Sarah L., High School Student</p>
+              <div className="pt-6 border-t border-synaply-blue/10 dark:border-synaply-blue/20">
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Academic Path</h4>
+                <p className="italic text-gray-700 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Sarah L., High School Student</p>
               </div>
             </div>
           </div>
@@ -685,29 +735,29 @@ export default function LandingPage() {
           <h3>Frequently Asked Questions (FAQ)</h3>
           <div className="space-y-4">
             <div className="faq-item group">
-              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+              <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>How is FSRS better than Anki?</span>
               </div>
-              <div className="faq-answer text-gray-600">
+              <div className="faq-answer text-gray-600 dark:text-gray-400">
                 While Anki is powerful, its default algorithm is based on SM-2. Synaply uses FSRS, which is mathematically proven to be more efficient. Furthermore, Synaply integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
               </div>
             </div>
             <div className="faq-item group">
-              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+              <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>Can I use Synaply offline?</span>
               </div>
-              <div className="faq-answer text-gray-600">
+              <div className="faq-answer text-gray-600 dark:text-gray-400">
                 Yes! Our Progressive Web App (PWA) technology allows you to continue your reviews even without an active internet connection. Your progress will sync automatically once you&apos;re back online.
               </div>
             </div>
             <div className="faq-item group">
-              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+              <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>Is it free to use?</span>
               </div>
-              <div className="faq-answer text-gray-600">
+              <div className="faq-answer text-gray-600 dark:text-gray-400">
                 Synaply offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
               </div>
             </div>
