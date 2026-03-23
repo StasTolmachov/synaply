@@ -8,9 +8,9 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/utils"
-	"synaply_v2/slogger"
+	"synaply/internal/models"
+	"synaply/internal/utils"
+	"synaply/slogger"
 )
 
 type UserCtxKey struct{}

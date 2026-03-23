@@ -16,13 +16,13 @@ import (
 	"github.com/google/uuid"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
-	"synaply_v2/external/gemini"
-	"synaply_v2/internal/middleware"
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository/modelsDB"
-	"synaply_v2/internal/service"
-	"synaply_v2/internal/utils"
-	"synaply_v2/slogger"
+	"synaply/external/gemini"
+	"synaply/internal/middleware"
+	"synaply/internal/models"
+	"synaply/internal/repository/modelsDB"
+	"synaply/internal/service"
+	"synaply/internal/utils"
+	"synaply/slogger"
 )
 
 const ctxWithTimeout time.Duration = time.Second * 5

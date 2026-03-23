@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/slogger"
+	"synaply/slogger"
 )
 
 func LoggerMiddleware(next http.Handler) http.Handler {
