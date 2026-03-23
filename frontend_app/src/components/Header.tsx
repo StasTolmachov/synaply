@@ -92,6 +92,20 @@ export function Header() {
         <span className="md:hidden lg:inline">{t('common.dashboard')}</span>
       </Link>
       <Link
+        href="/public-lists"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+      >
+        <List className="w-4 h-4 mr-2 md:mr-1 text-orange-500" />
+        <span className="md:hidden lg:inline">{t('dashboard.public_lists.title')}</span>
+      </Link>
+      <Link
+        href="/help"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+      >
+        <HelpCircle className="w-4 h-4 mr-2 md:mr-1 text-blue-500" />
+        <span className="md:hidden lg:inline">{t('common.help')}</span>
+      </Link>
+      <Link
         href="/lesson"
         className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >

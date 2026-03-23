@@ -21,11 +21,21 @@ const Footer = () => {
         <div className="mb-4 text-center text-sm text-gray-600 dark:text-gray-400">
           <p>© {year || '...'} Synaply. {t('common.all_rights_reserved')}</p>
         </div>
-        <nav className="mb-4 flex justify-center gap-8" aria-label="Footer Navigation">
+        <nav className="mb-4 flex justify-center gap-6 sm:gap-8 flex-wrap" aria-label="Footer Navigation">
           <Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('common.terms')}</Link>
           <Link href="/help" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('common.help')}</Link>
           <Link href="/public-lists" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('dashboard.public_lists.title')}</Link>
+          <a href="/sitemap.xml" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">Sitemap</a>
         </nav>
+        <div className="mb-4 flex justify-center gap-4 flex-wrap">
+          <Link href="/en" locale="en" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">English</Link>
+          <Link href="/ru" locale="ru" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Русский</Link>
+          <Link href="/es" locale="es" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Español</Link>
+          <Link href="/de" locale="de" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Deutsch</Link>
+          <Link href="/fr" locale="fr" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Français</Link>
+          <Link href="/pt" locale="pt" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Português</Link>
+          <Link href="/tr" locale="tr" className="text-xs text-gray-500 hover:text-synaply-blue dark:text-gray-500 dark:hover:text-synaply-cyan transition-colors">Türkçe</Link>
+        </div>
         <div className="mb-4 text-center text-sm text-gray-600 dark:text-gray-400">
           <p>
             {t('common.footer_help_text')}
