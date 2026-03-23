@@ -24,7 +24,7 @@ jobs:
             set -e
             
             # Go to the project folder
-            cd /root/synaply_v2
+            cd /root/synaply
             
             # 1. Download ALL fresh updates from GitHub to the server buffer
             git fetch origin

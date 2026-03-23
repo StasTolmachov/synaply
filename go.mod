@@ -1,4 +1,4 @@
-module synaply_v2
+module synaply
 
 go 1.26
 
