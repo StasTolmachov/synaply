@@ -10,7 +10,7 @@ export const routing = defineRouting({
   defaultLocale: 'en',
   
   // Автоматический редирект на подпапку локали (например, /dashboard -> /en/dashboard)
-  localePrefix: 'as-needed'
+  localePrefix: 'always'
 });
 
 // Обертки для навигации, которые автоматически добавляют локаль в URL
