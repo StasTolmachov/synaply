@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Učte sa slovíčka s AI a fázovým opakovaním",
+    "title": "Synaply - Učte sa slovíčka s AI a fázovým opakovaním",
     "description": "Zlepšite svoje jazykové zručnosti pomocou fázového opakovania poháňaného AI. Vytvárajte si vlastné zoznamy slovíčok alebo sa učte zo zdieľaných verejných zoznamov.",
     "keywords": "učiť sa anglicky, fázové opakovanie, budovanie slovnej zásoby, kartičky, AI učenie jazykov, zoznamy slov, aplikácia na štúdium jazykov, učiť sa španielsky, učiť sa francúzsky, učiť sa nemecky, jazyková úroveň, zapamätanie slov, SRS učenie",
-    "og_title": "WordsGo - Inteligentné učenie slovíčok",
+    "og_title": "Synaply - Inteligentné učenie slovíčok",
     "og_description": "Zlepšite svoje jazykové zručnosti pomocou fázového opakovania poháňaného AI. Učte sa rýchlejšie, pamätajte si dlhšie.",
-    "og_image_alt": "Rozhranie aplikácie WordsGo AI na učenie jazykov",
-    "twitter_title": "WordsGo - Učte sa nové slovíčka bez námahy",
-    "twitter_description": "Pridajte sa k WordsGo a rozšírte si slovnú zásobu pomocou inteligentného fázového opakovania a AI."
+    "og_image_alt": "Rozhranie aplikácie Synaply AI na učenie jazykov",
+    "twitter_title": "Synaply - Učte sa nové slovíčka bez námahy",
+    "twitter_description": "Pridajte sa k Synaply a rozšírte si slovnú zásobu pomocou inteligentného fázového opakovania a AI."
   },
   "landing": {
     "public_lists": "Verejné zoznamy",
@@ -144,10 +144,10 @@
     "support_title": "Podporte projekt",
     "support_desc": "Ak sa vám táto aplikácia páči, môžete podporiť jej vývoj.",
     "onboarding": {
-      "welcome": "Vitajte vo WordsGo!",
+      "welcome": "Vitajte vo Synaply!",
       "journey_begins": "Vaša cesta k majstrovskému ovládaniu jazyka začína tu.",
       "best_practice": "Najlepšie postupy pre úspech",
-      "strategy_desc": "Ak chcete z WordsGo vyťažiť maximum, odporúčame túto jednoduchú stratégiu:",
+      "strategy_desc": "Ak chcete z Synaply vyťažiť maximum, odporúčame túto jednoduchú stratégiu:",
       "step1_title": "Zamerajte sa na tému",
       "step1_desc": "Pridajte si približne <strong>100 slov</strong> súvisiacich s jednou témou (napr. Obchod alebo Cestovanie), aby ste si vytvorili silný kontext.",
       "step2_title": "Denné opakovanie",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Zmluvné podmienky",
-    "terms_welcome": "Vitajte vo WordsGo. Používaním našich služieb súhlasíte s týmito podmienkami...",
+    "terms_welcome": "Vitajte vo Synaply. Používaním našich služieb súhlasíte s týmito podmienkami...",
     "title": "Nastavenia profilu",
     "first_name": "Krstné meno",
     "last_name": "Priezvisko",
@@ -286,7 +286,7 @@
     "subtitle": "Spravujte svoje osobné údaje a jazykové nastavenia"
   },
   "login": {
-    "title": "Prihláste sa do wordsGo",
+    "title": "Prihláste sa do synaply",
     "email": "E-mailová adresa",
     "password": "Heslo",
     "sign_in": "Prihlásiť sa",
@@ -307,7 +307,7 @@
     "login": "Prihláste sa tu"
   },
   "help": {
-    "title": "Ako používať WordsGo",
+    "title": "Ako používať Synaply",
     "best_practice": {
       "title": "Najlepšie postupy pre úspech",
       "strategy_desc": "Pre najefektívnejšie učenie odporúčame túto jednoduchú stratégiu v 3 krokoch:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Začíname",
-      "desc": "WordsGo je výkonný nástroj navrhnutý tak, aby vám pomohol rozšíriť si slovnú zásobu a zlepšiť jazykové zručnosti pomocou fázového opakovania a umelej inteligencie.",
+      "desc": "Synaply je výkonný nástroj navrhnutý tak, aby vám pomohol rozšíriť si slovnú zásobu a zlepšiť jazykové zručnosti pomocou fázového opakovania a umelej inteligencie.",
       "step1_title": "Krok 1: Pridanie slov",
       "step1_desc": "Pridávajte slovíčka manuálne alebo použite AI na generovanie zoznamov podľa tém a úrovní.",
       "step2_title": "Krok 2: Denné precvičovanie",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Fázové opakovanie",
-      "desc": "WordsGo využíva algoritmus FSRS (Free Spaced Repetition Scheduler) na výpočet ideálneho času pre zopakovanie každého slova.",
+      "desc": "Synaply využíva algoritmus FSRS (Free Spaced Repetition Scheduler) na výpočet ideálneho času pre zopakovanie každého slova.",
       "process_title": "Proces opakovania",
       "step1": "Zobrazí sa vám slovo v pôvodnom jazyku.",
       "step2": "Zadajte preklad a stlačte <strong>Enter</strong> alebo <strong>Skontrolovať odpoveď</strong>.",

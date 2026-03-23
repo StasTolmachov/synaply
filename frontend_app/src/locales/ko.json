@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI 및 간격 반복을 통한 어휘 학습",
+    "title": "Synaply - AI 및 간격 반복을 통한 어휘 학습",
     "description": "AI 기반 간격 반복으로 언어 실력을 향상시키세요. 맞춤형 단어장을 만들거나 커뮤니티에서 공유된 공개 리스트로 학습하세요.",
     "keywords": "영어 학습, 간격 반복, 어휘력 향상, 플래시카드, AI 언어 학습, 단어장, 언어 공부 앱, 스페인어 학습, 프랑스어 학습, 독일어 학습, 언어 능숙도, 단어 암기, SRS 학습",
-    "og_title": "WordsGo - 스마트한 어휘 학습",
+    "og_title": "Synaply - 스마트한 어휘 학습",
     "og_description": "AI 기반 간격 반복으로 언어 실력을 향상시키세요. 더 빨리 배우고 더 오래 기억하세요.",
-    "og_image_alt": "WordsGo AI 언어 학습 앱 인터페이스",
-    "twitter_title": "WordsGo - 손쉬운 단어 암기",
-    "twitter_description": "스마트한 간격 반복과 AI를 사용하여 WordsGo에서 어휘를 확장하세요."
+    "og_image_alt": "Synaply AI 언어 학습 앱 인터페이스",
+    "twitter_title": "Synaply - 손쉬운 단어 암기",
+    "twitter_description": "스마트한 간격 반복과 AI를 사용하여 Synaply에서 어휘를 확장하세요."
   },
   "landing": {
     "public_lists": "공개 리스트",
@@ -144,10 +144,10 @@
     "support_title": "프로젝트 후원",
     "support_desc": "이 앱이 마음에 드신다면 개발을 후원하실 수 있습니다.",
     "onboarding": {
-      "welcome": "WordsGo에 오신 것을 환영합니다!",
+      "welcome": "Synaply에 오신 것을 환영합니다!",
       "journey_begins": "언어 마스터를 위한 여정이 여기서 시작됩니다.",
       "best_practice": "성공적인 학습을 위한 팁",
-      "strategy_desc": "WordsGo를 최대한 활용하려면 이 간단한 전략을 권장합니다:",
+      "strategy_desc": "Synaply를 최대한 활용하려면 이 간단한 전략을 권장합니다:",
       "step1_title": "주제에 집중하기",
       "step1_desc": "강력한 문맥 형성을 위해 한 가지 주제(예: 비즈니스 또는 여행)와 관련된 단어를 약 <strong>100개</strong> 추가하세요.",
       "step2_title": "매일 복습하기",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "이용 약관",
-    "terms_welcome": "WordsGo에 오신 것을 환영합니다. 서비스를 이용함으로써 귀하는 다음 약관에 동의하게 됩니다...",
+    "terms_welcome": "Synaply에 오신 것을 환영합니다. 서비스를 이용함으로써 귀하는 다음 약관에 동의하게 됩니다...",
     "title": "프로필 설정",
     "first_name": "이름",
     "last_name": "성",
@@ -286,7 +286,7 @@
     "subtitle": "개인 정보 및 언어 설정을 관리하세요"
   },
   "login": {
-    "title": "wordsGo 로그인",
+    "title": "synaply 로그인",
     "email": "이메일 주소",
     "password": "비밀번호",
     "sign_in": "로그인",
@@ -307,7 +307,7 @@
     "login": "여기에서 로그인"
   },
   "help": {
-    "title": "WordsGo 사용 방법",
+    "title": "Synaply 사용 방법",
     "best_practice": {
       "title": "성공적인 학습을 위한 팁",
       "strategy_desc": "가장 효과적인 학습 경험을 위해 다음의 간단한 3단계 전략을 추천합니다:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "시작하기",
-      "desc": "WordsGo는 간격 반복과 인공지능을 사용하여 어휘를 확장하고 언어 실력을 향상시킬 수 있도록 설계된 강력한 도구입니다.",
+      "desc": "Synaply는 간격 반복과 인공지능을 사용하여 어휘를 확장하고 언어 실력을 향상시킬 수 있도록 설계된 강력한 도구입니다.",
       "step1_title": "1단계: 단어 추가",
       "step1_desc": "단어를 수동으로 추가하거나 AI를 사용하여 주제별, 레벨별로 리스트를 생성하세요.",
       "step2_title": "2단계: 매일 연습",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "간격 반복",
-      "desc": "WordsGo는 FSRS(Free Spaced Repetition Scheduler) 알고리즘을 사용하여 각 단어를 반복하기에 가장 이상적인 시간을 계산합니다.",
+      "desc": "Synaply는 FSRS(Free Spaced Repetition Scheduler) 알고리즘을 사용하여 각 단어를 반복하기에 가장 이상적인 시간을 계산합니다.",
       "process_title": "복습 과정",
       "step1": "원본 언어로 된 단어가 표시됩니다.",
       "step2": "번역을 입력하고 <strong>Enter</strong> 키를 누르거나 <strong>정답 확인</strong>을 클릭합니다.",

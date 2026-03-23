@@ -10,14 +10,14 @@ import (
 	"syscall"
 	"time"
 
-	"wordsGo_v2/external/deepl"
-	"wordsGo_v2/external/gemini"
-	"wordsGo_v2/internal/cache"
-	"wordsGo_v2/internal/config"
-	"wordsGo_v2/internal/handler"
-	"wordsGo_v2/internal/repository"
-	"wordsGo_v2/internal/service"
-	"wordsGo_v2/slogger"
+	"synaply_v2/external/deepl"
+	"synaply_v2/external/gemini"
+	"synaply_v2/internal/cache"
+	"synaply_v2/internal/config"
+	"synaply_v2/internal/handler"
+	"synaply_v2/internal/repository"
+	"synaply_v2/internal/service"
+	"synaply_v2/slogger"
 )
 
 func StartServer(cfg config.Config) {

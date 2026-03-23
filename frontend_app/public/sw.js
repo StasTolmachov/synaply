@@ -1,5 +1,5 @@
-const CACHE_NAME = 'wordsgo-v3';
-const API_CACHE_NAME = 'wordsgo-api-v1';
+const CACHE_NAME = 'synaply-v3';
+const API_CACHE_NAME = 'synaply-api-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.json',

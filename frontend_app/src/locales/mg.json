@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Mianatra voambolana amin'ny alalan'ny AI & Spaced Repetition",
+    "title": "Synaply - Mianatra voambolana amin'ny alalan'ny AI & Spaced Repetition",
     "description": "Hamafiso ny fahaizanao fiteny amin'ny alalan'ny famerimberenana misy elanelana ampiasain'ny AI. Mamoròna lisitry ny teny manokana na mianara avy amin'ny lisitra iombonana nozarain'ny fiarahamonina.",
     "keywords": "mianatra teny anglisy, famerimberenana misy elanelana, fananganana voambolana, karatra fitadidiana, fianarana fiteny AI, lisitry ny teny, fampiharana fianarana fiteny, mianatra teny espaniola, mianatra teny frantsay, mianatra teny alemana, fahaizana fiteny, mitadidy teny, fianarana SRS",
-    "og_title": "WordsGo - Fianarana Voambolana Maranitra",
+    "og_title": "Synaply - Fianarana Voambolana Maranitra",
     "og_description": "Hamafiso ny fahaizanao fiteny amin'ny alalan'ny famerimberenana misy elanelana ampiasain'ny AI. Mianara haingana kokoa, tadidio mandritra ny fotoana lava kokoa.",
-    "og_image_alt": "Interface-n'ny Fampiharana Fianarana Fiteny WordsGo AI",
-    "twitter_title": "WordsGo - Mianara Teny Vaovao mora foana",
-    "twitter_description": "Midira ao amin'ny WordsGo mba hanitarana ny voambolanao amin'ny alalan'ny famerimberenana misy elanelana maranitra sy AI."
+    "og_image_alt": "Interface-n'ny Fampiharana Fianarana Fiteny Synaply AI",
+    "twitter_title": "Synaply - Mianara Teny Vaovao mora foana",
+    "twitter_description": "Midira ao amin'ny Synaply mba hanitarana ny voambolanao amin'ny alalan'ny famerimberenana misy elanelana maranitra sy AI."
   },
   "landing": {
     "public_lists": "Lisitra ho an'ny daholobe",
@@ -144,10 +144,10 @@
     "support_title": "Hanohana ny Tetikasa",
     "support_desc": "Raha tianao ity fampiharana ity, azonao atao ny manohana ny fivoarany.",
     "onboarding": {
-      "welcome": "Tongasoa eto amin'ny WordsGo!",
+      "welcome": "Tongasoa eto amin'ny Synaply!",
       "journey_begins": "Eto no manomboka ny dianao mankany amin'ny fifehezana fiteny.",
       "best_practice": "Fomba Tsara Indrindra ho an'ny Fahombiazana",
-      "strategy_desc": "Mba hahazoana tombony betsaka amin'ny WordsGo, manolotra ity paikady tsotra ity izahay:",
+      "strategy_desc": "Mba hahazoana tombony betsaka amin'ny Synaply, manolotra ity paikady tsotra ity izahay:",
       "step1_title": "Hifantoka amin'ny Lohahevitra iray",
       "step1_desc": "Ampio teny <strong>eo amin'ny 100 eo</strong> mifandraika amin'ny lohahevitra iray (ohatra: Fandraharahana na Fitsangatsanganana) mba hamoronana toe-javatra matanjaka.",
       "step2_title": "Famerenana Isan'andro",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Fepetra fampiasana",
-    "terms_welcome": "Tongasoa eto amin'ny WordsGo. Amin'ny fampiasanao ny serivisinay, dia manaiky ireto fepetra ireto ianao...",
+    "terms_welcome": "Tongasoa eto amin'ny Synaply. Amin'ny fampiasanao ny serivisinay, dia manaiky ireto fepetra ireto ianao...",
     "title": "Fandaminana ny Piraofilina",
     "first_name": "Anarana",
     "last_name": "Anaram-pianakaviana",
@@ -286,7 +286,7 @@
     "subtitle": "Hitantana ny fampahalalana manokana sy ny fandaminana fiteny"
   },
   "login": {
-    "title": "Hiditra ao amin'ny wordsGo",
+    "title": "Hiditra ao amin'ny synaply",
     "email": "Adiresy imailaka",
     "password": "Tenimiafina",
     "sign_in": "Hiditra",
@@ -307,7 +307,7 @@
     "login": "Hiditra eto"
   },
   "help": {
-    "title": "Fomba fampiasana ny WordsGo",
+    "title": "Fomba fampiasana ny Synaply",
     "best_practice": {
       "title": "Fomba Tsara Indrindra ho an'ny Fahombiazana",
       "strategy_desc": "Ho an'ny traikefa fianarana mandaitra indrindra, manolotra ity paikady tsotra misy dingana 3 ity izahay:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Fanombohana",
-      "desc": "Ny WordsGo dia fitaovana mahery vaika natao hanampiana anao hanitatra ny voambolanao sy hanatsara ny fahaizanao fiteny amin'ny fampiasana ny famerimberenana misy elanelana sy ny faharanitan-tsaina namboarina (AI).",
+      "desc": "Ny Synaply dia fitaovana mahery vaika natao hanampiana anao hanitatra ny voambolanao sy hanatsara ny fahaizanao fiteny amin'ny fampiasana ny famerimberenana misy elanelana sy ny faharanitan-tsaina namboarina (AI).",
       "step1_title": "Dingana 1: Manampy Teny",
       "step1_desc": "Ampio amin'ny tanana the teny na ampiasao ny AI mba hamoronana lisitra araka ny lohahevitra sy ny haavo.",
       "step2_title": "Dingana 2: Fampiharana Isan'andro",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Famerimberenana misy Elanelana",
-      "desc": "Ny WordsGo dia mampiasa the algorithm FSRS (Free Spaced Repetition Scheduler) mba hikajiana the fotoana tsara indrindra hamerimberenana the teny tsirairay.",
+      "desc": "Ny Synaply dia mampiasa the algorithm FSRS (Free Spaced Repetition Scheduler) mba hikajiana the fotoana tsara indrindra hamerimberenana the teny tsirairay.",
       "process_title": "Dingana Famerenana",
       "step1": "Aseho anao the teny iray amin'ny fiteny tany am-boalohany.",
       "step2": "Ampidiro the dikany ary tsindrio the <strong>Enter</strong> na <strong>Hanamarina ny Valiny</strong>.",

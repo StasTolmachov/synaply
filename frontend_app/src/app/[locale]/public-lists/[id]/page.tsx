@@ -20,23 +20,24 @@ async function getPublicList(id: string) {
 export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }): Promise<Metadata> {
   const { id, locale } = await params;
   const list = await getPublicList(id);
+  const t = await getTranslations({ locale, namespace: 'common' });
   
   if (!list) {
     return {
-      title: 'List Not Found | WordsGo',
+      title: 'List Not Found | Synaply',
     };
   }
 
   const baseUrl = "https://synaply.me";
 
   return {
-    title: `${list.title} | WordsGo`,
+    title: `${list.title} | Synaply`,
     description: list.description || `Explore this public word list: ${list.title} (${list.source_lang} to ${list.target_lang})`,
     alternates: {
       canonical: `${baseUrl}/${locale}/public-lists/${id}`,
     },
     openGraph: {
-      title: `${list.title} | WordsGo`,
+      title: `${list.title} | Synaply`,
       description: list.description,
       url: `${baseUrl}/${locale}/public-lists/${id}`,
       type: 'article',
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${list.title} | WordsGo`,
+      title: `${list.title} | Synaply`,
       description: list.description,
       images: ["/opengraph-image.png"],
     },
@@ -61,6 +62,34 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function PublicListDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
   const { id, locale } = await params;
   const list = await getPublicList(id);
+  const t = await getTranslations({ locale, namespace: 'dashboard.public_lists' });
+  const tCommon = await getTranslations({ locale, namespace: 'common' });
+  const baseUrl = "https://synaply.me";
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${baseUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('title'),
+        item: `${baseUrl}/${locale}/public-lists`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: list?.title || id,
+        item: `${baseUrl}/${locale}/public-lists/${id}`,
+      },
+    ],
+  };
 
   const jsonLd = list ? {
     '@context': 'https://schema.org',
@@ -82,6 +111,12 @@ export default async function PublicListDetailPage({ params }: { params: Promise
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       )}
       <PublicListDetailClient id={id} />

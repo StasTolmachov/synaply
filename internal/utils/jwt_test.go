@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	"wordsGo_v2/internal/config"
+	"synaply_v2/internal/config"
 )
 
 func TestJWT(t *testing.T) {

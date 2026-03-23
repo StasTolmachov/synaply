@@ -133,26 +133,25 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-10">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-gray-900 shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-          <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 flex justify-between items-center">
+    <div className="min-h-screen bg-transparent py-10">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 overflow-hidden">
+          <div className="p-6 border-b border-white/20 dark:border-gray-800/50 bg-white/50 dark:bg-gray-800/30 flex justify-between items-center">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-                <UserIcon className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" />
+              <h1 className="text-3xl font-extrabold synaply-gradient-text tracking-tight uppercase">
                 {t('profile.title')}
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('profile.subtitle')}</p>
+              </h1>
+              <p className="text-sm font-bold text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-widest">{t('profile.subtitle')}</p>
             </div>
             <Link 
               href="/dashboard"
-              className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-bold rounded-full text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all"
             >
               <LayoutDashboard className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" />
               {t('common.dashboard')}
@@ -162,25 +161,25 @@ export default function Profile() {
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
                   {t('profile.first_name')}
                 </label>
                 <input
                   type="text"
                   required
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                   value={formData.first_name}
                   onChange={e => setFormData({ ...formData, first_name: e.target.value })}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
                   {t('profile.last_name')}
                 </label>
                 <input
                   type="text"
                   required
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                   value={formData.last_name}
                   onChange={e => setFormData({ ...formData, last_name: e.target.value })}
                 />
@@ -188,27 +187,27 @@ export default function Profile() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider flex items-center">
                 <Mail className="w-4 h-4 mr-1 text-gray-400" />
                 {t('profile.email')}
               </label>
               <input
                 type="email"
                 required
-                className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-gray-100 dark:border-gray-800">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/20 dark:border-gray-800/50">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider flex items-center">
                   <Globe className="w-4 h-4 mr-1 text-gray-400" />
                   {t('profile.interface_lang')}
                 </label>
                 <select
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                   value={formData.source_lang}
                   onChange={e => setFormData({ ...formData, source_lang: e.target.value })}
                 >
@@ -218,12 +217,12 @@ export default function Profile() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
-                  <Globe className="w-4 h-4 mr-1 text-blue-400 dark:text-blue-500" />
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider flex items-center">
+                  <Globe className="w-4 h-4 mr-1 text-synaply-blue dark:text-synaply-cyan" />
                   {t('profile.learning_lang')}
                 </label>
                 <select
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                   value={formData.target_lang}
                   onChange={e => setFormData({ ...formData, target_lang: e.target.value })}
                 >
@@ -234,14 +233,14 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
+            <div className="pt-4 border-t border-white/20 dark:border-gray-800/50">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider flex items-center">
                 <Lock className="w-4 h-4 mr-1 text-gray-400" />
                 {t('profile.change_password')}
               </label>
               <input
                 type="password"
-                className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={e => setFormData({ ...formData, password: e.target.value })}
@@ -262,14 +261,14 @@ export default function Profile() {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                className="text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 uppercase tracking-widest"
               >
                 {t('common.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
+                className="inline-flex justify-center items-center px-8 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue-shadow text-white synaply-gradient-bg hover:opacity-90 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple disabled:opacity-50 transition-all"
               >
                 {saving ? (
                   <>

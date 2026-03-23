@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo – mokykitės žodyno su DI ir intervalinio kartojimo metodu",
+    "title": "Synaply – mokykitės žodyno su DI ir intervalinio kartojimo metodu",
     "description": "Tobulinkite užsienio kalbų įgūdžius naudodami DI pagrįstą intervalinį kartojimą. Kurkite savo žodžių sąrašus arba mokykitės iš bendruomenės viešų sąrašų.",
     "keywords": "mokytis anglų kalbos, intervalinis kartojimas, žodyno plėtimas, kortelės, DI kalbų mokymasis, žodžių sąrašai, kalbų mokymosi programėlė, mokytis ispanų kalbos, mokytis prancūzų kalbos, mokytis vokiečių kalbos, kalbos mokėjimas, įsiminti žodžius, SRS mokymasis",
-    "og_title": "WordsGo – išmanus žodyno mokymasis",
+    "og_title": "Synaply – išmanus žodyno mokymasis",
     "og_description": "Tobulinkite kalbų įgūdžius naudodami DI pagrįstą intervalinį kartojimą. Mokykitės greičiau, prisiminkite ilgiau.",
-    "og_image_alt": "WordsGo DI kalbų mokymosi programėlės sąsaja",
-    "twitter_title": "WordsGo – mokykitės naujų žodžių be vargo",
-    "twitter_description": "Prisijunkite prie WordsGo ir plėskite žodyną naudodami išmanųjį intervalinį kartojimą bei DI."
+    "og_image_alt": "Synaply DI kalbų mokymosi programėlės sąsaja",
+    "twitter_title": "Synaply – mokykitės naujų žodžių be vargo",
+    "twitter_description": "Prisijunkite prie Synaply ir plėskite žodyną naudodami išmanųjį intervalinį kartojimą bei DI."
   },
   "landing": {
     "public_lists": "Viešieji sąrašai",
@@ -144,10 +144,10 @@
     "support_title": "Remti projektą",
     "support_desc": "Jei jums patinka ši programėlė, galite paremti jos kūrimą.",
     "onboarding": {
-      "welcome": "Sveiki atvykę į WordsGo!",
+      "welcome": "Sveiki atvykę į Synaply!",
       "journey_begins": "Jūsų kelionė į kalbos įvaldymą prasideda čia.",
       "best_practice": "Geriausia sėkmės praktika",
-      "strategy_desc": "Norėdami išnaudoti WordsGo geriausiai, rekomenduojame šią paprastą strategiją:",
+      "strategy_desc": "Norėdami išnaudoti Synaply geriausiai, rekomenduojame šią paprastą strategiją:",
       "step1_title": "Susikoncentruokite į temą",
       "step1_desc": "Pridėkite apie <strong>100 žodžių</strong>, susijusių su viena tema (pvz., Verslas ar Kelionės), kad sukurtumėte stiprų kontekstą.",
       "step2_title": "Kasdienis kartojimas",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Paslaugų teikimo sąlygos",
-    "terms_welcome": "Sveiki atvykę į WordsGo. Naudodamiesi mūsų paslaugomis, jūs sutinkate su šiomis sąlygomis...",
+    "terms_welcome": "Sveiki atvykę į Synaply. Naudodamiesi mūsų paslaugomis, jūs sutinkate su šiomis sąlygomis...",
     "title": "Profilio nustatymai",
     "first_name": "Vardas",
     "last_name": "Pavardė",
@@ -286,7 +286,7 @@
     "subtitle": "Valdykite savo asmeninę informaciją ir kalbos nustatymus"
   },
   "login": {
-    "title": "Prisijungti prie WordsGo",
+    "title": "Prisijungti prie Synaply",
     "email": "El. pašto adresas",
     "password": "Slaptažodis",
     "sign_in": "Prisijungti",
@@ -307,7 +307,7 @@
     "login": "Prisijungti čia"
   },
   "help": {
-    "title": "Kaip naudotis WordsGo",
+    "title": "Kaip naudotis Synaply",
     "best_practice": {
       "title": "Geriausia sėkmės praktika",
       "strategy_desc": "Siekdami efektyviausio mokymosi, rekomenduojame šią paprastą 3 žingsnių strategiją:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Darbo pradžia",
-      "desc": "WordsGo yra galingas įrankis, sukurtas padėti jums plėsti žodyną ir tobulinti kalbos įgūdžius naudojant intervalinį kartojimą ir dirbtinį intelektą.",
+      "desc": "Synaply yra galingas įrankis, sukurtas padėti jums plėsti žodyną ir tobulinti kalbos įgūdžius naudojant intervalinį kartojimą ir dirbtinį intelektą.",
       "step1_title": "1 žingsnis: Pridėkite žodžius",
       "step1_desc": "Pridėkite žodžius rankiniu būdu arba naudokite DI, kad sugeneruotumėte sąrašus pagal temas ir lygius.",
       "step2_title": "2 žingsnis: Kasdienė praktika",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Intervalinis kartojimas",
-      "desc": "WordsGo naudoja FSRS (Free Spaced Repetition Scheduler) algoritmą, kad apskaičiuotų idealų laiką kiekvieno žodžio kartojimui.",
+      "desc": "Synaply naudoja FSRS (Free Spaced Repetition Scheduler) algoritmą, kad apskaičiuotų idealų laiką kiekvieno žodžio kartojimui.",
       "process_title": "Kartojimo procesas",
       "step1": "Jums parodomas žodis originalo kalba.",
       "step2": "Įveskite vertimą ir paspauskite <strong>Enter</strong> arba <strong>Patikrinti atsakymą</strong>.",

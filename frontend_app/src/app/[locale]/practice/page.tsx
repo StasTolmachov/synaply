@@ -218,7 +218,7 @@ export default function PracticePage() {
                 <button
                   onClick={handleSubmitTranslation}
                   disabled={loading || !userTranslation.trim()}
-                  className="flex-1 flex justify-center items-center px-6 py-4 border border-transparent text-base font-bold rounded-xl shadow-md text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 dark:disabled:bg-blue-900/50 transition-all"
+                  className="flex-1 flex justify-center items-center px-6 py-4 border border-transparent text-base font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue disabled:opacity-50 transition-all"
                 >
                   {loading && state === 'translating' ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Send className="w-5 h-5 mr-2" />}
                   {t('dashboard.submit_practice')}
@@ -275,7 +275,7 @@ export default function PracticePage() {
 
                         <div>
                           <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold mb-1">{t('dashboard.ideal_translation')}</p>
-                          <p className="text-blue-700 dark:text-blue-400 font-medium">{result.ideal_translation}</p>
+                          <p className="text-synaply-blue dark:text-synaply-cyan font-bold">{result.ideal_translation}</p>
                         </div>
                       </div>
                     </div>

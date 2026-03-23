@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Apprendre le vocabulaire avec l'IA et la répétition espacée",
-    "description": "Améliorez vos compétences linguistiques grâce à la répétition espacée assistée par l'IA. Créez des listes de mots personnalisées ou apprenez à partir de listes publiques partagées par la communauté.",
-    "keywords": "apprendre l'anglais, répétition espacée, constructeur de vocabulaire, flashcards, apprentissage des langues par l'IA, listes de mots, application d'étude des langues, apprendre l'espagnol, apprendre le français, apprendre l'allemand, maîtrise de la langue, mémoriser des mots, apprentissage SRS",
-    "og_title": "WordsGo - Apprentissage Intelligent du Vocabulaire",
+    "title": "Synaply - Créer des synapses avec des algorithmes alimentés par l'IA",
+    "description": "Maîtrisez n'importe quelle langue grâce à notre algorithme scientifique qui crée et renforce les synapses neuronales, consolidé par une IA avancée.",
+    "keywords": "construction de synapses, apprentissage neuronal des langues, répétition espacée scientifique, algorithme FSRS, vocabulaire IA, apprentissage basé sur le cerveau, science de la mémorisation",
+    "og_title": "Synaply - Apprentissage Intelligent du Vocabulaire",
     "og_description": "Améliorez vos compétences linguistiques grâce à la répétition espacée assistée par l'IA. Apprenez plus vite, retenez plus longtemps.",
-    "og_image_alt": "Interface de l'application d'apprentissage des langues WordsGo AI",
-    "twitter_title": "WordsGo - Apprenez de nouveaux mots sans effort",
-    "twitter_description": "Rejoignez WordsGo pour enrichir votre vocabulaire grâce à la répétition espacée intelligente et à l'IA."
+    "og_image_alt": "Interface de l'application d'apprentissage des langues Synaply AI",
+    "twitter_title": "Synaply - Apprenez de nouveaux mots sans effort",
+    "twitter_description": "Rejoignez Synaply pour enrichir votre vocabulaire grâce à la répétition espacée intelligente et à l'IA."
   },
   "landing": {
     "public_lists": "Listes publiques",
@@ -144,17 +144,17 @@
     "support_title": "Soutenir le projet",
     "support_desc": "Si vous aimez cette application, vous pouvez soutenir son développement.",
     "onboarding": {
-      "welcome": "Bienvenue sur WordsGo !",
-      "journey_begins": "Votre voyage vers la maîtrise de la langue commence ici.",
+      "welcome": "Bienvenue sur Synaply !",
+      "journey_begins": "Commencez à créer des connexions neuronales durables dès aujourd'hui.",
       "best_practice": "Meilleures pratiques pour réussir",
-      "strategy_desc": "Pour tirer le meilleur parti de WordsGo, nous recommandons cette stratégie simple :",
-      "step1_title": "Concentrez-vous sur un sujet",
+      "strategy_desc": "Pour tirer le meilleur parti de Synaply, nous recommandons cette stratégie simple :",
+      "step1_title": "Focus sur un thème",
       "step1_desc": "Ajoutez environ <strong>100 mots</strong> liés à un seul sujet (ex: Affaires ou Voyage) pour créer un contexte fort.",
-      "step2_title": "Révisions quotidiennes",
-      "step2_desc": "Maîtrisez ces mots par une <strong>répétition quotidienne</strong> jusqu'à ce qu'ils fassent partie de votre vocabulaire.",
+      "step2_title": "Construire des synapses",
+      "step2_desc": "Renforcez les voies neuronales grâce à la <strong>répétition scientifique</strong> jusqu'à ce que les mots soient gravés dans votre mémoire.",
       "step3_title": "Pratique IA",
       "step3_desc": "Passez à la <strong>Pratique IA</strong> pour utiliser votre nouveau vocabulaire dans des phrases complètes et des situations réelles.",
-      "got_it": "Compris, commençons !"
+      "got_it": "Compris, c'est parti !"
     },
     "generate_ai_title": "Générer une liste de mots avec l'IA",
     "proficiency_level": "Niveau de compétence",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Conditions d'utilisation",
-    "terms_welcome": "Bienvenue sur WordsGo. En utilisant nos services, vous acceptez ces conditions...",
+    "terms_welcome": "Bienvenue sur Synaply. En utilisant nos services, vous acceptez ces conditions...",
     "title": "Paramètres du profil",
     "first_name": "Prénom",
     "last_name": "Nom",
@@ -286,7 +286,7 @@
     "subtitle": "Gérez vos informations personnelles et vos paramètres de langue"
   },
   "login": {
-    "title": "Connectez-vous à WordsGo",
+    "title": "Connectez-vous à Synaply",
     "email": "Adresse e-mail",
     "password": "Mot de passe",
     "sign_in": "Se connecter",
@@ -307,7 +307,7 @@
     "login": "Connectez-vous ici"
   },
   "help": {
-    "title": "Comment utiliser WordsGo",
+    "title": "Comment utiliser Synaply",
     "best_practice": {
       "title": "Meilleures pratiques pour réussir",
       "strategy_desc": "Pour une expérience d'apprentissage plus efficace, nous recommandons cette stratégie simple en 3 étapes :",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Démarrage",
-      "desc": "WordsGo est un outil puissant conçu pour vous aider à enrichir votre vocabulaire et à améliorer vos compétences linguistiques grâce à la répétition espacée et à l'intelligence artificielle.",
+      "desc": "Synaply est un outil puissant conçu pour vous aider à enrichir votre vocabulaire et à améliorer vos compétences linguistiques grâce à la répétition espacée et à l'intelligence artificielle.",
       "step1_title": "Étape 1 : Ajouter des mots",
       "step1_desc": "Ajoutez des mots manuellement ou utilisez l'IA pour générer des listes par sujets et par niveaux.",
       "step2_title": "Étape 2 : Pratique quotidienne",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Répétition espacée",
-      "desc": "WordsGo utilise l'algorithme FSRS (Free Spaced Repetition Scheduler) pour calculer le moment idéal pour réviser chaque mot.",
+      "desc": "Synaply utilise l'algorithme FSRS (Free Spaced Repetition Scheduler) pour calculer le moment idéal pour réviser chaque mot.",
       "process_title": "Processus de révision",
       "step1": "Un mot vous est présenté dans la langue d'origine.",
       "step2": "Saisissez la traduction et appuyez sur <strong>Entrée</strong> ou sur <strong>Vérifier la réponse</strong>.",

@@ -14,7 +14,7 @@ export const BuyMeACoffee = () => {
         {t('dashboard.support_desc')}
       </p>
       <div className="flex justify-center">
-        <a href="https://www.buymeacoffee.com/WordsGo" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.buymeacoffee.com/Synaply" target="_blank" rel="noopener noreferrer">
           <img 
             src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" 
             alt="Buy Me A Coffee" 

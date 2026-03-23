@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Pagkat-on sa Bokabularyo gamit ang AI ug Spaced Repetition",
+    "title": "Synaply - Pagkat-on sa Bokabularyo gamit ang AI ug Spaced Repetition",
     "description": "Pausbawa ang imong kahanas sa pinulongan gamit ang AI-powered spaced repetition. Paghimo og kaugalingong listahan sa mga pulong o pagkat-on gikan sa gipaambit sa komunidad nga mga publikong listahan.",
     "keywords": "pagkat-on og ingles, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, pagkat-on og spanish, pagkat-on og french, pagkat-on og german, language proficiency, pagsag-ulo sa mga pulong, SRS learning",
-    "og_title": "WordsGo - Maalamon nga Pagkat-on sa Bokabularyo",
+    "og_title": "Synaply - Maalamon nga Pagkat-on sa Bokabularyo",
     "og_description": "Pausbawa ang imong kahanas sa pinulongan gamit ang AI-powered spaced repetition. Pagkat-on og mas paspas, hinumdomi og mas dugay.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Pagkat-on og mga Bag-ong Pulong sa Sayon nga Paagi",
-    "twitter_description": "Apil sa WordsGo aron mapalapad ang imong bokabularyo gamit ang maalamon nga spaced repetition ug AI."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Pagkat-on og mga Bag-ong Pulong sa Sayon nga Paagi",
+    "twitter_description": "Apil sa Synaply aron mapalapad ang imong bokabularyo gamit ang maalamon nga spaced repetition ug AI."
   },
   "landing": {
     "public_lists": "Mga Publikong Listahan",
@@ -144,10 +144,10 @@
     "support_title": "Suportahi ang Proyekto",
     "support_desc": "Kon ganahan ka niini nga app, mahimo nimong suportahan ang pagpalambo niini.",
     "onboarding": {
-      "welcome": "Welcome sa WordsGo!",
+      "welcome": "Welcome sa Synaply!",
       "journey_begins": "Ang imong panaw padulong sa pagka-master sa pinulongan magsugod dinhi.",
       "best_practice": "Pinakamaayo nga Paagi para sa Kalampusan",
-      "strategy_desc": "Aron makuha ang pinakamaayo gikan sa WordsGo, among girekomendar kini nga yano nga estratehiya:",
+      "strategy_desc": "Aron makuha ang pinakamaayo gikan sa Synaply, among girekomendar kini nga yano nga estratehiya:",
       "step1_title": "Pag-focus sa usa ka Topiko",
       "step1_desc": "Pagdugang og mga <strong>100 ka pulong</strong> nga may kalabutan sa usa ka topiko (pananglitan, Business o Travel) aron makahimo og lig-on nga konteksto.",
       "step2_title": "Adlaw-adlaw nga Pagribyu",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Mga Termino sa Serbisyo",
-    "terms_welcome": "Welcome sa WordsGo. Pinaagi sa paggamit sa among mga serbisyo, miuyon ka niini nga mga termino...",
+    "terms_welcome": "Welcome sa Synaply. Pinaagi sa paggamit sa among mga serbisyo, miuyon ka niini nga mga termino...",
     "title": "Mga Setting sa Profile",
     "first_name": "Unang Ngalan",
     "last_name": "Apelyido",
@@ -286,7 +286,7 @@
     "subtitle": "Pagdumala sa imong personal nga impormasyon ug mga setting sa pinulongan"
   },
   "login": {
-    "title": "Sign in sa wordsGo",
+    "title": "Sign in sa synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Sign in",
@@ -307,7 +307,7 @@
     "login": "Log-in dinhi"
   },
   "help": {
-    "title": "Unsaon paggamit ang WordsGo",
+    "title": "Unsaon paggamit ang Synaply",
     "best_practice": {
       "title": "Pinakamaayo nga Paagi para sa Kalampusan",
       "strategy_desc": "Alang sa labing epektibo nga kasinatian sa pagkat-on, among girekomendar kining yano nga 3-ka-lakang nga estratehiya:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Pagsugod",
-      "desc": "Ang WordsGo usa ka gamhanan nga himan nga gidisenyo aron matabangan ka sa pagpalapad sa imong bokabularyo ug pagpalambo sa imong kahanas sa pinulongan gamit ang spaced repetition ug artificial intelligence.",
+      "desc": "Ang Synaply usa ka gamhanan nga himan nga gidisenyo aron matabangan ka sa pagpalapad sa imong bokabularyo ug pagpalambo sa imong kahanas sa pinulongan gamit ang spaced repetition ug artificial intelligence.",
       "step1_title": "Lakang 1: Pagdugang og mga Pulong",
       "step1_desc": "Idugang ang mga pulong sa mano-mano o gamita ang AI aron makahimo og mga listahan pinaagi sa mga topiko ug lebel.",
       "step2_title": "Lakang 2: Adlaw-adlaw nga Pagpraktis",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "Ang WordsGo naggamit sa FSRS (Free Spaced Repetition Scheduler) algorithm aron makalkulo ang ideal nga panahon sa pagsubli sa matag pulong.",
+      "desc": "Ang Synaply naggamit sa FSRS (Free Spaced Repetition Scheduler) algorithm aron makalkulo ang ideal nga panahon sa pagsubli sa matag pulong.",
       "process_title": "Proseso sa Pagribyu",
       "step1": "Pakit-on ka og pulong sa orihinal nga pinulongan.",
       "step2": "Ipasulod ang hubad ug i-press ang <strong>Enter</strong> o <strong>Susiha ang Tubag</strong>.",

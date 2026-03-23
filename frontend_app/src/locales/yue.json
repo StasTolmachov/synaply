@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - 使用 AI 同間隔重複學習詞彙",
+    "title": "Synaply - 使用 AI 同間隔重複學習詞彙",
     "description": "透過 AI 驅動嘅間隔重複技術提升你嘅語言技能。建立自訂單字表，或者從社群共享嘅公開列表學習。",
     "keywords": "學英文, 間隔重複, 詞彙構建, 閃卡, AI 語言學習, 單字表, 語言學習應用程式, 學西班牙文, 學法文, 學德文, 語言能力, 記單字, SRS 學習",
-    "og_title": "WordsGo - 智能詞彙學習",
+    "og_title": "Synaply - 智能詞彙學習",
     "og_description": "透過 AI 驅動嘅間隔重複技術提升你嘅語言技能。學得更快，記律更耐。",
-    "og_image_alt": "WordsGo AI 語言學習應用程式介面",
-    "twitter_title": "WordsGo - 輕輕鬆鬆學新字",
-    "twitter_description": "加入 WordsGo，利用智能間隔重複同 AI 擴展你嘅詞彙量。"
+    "og_image_alt": "Synaply AI 語言學習應用程式介面",
+    "twitter_title": "Synaply - 輕輕鬆鬆學新字",
+    "twitter_description": "加入 Synaply，利用智能間隔重複同 AI 擴展你嘅詞彙量。"
   },
   "landing": {
     "public_lists": "公開列表",
@@ -144,10 +144,10 @@
     "support_title": "支持本計劃",
     "support_desc": "如果你鍾意呢個應用程式，可以支持下我哋嘅開發。",
     "onboarding": {
-      "welcome": "歡迎嚟到 WordsGo！",
+      "welcome": "歡迎嚟到 Synaply！",
       "journey_begins": "你嘅語言精通之旅就由呢度開始。",
       "best_practice": "成功嘅最佳實踐",
-      "strategy_desc": "為咗充分利用 WordsGo，我哋建議呢個簡單嘅策略：",
+      "strategy_desc": "為咗充分利用 Synaply，我哋建議呢個簡單嘅策略：",
       "step1_title": "專注於一個主題",
       "step1_desc": "新增大約 <strong>100 個單字</strong> 關於單一主題（例如：商務或旅行）嚟建立強大嘅語境。",
       "step2_title": "每日複習",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "服務條款",
-    "terms_welcome": "歡迎嚟到 WordsGo。使用我哋嘅服務即表示你同意呢啲條款...",
+    "terms_welcome": "歡迎嚟到 Synaply。使用我哋嘅服務即表示你同意呢啲條款...",
     "title": "個人檔案設定",
     "first_name": "名",
     "last_name": "姓",
@@ -286,7 +286,7 @@
     "subtitle": "管理你嘅個人資訊同語言設定"
   },
   "login": {
-    "title": "登入 wordsGo",
+    "title": "登入 synaply",
     "email": "電郵地址",
     "password": "密碼",
     "sign_in": "登入",
@@ -307,7 +307,7 @@
     "login": "喺呢度登入"
   },
   "help": {
-    "title": "點樣用 WordsGo",
+    "title": "點樣用 Synaply",
     "best_practice": {
       "title": "成功嘅最佳實踐",
       "strategy_desc": "為咗攞到最有效嘅學習體驗，我哋建議呢個簡單嘅 3 步策略：",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "開始使用",
-      "desc": "WordsGo 係一個強大嘅工具，旨在透過間隔重複同人工智能幫你擴展詞彙量同提升語言技能。",
+      "desc": "Synaply 係一個強大嘅工具，旨在透過間隔重複同人工智能幫你擴展詞彙量同提升語言技能。",
       "step1_title": "第 1 步：新增單字",
       "step1_desc": "手動新增單字，或者用 AI 根據主題同等級生成列表。",
       "step2_title": "第 2 步：每日練習",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "間隔重複",
-      "desc": "WordsGo 使用 FSRS (Free Spaced Repetition Scheduler) 演算法嚟計算每個單字複習嘅理想時間。",
+      "desc": "Synaply 使用 FSRS (Free Spaced Repetition Scheduler) 演算法嚟計算每個單字複習嘅理想時間。",
       "process_title": "複習過程",
       "step1": "你會睇到原文語言嘅單字。",
       "step2": "輸入翻譯並按 <strong>Enter</strong> 或 <strong>檢查答案</strong>。",
