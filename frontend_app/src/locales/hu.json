@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Tanuljon szavakat MI és Időközölt Ismétlés segítségével",
+    "title": "Synaply - Tanuljon szavakat MI és Időközölt Ismétlés segítségével",
     "description": "Fejlessze nyelvtudását MI-alapú időközölt ismétléssel. Hozzon létre saját szólistákat, vagy tanuljon a közösség által megosztott nyilvános listákból.",
     "keywords": "angol tanulás, időközölt ismétlés, szókincsfejlesztő, szókártyák, MI nyelvtanulás, szólisták, nyelvtanuló alkalmazás, spanyol tanulás, francia tanulás, német tanulás, nyelvtudás, szavak megjegyzése, SRS tanulás",
-    "og_title": "WordsGo - Okos Szókincsfejlesztés",
+    "og_title": "Synaply - Okos Szókincsfejlesztés",
     "og_description": "Fejlessze nyelvtudását MI-alapú időközölt ismétléssel. Tanuljon gyorsabban, emlékezzen tovább.",
-    "og_image_alt": "WordsGo MI Nyelvtanuló Alkalmazás Interfész",
-    "twitter_title": "WordsGo - Tanuljon új szavakat erőfeszítés nélkül",
-    "twitter_description": "Csatlakozzon a WordsGo-hoz, és bővítse szókincsét okos időközölt ismétlés és MI segítségével."
+    "og_image_alt": "Synaply MI Nyelvtanuló Alkalmazás Interfész",
+    "twitter_title": "Synaply - Tanuljon új szavakat erőfeszítés nélkül",
+    "twitter_description": "Csatlakozzon a Synaply-hoz, és bővítse szókincsét okos időközölt ismétlés és MI segítségével."
   },
   "landing": {
     "public_lists": "Nyilvános listák",
@@ -144,10 +144,10 @@
     "support_title": "A projekt támogatása",
     "support_desc": "Ha tetszik az alkalmazás, támogathatja a fejlesztését.",
     "onboarding": {
-      "welcome": "Üdvözöljük a WordsGo-ban!",
+      "welcome": "Üdvözöljük a Synaply-ban!",
       "journey_begins": "A nyelvi fejlődése itt kezdődik.",
       "best_practice": "A siker kulcsa",
-      "strategy_desc": "Ahhoz, hogy a legtöbbet hozza ki a WordsGo-ból, a következő egyszerű stratégiát javasoljuk:",
+      "strategy_desc": "Ahhoz, hogy a legtöbbet hozza ki a Synaply-ból, a következő egyszerű stratégiát javasoljuk:",
       "step1_title": "Fókuszáljon egy témára",
       "step1_desc": "Adjon hozzá körülbelül <strong>100 szót</strong> egyetlen témához kapcsolódóan (pl. üzlet vagy utazás), hogy erős szövegkörnyezetet építsen.",
       "step2_title": "Napi ismétlés",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Felhasználási feltételek",
-    "terms_welcome": "Üdvözöljük a WordsGo-ban. Szolgáltatásaink használatával elfogadja ezeket a feltételeket...",
+    "terms_welcome": "Üdvözöljük a Synaply-ban. Szolgáltatásaink használatával elfogadja ezeket a feltételeket...",
     "title": "Profilbeállítások",
     "first_name": "Keresztnév",
     "last_name": "Vezetéknév",
@@ -286,7 +286,7 @@
     "subtitle": "Személyes adatok és nyelvbeállítások kezelése"
   },
   "login": {
-    "title": "Bejelentkezés a WordsGo-ba",
+    "title": "Bejelentkezés a Synaply-ba",
     "email": "E-mail cím",
     "password": "Jelszó",
     "sign_in": "Bejelentkezés",
@@ -307,7 +307,7 @@
     "login": "Jelentkezzen be itt"
   },
   "help": {
-    "title": "A WordsGo használata",
+    "title": "A Synaply használata",
     "best_practice": {
       "title": "A siker kulcsa",
       "strategy_desc": "A leghatékonyabb tanulási élmény érdekében a következő egyszerű, 3 lépésből álló stratégiát javasoljuk:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kezdeti lépések",
-      "desc": "A WordsGo egy hatékony eszköz, amelyet arra terveztek, hogy segítsen bővíteni szókincsét és fejleszteni nyelvtudását időközölt ismétlés és mesterséges intelligencia segítségével.",
+      "desc": "A Synaply egy hatékony eszköz, amelyet arra terveztek, hogy segítsen bővíteni szókincsét és fejleszteni nyelvtudását időközölt ismétlés és mesterséges intelligencia segítségével.",
       "step1_title": "1. lépés: Szavak hozzáadása",
       "step1_desc": "Adjon hozzá szavakat manuálisan, vagy használja az MI-t listák generálásához témák és szintek szerint.",
       "step2_title": "2. lépés: Napi gyakorlás",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Időközölt ismétlés",
-      "desc": "A WordsGo az FSRS (Free Spaced Repetition Scheduler) algoritmust használja az egyes szavak ismétlésének ideális idejének kiszámításához.",
+      "desc": "A Synaply az FSRS (Free Spaced Repetition Scheduler) algoritmust használja az egyes szavak ismétlésének ideális idejének kiszámításához.",
       "process_title": "Ismétlési folyamat",
       "step1": "Megjelenik egy szó az eredeti nyelven.",
       "step2": "Írja be a fordítást, és nyomja meg az <strong>Enter</strong>-t vagy a <strong>Válasz ellenőrzése</strong> gombot.",

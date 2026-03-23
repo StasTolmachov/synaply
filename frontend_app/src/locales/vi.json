@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Học từ vựng cùng WordsGo",
-    "description": "Nâng tầm vốn từ vựng của bạn với WordsGo - ứng dụng giúp bạn học từ mới một cách hiệu quả."
+    "title": "Học từ vựng cùng Synaply",
+    "description": "Nâng tầm vốn từ vựng của bạn với Synaply - ứng dụng giúp bạn học từ mới một cách hiệu quả."
   },
   "landing": {
     "hero": {
@@ -62,7 +62,7 @@
     "quick_add": "Thêm từ nhanh"
   },
   "onboarding": {
-    "title": "Chào mừng bạn đến với WordsGo",
+    "title": "Chào mừng bạn đến với Synaply",
     "step1": {
       "title": "Chọn ngôn ngữ của bạn",
       "description": "Chọn ngôn ngữ bạn muốn học và ngôn ngữ mẹ đẻ của bạn."
@@ -139,11 +139,11 @@
     "title": "Trợ giúp",
     "faq": "Câu hỏi thường gặp",
     "contact": "Liên hệ với chúng tôi",
-    "about": "Về WordsGo"
+    "about": "Về Synaply"
   },
   "spaced_repetition": {
     "title": "Hệ thống lặp lại ngắt quãng",
-    "description": "WordsGo sử dụng hệ thống lặp lại ngắt quãng tiên tiến dựa trên khoa học nhận thức. Phương pháp này tối ưu hóa việc học bằng cách lên lịch ôn tập vào những thời điểm chính xác trước khi bạn sắp quên một từ, giúp chuyển thông tin vào <strong>trí nhớ dài hạn</strong> một cách hiệu quả nhất.",
+    "description": "Synaply sử dụng hệ thống lặp lại ngắt quãng tiên tiến dựa trên khoa học nhận thức. Phương pháp này tối ưu hóa việc học bằng cách lên lịch ôn tập vào những thời điểm chính xác trước khi bạn sắp quên một từ, giúp chuyển thông tin vào <strong>trí nhớ dài hạn</strong> một cách hiệu quả nhất.",
     "levels": {
       "new": "Mới",
       "learning": "Đang học",

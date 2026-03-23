@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Jifunze Msamiati kwa kutumia AI na Marudio ya Kupanga",
+    "title": "Synaply - Jifunze Msamiati kwa kutumia AI na Marudio ya Kupanga",
     "description": "Boresha ujuzi wako wa lugha kwa marudio ya kupanga yanayoendeshwa na AI. Unda orodha za maneno unazotaka au jifunze kutoka kwa orodha za umma zilizoshirikiwa na jamii.",
     "keywords": "jifunze kiingereza, marudio ya kupanga, mjenzi wa msamiati, kadi za kumbukumbu, mafunzo ya lugha ya AI, orodha za maneno, programu ya kusoma lugha, jifunze kihispania, jifunze kifaransa, jifunze kijerumani, ubingwa wa lugha, kariri maneno, mafunzo ya SRS",
-    "og_title": "WordsGo - Mafunzo ya Msamiati ya Akili",
+    "og_title": "Synaply - Mafunzo ya Msamiati ya Akili",
     "og_description": "Boresha ujuzi wako wa lugha kwa marudio ya kupanga yanayoendeshwa na AI. Jifunze haraka, kumbuka kwa muda mrefu.",
-    "og_image_alt": "Kiolesura cha Programu ya Mafunzo ya Lugha ya WordsGo AI",
-    "twitter_title": "WordsGo - Jifunze Maneno Mapya Bila Juhudi",
-    "twitter_description": "Jiunge na WordsGo ili kupanua msamiati wako kwa kutumia marudio ya kupanga ya akili na AI."
+    "og_image_alt": "Kiolesura cha Programu ya Mafunzo ya Lugha ya Synaply AI",
+    "twitter_title": "Synaply - Jifunze Maneno Mapya Bila Juhudi",
+    "twitter_description": "Jiunge na Synaply ili kupanua msamiati wako kwa kutumia marudio ya kupanga ya akili na AI."
   },
   "landing": {
     "public_lists": "Orodha za Umma",
@@ -144,10 +144,10 @@
     "support_title": "Saidia Mradi",
     "support_desc": "Ikiwa unapenda programu hii, unaweza kusaidia maendeleo yake.",
     "onboarding": {
-      "welcome": "Karibu kwenye WordsGo!",
+      "welcome": "Karibu kwenye Synaply!",
       "journey_begins": "Safari yako ya ubingwa wa lugha inaanza hapa.",
       "best_practice": "Mazoezi Bora kwa Mafanikio",
-      "strategy_desc": "Ili kupata manufaa zaidi kutoka kwa WordsGo, tunapendekeza mkakati huu rahisi:",
+      "strategy_desc": "Ili kupata manufaa zaidi kutoka kwa Synaply, tunapendekeza mkakati huu rahisi:",
       "step1_title": "Zingatia Mada",
       "step1_desc": "Ongeza karibu <strong>maneno 100</strong> yanayohusiana na mada moja (k.m., Biashara au Usafiri) ili kujenga muktadha thabiti.",
       "step2_title": "Mapitio ya Kila Siku",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Masharti ya Huduma",
-    "terms_welcome": "Karibu kwenye WordsGo. Kwa kutumia huduma zetu, unakubaliana na masharti haya...",
+    "terms_welcome": "Karibu kwenye Synaply. Kwa kutumia huduma zetu, unakubaliana na masharti haya...",
     "title": "Mipangilio ya Wasifu",
     "first_name": "Jina la kwanza",
     "last_name": "Jina la ukoo",
@@ -286,7 +286,7 @@
     "subtitle": "Dhibiti taarifa zako za kibinafsi na mipangilio ya lugha"
   },
   "login": {
-    "title": "Ingia kwenye wordsGo",
+    "title": "Ingia kwenye synaply",
     "email": "Barua pepe",
     "password": "Nywila",
     "sign_in": "Ingia",
@@ -307,7 +307,7 @@
     "login": "Ingia hapa"
   },
   "help": {
-    "title": "Jinsi ya kutumia WordsGo",
+    "title": "Jinsi ya kutumia Synaply",
     "best_practice": {
       "title": "Mazoezi Bora kwa Mafanikio",
       "strategy_desc": "Kwa matumizi bora ya kujifunza, tunapendekeza mkakati huu rahisi wa hatua 3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kuanza",
-      "desc": "WordsGo ni chombo chenye nguvu kilichoundwa kukusaidia kupanua msamiati wako na kuboresha ujuzi wako wa lugha kwa kutumia marudio ya kupanga na akili mnemba (AI).",
+      "desc": "Synaply ni chombo chenye nguvu kilichoundwa kukusaidia kupanua msamiati wako na kuboresha ujuzi wako wa lugha kwa kutumia marudio ya kupanga na akili mnemba (AI).",
       "step1_title": "Hatua ya 1: Ongeza Maneno",
       "step1_desc": "Ongeza maneno mwenyewe au tumia AI kuzalisha orodha kulingana na mada na viwango.",
       "step2_title": "Hatua ya 2: Mazoezi ya Kila Siku",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Marudio ya Kupanga",
-      "desc": "WordsGo hutumia algoriti ya FSRS (Free Spaced Repetition Scheduler) kuhesabu muda bora wa kurudia kila neno.",
+      "desc": "Synaply hutumia algoriti ya FSRS (Free Spaced Repetition Scheduler) kuhesabu muda bora wa kurudia kila neno.",
       "process_title": "Mchakato wa Mapitio",
       "step1": "Unaonyeshwa neno katika lugha asilia.",
       "step2": "Ingiza tafsiri na ubonyeze <strong>Enter</strong> au <strong>Angalia Jibu</strong>.",

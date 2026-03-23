@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Ithute Tlotlontswe ka AI le Phetapheto e Katolositsoeng",
+    "title": "Synaply - Ithute Tlotlontswe ka AI le Phetapheto e Katolositsoeng",
     "description": "Ntshetsa pele bokgoni ba hao ba puo ka phetapheto e katolositsoeng e tsamaiswang ka AI. Ipophele manane a hao a mantswe kapa o ithute ho tswa mananeng a phatlaladitsweng ke setshaba.",
     "keywords": "ithute senyesemane, phetapheto e katolositsoeng, moaho wa tlotlontswe, diflakarete, AI thuto ya puo, manane a mantswe, app ya thuto ya puo, ithute sespanishe, ithute sefora, ithute sejeremane, tsebo ya puo, hopola mantswe, SRS thuto",
-    "og_title": "WordsGo - Thuto e bohlale ya Tlotlontswe",
+    "og_title": "Synaply - Thuto e bohlale ya Tlotlontswe",
     "og_description": "Ntshetsa pele bokgoni ba hao ba puo ka phetapheto e katolositsoeng e tsamaiswang ka AI. Ithute kapele, hopola nako e telele.",
-    "og_image_alt": "WordsGo AI App ya Thuto ya Puo",
-    "twitter_title": "WordsGo - Ithute Mantswe a Matjha ka Bonolo",
-    "twitter_description": "Kopanya le WordsGo ho hodisa tlotlontswe ya hao o sebedisa phetapheto e bohlale le AI."
+    "og_image_alt": "Synaply AI App ya Thuto ya Puo",
+    "twitter_title": "Synaply - Ithute Mantswe a Matjha ka Bonolo",
+    "twitter_description": "Kopanya le Synaply ho hodisa tlotlontswe ya hao o sebedisa phetapheto e bohlale le AI."
   },
   "landing": {
     "public_lists": "Manane a Phatlaladitsweng",
@@ -144,10 +144,10 @@
     "support_title": "Tshehetsa Morero",
     "support_desc": "Haeba o rata app ena, o ka tshehetsa ntshetsopele ya yona.",
     "onboarding": {
-      "welcome": "Rea u amohela ho WordsGo!",
+      "welcome": "Rea u amohela ho Synaply!",
       "journey_begins": "Leeto la hao la ho tseba puo le qala mona.",
       "best_practice": "Tsela e Molemohadi ya Katleho",
-      "strategy_desc": "Ho fumana molemo o moholo ho WordsGo, re kgothaletsa leano lena le bonolo:",
+      "strategy_desc": "Ho fumana molemo o moholo ho Synaply, re kgothaletsa leano lena le bonolo:",
       "step1_title": "Tsepamisa maikutlo Sehloohong",
       "step1_desc": "Eketsa mantswe a ka bang <strong>100</strong> a amanang le sehlooho se le seng (mohlala, Kgwebo kapa Leeto) ho haha boemo bo matla.",
       "step2_title": "Ditlhahlobo tsa Letsatsi le Letsatsi",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Melao ya Tshebeletso",
-    "terms_welcome": "Rea u amohela ho WordsGo. Ka ho sebedisa ditshebeletso tsa rona, o dumellana le melao ena...",
+    "terms_welcome": "Rea u amohela ho Synaply. Ka ho sebedisa ditshebeletso tsa rona, o dumellana le melao ena...",
     "title": "Dipehelo tsa Profil",
     "first_name": "Lebitso la Pele",
     "last_name": "Fane",
@@ -286,7 +286,7 @@
     "subtitle": "Laola dintlha tsa hao le dipehelo tsa puo"
   },
   "login": {
-    "title": "Kena ho wordsGo",
+    "title": "Kena ho synaply",
     "email": "Aterese ya imeile",
     "password": "Phasewete",
     "sign_in": "Kena",
@@ -307,7 +307,7 @@
     "login": "Kena mona"
   },
   "help": {
-    "title": "Mokgwa wa ho sebedisa WordsGo",
+    "title": "Mokgwa wa ho sebedisa Synaply",
     "best_practice": {
       "title": "Tsela e Molemohadi ya Katleho",
       "strategy_desc": "Bakeng sa phihlelo e atlehileng ya ho ithuta, re kgothaletsa leano lena le bonolo la mehato e 3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ho Qala",
-      "desc": "WordsGo ke sesebelisoa se matla se etselitsoeng ho u thusa ho holisa tlotlontswe ea hau le ho ntlafatsa bokgoni ba hau ba puo u sebelisa phetapheto e katolositsweng le bohlale ba maiketsetso.",
+      "desc": "Synaply ke sesebelisoa se matla se etselitsoeng ho u thusa ho holisa tlotlontswe ea hau le ho ntlafatsa bokgoni ba hau ba puo u sebelisa phetapheto e katolositsweng le bohlale ba maiketsetso.",
       "step1_title": "Mohato oa 1: Eketsa Mantswe",
       "step1_desc": "Eketsa mantswe ka bowena kapa o sebedise AI ho hlahisa manane ho latela dihlooho le maemo.",
       "step2_title": "Mohato oa 2: Thuto ya Letsatsi le Letsatsi",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Phetapheto e Katolositsweng",
-      "desc": "WordsGo e sebedisa algorithm ya FSRS (Free Spaced Repetition Scheduler) ho bala nako e nepahetseng ya ho pheta lentswe le leng le le leng.",
+      "desc": "Synaply e sebedisa algorithm ya FSRS (Free Spaced Repetition Scheduler) ho bala nako e nepahetseng ya ho pheta lentswe le leng le le leng.",
       "process_title": "Tsela ya Tlhahlobo",
       "step1": "O bontshwa lentswe ka puo ya mantlha.",
       "step2": "Kenya phetolelo mme o tobetse <strong>Enter</strong> kapa <strong>Hlahloba Karabo</strong>.",

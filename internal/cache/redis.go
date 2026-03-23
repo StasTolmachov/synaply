@@ -8,8 +8,8 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"wordsGo_v2/internal/config"
-	"wordsGo_v2/slogger"
+	"synaply_v2/internal/config"
+	"synaply_v2/slogger"
 )
 
 type Client struct {

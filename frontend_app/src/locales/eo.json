@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Lernu Vortprovizon per AI & Interstita Ripetado",
+    "title": "Synaply - Lernu Vortprovizon per AI & Interstita Ripetado",
     "description": "Plibonigu viajn lingvajn kapablojn per AI-funkciigita interstita ripetado. Kreu proprajn vortlistojn aŭ lernu el publikaj listoj dividitaj de la komunumo.",
     "keywords": "lerni la anglan, interstita ripetado, vortproviza konstruilo, fulmkartoj, AI lingvolernado, vortlistoj, lingva stud-aplikaĵo, lerni la hispanan, lerni la francan, lerni la germanan, lingva scipovo, memori vortojn, SRS-lernado",
-    "og_title": "WordsGo - Inteligenta Vortproviza Lernado",
+    "og_title": "Synaply - Inteligenta Vortproviza Lernado",
     "og_description": "Plibonigu viajn lingvajn kapablojn per AI-funkciigita interstita ripetado. Lernu pli rapide, memoru pli longe.",
-    "og_image_alt": "WordsGo AI Lingvolerna Aplikaĵa Interfaco",
-    "twitter_title": "WordsGo - Lernu Novajn Vortojn Senpene",
-    "twitter_description": "Aliĝu al WordsGo por vastigi vian vortprovizon uzante inteligentan interstita ripetadon kaj AI."
+    "og_image_alt": "Synaply AI Lingvolerna Aplikaĵa Interfaco",
+    "twitter_title": "Synaply - Lernu Novajn Vortojn Senpene",
+    "twitter_description": "Aliĝu al Synaply por vastigi vian vortprovizon uzante inteligentan interstita ripetadon kaj AI."
   },
   "landing": {
     "public_lists": "Publikaj Listoj",
@@ -144,10 +144,10 @@
     "support_title": "Subtenu la Projekton",
     "support_desc": "Se vi ŝatas ĉi tiun aplikaĵon, vi povas subteni ĝian evoluon.",
     "onboarding": {
-      "welcome": "Bonvenon al WordsGo!",
+      "welcome": "Bonvenon al Synaply!",
       "journey_begins": "Via vojaĝo al lingva majstreco komenciĝas ĉi tie.",
       "best_practice": "Plej bona Praktiko por Sukceso",
-      "strategy_desc": "Por profiti la plej grandan parton de WordsGo, ni rekomendas ĉi tiun simplan strategion:",
+      "strategy_desc": "Por profiti la plej grandan parton de Synaply, ni rekomendas ĉi tiun simplan strategion:",
       "step1_title": "Fokusu sur Temon",
       "step1_desc": "Aldonu ĉirkaŭ <strong>100 vortojn</strong> rilatajn al ununura temo (ekz. Komerco aŭ Vojaĝado) por konstrui fortan kuntekston.",
       "step2_title": "Ĉiutagaj Revizioj",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Servokondiĉoj",
-    "terms_welcome": "Bonvenon al WordsGo. Uzante niajn servojn, vi konsentas kun ĉi tiuj kondiĉoj...",
+    "terms_welcome": "Bonvenon al Synaply. Uzante niajn servojn, vi konsentas kun ĉi tiuj kondiĉoj...",
     "title": "Profilaj Agordoj",
     "first_name": "Antaŭnomo",
     "last_name": "Familinomo",
@@ -286,7 +286,7 @@
     "subtitle": "Administru viajn personajn informojn kaj lingvajn agordojn"
   },
   "login": {
-    "title": "Ensaluti al wordsGo",
+    "title": "Ensaluti al synaply",
     "email": "Retadreso",
     "password": "Pasvorto",
     "sign_in": "Ensaluti",
@@ -307,7 +307,7 @@
     "login": "Ensalutu ĉi tie"
   },
   "help": {
-    "title": "Kiel uzi WordsGo",
+    "title": "Kiel uzi Synaply",
     "best_practice": {
       "title": "Plej bona Praktiko por Sukceso",
       "strategy_desc": "Por la plej efika lerna sperto, ni rekomendas ĉi tiun simplan 3-paŝan strategion:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Komencante",
-      "desc": "WordsGo estas potenca ilo desegnita por helpi vin vastigi vian vortprovizon kaj plibonigi viajn lingvajn kapablojn uzante interstita ripetadon kaj artefaritan inteligenton.",
+      "desc": "Synaply estas potenca ilo desegnita por helpi vin vastigi vian vortprovizon kaj plibonigi viajn lingvajn kapablojn uzante interstita ripetadon kaj artefaritan inteligenton.",
       "step1_title": "Paŝo 1: Aldoni Vortojn",
       "step1_desc": "Aldonu vortojn mane aŭ uzu AI por generi listojn laŭ temoj kaj niveloj.",
       "step2_title": "Paŝo 2: Ĉiutaga Praktiko",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Interstita Ripetado",
-      "desc": "WordsGo uzas la algoritmon FSRS (Free Spaced Repetition Scheduler) por kalkuli la idealan tempon por ripeti ĉiun vorton.",
+      "desc": "Synaply uzas la algoritmon FSRS (Free Spaced Repetition Scheduler) por kalkuli la idealan tempon por ripeti ĉiun vorton.",
       "process_title": "Revizia Procezo",
       "step1": "Al vi estas montrata vorto en la fontlingvo.",
       "step2": "Enigu la tradukon kaj premu <strong>Enter</strong> aŭ <strong>Kontroli Respondon</strong>.",

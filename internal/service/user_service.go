@@ -7,12 +7,12 @@ import (
 
 	"github.com/google/uuid"
 
-	"wordsGo_v2/internal/config"
-	"wordsGo_v2/internal/models"
-	"wordsGo_v2/internal/repository"
-	"wordsGo_v2/internal/repository/modelsDB"
-	"wordsGo_v2/internal/utils"
-	"wordsGo_v2/slogger"
+	"synaply_v2/internal/config"
+	"synaply_v2/internal/models"
+	"synaply_v2/internal/repository"
+	"synaply_v2/internal/repository/modelsDB"
+	"synaply_v2/internal/utils"
+	"synaply_v2/slogger"
 )
 
 type UserService interface {

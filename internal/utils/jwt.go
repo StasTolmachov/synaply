@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 
-	"wordsGo_v2/internal/config"
+	"synaply_v2/internal/config"
 )
 
 type CustomClaims struct {

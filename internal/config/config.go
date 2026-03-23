@@ -7,7 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"wordsGo_v2/slogger"
+	"synaply_v2/slogger"
 )
 
 type Config struct {

@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'WordsGo',
-    short_name: 'WordsGo',
+    name: 'Synaply',
+    short_name: 'Synaply',
     description: 'Learn new words with spaced repetition. The easiest way to expand your vocabulary.',
     start_url: '/dashboard',
     display: 'standalone',

@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Lär dig ordförråd med AI & Spatierad repetition",
+    "title": "Synaply - Lär dig ordförråd med AI & Spatierad repetition",
     "description": "Förbättra dina språkkunskaper med AI-driven spatierad repetition. Skapa anpassade ordlistor eller lär dig från community-delade offentliga listor.",
     "keywords": "lära sig engelska, spatierad repetition, ordförrådsbyggare, flashcards, AI-språkinlärning, ordlistor, språkstudie-app, lära sig spanska, lära sig franska, lära sig tyska, språkkunskap, memorera ord, SRS-inlärning",
-    "og_title": "WordsGo - Smart ordförrådsinlärning",
+    "og_title": "Synaply - Smart ordförrådsinlärning",
     "og_description": "Förbättra dina språkkunskaper med AI-driven spatierad repetition. Lär dig snabbare, kom ihåg längre.",
-    "og_image_alt": "WordsGo AI språkinlärningsapp gränssnitt",
-    "twitter_title": "WordsGo - Lär dig nya ord utan ansträngning",
-    "twitter_description": "Gå med i WordsGo för att utöka ditt ordförråd med smart spatierad repetition och AI."
+    "og_image_alt": "Synaply AI språkinlärningsapp gränssnitt",
+    "twitter_title": "Synaply - Lär dig nya ord utan ansträngning",
+    "twitter_description": "Gå med i Synaply för att utöka ditt ordförråd med smart spatierad repetition och AI."
   },
   "landing": {
     "public_lists": "Offentliga listor",
@@ -144,10 +144,10 @@
     "support_title": "Stöd projektet",
     "support_desc": "Om du gillar den här appen kan du stödja dess utveckling.",
     "onboarding": {
-      "welcome": "Välkommen till WordsGo!",
+      "welcome": "Välkommen till Synaply!",
       "journey_begins": "Din resa mot språkmästerskap börjar här.",
       "best_practice": "Bästa praxis för framgång",
-      "strategy_desc": "För att få ut det mesta av WordsGo rekommenderar vi denna enkla strategi:",
+      "strategy_desc": "För att få ut det mesta av Synaply rekommenderar vi denna enkla strategi:",
       "step1_title": "Fokusera på ett ämne",
       "step1_desc": "Lägg till cirka <strong>100 ord</strong> relaterade till ett enda ämne (t.ex. affärer eller resor) för att bygga ett starkt sammanhang.",
       "step2_title": "Dagliga repetitioner",
@@ -269,7 +269,7 @@
     "spaced_repetition_desc": "Spatierad repetition är en inlärningsteknik som innebär att man repeterar information med ökande intervall. Vår algoritm beräknar den optimala tiden för dig att repetera varje ord för att säkerställa att det stannar i ditt långtidsminne.",
     "contact_title": "Kontakta oss",
     "contact_desc": "Har du frågor eller feedback? Vi vill gärna höra från dig!",
-    "email_support": "E-postsupport: support@wordsgo.com"
+    "email_support": "E-postsupport: support@synaply.com"
   },
   "spaced_repetition": {
     "title": "Spatierad repetition",

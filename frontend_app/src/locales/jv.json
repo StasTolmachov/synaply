@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Sinau Kosakata nganggo AI & Pengulangan Berjarak",
+    "title": "Synaply - Sinau Kosakata nganggo AI & Pengulangan Berjarak",
     "description": "Ningkatake katrampilan basa sampeyan nganggo pengulangan berjarak sing didhukung AI. Gawe dhaptar tembung khusus utawa sinau saka dhaptar umum sing dituduhake komunitas.",
     "keywords": "sinau basa inggris, pengulangan berjarak, pembangun kosakata, flashcards, sinau basa AI, dhaptar tembung, aplikasi sinau basa, sinau basa spanyol, sinau basa prancis, sinau basa jerman, kemahiran basa, apal tembung, sinau SRS",
-    "og_title": "WordsGo - Sinau Kosakata Pinter",
+    "og_title": "Synaply - Sinau Kosakata Pinter",
     "og_description": "Ningkatake katrampilan basa sampeyan nganggo pengulangan berjarak sing didhukung AI. Sinau luwih cepet, eling luwih suwe.",
-    "og_image_alt": "Tampilan Antarmuka Aplikasi Sinau Basa AI WordsGo",
-    "twitter_title": "WordsGo - Sinau Tembung Anyar kanthi Gampang",
-    "twitter_description": "Gabung karo WordsGo kanggo nggedhekake kosakata sampeyan nggunakake pengulangan berjarak pinter lan AI."
+    "og_image_alt": "Tampilan Antarmuka Aplikasi Sinau Basa AI Synaply",
+    "twitter_title": "Synaply - Sinau Tembung Anyar kanthi Gampang",
+    "twitter_description": "Gabung karo Synaply kanggo nggedhekake kosakata sampeyan nggunakake pengulangan berjarak pinter lan AI."
   },
   "landing": {
     "public_lists": "Dhaptar Umum",
@@ -144,10 +144,10 @@
     "support_title": "Dhukungan Proyek",
     "support_desc": "Yen sampeyan seneng karo aplikasi iki, sampeyan bisa ndhukung pangembangane.",
     "onboarding": {
-      "welcome": "Sugeng rawuh ing WordsGo!",
+      "welcome": "Sugeng rawuh ing Synaply!",
       "journey_begins": "Perjalanan sampeyan kanggo nguwasani basa diwiwiti ing kene.",
       "best_practice": "Cara Paling Apik kanggo Sukses",
-      "strategy_desc": "Kanggo entuk asil maksimal saka WordsGo, kita nyaranake strategi prasaja iki:",
+      "strategy_desc": "Kanggo entuk asil maksimal saka Synaply, kita nyaranake strategi prasaja iki:",
       "step1_title": "Fokus ing Sawijining Topik",
       "step1_desc": "Tambah udakara <strong>100 tembung</strong> sing gegayutan karo siji topik (misal: Bisnis utawa Lelungan) kanggo mbangun konteks sing kuwat.",
       "step2_title": "Tinjauan Saben Dina",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Ketentuan Layanan",
-    "terms_welcome": "Sugeng rawuh ing WordsGo. Kanthi nggunakake layanan kita, sampeyan setuju karo ketentuan iki...",
+    "terms_welcome": "Sugeng rawuh ing Synaply. Kanthi nggunakake layanan kita, sampeyan setuju karo ketentuan iki...",
     "title": "Pengaturan Profil",
     "first_name": "Jeneng Ngarep",
     "last_name": "Jeneng Mburi",
@@ -286,7 +286,7 @@
     "subtitle": "Atur informasi pribadi lan pengaturan basa sampeyan"
   },
   "login": {
-    "title": "Mlebu menyang wordsGo",
+    "title": "Mlebu menyang synaply",
     "email": "Alamat email",
     "password": "Sandi",
     "sign_in": "Mlebu",
@@ -307,7 +307,7 @@
     "login": "Mlebu ing kene"
   },
   "help": {
-    "title": "Cara nggunakake WordsGo",
+    "title": "Cara nggunakake Synaply",
     "best_practice": {
       "title": "Cara Paling Apik kanggo Sukses",
       "strategy_desc": "Kanggo pengalaman sinau sing paling efektif, kita nyaranake strategi 3 langkah prasaja iki:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Mulai",
-      "desc": "WordsGo yaiku alat kuat sing dirancang kanggo mbantu sampeyan nggedhekake kosakata lan ningkatake katrampilan basa nggunakake pengulangan berjarak lan kecerdasan buatan (AI).",
+      "desc": "Synaply yaiku alat kuat sing dirancang kanggo mbantu sampeyan nggedhekake kosakata lan ningkatake katrampilan basa nggunakake pengulangan berjarak lan kecerdasan buatan (AI).",
       "step1_title": "Langkah 1: Tambah Tembung",
       "step1_desc": "Tambah tembung kanthi manual utawa gunakake AI kanggo nggawe dhaptar miturut topik lan level.",
       "step2_title": "Langkah 2: Latihan Saben Dina",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Pengulangan Berjarak",
-      "desc": "WordsGo nggunakake algoritma FSRS (Free Spaced Repetition Scheduler) kanggo ngetung wektu ideal kanggo mbaleni saben tembung.",
+      "desc": "Synaply nggunakake algoritma FSRS (Free Spaced Repetition Scheduler) kanggo ngetung wektu ideal kanggo mbaleni saben tembung.",
       "process_title": "Proses Tinjauan",
       "step1": "Sampeyan bakal dituduhake tembung ing basa asli.",
       "step2": "Lebokake terjemahan lan pencet <strong>Enter</strong> utawa <strong>Priksa Jawaban</strong>.",

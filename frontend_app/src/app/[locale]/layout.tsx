@@ -52,12 +52,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('title'),
     description: t('description'),
     keywords: t('keywords').split(','),
-    authors: [{ name: "WordsGo Team" }],
+    authors: [{ name: "Synaply Team" }],
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://synaply.me'),
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
-      title: "WordsGo",
+      title: "Synaply",
     },
     formatDetection: {
       telephone: false,
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
       url: `${baseUrl}/${locale}`,
-      siteName: "WordsGo",
+      siteName: "Synaply",
       locale: ogLocales[locale] || locale,
       type: "website",
       images: [
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: "/opengraph-image.png",
           width: 1200,
           height: 630,
-          alt: t('og_image_alt') || "WordsGo AI Language Learning",
+          alt: t('og_image_alt') || "Synaply AI Language Learning",
         },
       ],
     },
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: t('twitter_title') || t('title'),
       description: t('twitter_description') || t('description'),
-      creator: "@WordsGoTeam",
+      creator: "@SynaplyTeam",
       images: ["/opengraph-image.png"],
     },
     alternates: {

@@ -167,7 +167,7 @@ export function Header() {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center group">
-              <span className="text-xl font-bold text-blue-600 dark:text-blue-500">WordsGo</span>
+              <span className="text-xl font-bold text-blue-600 dark:text-blue-500">Synaply</span>
               <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded">{t('common.beta')}</span>
             </Link>
           </div>

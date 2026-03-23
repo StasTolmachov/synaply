@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Impara i vocaboli con l'IA e la ripetizione spaziata",
+    "title": "Synaply - Impara i vocaboli con l'IA e la ripetizione spaziata",
     "description": "Migliora le tue abilità linguistiche con la ripetizione spaziata basata sull'IA. Crea elenchi di parole personalizzati o impara da elenchi pubblici condivisi dalla comunità.",
     "keywords": "imparare l'inglese, ripetizione spaziata, costruttore di vocaboli, flashcards, apprendimento delle lingue con l'IA, elenchi di parole, app per lo studio delle lingue, imparare lo spagnolo, imparare il francese, imparare il tedesco, competenza linguistica, memorizzare parole, apprendimento SRS",
-    "og_title": "WordsGo - Apprendimento Intelligente dei Vocaboli",
+    "og_title": "Synaply - Apprendimento Intelligente dei Vocaboli",
     "og_description": "Migliora le tue abilità linguistiche con la ripetizione spaziata basata sull'IA. Impara più velocemente, ricorda più a lungo.",
-    "og_image_alt": "Interfaccia dell'app WordsGo per l'apprendimento delle lingue con l'IA",
-    "twitter_title": "WordsGo - Impara Nuove Parole Senza Sforzo",
-    "twitter_description": "Unisciti a WordsGo per ampliare il tuo vocabolario usando la ripetizione spaziata intelligente e l'IA."
+    "og_image_alt": "Interfaccia dell'app Synaply per l'apprendimento delle lingue con l'IA",
+    "twitter_title": "Synaply - Impara Nuove Parole Senza Sforzo",
+    "twitter_description": "Unisciti a Synaply per ampliare il tuo vocabolario usando la ripetizione spaziata intelligente e l'IA."
   },
   "landing": {
     "public_lists": "Elenchi Pubblici",
@@ -144,10 +144,10 @@
     "support_title": "Supporta il Progetto",
     "support_desc": "Se ti piace questa app, puoi supportare il suo sviluppo.",
     "onboarding": {
-      "welcome": "Benvenuto su WordsGo!",
+      "welcome": "Benvenuto su Synaply!",
       "journey_begins": "Il tuo viaggio verso la padronanza della lingua inizia qui.",
       "best_practice": "Migliori Pratiche per il Successo",
-      "strategy_desc": "Per ottenere il massimo da WordsGo, ti consigliamo questa semplice strategia:",
+      "strategy_desc": "Per ottenere il massimo da Synaply, ti consigliamo questa semplice strategia:",
       "step1_title": "Concentrati su un Argomento",
       "step1_desc": "Aggiungi circa <strong>100 parole</strong> relative a un singolo argomento (es. Affari o Viaggi) per costruire un contesto solido.",
       "step2_title": "Ripassi Giornalieri",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Termini di Servizio",
-    "terms_welcome": "Benvenuto su WordsGo. Utilizzando i nostri servizi, accetti questi termini...",
+    "terms_welcome": "Benvenuto su Synaply. Utilizzando i nostri servizi, accetti questi termini...",
     "title": "Impostazioni Profilo",
     "first_name": "Nome",
     "last_name": "Cognome",
@@ -286,7 +286,7 @@
     "subtitle": "Gestisci le tue informazioni personali e le impostazioni della lingua"
   },
   "login": {
-    "title": "Accedi a wordsGo",
+    "title": "Accedi a synaply",
     "email": "Indirizzo email",
     "password": "Password",
     "sign_in": "Accedi",
@@ -307,7 +307,7 @@
     "login": "Accedi qui"
   },
   "help": {
-    "title": "Come usare WordsGo",
+    "title": "Come usare Synaply",
     "best_practice": {
       "title": "Migliori Pratiche per il Successo",
       "strategy_desc": "Per un'esperienza di apprendimento più efficace, consigliamo questa semplice strategia in 3 fasi:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Per Iniziare",
-      "desc": "WordsGo è uno strumento potente progettato per aiutarti ad ampliare il tuo vocabolario e migliorare le tue abilità linguistiche usando la ripetizione spaziata e l'intelligenza artificiale.",
+      "desc": "Synaply è uno strumento potente progettato per aiutarti ad ampliare il tuo vocabolario e migliorare le tue abilità linguistiche usando la ripetizione spaziata e l'intelligenza artificiale.",
       "step1_title": "Fase 1: Aggiungi Parole",
       "step1_desc": "Aggiungi parole manualmente o usa l'IA per generare elenchi per argomenti e livelli.",
       "step2_title": "Fase 2: Pratica Giornaliera",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Ripetizione Spaziata",
-      "desc": "WordsGo utilizza l'algoritmo FSRS (Free Spaced Repetition Scheduler) per calcolare il momento ideale per ripetere ogni parola.",
+      "desc": "Synaply utilizza l'algoritmo FSRS (Free Spaced Repetition Scheduler) per calcolare il momento ideale per ripetere ogni parola.",
       "process_title": "Processo di Ripasso",
       "step1": "Ti viene mostrata una parola nella lingua di origine.",
       "step2": "Inserisci la traduzione e premi <strong>Invio</strong> o <strong>Controlla Risposta</strong>.",

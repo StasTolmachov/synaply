@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"wordsGo_v2/internal/repository/modelsDB"
-	"wordsGo_v2/internal/utils"
+	"synaply_v2/internal/repository/modelsDB"
+	"synaply_v2/internal/utils"
 )
 
 type User struct {

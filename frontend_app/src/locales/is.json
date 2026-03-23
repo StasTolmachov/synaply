@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Lærðu orðaforða með gervigreind og reglulegri upprifjun",
+    "title": "Synaply - Lærðu orðaforða með gervigreind og reglulegri upprifjun",
     "description": "Efltu tungumálakunnáttu þína með gervigreindardrifinni reglulegri upprifjun. Búðu til sérsniðna orðalista eða lærðu af opinberum listum sem aðrir notendur deila.",
     "keywords": "læra ensku, regluleg upprifjun, orðaforðauppbygging, leifturspjöld, gervigreind í tungumálanámi, orðalistar, tungumálanámsforrit, læra spænsku, læra frönsku, læra þýsku, tungumálakunnátta, leggja orð á minnið, SRS nám",
-    "og_title": "WordsGo - Snjallt orðaforðanám",
+    "og_title": "Synaply - Snjallt orðaforðanám",
     "og_description": "Efltu tungumálakunnáttu þína með gervigreindardrifinni reglulegri upprifjun. Lærðu hraðar, mundu lengur.",
-    "og_image_alt": "WordsGo gervigreindartungumálanámsforrit viðmót",
-    "twitter_title": "WordsGo - Lærðu ný orð áreynslulaust",
-    "twitter_description": "Vertu með í WordsGo til að auka orðaforða þinn með snjallri reglulegri upprifjun og gervigreind."
+    "og_image_alt": "Synaply gervigreindartungumálanámsforrit viðmót",
+    "twitter_title": "Synaply - Lærðu ný orð áreynslulaust",
+    "twitter_description": "Vertu með í Synaply til að auka orðaforða þinn með snjallri reglulegri upprifjun og gervigreind."
   },
   "landing": {
     "public_lists": "Opinberir listar",
@@ -144,10 +144,10 @@
     "support_title": "Styðja verkefnið",
     "support_desc": "Ef þér líkar við þetta forrit geturðu stutt við þróun þess.",
     "onboarding": {
-      "welcome": "Velkomin í WordsGo!",
+      "welcome": "Velkomin í Synaply!",
       "journey_begins": "Ferðalag þitt til tungumálakunnáttu hefst hér.",
       "best_practice": "Besta leiðin til árangurs",
-      "strategy_desc": "Til að fá sem mest út úr WordsGo mælum við með þessari einföldu áætlun:",
+      "strategy_desc": "Til að fá sem mest út úr Synaply mælum við með þessari einföldu áætlun:",
       "step1_title": "Einbeittu þér að efni",
       "step1_desc": "Bættu við um <strong>100 orðum</strong> tengdum einu efni (t.d. viðskiptum eða ferðalögum) til að byggja upp sterkt samhengi.",
       "step2_title": "Dagleg upprifjun",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Þjónustuskilmálar",
-    "terms_welcome": "Velkomin í WordsGo. Með því að nota þjónustu okkar samþykkir þú þessa skilmála...",
+    "terms_welcome": "Velkomin í Synaply. Með því að nota þjónustu okkar samþykkir þú þessa skilmála...",
     "title": "Prófílstillingar",
     "first_name": "Fornafn",
     "last_name": "Eftirnafn",
@@ -286,7 +286,7 @@
     "subtitle": "Sýslaðu með persónuupplýsingar þínar og tungumálastillingar"
   },
   "login": {
-    "title": "Skráðu þig inn í WordsGo",
+    "title": "Skráðu þig inn í Synaply",
     "email": "Netfang",
     "password": "Lykilorð",
     "sign_in": "Skrá inn",
@@ -307,7 +307,7 @@
     "login": "Skráðu þig inn hér"
   },
   "help": {
-    "title": "Hvernig á að nota WordsGo",
+    "title": "Hvernig á að nota Synaply",
     "best_practice": {
       "title": "Besta leiðin til árangurs",
       "strategy_desc": "Til að ná sem bestum árangri mælum við með þessari einföldu 3-skrefa áætlun:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Hafist handa",
-      "desc": "WordsGo er öflugt tæki hannað til að hjálpa þér að auka orðaforða þinn og bæta tungumálakunnáttu þína með því að nota reglulega upprifjun og gervigreind.",
+      "desc": "Synaply er öflugt tæki hannað til að hjálpa þér að auka orðaforða þinn og bæta tungumálakunnáttu þína með því að nota reglulega upprifjun og gervigreind.",
       "step1_title": "Skref 1: Bæta við orðum",
       "step1_desc": "Bættu við orðum handvirkt eða notaðu gervigreind til að búa til lista eftir efni og stigum.",
       "step2_title": "Skref 2: Dagleg æfing",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Regluleg upprifjun",
-      "desc": "WordsGo notar FSRS (Free Spaced Repetition Scheduler) reikniritið til að reikna út kjörinn tíma til að endurtaka hvert orð.",
+      "desc": "Synaply notar FSRS (Free Spaced Repetition Scheduler) reikniritið til að reikna út kjörinn tíma til að endurtaka hvert orð.",
       "process_title": "Upprifjunarferli",
       "step1": "Þér er sýnt orð á frummálinu.",
       "step2": "Sláðu inn þýðinguna og ýttu á <strong>Enter</strong> eða <strong>Athuga svar</strong>.",

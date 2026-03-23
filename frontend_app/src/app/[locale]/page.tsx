@@ -38,8 +38,8 @@ export default function LandingPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'WordsGo',
-    alternateName: 'WordsGo Language Learning',
+    name: 'Synaply',
+    alternateName: 'Synaply Language Learning',
     description: 'Learn new words with AI-powered spaced repetition. The easiest way to expand your vocabulary.',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
@@ -51,7 +51,7 @@ export default function LandingPage() {
     },
     author: {
       '@type': 'Organization',
-      name: 'WordsGo Team',
+      name: 'Synaply Team',
       logo: 'https://synaply.me/apple-icon.png'
     },
     aggregateRating: {
@@ -252,7 +252,7 @@ export default function LandingPage() {
                   <div className="bg-blue-600 p-1.5 rounded-lg">
                     <Brain className="w-6 h-6 text-white" aria-hidden="true" />
                   </div>
-                  <span className="text-xl font-bold tracking-tight text-blue-600">WordsGo</span>
+                  <span className="text-xl font-bold tracking-tight text-blue-600">Synaply</span>
                 </Link>
               </div>
               <div className="flex items-center gap-4">
@@ -299,7 +299,7 @@ export default function LandingPage() {
             to Language Fluency
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Stop guessing and start remembering. WordsGo uses advanced cognitive science 
+            Stop guessing and start remembering. Synaply uses advanced cognitive science 
             to ensure you never forget a word again.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -322,7 +322,7 @@ export default function LandingPage() {
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20"></div>
             <img 
               src="/opengraph-image.png" 
-              alt="WordsGo App Interface - AI-powered vocabulary learning dashboard" 
+              alt="Synaply App Interface - AI-powered vocabulary learning dashboard" 
               className="relative rounded-2xl shadow-2xl border border-gray-100 w-full"
             />
           </div>
@@ -475,7 +475,7 @@ export default function LandingPage() {
               <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl overflow-hidden">
                 <img 
                   src="/promo-ai-brain-1-1.png" 
-                  alt="WordsGo AI Brain" 
+                  alt="Synaply AI Brain" 
                   className="w-full h-full object-cover rounded-[2.8rem]"
                 />
               </div>
@@ -535,23 +535,23 @@ export default function LandingPage() {
       <section className="py-32 px-4 bg-white border-t border-gray-100">
         <article className="prose-article">
           <div className="mb-20 text-center">
-            <h2 className="!mt-0">The Science of Fluency: Master Any Language with WordsGo</h2>
+            <h2 className="!mt-0">The Science of Fluency: Master Any Language with Synaply</h2>
             <p className="text-2xl text-gray-500 max-w-3xl mx-auto">
               A deep dive into the technology, psychology, and methodology powering the world&apos;s most efficient language learning platform.
             </p>
           </div>
 
           <p>
-            In today&apos;s interconnected world, mastering a new language is more than just a hobby—it&apos;s a gateway to new cultures, professional opportunities, and personal growth. However, the biggest challenge for most learners isn&apos;t starting; it&apos;s <strong>retention</strong>. Traditional methods often lead to the &quot;forgetting curve,&quot; where new vocabulary vanishes as quickly as it was acquired. WordsGo was built to solve this problem by combining cutting-edge cognitive science with state-of-the-art Artificial Intelligence.
+            In today&apos;s interconnected world, mastering a new language is more than just a hobby—it&apos;s a gateway to new cultures, professional opportunities, and personal growth. However, the biggest challenge for most learners isn&apos;t starting; it&apos;s <strong>retention</strong>. Traditional methods often lead to the &quot;forgetting curve,&quot; where new vocabulary vanishes as quickly as it was acquired. Synaply was built to solve this problem by combining cutting-edge cognitive science with state-of-the-art Artificial Intelligence.
           </p>
 
           <div className="article-card">
             <h3>The Science of Memory: Our Advanced FSRS+ Algorithm</h3>
             <p>
-              At the heart of WordsGo lies the <strong>Free Spaced Repetition Scheduler (FSRS)</strong>. Unlike the older SM-2 algorithms used by many popular apps, FSRS is a modern, data-driven model designed to predict the stability of your memory with incredible precision.
+              At the heart of Synaply lies the <strong>Free Spaced Repetition Scheduler (FSRS)</strong>. Unlike the older SM-2 algorithms used by many popular apps, FSRS is a modern, data-driven model designed to predict the stability of your memory with incredible precision.
             </p>
             <p>
-              Our proprietary <strong>FSRS+ enhancement</strong> takes this a step further. It analyzes your unique learning patterns—how quickly you recall a word, how often you struggle with specific types of vocabulary, and your individual forgetting rate. By calculating the exact moment before a word slips from your mind, WordsGo schedules reviews at the <strong>optimal interval</strong>, ensuring maximum retention with minimum effort.
+              Our proprietary <strong>FSRS+ enhancement</strong> takes this a step further. It analyzes your unique learning patterns—how quickly you recall a word, how often you struggle with specific types of vocabulary, and your individual forgetting rate. By calculating the exact moment before a word slips from your mind, Synaply schedules reviews at the <strong>optimal interval</strong>, ensuring maximum retention with minimum effort.
             </p>
             
             <div className="mt-8 p-6 bg-blue-50/50 rounded-xl border border-blue-100">
@@ -564,7 +564,7 @@ export default function LandingPage() {
 
           <h3>Why We Forget: Combatting the Forgetting Curve</h3>
           <p>
-            The &quot;Forgetting Curve,&quot; first proposed by Hermann Ebbinghaus, illustrates how information is lost over time when there is no attempt to retain it. Without reinforcement, humans forget approximately 50% of new information within 24 hours. WordsGo is engineered specifically to disrupt this curve.
+            The &quot;Forgetting Curve,&quot; first proposed by Hermann Ebbinghaus, illustrates how information is lost over time when there is no attempt to retain it. Without reinforcement, humans forget approximately 50% of new information within 24 hours. Synaply is engineered specifically to disrupt this curve.
           </p>
           
           <blockquote>
@@ -584,7 +584,7 @@ export default function LandingPage() {
               <strong>DeepL Precision:</strong> For every word you add, we utilize DeepL—widely recognized as the world&apos;s most accurate translation engine. This ensures that the definitions and synonyms you learn are natural and contextually correct.
             </li>
             <li>
-              <strong>Gemini AI Tutor:</strong> WordsGo leverages Google&apos;s Gemini AI to generate personalized usage examples. If you&apos;re learning the word &quot;sustainable&quot; in a business context, Gemini won&apos;t just give you a generic sentence; it will craft examples relevant to your specific field of interest.
+              <strong>Gemini AI Tutor:</strong> Synaply leverages Google&apos;s Gemini AI to generate personalized usage examples. If you&apos;re learning the word &quot;sustainable&quot; in a business context, Gemini won&apos;t just give you a generic sentence; it will craft examples relevant to your specific field of interest.
             </li>
             <li>
               <strong>Interactive Feedback:</strong> During AI Practice sessions, Gemini acts as a live tutor. It doesn&apos;t just tell you if you&apos;re wrong; it explains <em>why</em> and suggests more idiomatic ways to express your thoughts.
@@ -592,14 +592,14 @@ export default function LandingPage() {
           </ul>
 
           <div className="article-card bg-blue-50/30 border-blue-100">
-            <h3>Comparison: WordsGo vs. The Old Way</h3>
+            <h3>Comparison: Synaply vs. The Old Way</h3>
             <div className="comparison-table-wrapper">
               <table className="comparison-table">
                 <thead>
                   <tr>
                     <th>Feature</th>
                     <th>Traditional Apps</th>
-                    <th>WordsGo (AI + FSRS)</th>
+                    <th>Synaply (AI + FSRS)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -630,7 +630,7 @@ export default function LandingPage() {
 
           <h3>Advanced Cognitive Load Management</h3>
           <p>
-            One of the primary reasons learners quit is &quot;overwhelm.&quot; When you have too many words to review, the task becomes daunting. WordsGo implements <strong>Cognitive Load Balancing</strong>. Our AI monitors your performance and, if it detects fatigue or a drop in accuracy, it automatically throttles the introduction of new words while prioritizing the most critical reviews.
+            One of the primary reasons learners quit is &quot;overwhelm.&quot; When you have too many words to review, the task becomes daunting. Synaply implements <strong>Cognitive Load Balancing</strong>. Our AI monitors your performance and, if it detects fatigue or a drop in accuracy, it automatically throttles the introduction of new words while prioritizing the most critical reviews.
           </p>
           <p>
             This ensures that you remain in the <strong>&quot;Flow State&quot;</strong>—a psychological state where you are fully immersed in the activity, feeling energized and focused. Learning becomes addictive rather than exhaustive.
@@ -638,7 +638,7 @@ export default function LandingPage() {
 
           <h3>Core Features for Global Learners</h3>
           <p>
-            WordsGo is more than just a flashcard app; it&apos;s a comprehensive language-learning laboratory. Our features are designed to support every stage of your journey:
+            Synaply is more than just a flashcard app; it&apos;s a comprehensive language-learning laboratory. Our features are designed to support every stage of your journey:
           </p>
           <ul className="list-disc pl-6 space-y-4">
             <li><strong>114 Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
@@ -649,20 +649,20 @@ export default function LandingPage() {
 
           <h3>The Social Learning Revolution</h3>
           <p>
-            Language learning shouldn&apos;t be a solitary endeavor. WordsGo fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
+            Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
           </p>
 
           <div className="article-card bg-emerald-50/30 border-emerald-100">
-            <h3>Real-World Use Cases: How WordsGo Changes Lives</h3>
+            <h3>Real-World Use Cases: How Synaply Changes Lives</h3>
             <div className="space-y-12">
               <div>
                 <h4 className="text-blue-600">The Professional Track</h4>
-                <p className="italic">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With WordsGo, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
+                <p className="italic">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
                 <p className="font-bold">— Mark S., Mechanical Engineer</p>
               </div>
               <div className="pt-6 border-t border-emerald-100">
                 <h4 className="text-blue-600">The Academic Path</h4>
-                <p className="italic">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on WordsGo. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="italic">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
                 <p className="font-bold">— Sarah L., High School Student</p>
               </div>
             </div>
@@ -676,13 +676,13 @@ export default function LandingPage() {
                 <span>How is FSRS better than Anki?</span>
               </div>
               <div className="faq-answer">
-                While Anki is powerful, its default algorithm is based on SM-2. WordsGo uses FSRS, which is mathematically proven to be more efficient. Furthermore, WordsGo integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
+                While Anki is powerful, its default algorithm is based on SM-2. Synaply uses FSRS, which is mathematically proven to be more efficient. Furthermore, Synaply integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
               </div>
             </div>
             <div className="faq-item">
               <div className="faq-question">
                 <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
-                <span>Can I use WordsGo offline?</span>
+                <span>Can I use Synaply offline?</span>
               </div>
               <div className="faq-answer">
                 Yes! Our Progressive Web App (PWA) technology allows you to continue your reviews even without an active internet connection. Your progress will sync automatically once you&apos;re back online.
@@ -694,7 +694,7 @@ export default function LandingPage() {
                 <span>Is it free to use?</span>
               </div>
               <div className="faq-answer">
-                WordsGo offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
+                Synaply offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
               </div>
             </div>
           </div>
@@ -710,7 +710,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to hack your memory?</h2>
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Join WordsGo and try the most scientifically proven system for learning foreign words.
+            Join Synaply and try the most scientifically proven system for learning foreign words.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 

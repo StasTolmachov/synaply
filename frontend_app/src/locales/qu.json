@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI nisqawan yachay",
+    "title": "Synaply - AI nisqawan yachay",
     "description": "AI nisqawan simikunata yachay. Kikiykipaq word list-kunata ruray otaq hukkunapa rurasqanmanta yachay.",
     "keywords": "ingles yachay, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, castilla simi yachay, frances yachay, aleman yachay, simi yachay, simikunata yuyay, SRS learning",
-    "og_title": "WordsGo - Sumaq Simi Yachay",
+    "og_title": "Synaply - Sumaq Simi Yachay",
     "og_description": "AI nisqawan simikunata utqaylla yachay. Allin yuyaypaq.",
-    "og_image_alt": "WordsGo AI Simi Yachay Interface",
-    "twitter_title": "WordsGo - Simikunata mana sasa yachay",
-    "twitter_description": "WordsGo-man yaykuy simikunata yachaypaq AI nisqawan."
+    "og_image_alt": "Synaply AI Simi Yachay Interface",
+    "twitter_title": "Synaply - Simikunata mana sasa yachay",
+    "twitter_description": "Synaply-man yaykuy simikunata yachaypaq AI nisqawan."
   },
   "landing": {
     "public_lists": "Llaqtapa Listankuna",
@@ -144,7 +144,7 @@
     "support_title": "Proyectota yanapay",
     "support_desc": "If you like this app, you can support its development.",
     "onboarding": {
-      "welcome": "Allin hamusqa WordsGo-man!",
+      "welcome": "Allin hamusqa Synaply-man!",
       "journey_begins": "Simi yachayniyki kaypi qallarin.",
       "best_practice": "Allin yachaypaq",
       "strategy_desc": "Allinta yachanaykipaq kayta rurawaqmi:",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Servicio nisqapa munasqan",
-    "terms_welcome": "Welcome to WordsGo. By using our services, you agree to these terms...",
+    "terms_welcome": "Welcome to Synaply. By using our services, you agree to these terms...",
     "title": "Perfil Configuración",
     "first_name": "Sutiyki",
     "last_name": "Apellidoyki",
@@ -286,7 +286,7 @@
     "subtitle": "Manage your personal information and language settings"
   },
   "login": {
-    "title": "Sign in to wordsGo",
+    "title": "Sign in to synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Yaykuy",
@@ -307,7 +307,7 @@
     "login": "Login here"
   },
   "help": {
-    "title": "Imaynatam WordsGo-ta servichikun",
+    "title": "Imaynatam Synaply-ta servichikun",
     "best_practice": {
       "title": "Allin yachaypaq",
       "strategy_desc": "For the most effective learning experience, we recommend this simple 3-step strategy:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Getting Started",
-      "desc": "WordsGo is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
+      "desc": "Synaply is a powerful tool designed to help you expand your vocabulary and improve your language skills using spaced repetition and artificial intelligence.",
       "step1_title": "Step 1: Add Words",
       "step1_desc": "Add words manually or use AI to generate lists by topics and levels.",
       "step2_title": "Step 2: Daily Practice",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
+      "desc": "Synaply uses the FSRS (Free Spaced Repetition Scheduler) algorithm to calculate the ideal time to repeat each word.",
       "process_title": "Yuyariy ruraykuna",
       "step1": "You are shown a word in the source language.",
       "step2": "Enter the translation and press <strong>Enter</strong> or <strong>Check Answer</strong>.",

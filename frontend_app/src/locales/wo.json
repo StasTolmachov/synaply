@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Jàng baat yi ak IA & Njiitalu Fattali",
+    "title": "Synaply - Jàng baat yi ak IA & Njiitalu Fattali",
     "description": "Yookal sa xam-xamu làmmiñ ak njiitalu fattali bu IA di njiite. Sos say sarsu baat walla jàng ci sarsu mbooloo yi ñu séddoo.",
     "keywords": "jàng angale, njiitalu fattali, defaru baat yi, flashcards, jàng làmmiñ ak IA, sarsu baat yi, app bi ñuy jàng làmmiñ, jàng espagnol, jàng français, jàng allemand, xam-xam ci làmmiñ, jàng baat yi, SRS jàng",
-    "og_title": "WordsGo - Jàng Baat yi ci Lu Xereñ",
+    "og_title": "Synaply - Jàng Baat yi ci Lu Xereñ",
     "og_description": "Yookal sa xam-xamu làmmiñ ak njiitalu fattali bu IA di njiite. Jàngal bu gaaw, fattaliku bu yàgg.",
-    "og_image_alt": "Xar-kanamu WordsGo App bi ñuy Jàngé Làmmiñ ak IA",
-    "twitter_title": "WordsGo - Jàng Baat yu Bees ci Lu Nééw-Doolé",
-    "twitter_description": "Àndal ak WordsGo ngir yaatal sa xam-xamu baat yi ci njiitalu fattali bu xereñ ak IA."
+    "og_image_alt": "Xar-kanamu Synaply App bi ñuy Jàngé Làmmiñ ak IA",
+    "twitter_title": "Synaply - Jàng Baat yu Bees ci Lu Nééw-Doolé",
+    "twitter_description": "Àndal ak Synaply ngir yaatal sa xam-xamu baat yi ci njiitalu fattali bu xereñ ak IA."
   },
   "landing": {
     "public_lists": "Sarsu Mbooloo yi",
@@ -144,10 +144,10 @@
     "support_title": "Jàppale Porose bi",
     "support_desc": "Boo bëggee app bi, mën nga jàppale doxalinam.",
     "onboarding": {
-      "welcome": "Dalal ak jàmm ci WordsGo!",
+      "welcome": "Dalal ak jàmm ci Synaply!",
       "journey_begins": "Sa tukk ngir xam làmmiñ tambali na fi.",
       "best_practice": "Pexey Sotti",
-      "strategy_desc": "Ngir gënë jarinòo WordsGo, nu ngi la di digal pexe bu yomb bi:",
+      "strategy_desc": "Ngir gënë jarinòo Synaply, nu ngi la di digal pexe bu yomb bi:",
       "step1_title": "Téewlu ci Koj",
       "step1_desc": "Yookal lu tolloo <strong>100 baat</strong> yu am genn koj (n.m., Liggéey walla Tukk) ngir sàkk dëkk bu dëgg.",
       "step2_title": "Fattaliku Bis bu nekk",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Sartu Jëfandikoo",
-    "terms_welcome": "Dalal ak jàmm ci WordsGo. Ci jëfandikoo samay xarala, dëggal nga sart yi...",
+    "terms_welcome": "Dalal ak jàmm ci Synaply. Ci jëfandikoo samay xarala, dëggal nga sart yi...",
     "title": "Ngalu Xar-kanam",
     "first_name": "Tur",
     "last_name": "Sant",
@@ -286,7 +286,7 @@
     "subtitle": "Yéwénal say xibaar bopp ak ngalu làmmiñ"
   },
   "login": {
-    "title": "Duggal ci wordsGo",
+    "title": "Duggal ci synaply",
     "email": "Makane Email",
     "password": "Baat-u-jàll",
     "sign_in": "Duggal",
@@ -307,7 +307,7 @@
     "login": "Duggal fi"
   },
   "help": {
-    "title": "Naka ngay jëfandikoo WordsGo",
+    "title": "Naka ngay jëfandikoo Synaply",
     "best_practice": {
       "title": "Pexey Sotti",
       "strategy_desc": "Ngir njàng mi gënë sotti, nu ngi la di digal pexe bu yomb bi ci 3 jeego:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Tambali",
-      "desc": "WordsGo jumtukaay bu am solo la bu ñu defar ngir dimbali la nga yaatal sa xam-xamu baat yi ak baax sa xam-xam ci làmmiñ ci njiitalu fattali ak IA.",
+      "desc": "Synaply jumtukaay bu am solo la bu ñu defar ngir dimbali la nga yaatal sa xam-xamu baat yi ak baax sa xam-xam ci làmmiñ ci njiitalu fattali ak IA.",
       "step1_title": "Jeego 1: Yook Baat yi",
       "step1_desc": "Yookal baat yi ci sa loxo walla nga jëfandikoo IA ngir sàkk sarsu yi ci koj ak lebeul.",
       "step2_title": "Jeego 2: Tàggatu bis bu nekk",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Njiitalu Fattali",
-      "desc": "WordsGo mu ngi jëfandikoo njiitalu FSRS (Free Spaced Repetition Scheduler) ngir xalaat waxtu bu gën ngir fattaliku baat bu nekk.",
+      "desc": "Synaply mu ngi jëfandikoo njiitalu FSRS (Free Spaced Repetition Scheduler) ngir xalaat waxtu bu gën ngir fattaliku baat bu nekk.",
       "process_title": "Doxalin Fattaliku mi",
       "step1": "Dinañu la wone baat ci làmmiñu njeebant bi.",
       "step2": "Bindal tekki bi te nga cuq <strong>Enter</strong> walla <strong>Seet Tontu bi</strong>.",

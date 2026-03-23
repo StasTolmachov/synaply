@@ -8,8 +8,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: 'common' });
   
   return {
-    title: `${t('terms')} | WordsGo`,
-    description: 'Terms of Service and Privacy Policy for WordsGo.',
+    title: `${t('terms')} | Synaply`,
+    description: 'Terms of Service and Privacy Policy for Synaply.',
   };
 }
 
