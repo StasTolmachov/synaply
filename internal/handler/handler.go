@@ -41,7 +41,7 @@ func RegisterRoutes(h *Handler, jwtSecret string) *chi.Mux {
 
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
-			"https://wordsgo.tolmachov.dev",
+			"https://synaply.me",
 			"http://localhost:3000", // for local frontend development
 		},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
