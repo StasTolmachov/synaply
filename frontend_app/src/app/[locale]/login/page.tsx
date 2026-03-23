@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter, Link } from '@/i18n/routing';
 import { fetchApi } from '@/lib/api';
 import { sendGAEvent } from '@next/third-parties/google';
@@ -41,6 +42,17 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
         <div className="text-center">
+          <div className="flex justify-center mb-6">
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/logo-Header.png"
+                alt="Synaply Logo"
+                width={38}
+                height={48}
+                className="w-auto h-12"
+              />
+            </Link>
+          </div>
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
             {t('login.title')} <span className="text-sm font-normal text-gray-400">{t('common.beta')}</span>
           </h2>

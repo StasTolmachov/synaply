@@ -18,7 +18,7 @@ const Footer = () => {
   return (
     <footer className={`border-t border-gray-200 dark:border-gray-800 p-8 mt-8 text-center text-sm text-gray-600 dark:text-gray-400 ${isLandingPage ? 'bg-white dark:bg-gray-950' : 'bg-transparent'}`}>
       <div className="mb-4">
-        <p>© {year || '...'} Synaply. A project by Synaply.me. {t('dashboard.all_rights_reserved')}</p>
+        <p>© {year || '...'} Synaply. {t('dashboard.all_rights_reserved')}</p>
       </div>
       <div className="mb-4 flex justify-center gap-8">
         <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 no-underline transition-colors">{t('dashboard.terms')}</Link>
@@ -28,7 +28,7 @@ const Footer = () => {
         <p>
           {t('dashboard.footer_help_text')}
           {' '}
-          <a href="mailto:synaply@synaply.me" className="text-blue-600 dark:text-blue-400 hover:underline">synaply@synaply.me</a>
+          <a href="mailto:support@synaply.me" className="text-blue-600 dark:text-blue-400 hover:underline">support@synaply.me</a>
         </p>
       </div>
     </footer>

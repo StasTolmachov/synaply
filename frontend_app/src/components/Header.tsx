@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useScore } from './ScoreContext';
 import { sendGAEvent } from '@next/third-parties/google';
@@ -167,6 +168,13 @@ export function Header() {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center group">
+              <Image
+                src="/logo-Header.png"
+                alt="Synaply Logo"
+                width={32}
+                height={40}
+                className="w-auto h-8 mr-2"
+              />
               <span className="text-xl font-bold text-blue-600 dark:text-blue-500">Synaply</span>
               <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded">{t('common.beta')}</span>
             </Link>
