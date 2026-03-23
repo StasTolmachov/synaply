@@ -108,7 +108,7 @@ export default function Register() {
                 type="text"
                 name="first_name"
                 required
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 value={formData.first_name}
                 onChange={handleChange}
               />
@@ -119,7 +119,7 @@ export default function Register() {
                 type="text"
                 name="last_name"
                 required
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 value={formData.last_name}
                 onChange={handleChange}
               />
@@ -131,7 +131,7 @@ export default function Register() {
               type="email"
               name="email"
               required
-              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
               value={formData.email}
               onChange={handleChange}
             />
@@ -143,7 +143,7 @@ export default function Register() {
               name="password"
               required
               minLength={8}
-              className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
               value={formData.password}
               onChange={handleChange}
             />
@@ -154,7 +154,7 @@ export default function Register() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('profile.interface_lang')}</label>
               <select
                 name="source_lang"
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 value={formData.source_lang}
                 onChange={handleChange}
               >
@@ -167,7 +167,7 @@ export default function Register() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('profile.learning_lang')}</label>
               <select
                 name="target_lang"
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 value={formData.target_lang}
                 onChange={handleChange}
               >

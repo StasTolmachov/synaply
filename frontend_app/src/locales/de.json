@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Synaply - Vokabeln lernen mit KI & Spaced Repetition",
-    "description": "Verbessern Sie Ihre Sprachkenntnisse mit KI-gestützter Spaced Repetition. Erstellen Sie eigene Wortlisten oder lernen Sie von öffentlichen Community-Listen.",
-    "keywords": "Englisch lernen, Spaced Repetition, Vokabeltrainer, Flashcards, KI-Sprachlernen, Wortlisten, Sprachlern-App, Spanisch lernen, Französisch lernen, Deutsch lernen, Sprachkenntnisse, Wörter merken, SRS-Lernen",
+    "title": "Synaply - Synapsen bilden mit KI-gestützten Algorithmen",
+    "description": "Meistern Sie jede Sprache mit unserem wissenschaftlichen Algorithmus, der neuronale Synapsen erstellt und stärkt, unterstützt durch fortschrittliche KI.",
+    "keywords": "Synapsenbildung, neuronales Sprachenlernen, wissenschaftliche Spaced Repetition, FSRS-Algorithmus, KI-Vokabeln, gehirnbasiertes Lernen, Wissenschaft des Merkens",
     "og_title": "Synaply - Intelligentes Vokabellernen",
     "og_description": "Steigern Sie Ihre Sprachkenntnisse mit KI-gestützter Spaced Repetition. Schneller lernen, länger behalten.",
     "og_image_alt": "Synaply KI-Sprachlern-App Interface",
@@ -145,16 +145,16 @@
     "support_desc": "Wenn Ihnen diese App gefällt, können Sie ihre Entwicklung unterstützen.",
     "onboarding": {
       "welcome": "Willkommen bei Synaply!",
-      "journey_begins": "Ihre Reise zur Sprachbeherrschung beginnt hier.",
-      "best_practice": "Best Practice für den Erfolg",
+      "journey_begins": "Beginnen Sie noch heute mit dem Aufbau dauerhafter neuronaler Verbindungen.",
+      "best_practice": "Beste Praxis für den Erfolg",
       "strategy_desc": "Um das Beste aus Synaply herauszuholen, empfehlen wir diese einfache Strategie:",
-      "step1_title": "Konzentrieren Sie sich auf ein Thema",
+      "step1_title": "Fokus auf ein Thema",
       "step1_desc": "Fügen Sie etwa <strong>100 Wörter</strong> zu einem einzelnen Thema hinzu (z. B. Business oder Reisen), um einen starken Kontext aufzubauen.",
-      "step2_title": "Tägliche Wiederholungen",
-      "step2_desc": "Meistern Sie diese Wörter durch <strong>tägliche Wiederholung</strong>, bis sie Teil Ihres Wortschatzes werden.",
+      "step2_title": "Synapsen aufbauen",
+      "step2_desc": "Stärken Sie neuronale Pfade durch <strong>wissenschaftliche Wiederholung</strong>, bis die Wörter fest in Ihrem Gedächtnis verankert sind.",
       "step3_title": "KI-Übung",
-      "step3_desc": "Wechseln Sie zur <strong>KI-Übung</strong>, um Ihren neuen Wortschatz in vollständigen Sätzen und realen Situationen anzuwenden.",
-      "got_it": "Verstanden, fangen wir an!"
+      "step3_desc": "Wechseln Sie zur <strong>KI-Übung</strong>, um Ihr neues Vokabular in vollständigen Sätzen und realen Situationen anzuwenden.",
+      "got_it": "Verstanden, legen wir los!"
     },
     "generate_ai_title": "Wortliste mit KI generieren",
     "proficiency_level": "Sprachniveau",

@@ -133,7 +133,7 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -145,7 +145,7 @@ export default function Profile() {
           <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 flex justify-between items-center">
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-                <UserIcon className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" />
+                <UserIcon className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('profile.title')}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('profile.subtitle')}</p>
@@ -168,7 +168,7 @@ export default function Profile() {
                 <input
                   type="text"
                   required
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                   value={formData.first_name}
                   onChange={e => setFormData({ ...formData, first_name: e.target.value })}
                 />
@@ -180,7 +180,7 @@ export default function Profile() {
                 <input
                   type="text"
                   required
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                   value={formData.last_name}
                   onChange={e => setFormData({ ...formData, last_name: e.target.value })}
                 />
@@ -195,7 +195,7 @@ export default function Profile() {
               <input
                 type="email"
                 required
-                className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
               />
@@ -208,7 +208,7 @@ export default function Profile() {
                   {t('profile.interface_lang')}
                 </label>
                 <select
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                   value={formData.source_lang}
                   onChange={e => setFormData({ ...formData, source_lang: e.target.value })}
                 >
@@ -219,11 +219,11 @@ export default function Profile() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center">
-                  <Globe className="w-4 h-4 mr-1 text-blue-400 dark:text-blue-500" />
+                  <Globe className="w-4 h-4 mr-1 text-synaply-blue dark:text-synaply-cyan" />
                   {t('profile.learning_lang')}
                 </label>
                 <select
-                  className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-colors"
+                  className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                   value={formData.target_lang}
                   onChange={e => setFormData({ ...formData, target_lang: e.target.value })}
                 >
@@ -269,7 +269,7 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
+                className="inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue disabled:opacity-50 transition-all"
               >
                 {saving ? (
                   <>

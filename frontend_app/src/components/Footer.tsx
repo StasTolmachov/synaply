@@ -22,15 +22,15 @@ const Footer = () => {
           <p>© {year || '...'} Synaply. {t('dashboard.all_rights_reserved')}</p>
         </div>
         <nav className="mb-4 flex justify-center gap-8" aria-label="Footer Navigation">
-          <Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 no-underline transition-colors">{t('dashboard.terms')}</Link>
-          <Link href="/help" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 no-underline transition-colors">{t('common.help')}</Link>
-          <Link href="/public-lists" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 no-underline transition-colors">{t('dashboard.public_lists.title')}</Link>
+          <Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('dashboard.terms')}</Link>
+          <Link href="/help" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('common.help')}</Link>
+          <Link href="/public-lists" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('dashboard.public_lists.title')}</Link>
         </nav>
         <div className="mb-4 text-center text-sm text-gray-600 dark:text-gray-400">
           <p>
             {t('dashboard.footer_help_text')}
             {' '}
-            <a href="mailto:support@tolmachov.dev" className="text-blue-600 dark:text-blue-400 hover:underline">support@tolmachov.dev</a>
+            <a href="mailto:support@tolmachov.dev" className="text-synaply-blue dark:text-synaply-cyan hover:underline">support@tolmachov.dev</a>
           </p>
         </div>
       </div>
