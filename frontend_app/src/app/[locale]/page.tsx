@@ -260,14 +260,15 @@ export default function LandingPage() {
                   <span className="text-xl font-bold tracking-tight text-synaply-blue">
                     synaply<span className="text-synaply-cyan">.me</span>
                   </span>
+                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 border border-synaply-blue/10 rounded">{t('common.beta')}</span>
                 </Link>
               </div>
               <div className="flex items-center gap-4">
                 <Link 
                   href="/public-lists"
-                  className="text-gray-600 hover:text-blue-600 font-medium px-2 transition-colors flex items-center gap-1"
+                  className="text-gray-600 hover:text-synaply-blue font-medium px-2 transition-colors flex items-center gap-1"
                 >
-                  <Globe className="w-4 h-4 text-green-500" />
+                  <Globe className="w-4 h-4 text-synaply-cyan" />
                   {t('landing.public_lists')}
                 </Link>
                 {isLoggedIn ? (
@@ -279,10 +280,10 @@ export default function LandingPage() {
                   </Link>
                 ) : (
                   <>
-                    <Link href="/login" className="text-gray-600 hover:text-gray-900 font-medium px-2 transition-colors">Sign in</Link>
+                    <Link href="/login" className="text-gray-600 hover:text-synaply-blue font-medium px-2 transition-colors">Sign in</Link>
                     <Link 
                       href="/register"
-                      className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
+                      className="px-4 py-2 rounded-full bg-synaply-blue text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
                     >
                       Get Started
                     </Link>
@@ -319,14 +320,14 @@ export default function LandingPage() {
             </Link>
             <Link 
               href="/public-lists"
-              className="w-full sm:w-auto px-8 py-4 bg-white text-gray-700 border border-gray-200 rounded-full font-bold text-lg hover:bg-gray-50 hover:border-blue-200 transition-all shadow-lg flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 bg-white/70 backdrop-blur-md text-gray-700 border border-white/50 rounded-full font-bold text-lg hover:bg-white hover:border-synaply-blue/20 transition-all shadow-xl flex items-center justify-center gap-2"
             >
-              <Globe className="w-5 h-5 text-blue-500" />
+              <Globe className="w-5 h-5 text-synaply-cyan" />
               {t('landing.browse_lists')}
             </Link>
           </div>
           <div className="mt-16 relative max-w-5xl mx-auto">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-synaply-blue to-synaply-cyan rounded-3xl blur opacity-20"></div>
             <img 
               src="/opengraph-image.png" 
               alt="Synaply App Interface - AI-powered vocabulary learning dashboard" 
@@ -394,32 +395,32 @@ export default function LandingPage() {
                 We utilize the <strong>FSRS</strong> algorithm, 
                 enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.
               </p>
-              <div className="flex items-center gap-2 text-purple-600 font-semibold text-sm">
+              <div className="flex items-center gap-2 text-synaply-blue font-semibold text-sm">
                 <Target className="w-4 h-4" />
                 Scientifically proven memory optimization
               </div>
             </div>
 
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-8">
-                <Infinity className="w-7 h-7 text-blue-600" />
+            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-synaply-cyan/10 rounded-2xl flex items-center justify-center mb-8">
+                <Infinity className="w-7 h-7 text-synaply-cyan" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Public Word Lists</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Public Word Lists</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Don&apos;t know where to start? Explore and import themed word lists created by our community. 
                 From TOEFL prep to "Travel Essentials" — find what you need.
               </p>
-              <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm">
+              <div className="flex items-center gap-2 text-synaply-cyan font-semibold text-sm">
                 <Database className="w-4 h-4" />
                 Ready-to-use vocabulary for any goal
               </div>
             </div>
 
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-8">
+            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-amber-100/50 rounded-2xl flex items-center justify-center mb-8">
                 <Sparkles className="w-7 h-7 text-amber-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Gemini AI Tutor</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Gemini AI Tutor</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Practice in context. Gemini AI generates personalized examples and exercises using the specific words you are currently learning.
               </p>
@@ -443,62 +444,62 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-bold mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-bold mb-6 border border-synaply-blue/10">
                 <Bot className="w-4 h-4" />
                 Next-Gen AI Companion
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight">Beyond Simple Translation</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue">Beyond Simple Translation</h2>
               <div className="space-y-8">
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
-                    <MessageSquare className="w-6 h-6 text-emerald-600" />
+                  <div className="w-12 h-12 bg-synaply-blue/10 rounded-xl flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-6 h-6 text-synaply-blue" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">Infinite Context</h4>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">Infinite Context</h4>
                     <p className="text-gray-600">Don&apos;t just learn words, learn how to use them. Gemini AI generates real-world examples specifically for your vocabulary.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
-                    <Database className="w-6 h-6 text-emerald-600" />
+                  <div className="w-12 h-12 bg-synaply-cyan/10 rounded-xl flex items-center justify-center shrink-0">
+                    <Database className="w-6 h-6 text-synaply-cyan" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">Smart Public Lists</h4>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">Smart Public Lists</h4>
                     <p className="text-gray-600">Join thousands of users sharing their curated word lists. From academic vocabulary to niche professional terms.</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
-                    <Languages className="w-6 h-6 text-emerald-600" />
+                  <div className="w-12 h-12 bg-synaply-blue/10 rounded-xl flex items-center justify-center shrink-0">
+                    <Languages className="w-6 h-6 text-synaply-blue" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2">DeepL Precision</h4>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue">DeepL Precision</h4>
                     <p className="text-gray-600">We use the world&apos;s best translation algorithms to ensure you learn only correct and natural language options.</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="lg:w-1/2 relative">
-              <div className="bg-gradient-to-tr from-blue-600 to-purple-600 rounded-[3rem] p-1 shadow-2xl overflow-hidden">
+              <div className="bg-gradient-to-tr from-synaply-blue to-synaply-cyan rounded-[3rem] p-1 shadow-2xl overflow-hidden">
                 <img 
                   src="/synaply.png" 
                   alt="Synaply - Smart language learning platform" 
                   className="w-full h-full object-cover rounded-[2.8rem]"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-400/20 blur-3xl rounded-full"></div>
-              <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-400/20 blur-3xl rounded-full"></div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-synaply-cyan/20 blur-3xl rounded-full"></div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-synaply-blue/20 blur-3xl rounded-full"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Steps */}
-      <section className="py-24 px-4 bg-gray-50">
+      <section className="py-24 px-4 bg-white/50 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How does it work?</h2>
-            <p className="text-gray-600 text-lg">3 simple steps to language fluency</p>
+            <h2 className="text-4xl font-bold mb-4 text-synaply-blue">How does it work?</h2>
+            <p className="text-gray-600 text-lg">4 simple steps to language fluency</p>
           </div>
 
           <div className="space-y-12">
@@ -525,11 +526,11 @@ export default function LandingPage() {
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
-                <div className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0 shadow-lg shadow-blue-200 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 bg-synaply-blue text-white rounded-full flex items-center justify-center font-bold text-2xl shrink-0 shadow-lg shadow-synaply-blue/20 group-hover:scale-110 transition-transform">
                   {item.step}
                 </div>
                 <div className="pt-2">
-                  <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
+                  <h3 className="text-2xl font-bold mb-3 text-synaply-blue">{item.title}</h3>
                   <p className="text-lg text-gray-600 leading-relaxed">{item.description}</p>
                 </div>
               </div>
@@ -659,48 +660,48 @@ export default function LandingPage() {
             Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where users share their knowledge through <strong>Public Word Lists</strong>. This crowdsourced approach means you have access to specialized vocabulary that you won&apos;t find in any textbook—from regional slang to highly technical engineering terms.
           </p>
 
-          <div className="article-card bg-emerald-50/30 border-emerald-100">
-            <h3>Real-World Use Cases: How Synaply Changes Lives</h3>
+          <div className="article-card bg-synaply-blue/5 border-synaply-blue/10">
+            <h3 className="text-synaply-blue">Real-World Use Cases: How Synaply Changes Lives</h3>
             <div className="space-y-12">
               <div>
-                <h4 className="text-blue-600">The Professional Track</h4>
-                <p className="italic">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
-                <p className="font-bold">— Mark S., Mechanical Engineer</p>
+                <h4 className="text-synaply-blue font-bold">The Professional Track</h4>
+                <p className="italic text-gray-700">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
+                <p className="font-bold text-synaply-blue/80">— Mark S., Mechanical Engineer</p>
               </div>
-              <div className="pt-6 border-t border-emerald-100">
-                <h4 className="text-blue-600">The Academic Path</h4>
-                <p className="italic">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
-                <p className="font-bold">— Sarah L., High School Student</p>
+              <div className="pt-6 border-t border-synaply-blue/10">
+                <h4 className="text-synaply-blue font-bold">The Academic Path</h4>
+                <p className="italic text-gray-700">&quot;Preparing for the SAT vocabulary section was a nightmare until I found the public lists on Synaply. The FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
+                <p className="font-bold text-synaply-blue/80">— Sarah L., High School Student</p>
               </div>
             </div>
           </div>
 
           <h3>Frequently Asked Questions (FAQ)</h3>
           <div className="space-y-4">
-            <div className="faq-item">
-              <div className="faq-question">
-                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+            <div className="faq-item group">
+              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+                <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>How is FSRS better than Anki?</span>
               </div>
-              <div className="faq-answer">
+              <div className="faq-answer text-gray-600">
                 While Anki is powerful, its default algorithm is based on SM-2. Synaply uses FSRS, which is mathematically proven to be more efficient. Furthermore, Synaply integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
               </div>
             </div>
-            <div className="faq-item">
-              <div className="faq-question">
-                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+            <div className="faq-item group">
+              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+                <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>Can I use Synaply offline?</span>
               </div>
-              <div className="faq-answer">
+              <div className="faq-answer text-gray-600">
                 Yes! Our Progressive Web App (PWA) technology allows you to continue your reviews even without an active internet connection. Your progress will sync automatically once you&apos;re back online.
               </div>
             </div>
-            <div className="faq-item">
-              <div className="faq-question">
-                <CheckCircle className="w-6 h-6 text-blue-500 shrink-0" />
+            <div className="faq-item group">
+              <div className="faq-question text-synaply-blue group-hover:text-synaply-cyan transition-colors">
+                <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
                 <span>Is it free to use?</span>
               </div>
-              <div className="faq-answer">
+              <div className="faq-answer text-gray-600">
                 Synaply offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
               </div>
             </div>
@@ -710,26 +711,26 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 bg-gray-900 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500/10 blur-[100px] rounded-full"></div>
-        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-purple-500/10 blur-[100px] rounded-full"></div>
+      <section className="py-24 px-4 bg-synaply-blue text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-synaply-cyan/20 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-synaply-blue/20 blur-[100px] rounded-full"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to hack your memory?</h2>
-          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto opacity-90">
             Join Synaply and try the most advanced AI-powered system for learning foreign words.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
-              className="px-10 py-5 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-900/40"
+              className="px-10 py-5 bg-synaply-cyan text-synaply-blue rounded-full font-bold text-lg hover:bg-white hover:scale-105 transition-all shadow-xl shadow-synaply-cyan/20"
             >
               Create free account
             </Link>
             {!isLoggedIn && (
               <Link 
                 href="/login"
-                className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
+                className="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
               >
                 Already have an account? Sign in
               </Link>
