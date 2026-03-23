@@ -16,13 +16,13 @@ import (
 	"github.com/google/uuid"
 	"github.com/open-spaced-repetition/go-fsrs/v4"
 
-	"synaply_v2/external/deepl"
-	"synaply_v2/external/gemini"
-	"synaply_v2/internal/cache"
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository"
-	"synaply_v2/internal/repository/modelsDB"
-	"synaply_v2/slogger"
+	"synaply/external/deepl"
+	"synaply/external/gemini"
+	"synaply/internal/cache"
+	"synaply/internal/models"
+	"synaply/internal/repository"
+	"synaply/internal/repository/modelsDB"
+	"synaply/slogger"
 )
 
 var (

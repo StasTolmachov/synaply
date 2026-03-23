@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository/modelsDB"
+	"synaply/internal/models"
+	"synaply/internal/repository/modelsDB"
 )
 
 type WordsRepository interface {

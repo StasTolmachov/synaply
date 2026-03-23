@@ -8,8 +8,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/open-spaced-repetition/go-fsrs/v4"
 
-	"synaply_v2/external/gemini"
-	"synaply_v2/internal/repository/modelsDB"
+	"synaply/external/gemini"
+	"synaply/internal/repository/modelsDB"
 )
 
 type Word struct {

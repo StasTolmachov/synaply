@@ -10,9 +10,9 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/cache"
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository/modelsDB"
+	"synaply/internal/cache"
+	"synaply/internal/models"
+	"synaply/internal/repository/modelsDB"
 )
 
 var allowedUpdateColumns = map[string]bool{
