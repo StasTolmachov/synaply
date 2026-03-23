@@ -19,6 +19,7 @@ export default function Register() {
   const [languages, setLanguages] = useState<{ source: { code: string; name: string }[], target: { code: string; name: string }[] }>({ source: [], target: [] });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const router = useRouter();
   const { t, setLang } = useTranslation();
 
@@ -45,6 +46,12 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (!acceptedTerms) {
+      setError('You must agree to the Terms of Service to register');
+      setLoading(false);
+      return;
+    }
 
     if (formData.source_lang === formData.target_lang) {
       setError('Learning language cannot be the same as your native language');
@@ -179,6 +186,25 @@ export default function Register() {
           </div>
 
           {error && <div className="text-sm text-red-600 dark:text-red-400 font-medium">{error}</div>}
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              className="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-synaply-blue focus:ring-synaply-blue dark:bg-gray-800"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+              required
+            />
+            <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
+              {t('register.terms_acceptance_prefix')}
+              <Link href="/terms" className="text-synaply-blue dark:text-synaply-cyan hover:underline">
+                {t('register.terms_acceptance_link')}
+              </Link>
+              {t('register.terms_acceptance_suffix')}
+            </label>
+          </div>
 
           <div className="pt-2">
             <button
