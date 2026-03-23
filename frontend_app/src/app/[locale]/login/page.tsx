@@ -106,7 +106,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-xl synaply-gradient-bg py-3 px-4 text-sm font-bold text-white shadow-lg shadow-synaply-blue/20 hover:shadow-synaply-blue/40 focus:outline-none focus:ring-2 focus:ring-synaply-blue focus:ring-offset-2 disabled:opacity-50 transition-all active:scale-[0.98]"
+              className="group relative flex w-full justify-center rounded-xl synaply-gradient-bg py-3 px-4 text-sm font-bold text-white shadow-lg shadow-synaply-blue-shadow hover:shadow-synaply-purple-shadow focus:outline-none focus:ring-2 focus:ring-synaply-purple focus:ring-offset-2 disabled:opacity-50 transition-all active:scale-[0.98]"
             >
               {loading ? (
                 <span className="flex items-center space-x-2">

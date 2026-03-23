@@ -151,7 +151,7 @@ export default function Lesson() {
           </p>
           <button
             onClick={finishLesson}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-full shadow-lg shadow-synaply-blue/20 text-sm font-bold text-white bg-synaply-blue hover:opacity-90 transition-all"
+            className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue-shadow text-white synaply-gradient-bg hover:opacity-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple transition-all"
           >
             {t('common.back_to_dashboard')}
           </button>
@@ -206,7 +206,7 @@ export default function Lesson() {
                 onDrop={e => e.preventDefault()}
                 readOnly={!!feedback}
                 placeholder={t('dashboard.type_translation')}
-                className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50 transition-all"
+                className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-purple dark:focus:border-synaply-purple focus:ring-1 focus:ring-synaply-purple dark:focus:ring-synaply-purple shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50 transition-all"
                 autoFocus
                 autoComplete="off"
               />
@@ -243,7 +243,7 @@ export default function Lesson() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-lg shadow-synaply-blue/20 text-base font-bold text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue disabled:opacity-50 transition-all"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-lg shadow-synaply-blue-shadow text-base font-bold text-white synaply-gradient-bg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple disabled:opacity-50 transition-all"
               >
                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? t('dashboard.check_answer') : t('dashboard.dont_remember'))}
               </button>

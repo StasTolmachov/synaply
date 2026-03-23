@@ -488,11 +488,11 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="min-h-screen bg-transparent">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('dashboard.title')}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <h2 className="text-3xl font-extrabold synaply-gradient-text tracking-tight">{t('dashboard.title')}</h2>
+          <p className="text-sm font-bold text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-widest">
             {t('dashboard.subtitle', { 
               target: getLanguageName(userLangs.target), 
               source: getLanguageName(userLangs.source) 
@@ -502,8 +502,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           <div className="md:col-span-1 space-y-6">
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center uppercase tracking-wider">
                 <BarChart3 className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.progress')}
               </h3>
@@ -516,19 +516,19 @@ export default function Dashboard() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-synaply-blue/5 dark:bg-synaply-cyan/10 p-3 rounded-xl border border-synaply-blue/10 dark:border-synaply-cyan/20 text-center">
                     <div className="text-2xl font-bold text-synaply-blue dark:text-synaply-cyan">{stats.new}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-synaply-blue/60 dark:text-synaply-cyan/60">{t('dashboard.new')}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-synaply-blue/60 dark:text-synaply-cyan/60">{t('dashboard.new')}</div>
                   </div>
-                  <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg border border-amber-100 dark:border-amber-800 text-center">
+                  <div className="bg-amber-50/50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-100/50 dark:border-amber-800/50 text-center">
                     <div className="text-2xl font-bold text-amber-700 dark:text-amber-300">{stats.learning}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-amber-500 dark:text-amber-400">{t('dashboard.learning')}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-amber-500 dark:text-amber-400">{t('dashboard.learning')}</div>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-100 dark:border-green-800 text-center">
+                  <div className="bg-green-50/50 dark:bg-green-900/20 p-3 rounded-xl border border-green-100/50 dark:border-green-800/50 text-center">
                     <div className="text-2xl font-bold text-green-700 dark:text-green-300">{stats.review}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-green-500 dark:text-green-400">{t('dashboard.review')}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-green-500 dark:text-green-400">{t('dashboard.review')}</div>
                   </div>
-                  <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-100 dark:border-red-800 text-center">
+                  <div className="bg-red-50/50 dark:bg-red-900/20 p-3 rounded-xl border border-red-100/50 dark:border-red-800/50 text-center">
                     <div className="text-2xl font-bold text-red-700 dark:text-red-300">{stats.relearning}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-red-500 dark:text-red-400">{t('dashboard.relearning')}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-red-500 dark:text-red-400">{t('dashboard.relearning')}</div>
                   </div>
                 </div>
               )}
@@ -536,7 +536,7 @@ export default function Dashboard() {
               <div className="mt-6">
                 <Link 
                   href="/lesson"
-                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue transition-all"
+                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue-shadow text-white synaply-gradient-bg hover:opacity-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple transition-all"
                 >
                   <BookOpen className="w-4 h-4 mr-2" />
                   {t('dashboard.start_review')}
@@ -544,8 +544,8 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center uppercase tracking-wider">
                 <Brain className="w-5 h-5 mr-2 text-purple-500" />
                 {t('dashboard.ai_practice')}
               </h3>
@@ -554,14 +554,14 @@ export default function Dashboard() {
               </p>
               <Link 
                 href="/practice"
-                className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 dark:border-purple-800 text-sm font-medium rounded-md shadow-sm text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
+                className="w-full flex justify-center items-center px-4 py-2 border border-purple-200 dark:border-purple-800 text-sm font-bold rounded-full shadow-sm text-purple-700 dark:text-purple-300 bg-purple-50/50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors"
               >
                 {t('dashboard.practice_btn')}
               </Link>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center uppercase tracking-wider">
                 <List className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.manage_words')}
               </h3>
@@ -576,8 +576,8 @@ export default function Dashboard() {
               </Link>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 flex items-center uppercase tracking-wider">
                 <Globe className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.community_lists')}
               </h3>
@@ -587,14 +587,14 @@ export default function Dashboard() {
               <div className="flex flex-col gap-3">
                 <Link 
                   href="/public-lists"
-                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-bold rounded-full shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50/50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                 >
                   <Globe className="w-4 h-4 mr-2" />
                   {t('dashboard.public_lists.title')}
                 </Link>
                 <Link 
                   href="/public-lists?tab=playlists"
-                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-bold rounded-full shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50/50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                 >
                   <Layers className="w-4 h-4 mr-2" />
                   {t('common.playlists') || 'Playlists'}
@@ -606,9 +606,9 @@ export default function Dashboard() {
           </div>
 
           <div className="md:col-span-2">
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center uppercase tracking-wider">
                   <Plus className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                   {t('dashboard.add_word')}
                 </h3>
@@ -634,13 +634,13 @@ export default function Dashboard() {
               <form onSubmit={handleAddWord} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="relative">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
                       {t('dashboard.translation_in', { lang: getLanguageName(userLangs.source) })}
                     </label>
                     <div className="relative group">
                       <input
                         type="text"
-                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
+                        className="block w-full rounded-xl border-white/20 dark:border-gray-700 border pl-4 pr-10 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                         placeholder={t('dashboard.word_placeholder')}
                         value={newWord.source_word}
                         onChange={e => setNewWord({...newWord, source_word: e.target.value})}
@@ -658,13 +658,13 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="relative">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
                       {t('dashboard.word_in', { lang: getLanguageName(userLangs.target) })}
                     </label>
                     <div className="relative group">
                       <input
                         type="text"
-                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
+                        className="block w-full rounded-xl border-white/20 dark:border-gray-700 border pl-4 pr-10 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                         placeholder={t('dashboard.translation_placeholder')}
                         value={newWord.target_word}
                         onChange={e => setNewWord({...newWord, target_word: e.target.value})}
@@ -694,12 +694,12 @@ export default function Dashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
                     {t('dashboard.comment_optional')}
                   </label>
                   <input
                     type="text"
-                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
+                    className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                     placeholder={t('dashboard.usage_example')}
                     value={newWord.comment}
                     onChange={e => setNewWord({...newWord, comment: e.target.value})}
@@ -720,10 +720,10 @@ export default function Dashboard() {
                   <button
                     type="submit"
                     disabled={addingWord}
-                    className={`w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white transition-all ${
+                    className={`w-full sm:w-auto inline-flex justify-center items-center px-8 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg text-white transition-all transform active:scale-95 ${
                       (!newWord.source_word || !newWord.target_word) 
                         ? 'bg-gray-400 dark:bg-gray-700 cursor-not-allowed opacity-70' 
-                        : 'bg-gray-900 dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500'
+                        : 'synaply-gradient-bg hover:opacity-90 shadow-synaply-blue-shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple'
                     }`}
                   >
                     {addingWord ? (
@@ -747,9 +747,9 @@ export default function Dashboard() {
               ) : null}
             </div>
 
-            <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6 mt-6">
+            <div className="bg-white/70 dark:bg-gray-900/40 backdrop-blur-md overflow-hidden shadow-xl rounded-2xl border border-white/20 dark:border-gray-800/50 p-6 mt-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center uppercase tracking-wider">
                   <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
                   {t('dashboard.generate_ai_title')}
                 </h3>
@@ -758,16 +758,16 @@ export default function Dashboard() {
               <div className="space-y-6">
                 {/* Proficiency Level */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('dashboard.proficiency_level')}</label>
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('dashboard.proficiency_level')}</label>
                   <div className="flex flex-wrap gap-2">
                     {proficiencyLevels.map(level => (
                       <button
                         key={level}
                         onClick={() => setSelectedLevel(level)}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                        className={`px-4 py-2 rounded-full text-sm font-bold transition-all shadow-sm ${
                           selectedLevel === level
-                            ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                            ? 'synaply-gradient-bg text-white shadow-md'
+                            : 'bg-white/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 border border-white/20 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800'
                         }`}
                       >
                         {level}
@@ -778,16 +778,16 @@ export default function Dashboard() {
 
                 {/* Topics */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('dashboard.topic')}</label>
-                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1 border border-gray-50 dark:border-gray-800 rounded-lg">
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('dashboard.topic')}</label>
+                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-2 border border-white/20 dark:border-gray-800 rounded-xl bg-white/30 dark:bg-gray-900/20 shadow-inner">
                     {topicList.map(topic => (
                       <button
                         key={topic.slug}
                         onClick={() => setSelectedTopic(topic.slug === selectedTopic ? '' : topic.slug)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                        className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
                           selectedTopic === topic.slug
                             ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800'
-                            : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20'
+                            : 'bg-white/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20'
                         }`}
                       >
                         {t(`dashboard.topics.${topic.slug}`)}
@@ -798,10 +798,10 @@ export default function Dashboard() {
 
                 {/* Custom Prompt */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.custom_topic_label')}</label>
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-400 mb-1.5 uppercase tracking-wider">{t('dashboard.custom_topic_label')}</label>
                   <textarea
                     rows={2}
-                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
+                    className="block w-full rounded-xl border-white/20 dark:border-gray-700 border px-4 py-2.5 text-gray-900 dark:text-gray-100 bg-white/50 dark:bg-gray-800/20 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all shadow-inner"
                     placeholder={t('dashboard.custom_topic_placeholder')}
                     value={userTopic}
                     onChange={e => setUserTopic(e.target.value)}
@@ -811,7 +811,7 @@ export default function Dashboard() {
                 <button
                   onClick={handleGenerateWordList}
                   disabled={isGenerating}
-                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:bg-amber-300 dark:disabled:bg-amber-900/50 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:bg-amber-300 dark:disabled:bg-amber-900/50 transition-all active:scale-[0.98]"
                 >
                   {isGenerating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
                   {t('dashboard.generate_btn')}
