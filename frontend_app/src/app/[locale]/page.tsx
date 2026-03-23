@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter, Link } from '@/i18n/routing';
 import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe } from 'lucide-react';
 import { useTranslation } from '@/components/I18nContext';
@@ -248,10 +249,14 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
               <div className="flex items-center gap-2">
-                <Link href="/" className="flex items-center gap-2">
-                  <div className="bg-blue-600 p-1.5 rounded-lg">
-                    <Brain className="w-6 h-6 text-white" aria-hidden="true" />
-                  </div>
+                <Link href="/" className="flex items-center group">
+                  <Image
+                    src="/logo-Header.png"
+                    alt="Synaply Logo"
+                    width={32}
+                    height={40}
+                    className="w-auto h-8 mr-2"
+                  />
                   <span className="text-xl font-bold tracking-tight text-blue-600">Synaply</span>
                 </Link>
               </div>

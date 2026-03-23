@@ -63,8 +63,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       telephone: false,
     },
     icons: {
+      icon: "/favicon.png",
       apple: "/apple-icon.png",
     },
+    manifest: "/manifest.json",
     openGraph: {
       title: t('og_title') || t('title'),
       description: t('og_description') || t('description'),
