@@ -5,11 +5,11 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Synaply',
     short_name: 'Synaply',
     description: 'Learn new words with spaced repetition. The easiest way to expand your vocabulary.',
-    start_url: '/dashboard',
+    start_url: '/',
     display: 'standalone',
-    background_color: '#030712', // gray-950
-    theme_color: '#3b82f6',      // blue-500
-    orientation: 'portrait',
+    background_color: '#ffffff', // base light bg
+    theme_color: '#2563eb',      // synaply blue
+    orientation: 'any',
     icons: [
       {
         src: '/favicon.ico?v=2',
