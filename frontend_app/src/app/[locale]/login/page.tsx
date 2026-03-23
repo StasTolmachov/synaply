@@ -58,7 +58,7 @@ export default function Login() {
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             {t('login.no_account')}{' '}
-            <Link href="/register" className="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-500">
+            <Link href="/register" className="font-medium text-synaply-blue dark:text-synaply-cyan hover:opacity-80">
               {t('login.register')}
             </Link>
           </p>
@@ -70,7 +70,7 @@ export default function Login() {
               <input
                 type="email"
                 required
-                className="relative block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:z-10 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +81,7 @@ export default function Login() {
               <input
                 type="password"
                 required
-                className="relative block w-full rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="relative block w-full rounded-lg border border-gray-300 dark:border-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:z-10 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:outline-none focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +95,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-400"
+              className="group relative flex w-full justify-center rounded-full border border-transparent bg-synaply-blue py-2.5 px-4 text-sm font-bold text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-synaply-blue focus:ring-offset-2 disabled:opacity-50 transition-all shadow-lg shadow-synaply-blue/20"
             >
               {loading ? t('login.signing_in') : t('login.sign_in')}
             </button>

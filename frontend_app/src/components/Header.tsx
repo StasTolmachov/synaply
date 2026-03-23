@@ -86,35 +86,35 @@ export function Header() {
     <>
       <Link
         href="/dashboard"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >
-        <LayoutDashboard className="w-4 h-4 mr-2 md:mr-1 text-blue-500" />
+        <LayoutDashboard className="w-4 h-4 mr-2 md:mr-1 text-synaply-blue dark:text-synaply-cyan" />
         <span className="md:hidden lg:inline">{t('common.dashboard')}</span>
       </Link>
       <Link
         href="/lesson"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >
         <BookOpen className="w-4 h-4 mr-2 md:mr-1 text-green-500" />
         <span className="md:hidden lg:inline">{t('common.review')}</span>
       </Link>
       <Link
         href="/practice"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >
         <Brain className="w-4 h-4 mr-2 md:mr-1 text-purple-500" />
         <span className="md:hidden lg:inline">{t('common.practice')}</span>
       </Link>
       <Link
         href="/words"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >
         <List className="w-4 h-4 mr-2 md:mr-1 text-amber-500" />
         <span className="md:hidden lg:inline">{t('common.words')}</span>
       </Link>
       <Link
         href="/public-lists"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 md:py-0"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
       >
         <Globe className="w-4 h-4 mr-2 md:mr-1 text-cyan-500" />
         <span className="md:hidden lg:inline">{t('common.public_lists')}</span>
@@ -126,7 +126,7 @@ export function Header() {
     <>
       <Link
         href="/profile"
-        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md md:flex"
+        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md md:flex"
       >
         <User className="w-4 h-4 mr-2 md:mr-1 text-gray-400" />
         {t('common.profile')}
@@ -134,9 +134,9 @@ export function Header() {
       {isAdmin && (
         <Link
           href="/admin/stats"
-          className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md md:flex"
+          className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md md:flex"
         >
-          <ShieldCheck className="w-4 h-4 mr-2 text-blue-500" />
+          <ShieldCheck className="w-4 h-4 mr-2 text-synaply-blue dark:text-synaply-cyan" />
           {t('common.admin_stats')}
         </Link>
       )}
@@ -144,7 +144,7 @@ export function Header() {
         <Link
           href="/help"
           target="_blank"
-          className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md md:flex"
+          className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 px-3 hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md md:flex"
         >
           <HelpCircle className="w-4 h-4 mr-2 md:mr-1 text-gray-400" />
           {t('common.help')}
@@ -175,8 +175,10 @@ export function Header() {
                 height={40}
                 className="w-auto h-8 mr-2"
               />
-              <span className="text-xl font-bold text-blue-600 dark:text-blue-500">Synaply</span>
-              <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded">{t('common.beta')}</span>
+              <span className="text-xl font-bold tracking-tight text-synaply-blue dark:text-blue-400">
+                synaply<span className="text-synaply-cyan dark:text-blue-300">.me</span>
+              </span>
+              <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 dark:bg-blue-900/30 border border-synaply-blue/10 dark:border-blue-800 rounded">{t('common.beta')}</span>
             </Link>
           </div>
 

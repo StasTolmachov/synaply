@@ -482,7 +482,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -504,19 +504,19 @@ export default function Dashboard() {
           <div className="md:col-span-1 space-y-6">
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                <BarChart3 className="w-5 h-5 mr-2 text-blue-500" />
+                <BarChart3 className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.progress')}
               </h3>
               
               {statsLoading ? (
                 <div className="flex justify-center py-4">
-                  <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                  <Loader2 className="w-6 h-6 animate-spin text-synaply-blue dark:text-synaply-cyan" />
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-100 dark:border-blue-800 text-center">
-                    <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{stats.new}</div>
-                    <div className="text-[10px] uppercase tracking-wider font-semibold text-blue-500 dark:text-blue-400">{t('dashboard.new')}</div>
+                  <div className="bg-synaply-blue/5 dark:bg-synaply-cyan/10 p-3 rounded-xl border border-synaply-blue/10 dark:border-synaply-cyan/20 text-center">
+                    <div className="text-2xl font-bold text-synaply-blue dark:text-synaply-cyan">{stats.new}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-semibold text-synaply-blue/60 dark:text-synaply-cyan/60">{t('dashboard.new')}</div>
                   </div>
                   <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg border border-amber-100 dark:border-amber-800 text-center">
                     <div className="text-2xl font-bold text-amber-700 dark:text-amber-300">{stats.learning}</div>
@@ -536,7 +536,7 @@ export default function Dashboard() {
               <div className="mt-6">
                 <Link 
                   href="/lesson"
-                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue transition-all"
                 >
                   <BookOpen className="w-4 h-4 mr-2" />
                   {t('dashboard.start_review')}
@@ -562,7 +562,7 @@ export default function Dashboard() {
 
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
-                <List className="w-5 h-5 mr-2 text-blue-500" />
+                <List className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.manage_words')}
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -570,7 +570,7 @@ export default function Dashboard() {
               </p>
               <Link 
                 href="/words"
-                className="w-full flex justify-center items-center px-4 py-2 border border-blue-200 dark:border-blue-800 text-sm font-medium rounded-md shadow-sm text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="w-full flex justify-center items-center px-4 py-2 border border-synaply-blue/10 dark:border-synaply-cyan/20 text-sm font-bold rounded-full shadow-sm text-synaply-blue dark:text-synaply-cyan bg-synaply-blue/5 dark:bg-synaply-cyan/10 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue transition-all"
               >
                 {t('dashboard.my_words_list')}
               </Link>
@@ -578,7 +578,7 @@ export default function Dashboard() {
 
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
-                <Globe className="w-5 h-5 mr-2 text-blue-500" />
+                <Globe className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                 {t('dashboard.community_lists')}
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -609,7 +609,7 @@ export default function Dashboard() {
             <div className="bg-white dark:bg-gray-900 overflow-hidden shadow-sm rounded-xl border border-gray-100 dark:border-gray-800 p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
-                  <Plus className="w-5 h-5 mr-2 text-blue-500" />
+                  <Plus className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                   {t('dashboard.add_word')}
                 </h3>
                 <div className="flex items-center gap-2">
@@ -640,7 +640,7 @@ export default function Dashboard() {
                     <div className="relative group">
                       <input
                         type="text"
-                        className="block w-full rounded-md border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                         placeholder={t('dashboard.word_placeholder')}
                         value={newWord.source_word}
                         onChange={e => setNewWord({...newWord, source_word: e.target.value})}
@@ -649,7 +649,7 @@ export default function Dashboard() {
                         <button
                           type="button"
                           onClick={() => handleTranslate('source-to-target')}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-synaply-blue dark:text-synaply-cyan hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
                           title={t('dashboard.auto_translate')}
                         >
                           <Languages className="w-4 h-4" />
@@ -664,7 +664,7 @@ export default function Dashboard() {
                     <div className="relative group">
                       <input
                         type="text"
-                        className="block w-full rounded-md border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-3 pr-10 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                         placeholder={t('dashboard.translation_placeholder')}
                         value={newWord.target_word}
                         onChange={e => setNewWord({...newWord, target_word: e.target.value})}
@@ -673,7 +673,7 @@ export default function Dashboard() {
                         <button
                           type="button"
                           onClick={() => handleTranslate('target-to-source')}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-synaply-blue dark:text-synaply-cyan hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
                           title={t('dashboard.auto_translate')}
                         >
                           <Languages className="w-4 h-4 rotate-180" />
@@ -687,7 +687,7 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={() => handleTranslate()}
-                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium"
+                    className="text-xs text-synaply-blue dark:text-synaply-cyan hover:opacity-80 font-bold"
                   >
                     {t('dashboard.auto_translate')}
                   </button>
@@ -699,7 +699,7 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="text"
-                    className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                     placeholder={t('dashboard.usage_example')}
                     value={newWord.comment}
                     onChange={e => setNewWord({...newWord, comment: e.target.value})}
@@ -801,7 +801,7 @@ export default function Dashboard() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dashboard.custom_topic_label')}</label>
                   <textarea
                     rows={2}
-                    className="block w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-blue dark:focus:border-synaply-cyan focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan sm:text-sm transition-all"
                     placeholder={t('dashboard.custom_topic_placeholder')}
                     value={userTopic}
                     onChange={e => setUserTopic(e.target.value)}
@@ -829,7 +829,7 @@ export default function Dashboard() {
                         <input
                           type="text"
                           placeholder={t('dashboard.search_placeholder')}
-                          className="pl-9 w-full rounded-md border-gray-300 dark:border-gray-700 border px-3 py-1.5 text-xs text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                          className="pl-9 w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-1.5 text-xs text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan transition-all"
                           value={searchTerm}
                           onChange={e => {
                             setSearchTerm(e.target.value);
@@ -909,7 +909,7 @@ export default function Dashboard() {
                             <td className="px-4 py-3 text-right">
                               <button
                                 onClick={handleAddItemInline}
-                                className="inline-flex items-center px-2 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700 transition-all active:scale-95"
+                                className="inline-flex items-center px-2 py-1 bg-synaply-blue text-white text-xs font-bold rounded-full hover:opacity-90 transition-all active:scale-95 shadow-sm shadow-synaply-blue/20"
                               >
                                 <Plus className="h-3.5 w-3.5 mr-1" />
                                 {t('common.add')}
@@ -997,7 +997,7 @@ export default function Dashboard() {
                                     </>
                                   ) : (
                                     <>
-                                      <button onClick={() => handleStartEdit(idx)} className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300" title={t('common.edit')}>
+                                      <button onClick={() => handleStartEdit(idx)} className="text-synaply-blue dark:text-synaply-cyan hover:opacity-80 transition-opacity" title={t('common.edit')}>
                                         <Edit2 className="h-4 w-4" />
                                       </button>
                                       <button onClick={() => handleDeleteWord(idx)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300" title={t('common.delete')}>
@@ -1178,14 +1178,14 @@ export default function Dashboard() {
                   <button
                     type="button"
                     onClick={() => setShowPublishModal(false)}
-                    className="flex-1 px-4 py-2 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex-1 px-4 py-2 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-full text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     disabled={isPublishing || !publishForm.title}
-                    className="flex-1 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                    className="flex-1 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue disabled:opacity-50 transition-all"
                   >
                     {isPublishing ? (
                       <>

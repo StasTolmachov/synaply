@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Synaply - Aprende vocabulario con IA y repetición espaciada",
-    "description": "Mejora tus habilidades lingüísticas con la repetición espaciada potenciada por IA. Crea listas de palabras personalizadas o aprende de listas públicas compartidas por la comunidad.",
-    "keywords": "aprender inglés, repetición espaciada, constructor de vocabulario, flashcards, aprendizaje de idiomas con IA, listas de palabras, aplicación de estudio de idiomas, aprender español, aprender francés, aprender alemán, competencia lingüística, memorizar palabras, aprendizaje SRS",
+    "title": "Synaply - Construye sinapsis con algoritmos potenciados por IA",
+    "description": "Domina cualquier idioma con nuestro algoritmo científico que crea y fortalece las sinapsis neuronales, reforzado por una IA avanzada.",
+    "keywords": "construcción de sinapsis, aprendizaje neuronal de idiomas, repetición espaciada científica, algoritmo FSRS, vocabulario IA, aprendizaje basado en el cerebro, ciencia de la mémorización",
     "og_title": "Synaply - Aprendizaje inteligente de vocabulario",
     "og_description": "Mejora tus habilidades lingüísticas con la repetición espaciada potenciada por IA. Aprende más rápido, recuerda por más tiempo.",
     "og_image_alt": "Interfaz de la aplicación de aprendizaje de idiomas Synaply AI",
@@ -145,16 +145,16 @@
     "support_desc": "Si te gusta esta aplicación, puedes apoyar su desarrollo.",
     "onboarding": {
       "welcome": "¡Bienvenido a Synaply!",
-      "journey_begins": "Tu viaje hacia el dominio del idioma comienza aquí.",
+      "journey_begins": "Empieza a crear conexiones neuronales duraderas hoy mismo.",
       "best_practice": "Mejores prácticas para el éxito",
       "strategy_desc": "Para sacar el máximo provecho de Synaply, recomendamos esta sencilla estrategia:",
-      "step1_title": "Enfócate en un tema",
-      "step1_desc": "Añade unas <strong>100 palabras</strong> relacionadas con un solo tema (ej. Negocios o Viajes) para construir un contexto sólido.",
-      "step2_title": "Revisiones diarias",
-      "step2_desc": "Domina estas palabras mediante la <strong>repetición diaria</strong> hasta que formen parte de tu vocabulario.",
+      "step1_title": "Enfoque en un tema",
+      "step1_desc": "Añade unas <strong>100 palabras</strong> relacionadas con un solo tema (p. ej., Negocios o Viajes) para construir un contexto sólido.",
+      "step2_title": "Construir sinapsis",
+      "step2_desc": "Fortalece las vías neuronales mediante la <strong>repetición científica</strong> hasta que las palabras queden grabadas en tu memoria.",
       "step3_title": "Práctica con IA",
-      "step3_desc": "Cambia a la <strong>Práctica con IA</strong> para usar tu nuevo vocabulario en frases completas y situaciones del mundo real.",
-      "got_it": "¡Entendido, empecemos!"
+      "step3_desc": "Cambia a la <strong>Práctica con IA</strong> para usar tu nuevo vocabulario en frases completas y situaciones reales.",
+      "got_it": "Entendido, ¡vamos!"
     },
     "generate_ai_title": "Generar lista de palabras con IA",
     "proficiency_level": "Nivel de competencia",

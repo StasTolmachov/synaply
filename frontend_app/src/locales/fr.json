@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Synaply - Apprendre le vocabulaire avec l'IA et la répétition espacée",
-    "description": "Améliorez vos compétences linguistiques grâce à la répétition espacée assistée par l'IA. Créez des listes de mots personnalisées ou apprenez à partir de listes publiques partagées par la communauté.",
-    "keywords": "apprendre l'anglais, répétition espacée, constructeur de vocabulaire, flashcards, apprentissage des langues par l'IA, listes de mots, application d'étude des langues, apprendre l'espagnol, apprendre le français, apprendre l'allemand, maîtrise de la langue, mémoriser des mots, apprentissage SRS",
+    "title": "Synaply - Créer des synapses avec des algorithmes alimentés par l'IA",
+    "description": "Maîtrisez n'importe quelle langue grâce à notre algorithme scientifique qui crée et renforce les synapses neuronales, consolidé par une IA avancée.",
+    "keywords": "construction de synapses, apprentissage neuronal des langues, répétition espacée scientifique, algorithme FSRS, vocabulaire IA, apprentissage basé sur le cerveau, science de la mémorisation",
     "og_title": "Synaply - Apprentissage Intelligent du Vocabulaire",
     "og_description": "Améliorez vos compétences linguistiques grâce à la répétition espacée assistée par l'IA. Apprenez plus vite, retenez plus longtemps.",
     "og_image_alt": "Interface de l'application d'apprentissage des langues Synaply AI",
@@ -145,16 +145,16 @@
     "support_desc": "Si vous aimez cette application, vous pouvez soutenir son développement.",
     "onboarding": {
       "welcome": "Bienvenue sur Synaply !",
-      "journey_begins": "Votre voyage vers la maîtrise de la langue commence ici.",
+      "journey_begins": "Commencez à créer des connexions neuronales durables dès aujourd'hui.",
       "best_practice": "Meilleures pratiques pour réussir",
       "strategy_desc": "Pour tirer le meilleur parti de Synaply, nous recommandons cette stratégie simple :",
-      "step1_title": "Concentrez-vous sur un sujet",
+      "step1_title": "Focus sur un thème",
       "step1_desc": "Ajoutez environ <strong>100 mots</strong> liés à un seul sujet (ex: Affaires ou Voyage) pour créer un contexte fort.",
-      "step2_title": "Révisions quotidiennes",
-      "step2_desc": "Maîtrisez ces mots par une <strong>répétition quotidienne</strong> jusqu'à ce qu'ils fassent partie de votre vocabulaire.",
+      "step2_title": "Construire des synapses",
+      "step2_desc": "Renforcez les voies neuronales grâce à la <strong>répétition scientifique</strong> jusqu'à ce que les mots soient gravés dans votre mémoire.",
       "step3_title": "Pratique IA",
       "step3_desc": "Passez à la <strong>Pratique IA</strong> pour utiliser votre nouveau vocabulaire dans des phrases complètes et des situations réelles.",
-      "got_it": "Compris, commençons !"
+      "got_it": "Compris, c'est parti !"
     },
     "generate_ai_title": "Générer une liste de mots avec l'IA",
     "proficiency_level": "Niveau de compétence",

@@ -291,7 +291,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -300,7 +300,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-4 text-center">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t('common.no_data')}</h1>
-        <Link href="/public-lists" className="text-blue-600 hover:underline">{t('dashboard.public_lists.back_to_dashboard')}</Link>
+        <Link href="/public-lists" className="text-synaply-blue dark:text-synaply-cyan hover:underline">{t('dashboard.public_lists.back_to_dashboard')}</Link>
       </div>
     );
   }
@@ -328,14 +328,14 @@ export default function PublicListDetailClient({ id }: { id: string }) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           {isLoggedIn && (
-            <Link href="/public-lists" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-4 transition-colors">
+            <Link href="/public-lists" className="text-synaply-blue dark:text-synaply-cyan hover:opacity-80 flex items-center text-sm font-medium mb-4 transition-colors">
               <ArrowLeft className="w-4 h-4 mr-1" /> {t('dashboard.public_lists.detail.back_to_lists')}
             </Link>
           )}
           
           <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 p-6 flex flex-col items-end gap-2">
-               <div className="flex items-center text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800">
+               <div className="flex items-center text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-synaply-blue/5 dark:bg-synaply-cyan/10 text-synaply-blue dark:text-synaply-cyan border border-synaply-blue/10 dark:border-synaply-cyan/20">
                 {list.source_lang} → {list.target_lang}
               </div>
               <div className="flex items-center text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-800">
@@ -344,7 +344,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
               {isOwner && !isEditing && (
                 <button 
                   onClick={handleStartEdit}
-                  className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all active:scale-95"
+                  className="flex items-center px-4 py-2 bg-white dark:bg-gray-800 text-synaply-blue dark:text-synaply-cyan border border-synaply-blue/10 dark:border-synaply-cyan/20 rounded-full text-sm font-bold shadow-sm hover:opacity-80 transition-all active:scale-95"
                 >
                   <Edit2 className="w-4 h-4 mr-2" /> {t('dashboard.public_lists.detail.edit_list')}
                 </button>
@@ -358,7 +358,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                     type="text"
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-                    className="w-full text-3xl font-bold bg-transparent border-b border-blue-500 focus:outline-none text-gray-900 dark:text-gray-100"
+                    className="w-full text-3xl font-bold bg-transparent border-b border-synaply-blue focus:outline-none text-gray-900 dark:text-gray-100"
                     placeholder={t('dashboard.list_title_placeholder')}
                   />
                   <textarea
@@ -427,7 +427,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                         className={`flex items-center px-6 py-3 rounded-xl font-bold transition-all shadow-md active:scale-95 ${
                           success 
                             ? 'bg-green-500 text-white cursor-default' 
-                            : 'bg-blue-600 hover:bg-blue-700 text-white disabled:bg-blue-400'
+                            : 'bg-synaply-blue hover:opacity-90 text-white rounded-full disabled:opacity-50 transition-all shadow-lg shadow-synaply-blue/20'
                         }`}
                       >
                         {adding ? (
@@ -442,7 +442,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                     ) : (
                       <Link
                         href="/register"
-                        className="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-md active:scale-95"
+                        className="flex items-center px-6 py-3 bg-synaply-blue hover:opacity-90 text-white rounded-full font-bold transition-all shadow-xl shadow-synaply-blue/20 active:scale-95"
                       >
                         <Plus className="w-5 h-5 mr-2" />
                         {t('dashboard.public_lists.detail.add_to_my_list')}
@@ -495,13 +495,13 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                     </td>
                     <td className="px-0 py-3 text-center w-8">
                       {isTranslatingNew ? (
-                        <Loader2 className="w-4 h-4 animate-spin text-blue-500 mx-auto" />
+                        <Loader2 className="w-4 h-4 animate-spin text-synaply-blue dark:text-synaply-cyan mx-auto" />
                       ) : (
                         <div className="flex flex-col items-center gap-1">
                           {newItem.source_word && !newItem.target_word && (
                             <button
                               onClick={() => handleTranslateNew('source-to-target')}
-                              className="p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-colors mx-auto block"
+                              className="p-1.5 text-synaply-blue dark:text-synaply-cyan hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md transition-colors mx-auto block"
                               title={t('dashboard.auto_translate')}
                             >
                               <Languages className="w-4 h-4" />
@@ -510,7 +510,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                           {newItem.target_word && !newItem.source_word && (
                             <button
                               onClick={() => handleTranslateNew('target-to-source')}
-                              className="p-1.5 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-colors mx-auto block"
+                              className="p-1.5 text-synaply-blue dark:text-synaply-cyan hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-md transition-colors mx-auto block"
                               title={t('dashboard.auto_translate')}
                             >
                               <Languages className="w-4 h-4 rotate-180" />
@@ -541,7 +541,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                     <td className="px-4 py-3 text-center">
                       <button
                         onClick={handleAddItem}
-                        className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm active:scale-95"
+                        className="p-2 bg-synaply-blue hover:opacity-90 text-white rounded-full transition-all shadow-sm active:scale-95"
                         title={t('dashboard.public_lists.detail.add_new_word')}
                       >
                         <Plus className="w-4 h-4" />
@@ -556,7 +556,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                         <td className="px-4 py-3">
                           <input
                             type="text"
-                            className={`w-full bg-transparent border-b border-transparent focus:border-blue-500 outline-none px-2 py-1 text-sm font-bold ${
+                            className={`w-full bg-transparent border-b border-transparent focus:border-synaply-blue outline-none px-2 py-1 text-sm font-bold ${
                               duplicateWords.has(word.source_word.toLowerCase().trim()) ? 'text-red-500 border-red-500' : 'text-gray-900 dark:text-gray-100'
                             }`}
                             value={word.source_word}
@@ -589,7 +589,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                         <td className="px-4 py-3">
                           <input
                             type="text"
-                            className="w-full bg-transparent border-b border-transparent focus:border-blue-500 outline-none px-2 py-1 text-sm text-gray-600 dark:text-gray-300"
+                            className="w-full bg-transparent border-b border-transparent focus:border-synaply-blue outline-none px-2 py-1 text-sm text-gray-600 dark:text-gray-300"
                             value={word.target_word}
                             onChange={(e) => handleUpdateItem(word.id, 'target_word', e.target.value)}
                             onBlur={() => handleTranslateExisting(word.id, 'target-to-source')}
@@ -598,7 +598,7 @@ export default function PublicListDetailClient({ id }: { id: string }) {
                         <td className="px-4 py-3">
                           <input
                             type="text"
-                            className="w-full bg-transparent border-b border-transparent focus:border-blue-500 outline-none px-2 py-1 text-sm text-gray-400 dark:text-gray-500 italic"
+                            className="w-full bg-transparent border-b border-transparent focus:border-synaply-blue outline-none px-2 py-1 text-sm text-gray-400 dark:text-gray-500 italic"
                             value={word.comment}
                             onChange={(e) => handleUpdateItem(word.id, 'comment', e.target.value)}
                           />

@@ -69,7 +69,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -257,7 +257,9 @@ export default function LandingPage() {
                     height={40}
                     className="w-auto h-8 mr-2"
                   />
-                  <span className="text-xl font-bold tracking-tight text-blue-600">Synaply</span>
+                  <span className="text-xl font-bold tracking-tight text-synaply-blue">
+                    synaply<span className="text-synaply-cyan">.me</span>
+                  </span>
                 </Link>
               </div>
               <div className="flex items-center gap-4">
@@ -271,7 +273,7 @@ export default function LandingPage() {
                 {isLoggedIn ? (
                   <Link 
                     href="/dashboard"
-                    className="px-4 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
+                    className="px-4 py-2 rounded-full bg-synaply-blue text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
                   >
                     Dashboard
                   </Link>
@@ -296,10 +298,10 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold mb-6 animate-fade-in border border-blue-100">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-semibold mb-6 animate-fade-in border border-synaply-blue/10">
             Next-Gen Language Learning
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 bg-clip-text text-transparent pb-2">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-blue to-synaply-cyan bg-clip-text text-transparent pb-2">
             Build Neural Synapses <br />
             for Language Fluency
           </h1>
@@ -310,7 +312,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
-              className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-200 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 bg-synaply-blue text-white rounded-full font-bold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-xl shadow-synaply-blue/20 flex items-center justify-center gap-2"
             >
               {t('landing.try_for_free')}
               <ArrowRight className="w-5 h-5" />
@@ -335,18 +337,18 @@ export default function LandingPage() {
       </section>
 
       {/* Stats/Quick Features */}
-      <section className="py-12 border-y border-gray-100 bg-white">
+      <section className="py-12 border-y border-gray-100 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-1">FSRS</div>
+            <div className="text-3xl font-bold text-synaply-blue mb-1">FSRS</div>
             <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Memory Algorithm</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-1">AI</div>
+            <div className="text-3xl font-bold text-synaply-blue mb-1">AI</div>
             <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Gemini Integration</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-1">114</div>
+            <div className="text-3xl font-bold text-synaply-blue mb-1">114</div>
             <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold text-center relative overflow-hidden">
               Languages
               <div className="mt-2 overflow-hidden flex whitespace-nowrap mask-fade">
@@ -365,17 +367,17 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-1">DeepL</div>
+            <div className="text-3xl font-bold text-synaply-blue mb-1">DeepL</div>
             <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Accurate Translation</div>
           </div>
         </div>
       </section>
 
       {/* Main Features */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-white/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6">Algorithm That Builds Synapses</h2>
+            <h2 className="text-4xl font-bold mb-6 text-synaply-blue">Algorithm That Builds Synapses</h2>
             <p className="text-gray-600 max-w-3xl mx-auto text-xl">
               Our system focuses on the neurological process of memory. We use scientific algorithms 
               to create lasting synaptic connections for every word you learn.
@@ -383,11 +385,11 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-8">
-                <Brain className="w-7 h-7 text-purple-600" />
+            <div className="bg-white/70 backdrop-blur-md p-10 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 bg-synaply-blue/10 rounded-2xl flex items-center justify-center mb-8">
+                <Brain className="w-7 h-7 text-synaply-blue" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Neural FSRS+</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue">Neural FSRS+</h3>
               <p className="text-gray-600 leading-relaxed mb-6">
                 We utilize the <strong>FSRS</strong> algorithm, 
                 enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.

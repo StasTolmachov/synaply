@@ -157,7 +157,9 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen`} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-synaply-light text-gray-900 dark:bg-gray-950 dark:text-gray-100 flex flex-col min-h-screen relative`} suppressHydrationWarning>
+        <div className="fixed inset-0 bg-mesh -z-10" />
+        <div className="fixed inset-0 mesh-grid -z-10 opacity-60" />
         <ServiceWorkerRegister />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>

@@ -122,7 +122,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -133,7 +133,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           {t('dashboard.public_lists.playlists_detail.not_found') || 'Playlist not found'}
         </h1>
-        <Link href="/public-lists?tab=playlists" className="text-blue-600 hover:underline">
+        <Link href="/public-lists?tab=playlists" className="text-synaply-blue dark:text-synaply-cyan hover:underline">
           {t('dashboard.public_lists.playlists_detail.back_to_playlists') || 'Back to playlists'}
         </Link>
       </div>
@@ -144,13 +144,13 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <Link href="/public-lists?tab=playlists" className="text-blue-600 dark:text-blue-500 hover:text-blue-500 dark:hover:text-blue-400 flex items-center text-sm font-medium mb-4 transition-colors">
+          <Link href="/public-lists?tab=playlists" className="text-synaply-blue dark:text-synaply-cyan hover:opacity-80 flex items-center text-sm font-medium mb-4 transition-colors">
             <ArrowLeft className="w-4 h-4 mr-1" /> {t('dashboard.public_lists.playlists_detail.back_to_playlists') || 'Back to playlists'}
           </Link>
           
           <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 p-6">
-              <div className="flex items-center text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800">
+              <div className="flex items-center text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-synaply-blue/5 dark:bg-synaply-cyan/10 text-synaply-blue dark:text-synaply-cyan border border-synaply-blue/10 dark:border-synaply-cyan/20">
                 {t('dashboard.public_lists.playlists_detail.playlist_label') || 'Playlist'}
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                 {currentUserId === playlist.user_id && (
                   <button
                     onClick={handleOpenEdit}
-                    className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-all active:scale-95"
+                    className="p-2 text-gray-400 hover:text-synaply-blue hover:bg-synaply-blue/5 dark:hover:bg-synaply-cyan/10 rounded-xl transition-all active:scale-95"
                     title={t('common.edit')}
                   >
                     <Edit className="w-5 h-5" />
@@ -202,14 +202,14 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
               <Link 
                 key={list.id} 
                 href={`/public-lists/${list.id}`}
-                className="group bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-blue-200 dark:hover:border-blue-900 transition-all flex items-center justify-between"
+                className="group bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-synaply-blue/20 dark:hover:border-synaply-cyan/20 transition-all flex items-center justify-between"
               >
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1 mb-1">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-synaply-blue dark:group-hover:text-synaply-cyan transition-colors line-clamp-1 mb-1">
                     {list.title}
                   </h3>
                   <div className="flex items-center gap-4">
-                    <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800">
+                    <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-synaply-blue/5 dark:bg-synaply-cyan/10 text-synaply-blue dark:text-synaply-cyan border border-synaply-blue/10 dark:border-synaply-cyan/20">
                       {list.source_lang} → {list.target_lang}
                     </div>
                     {list.level && (
@@ -225,7 +225,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                     )}
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-synaply-blue dark:group-hover:text-synaply-cyan transition-colors" />
               </Link>
             ))}
           </div>
@@ -238,7 +238,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-                  <Save className="w-5 h-5 mr-2 text-blue-500" />
+                  <Save className="w-5 h-5 mr-2 text-synaply-blue dark:text-synaply-cyan" />
                   {t('dashboard.public_lists.playlists_edit') || 'Edit Playlist'}
                 </h3>
                 <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
@@ -252,7 +252,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                   <input
                     type="text"
                     required
-                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan sm:text-sm"
                     placeholder={t('common.title')}
                     value={editForm.title}
                     onChange={e => setEditForm({...editForm, title: e.target.value})}
@@ -262,7 +262,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('common.description')}</label>
                   <textarea
                     rows={2}
-                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border px-3 py-2 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan sm:text-sm"
                     placeholder={t('common.description')}
                     value={editForm.description}
                     onChange={e => setEditForm({...editForm, description: e.target.value})}
@@ -276,7 +276,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-9 pr-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                      className="block w-full rounded-lg border-gray-300 dark:border-gray-700 border pl-9 pr-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-1 focus:ring-synaply-blue dark:focus:ring-synaply-cyan focus:border-synaply-blue dark:focus:border-synaply-cyan"
                       placeholder={t('dashboard.public_lists.playlists_list_search_placeholder') || "Search word lists..."}
                       value={listSearchTerm}
                       onChange={e => setListSearchTerm(e.target.value)}
@@ -294,7 +294,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
 
                   <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden max-h-60 overflow-y-auto">
                     {loadingAllLists ? (
-                      <div className="p-4 text-center"><Loader2 className="w-5 h-5 animate-spin mx-auto text-blue-500" /></div>
+                      <div className="p-4 text-center"><Loader2 className="w-5 h-5 animate-spin mx-auto text-synaply-blue dark:text-synaply-cyan" /></div>
                     ) : allPublicLists.length === 0 ? (
                       <div className="p-4 text-center text-gray-500">{t('dashboard.public_lists.playlists_no_lists') || 'No public lists available'}</div>
                     ) : (
@@ -309,7 +309,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                           <label key={list.id} className="flex items-center px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
                             <input
                               type="checkbox"
-                              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                              className="w-4 h-4 text-synaply-blue border-gray-300 rounded focus:ring-synaply-blue"
                               checked={editForm.list_ids.includes(list.id)}
                               onChange={(e) => {
                                 if (e.target.checked) {
@@ -348,7 +348,7 @@ export default function PlaylistDetailClient({ id }: { id: string }) {
                   <button
                     type="submit"
                     disabled={saving || !editForm.title || editForm.list_ids.length === 0}
-                    className="flex-1 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                    className="flex-1 flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue/20 text-white bg-synaply-blue hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-blue disabled:opacity-50 transition-all"
                   >
                     {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                     {t('common.save')}

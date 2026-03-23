@@ -12,7 +12,7 @@ const HelpPageClient = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
-          <Link href="/dashboard" className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium transition-colors">
+          <Link href="/dashboard" className="flex items-center text-synaply-blue dark:text-synaply-cyan hover:opacity-80 font-bold transition-all">
             <ArrowLeft className="w-5 h-5 mr-2" />
             {t('common.back_to_dashboard')}
           </Link>
@@ -21,12 +21,12 @@ const HelpPageClient = () => {
 
         <div className="space-y-12">
           {/* Section: Best Practice */}
-          <section className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-lg p-8 text-white">
+          <section className="bg-gradient-to-br from-synaply-blue to-synaply-blue/80 rounded-2xl shadow-lg p-8 text-white">
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <Lightbulb className="w-6 h-6 mr-3 text-yellow-300" />
               {t('help.best_practice.title')}
             </h2>
-            <div className="space-y-4 text-blue-50">
+            <div className="space-y-4 text-white/90">
               <p className="text-lg leading-relaxed">
                 {t('help.best_practice.strategy_desc')}
               </p>
@@ -57,9 +57,9 @@ const HelpPageClient = () => {
               {t('help.getting_started.desc')}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-900/30">
-                <h3 className="font-bold text-blue-900 dark:text-blue-300 mb-2">{t('help.getting_started.step1_title')}</h3>
-                <p className="text-sm text-blue-800 dark:text-blue-400">{t('help.getting_started.step1_desc')}</p>
+              <div className="p-4 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-xl border border-synaply-blue/10 dark:border-synaply-cyan/20">
+                <h3 className="font-bold text-synaply-blue dark:text-synaply-cyan mb-2">{t('help.getting_started.step1_title')}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('help.getting_started.step1_desc')}</p>
               </div>
               <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-100 dark:border-purple-900/30">
                 <h3 className="font-bold text-purple-900 dark:text-purple-300 mb-2">{t('help.getting_started.step2_title')}</h3>
@@ -71,33 +71,33 @@ const HelpPageClient = () => {
           {/* Section: Adding Words */}
           <section className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 transition-colors">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-              <Plus className="w-6 h-6 mr-3 text-blue-600" />
+              <Plus className="w-6 h-6 mr-3 text-synaply-blue dark:text-synaply-cyan" />
               {t('help.adding_words.title')}
             </h2>
             <div className="space-y-6">
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-full flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 mr-4">1</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-full flex items-center justify-center font-bold text-synaply-blue dark:text-synaply-cyan mr-4 border border-synaply-blue/10 dark:border-synaply-cyan/20">1</div>
                 <div>
                   <h3 className="font-bold text-gray-900 dark:text-gray-100">{t('help.adding_words.manual.title')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">{t('help.adding_words.manual.desc')}</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-full flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 mr-4">2</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-full flex items-center justify-center font-bold text-synaply-blue dark:text-synaply-cyan mr-4 border border-synaply-blue/10 dark:border-synaply-cyan/20">2</div>
                 <div>
                   <h3 className="font-bold text-gray-900 dark:text-gray-100">{t('help.adding_words.auto_translate.title')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: t('help.adding_words.auto_translate.desc') }} />
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-full flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 mr-4">3</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-full flex items-center justify-center font-bold text-synaply-blue dark:text-synaply-cyan mr-4 border border-synaply-blue/10 dark:border-synaply-cyan/20">3</div>
                 <div>
                   <h3 className="font-bold text-gray-900 dark:text-gray-100">{t('help.adding_words.ai_list.title')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">{t('help.adding_words.ai_list.desc')}</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-full flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 mr-4">4</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-full flex items-center justify-center font-bold text-synaply-blue dark:text-synaply-cyan mr-4 border border-synaply-blue/10 dark:border-synaply-cyan/20">4</div>
                 <div>
                   <h3 className="font-bold text-gray-900 dark:text-gray-100">{t('help.adding_words.ai_insights.title')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">{t('help.adding_words.ai_insights.desc')}</p>
@@ -153,7 +153,7 @@ const HelpPageClient = () => {
           {/* Section: Managing Words */}
           <section className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 transition-colors">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-              <List className="w-6 h-6 mr-3 text-blue-500" />
+              <List className="w-6 h-6 mr-3 text-synaply-blue dark:text-synaply-cyan" />
               {t('help.dictionary_management.title')}
             </h2>
             <div className="space-y-4 text-gray-600 dark:text-gray-400 text-sm">
@@ -166,7 +166,7 @@ const HelpPageClient = () => {
           {/* Section: Progress */}
           <section className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 transition-colors">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center">
-              <GraduationCap className="w-6 h-6 mr-3 text-blue-600" />
+              <GraduationCap className="w-6 h-6 mr-3 text-synaply-blue dark:text-synaply-cyan" />
               {t('help.progress.title')}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
