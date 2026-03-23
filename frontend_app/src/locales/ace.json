@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Beulajue Meukata deungon AI & Spaced Repetition",
+    "title": "Synaply - Beulajue Meukata deungon AI & Spaced Repetition",
     "description": "Peutiam keunira meukata droeneuh deungon AI-powered spaced repetition. Peugot daptar meukata droeneuh atawa beulajue nibak daptar umum nyang geubagi lé kawóm.",
     "keywords": "beulajue bahsa Inggréh, spaced repetition, peugot meukata, flashcards, beulajue bahsa deungon AI, daptar meukata, aplikasi beulajue bahsa, beulajue bahsa Seupanyo, beulajue bahsa Peurancih, beulajue bahsa Jeureuman, keumanyun bahsa, ingat meukata, SRS learning",
-    "og_title": "WordsGo - Beulajue Meukata Pintar",
+    "og_title": "Synaply - Beulajue Meukata Pintar",
     "og_description": "Peutiam keunira meukata droeneuh deungon AI-powered spaced repetition. Beulajue leubèh sigra, ingat leubèh trép.",
-    "og_image_alt": "Tampilan Aplikasi Beulajue Bahsa AI WordsGo",
-    "twitter_title": "WordsGo - Beulajue Meukata Baró deungon Mudah",
-    "twitter_description": "Tamong WordsGo keu peuluah meukata droeneuh deungon spaced repetition pintar ngon AI."
+    "og_image_alt": "Tampilan Aplikasi Beulajue Bahsa AI Synaply",
+    "twitter_title": "Synaply - Beulajue Meukata Baró deungon Mudah",
+    "twitter_description": "Tamong Synaply keu peuluah meukata droeneuh deungon spaced repetition pintar ngon AI."
   },
   "landing": {
     "public_lists": "Daptar Umum",
@@ -144,10 +144,10 @@
     "support_title": "Dukông Proyek Nyoe",
     "support_desc": "Meunyo droeneuh galak keu aplikasi nyoe, droeneuh jeuët neu-dukông peukeumang jih.",
     "onboarding": {
-      "welcome": "Selamat tamong bak WordsGo!",
+      "welcome": "Selamat tamong bak Synaply!",
       "journey_begins": "Perjalanan droeneuh keu nyang jago bahsa jiphòn nibak nyoë.",
       "best_practice": "Cara nyang Gét keu Meuhasé",
-      "strategy_desc": "Keu meuteumèe nyang paléng gét nibak WordsGo, kamoe neu-peugah saran strategi nyoe:",
+      "strategy_desc": "Keu meuteumèe nyang paléng gét nibak Synaply, kamoe neu-peugah saran strategi nyoe:",
       "step1_title": "Fokus bak Topik",
       "step1_desc": "Tamah kira-kira <strong>100 meukata</strong> nyang na hubông ngon saboh topik (misal: Bisnis atawa Travel) keu peugot konteks nyang kuat.",
       "step2_title": "Ulang Tiëp Uròe",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Syarat Layanan",
-    "terms_welcome": "Selamat tamong bak WordsGo. Ngon cara nguy layanan kamoe, droeneuh sétuju ngon syarat nyoe...",
+    "terms_welcome": "Selamat tamong bak Synaply. Ngon cara nguy layanan kamoe, droeneuh sétuju ngon syarat nyoe...",
     "title": "Atô Profil",
     "first_name": "Nan Phòn",
     "last_name": "Nan Likót",
@@ -286,7 +286,7 @@
     "subtitle": "Atô info pribadi ngon bahsa droeneuh"
   },
   "login": {
-    "title": "Tamong u wordsGo",
+    "title": "Tamong u synaply",
     "email": "Alamat email",
     "password": "Password",
     "sign_in": "Tamong",
@@ -307,7 +307,7 @@
     "login": "Tamong bak nyoë"
   },
   "help": {
-    "title": "Cara nguy WordsGo",
+    "title": "Cara nguy Synaply",
     "best_practice": {
       "title": "Cara nyang Gét keu Meuhasé",
       "strategy_desc": "Keu beulajue nyang paléng meuhasé, kamoe neu-peugah saran strategi 3 langkah nyoe:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Phon Mulayi",
-      "desc": "WordsGo nakeuh alat nyang kuat nyang geudiséin keu bantu droeneuh peuluah meukata ngon peutiam keumanyun bahsa deungon spaced repetition ngon kecerdasan buatan.",
+      "desc": "Synaply nakeuh alat nyang kuat nyang geudiséin keu bantu droeneuh peuluah meukata ngon peutiam keumanyun bahsa deungon spaced repetition ngon kecerdasan buatan.",
       "step1_title": "Langkah 1: Tamah Meukata",
       "step1_desc": "Tamah meukata ngon cara manual atawa nguy AI keu peugot daptar meunurôt topik ngon tingkat.",
       "step2_title": "Langkah 2: Latih Tiëp Uròe",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo nguy algoritma FSRS (Free Spaced Repetition Scheduler) keu kira waktée nyang gét keu ulang tiëp meukata.",
+      "desc": "Synaply nguy algoritma FSRS (Free Spaced Repetition Scheduler) keu kira waktée nyang gét keu ulang tiëp meukata.",
       "process_title": "Proses Ulang",
       "step1": "Droeneuh geupeudeuh saboh meukata lam bahsa asli.",
       "step2": "Tamong teureujeumah ngon teukan Enter atawa Pré Jawaban.",

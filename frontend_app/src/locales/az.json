@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI və Aralıqlı Təkrarlama ilə Söz Ehtiyatını Öyrənin",
+    "title": "Synaply - AI və Aralıqlı Təkrarlama ilə Söz Ehtiyatını Öyrənin",
     "description": "AI dəstəkli aralıqlı təkrarlama ilə dil bacarıqlarınızı artırın. Xüsusi söz siyahıları yaradın və ya icma tərəfindən paylaşılan açıq siyahılardan öyrənin.",
     "keywords": "ingilis dilini öyrənmək, aralıqlı təkrarlama, söz ehtiyatı qurucu, flaşkartlar, AI dil öyrənmə, söz siyahıları, dil öyrənmə proqramı, ispan dilini öyrənmək, fransız dilini öyrənmək, alman dilini öyrənmək, dil biliyi, sözləri əzbərləmək, SRS öyrənmə",
-    "og_title": "WordsGo - Ağıllı Söz Ehtiyatı Öyrənmə",
+    "og_title": "Synaply - Ağıllı Söz Ehtiyatı Öyrənmə",
     "og_description": "AI dəstəkli aralıqlı təkrarlama ilə dil bacarıqlarınızı artırın. Daha sürətli öyrənin, daha uzun müddət yadda saxlayın.",
-    "og_image_alt": "WordsGo AI Dil Öyrənmə Proqramı İnterfeysi",
-    "twitter_title": "WordsGo - Yeni Sözləri Zəhmətsiz Öyrənin",
-    "twitter_description": "Ağıllı aralıqlı təkrarlama və AI istifadə edərək söz ehtiyatınızı genişləndirmək üçün WordsGo-ya qoşulun."
+    "og_image_alt": "Synaply AI Dil Öyrənmə Proqramı İnterfeysi",
+    "twitter_title": "Synaply - Yeni Sözləri Zəhmətsiz Öyrənin",
+    "twitter_description": "Ağıllı aralıqlı təkrarlama və AI istifadə edərək söz ehtiyatınızı genişləndirmək üçün Synaply-ya qoşulun."
   },
   "landing": {
     "public_lists": "İctimai Siyahılar",
@@ -144,10 +144,10 @@
     "support_title": "Layihəyə Dəstək Ol",
     "support_desc": "Bu tətbiqi bəyənirsinizsə, onun inkişafına dəstək ola bilərsiniz.",
     "onboarding": {
-      "welcome": "WordsGo-ya xoş gəlmisiniz!",
+      "welcome": "Synaply-ya xoş gəlmisiniz!",
       "journey_begins": "Dil öyrənmə yolunuz burada başlayır.",
       "best_practice": "Uğur üçün Ən Yaxşı Təcrübə",
-      "strategy_desc": "WordsGo-dan maksimum yararlanmaq üçün bu sadə strategiyanı tövsiyə edirik:",
+      "strategy_desc": "Synaply-dan maksimum yararlanmaq üçün bu sadə strategiyanı tövsiyə edirik:",
       "step1_title": "Bir Mövzuya Diqqət Yetirin",
       "step1_desc": "Güclü kontekst yaratmaq üçün tək bir mövzuya (məsələn, Biznes və ya Səyahət) aid təxminən <strong>100 söz</strong> əlavə edin.",
       "step2_title": "Gündəlik Təkrarlar",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Xidmət Şərtləri",
-    "terms_welcome": "WordsGo-ya xoş gəlmisiniz. Xidmətlərimizdən istifadə edərək, bu şərtlərlə razılaşırsınız...",
+    "terms_welcome": "Synaply-ya xoş gəlmisiniz. Xidmətlərimizdən istifadə edərək, bu şərtlərlə razılaşırsınız...",
     "title": "Profil Ayarları",
     "first_name": "Ad",
     "last_name": "Soyad",
@@ -286,7 +286,7 @@
     "subtitle": "Şəxsi məlumatlarınızı və dil ayarlarınızı idarə edin"
   },
   "login": {
-    "title": "WordsGo-ya daxil olun",
+    "title": "Synaply-ya daxil olun",
     "email": "E-poçt ünvanı",
     "password": "Şifrə",
     "sign_in": "Daxil ol",
@@ -307,7 +307,7 @@
     "login": "Burada daxil olun"
   },
   "help": {
-    "title": "WordsGo-nu necə istifadə etməli",
+    "title": "Synaply-nu necə istifadə etməli",
     "best_practice": {
       "title": "Uğur üçün Ən Yaxşı Təcrübə",
       "strategy_desc": "Ən effektiv öyrənmə təcrübəsi üçün biz bu sadə 3 addımlı strategiyanı tövsiyə edirik:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Başlamaq",
-      "desc": "WordsGo, aralıqlı təkrarlama və süni intellektdən istifadə edərək söz ehtiyatınızı genişləndirməyə və dil bacarıqlarınızı təkmilləşdirməyə kömək etmək üçün hazırlanmış güclü bir vasitədir.",
+      "desc": "Synaply, aralıqlı təkrarlama və süni intellektdən istifadə edərək söz ehtiyatınızı genişləndirməyə və dil bacarıqlarınızı təkmilləşdirməyə kömək etmək üçün hazırlanmış güclü bir vasitədir.",
       "step1_title": "Addım 1: Sözləri Əlavə Edin",
       "step1_desc": "Sözləri əl ilə əlavə edin və ya mövzular və səviyyələr üzrə siyahılar yaratmaq üçün AI-dan istifadə edin.",
       "step2_title": "Addım 2: Gündəlik Təcrübə",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Aralıqlı Təkrarlama",
-      "desc": "WordsGo hər bir sözü təkrarlamaq üçün ideal vaxtı hesablamaq üçün FSRS (Free Spaced Repetition Scheduler) alqoritmindən istifadə edir.",
+      "desc": "Synaply hər bir sözü təkrarlamaq üçün ideal vaxtı hesablamaq üçün FSRS (Free Spaced Repetition Scheduler) alqoritmindən istifadə edir.",
       "process_title": "Təkrar Prosesi",
       "step1": "Sizə mənbə dilində bir söz göstərilir.",
       "step2": "Tərcüməni daxil edin və <strong>Enter</strong> və ya <strong>Cavabı Yoxla</strong> düyməsini basın.",

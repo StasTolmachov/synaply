@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Deskiñ geriaoueg gant an AI & an Adlavaret Egorel",
+    "title": "Synaply - Deskiñ geriaoueg gant an AI & an Adlavaret Egorel",
     "description": "Gwellaat ho barregezhioù yezh gant an adlavaret egorel harpet gant an AI. Krouit ho rolloù gerioù deoc'h-c'hwi pe deskit diwar rolloù foran rannet gant ar gumuniezh.",
     "keywords": "deskiñ saozneg, adlavaret egorel, geriaoueg, kartennoù-deskiñ, deskiñ yezhoù AI, rolloù gerioù, arload deskiñ yezhoù, deskiñ spagnoleg, deskiñ galleg, deskiñ alamaneg, live yezh, eñvoriñ gerioù, deskiñ SRS",
-    "og_title": "WordsGo - Deskiñ Geriaoueg speredek",
+    "og_title": "Synaply - Deskiñ Geriaoueg speredek",
     "og_description": "Gwellaat ho barregezhioù yezh gant an adlavaret egorel harpet gant an AI. Deskiñ buanoc'h, eñvoriñ pelloc'h.",
-    "og_image_alt": "Etrefas an arload deskiñ yezhoù WordsGo AI",
-    "twitter_title": "WordsGo - Deskiñ gerioù nevez hep poan",
-    "twitter_description": "Emellit e WordsGo evit brasaat ho keriaoueg en ur implijout an adlavaret egorel speredek hag an AI."
+    "og_image_alt": "Etrefas an arload deskiñ yezhoù Synaply AI",
+    "twitter_title": "Synaply - Deskiñ gerioù nevez hep poan",
+    "twitter_description": "Emellit e Synaply evit brasaat ho keriaoueg en ur implijout an adlavaret egorel speredek hag an AI."
   },
   "landing": {
     "public_lists": "Rolloù foran",
@@ -144,10 +144,10 @@
     "support_title": "Skoazellañ ar raktres",
     "support_desc": "Ma plij an arload-mañ deoc'h, tu zo deoc'h skoazellañ e diorren.",
     "onboarding": {
-      "welcome": "Donemat e WordsGo!",
+      "welcome": "Donemat e Synaply!",
       "journey_begins": "Ho veaj war-du mestroni ar yezh a groas amañ.",
       "best_practice": "Pleustr peurvat evit reizhañ",
-      "strategy_desc": "Evit tennañ ar muiañ posupl eus WordsGo, ni a erbed deoc'h ar strategiezh eeun-mañ :",
+      "strategy_desc": "Evit tennañ ar muiañ posupl eus Synaply, ni a erbed deoc'h ar strategiezh eeun-mañ :",
       "step1_title": "Kreizennit war un dodenn",
       "step1_desc": "Ouzhpennit war-dro <strong>100 ger</strong> liammet gant un dodenn hepken (da sk. Aferioù pe Beajoù) evit sevel ur c'henarroud kreñv.",
       "step2_title": "Adwelet bemdez",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Divizoù Implijout",
-    "terms_welcome": "Donemat e WordsGo. En ur implijout hor servijoù, ec'h asantit d'an divizoù-mañ...",
+    "terms_welcome": "Donemat e Synaply. En ur implijout hor servijoù, ec'h asantit d'an divizoù-mañ...",
     "title": "Kefluniadur ar profil",
     "first_name": "Anv-bihan",
     "last_name": "Anv-familh",
@@ -286,7 +286,7 @@
     "subtitle": "Merat ho titouroù personel ha kefluniadur ar yezhoù"
   },
   "login": {
-    "title": "Em lugañ e wordsGo",
+    "title": "Em lugañ e synaply",
     "email": "Chomlec'h postel",
     "password": "Ger-tremen",
     "sign_in": "Em lugañ",
@@ -307,7 +307,7 @@
     "login": "Em lugañ amañ"
   },
   "help": {
-    "title": "Penaos implijout WordsGo",
+    "title": "Penaos implijout Synaply",
     "best_practice": {
       "title": "Pleustr peurvat evit reizhañ",
       "strategy_desc": "Evit an deskiñ ar muiañ efedus, ni a erbed ar strategiezh e 3 fazenn-mañ :",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Kregiñ ganti",
-      "desc": "WordsGo a zo ur benveg galloudus savet evit skoazellañ ac'hanoc'h da vrasaat ho keriaoueg hag evit gwellaat ho barregezhioù yezh en ur implijout an adlavaret egorel hag an naonegezh artifisiel.",
+      "desc": "Synaply a zo ur benveg galloudus savet evit skoazellañ ac'hanoc'h da vrasaat ho keriaoueg hag evit gwellaat ho barregezhioù yezh en ur implijout an adlavaret egorel hag an naonegezh artifisiel.",
       "step1_title": "Pazenn 1 : Ouzhpennañ gerioù",
       "step1_desc": "Ouzhpennit gerioù gant an dorn pe implijit an AI evit genel rolloù dre zodenn ha dre live.",
       "step2_title": "Pazenn 2 : Pleustradenn bemdeziek",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Adlavaret egorel",
-      "desc": "WordsGo a implij an algoritm FSRS (Free Spaced Repetition Scheduler) evit jediñ an amzer peurvat evit adlavaret pep ger.",
+      "desc": "Synaply a implij an algoritm FSRS (Free Spaced Repetition Scheduler) evit jediñ an amzer peurvat evit adlavaret pep ger.",
       "process_title": "Argerzh an adwelet",
       "step1": "Diskouezet e vez deoc'h ur ger er yezh orizinal.",
       "step2": "Skrivit an droidigezh ha pouezit war <strong>Enter</strong> pe <strong>Gwiriañ ar respont</strong>.",

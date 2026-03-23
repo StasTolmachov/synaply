@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "AI-Powered Language Learning Platform API",
-        "title": "WordsGo API",
+        "title": "Synaply API",
         "contact": {},
         "version": "1.1"
     },

@@ -114,7 +114,7 @@ export default function AdminStatsPage() {
   if (loading && !refreshing) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -131,7 +131,7 @@ export default function AdminStatsPage() {
         </p>
         <button
           onClick={() => router.push('/dashboard')}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-synaply-blue text-white rounded-full font-bold hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
         >
           {t('common.back_to_dashboard')}
         </button>
@@ -144,11 +144,11 @@ export default function AdminStatsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
-            <BarChart3 className="w-6 h-6 mr-2 text-blue-500" />
+            <BarChart3 className="w-6 h-6 mr-2 text-synaply-blue dark:text-synaply-cyan" />
             {t('admin.title')}
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            WordsGo System Overview
+            Synaply System Overview
           </p>
         </div>
         <button
@@ -171,8 +171,8 @@ export default function AdminStatsPage() {
         {/* Total Users */}
         <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:shadow-md">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <div className="p-2 bg-synaply-blue/5 dark:bg-synaply-cyan/10 rounded-lg">
+              <Users className="w-6 h-6 text-synaply-blue dark:text-synaply-cyan" />
             </div>
             <div className="flex flex-col items-end">
                <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full flex items-center">

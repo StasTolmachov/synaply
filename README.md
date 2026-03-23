@@ -1,18 +1,18 @@
-# WordsGo — AI-Powered Language Learning Platform
+# Synaply — AI-Powered Language Learning Platform
 
-**WordsGo** is a high-performance backend service built with Go 1.26, designed to radically improve the foreign language learning process. The platform combines the scientific precision of Spaced Repetition Systems (SRS) with the power of Generative AI and a unique cyclic reinforcement logic.
+**Synaply** is a high-performance backend service built with Go 1.26, designed to radically improve the foreign language learning process. The platform combines the scientific precision of Spaced Repetition Systems (SRS) with the power of Generative AI and a unique cyclic reinforcement logic.
 
 ---
 
 ## 🧠 Hybrid Learning Algorithm
 
-The uniqueness of WordsGo lies in its dual-layer approach to memorization:
+The uniqueness of Synaply lies in its dual-layer approach to memorization:
 
 ### 1. Long-Term Mastery (FSRS v4)
 The system implements the modern **Free Spaced Repetition Scheduler (FSRS v4)** algorithm. It tracks metrics such as stability, difficulty, and lapse counts for every word, calculating the optimal time for the next review to ensure maximum information retention in long-term memory.
 
 ### 2. Short-Term Reinforcement (Cyclic Practice)
-Unlike standard SRS applications, WordsGo applies **Round-Robin (In-Circle)** logic during active lessons:
+Unlike standard SRS applications, Synaply applies **Round-Robin (In-Circle)** logic during active lessons:
 - Words are not marked as "learned" after the first attempt.
 - An internal indexing system via **Redis** is used to cycle through a set of words.
 - If a word is skipped or answered incorrectly, it moves to the end of the current lesson queue.
@@ -68,7 +68,7 @@ The project is fully containerized and ready for deployment via Docker Compose.
 
 Once started, the API will be available at `http://localhost:8080/api/v1`, and the Swagger documentation at `http://localhost:8080/swagger/index.html`.
 
-For a better viewing experience, you can view the [Interactive API Documentation (GitHub Pages)](https://stastolmachov.github.io/wordsGo_v2/).
+For a better viewing experience, you can view the [Interactive API Documentation (GitHub Pages)](https://stastolmachov.github.io/synaply_v2/).
 
 ---
 
@@ -101,6 +101,6 @@ For a better viewing experience, you can view the [Interactive API Documentation
 
 Copyright (c) 2025 Stanislav Tolmachov. All rights reserved.
 
-The source code for the "WordsGo" project is the sole property of the author. Any reproduction, modification, or distribution of this code, in whole or in part, for any purpose is strictly prohibited without the express prior written permission of the copyright owner.
+The source code for the "Synaply" project is the sole property of the author. Any reproduction, modification, or distribution of this code, in whole or in part, for any purpose is strictly prohibited without the express prior written permission of the copyright owner.
 
 This software is provided for demonstration purposes only as part of a professional portfolio. Open access to the source code is granted by the author solely for the demonstration of professional skills and job seeking. Any other use, copying, or distribution of the code without the written consent of the author is prohibited. Details can be found in the [LICENSE](LICENSE) file.

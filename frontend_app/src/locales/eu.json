@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Hiztegia ikasi AI eta Espazio Errepikapenarekin",
+    "title": "Synaply - Hiztegia ikasi AI eta Espazio Errepikapenarekin",
     "description": "Hobetu zure hizkuntza-trebetasunak AI bidezko espazio-errepikapenarekin. Sortu hitz-zerrenda pertsonalizatuak edo ikasi komunitateak partekatutako zerrenda publikoetatik.",
     "keywords": "ingelesa ikasi, espazio-errepikapena, hiztegi-sortzailea, flashcard-ak, AI bidezko hizkuntza-ikaskuntza, hitz-zerrendak, hizkuntzak ikasteko aplikazioa, gaztelania ikasi, frantsesa ikasi, alemana ikasi, hizkuntza-gaitasuna, hitzak memorizatu, SRS ikaskuntza",
-    "og_title": "WordsGo - Hiztegi Ikaskuntza Adimenduna",
+    "og_title": "Synaply - Hiztegi Ikaskuntza Adimenduna",
     "og_description": "Hobetu zure hizkuntza-trebetasunak AI bidezko espazio-errepikapenarekin. Ikasi azkarrago, gogoratu gehiago.",
-    "og_image_alt": "WordsGo AI Hizkuntzak Ikasteko Aplikazioaren Interfazea",
-    "twitter_title": "WordsGo - Ikasi hitz berriak esfortzurik gabe",
-    "twitter_description": "Bat egin WordsGorekin zure hiztegia zabaltzeko espazio-errepikapen adimenduna eta AI erabiliz."
+    "og_image_alt": "Synaply AI Hizkuntzak Ikasteko Aplikazioaren Interfazea",
+    "twitter_title": "Synaply - Ikasi hitz berriak esfortzurik gabe",
+    "twitter_description": "Bat egin Synaplyrekin zure hiztegia zabaltzeko espazio-errepikapen adimenduna eta AI erabiliz."
   },
   "landing": {
     "public_lists": "Zerrenda Publikoak",
@@ -144,10 +144,10 @@
     "support_title": "Lagundu proiektua",
     "support_desc": "Aplikazio hau gustuko baduzu, bere garapena lagun dezakezu.",
     "onboarding": {
-      "welcome": "Ongi etorri WordsGora!",
+      "welcome": "Ongi etorri Synaplyra!",
       "journey_begins": "Hizkuntza menderatzeko zure bidaia hemen hasten da.",
       "best_practice": "Arrakastarako praktika onena",
-      "strategy_desc": "WordsGori etekin handiena ateratzeko, estrategia erraz hau gomendatzen dizugu:",
+      "strategy_desc": "Synaplyri etekin handiena ateratzeko, estrategia erraz hau gomendatzen dizugu:",
       "step1_title": "Gai batean zentratu",
       "step1_desc": "Gehitu gai bakar bati lotutako <strong>100 hitz</strong> inguru (adib. Negozioak edo Bidaiak) testuinguru saddoa sortzeko.",
       "step2_title": "Eguneroko Berrikuspenak",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Zerbitzu-baldintzak",
-    "terms_welcome": "Ongi etorri WordsGora. Gure zerbitzuak erabiltzean, baldintza hauek onartzen dituzu...",
+    "terms_welcome": "Ongi etorri Synaplyra. Gure zerbitzuak erabiltzean, baldintza hauek onartzen dituzu...",
     "title": "Profilaren ezarpenak",
     "first_name": "Izena",
     "last_name": "Abizena",
@@ -286,7 +286,7 @@
     "subtitle": "Kudeatu zure informazio pertsonala eta hizkuntza-ezarpenak"
   },
   "login": {
-    "title": "Hasi saioa WordsGon",
+    "title": "Hasi saioa Synaplyn",
     "email": "Helbide elektronikoa",
     "password": "Pasahitza",
     "sign_in": "Saioa hasi",
@@ -307,7 +307,7 @@
     "login": "Hasi saioa hemen"
   },
   "help": {
-    "title": "Nola erabili WordsGo",
+    "title": "Nola erabili Synaply",
     "best_practice": {
       "title": "Arrakastarako praktika onena",
       "strategy_desc": "Ikaskuntza-esperientzia eraginkorrena izateko, 3 urratseko estrategia erraz hau gomendatzen dizugu:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Hasierako urratsak",
-      "desc": "WordsGo zure hiztegia zabaltzen eta hizkuntza-trebetasunak hobetzen laguntzeko tresna indartsua da, espazio-errepikapena eta adimen artifiziala erabiliz.",
+      "desc": "Synaply zure hiztegia zabaltzen eta hizkuntza-trebetasunak hobetzen laguntzeko tresna indartsua da, espazio-errepikapena eta adimen artifiziala erabiliz.",
       "step1_title": "1. urratsa: Gehitu hitzak",
       "step1_desc": "Gehitu hitzak eskuz edo erabili AIa gaien eta mailen arabera zerrendak sortzeko.",
       "step2_title": "2. urratsa: Eguneroko praktika",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Espazio-errepikapena",
-      "desc": "WordsGok FSRS (Free Spaced Repetition Scheduler) algoritmoa erabiltzen du hitz bakoitza errepikatzeko une egokiena kalkulatzeko.",
+      "desc": "Synaplyk FSRS (Free Spaced Repetition Scheduler) algoritmoa erabiltzen du hitz bakoitza errepikatzeko une egokiena kalkulatzeko.",
       "process_title": "Berrikusketa-prozesua",
       "step1": "Jatorrizko hizkuntzan hitz bat erakusten zaizu.",
       "step2": "Sartu itzulpena eta sakatu <strong>Enter</strong> edo <strong>Egiaztatu erantzuna</strong>.",

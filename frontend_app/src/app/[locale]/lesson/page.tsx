@@ -131,7 +131,7 @@ export default function Lesson() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600 dark:text-blue-500" />
+        <Loader2 className="w-8 h-8 animate-spin text-synaply-blue dark:text-synaply-cyan" />
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function Lesson() {
           </p>
           <button
             onClick={finishLesson}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
+            className="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-bold rounded-full shadow-lg shadow-synaply-blue-shadow text-white synaply-gradient-bg hover:opacity-90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple transition-all"
           >
             {t('common.back_to_dashboard')}
           </button>
@@ -167,7 +167,7 @@ export default function Lesson() {
           <XCircle className="w-16 h-16 text-red-500 dark:text-red-400 mx-auto" />
           <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('dashboard.error_occurred')}</h2>
           <p className="text-gray-600 dark:text-gray-400">{error}</p>
-          <Link href="/dashboard" className="text-blue-600 dark:text-blue-400 hover:underline">
+          <Link href="/dashboard" className="text-synaply-blue dark:text-synaply-cyan hover:opacity-80 transition-opacity font-bold">
             {t('common.back')}
           </Link>
         </div>
@@ -206,7 +206,7 @@ export default function Lesson() {
                 onDrop={e => e.preventDefault()}
                 readOnly={!!feedback}
                 placeholder={t('dashboard.type_translation')}
-                className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-blue-500 focus:ring-blue-500 shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50"
+                className="block w-full text-center text-lg rounded-xl border-gray-300 dark:border-gray-700 border-2 px-4 py-3 text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:border-synaply-purple dark:focus:border-synaply-purple focus:ring-1 focus:ring-synaply-purple dark:focus:ring-synaply-purple shadow-sm read-only:bg-gray-50 dark:read-only:bg-gray-800/50 transition-all"
                 autoFocus
                 autoComplete="off"
               />
@@ -229,7 +229,7 @@ export default function Lesson() {
                     <button
                       type="button"
                       onClick={() => word?.target_word && speak(word.target_word, word.target_lang)}
-                      className="p-1 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      className="p-1 text-gray-400 dark:text-gray-500 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors"
                       title={t('dashboard.listen')}
                     >
                       <Volume2 className="w-4 h-4" />
@@ -243,14 +243,14 @@ export default function Lesson() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 dark:disabled:bg-blue-900 transition-colors"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-lg shadow-synaply-blue-shadow text-base font-bold text-white synaply-gradient-bg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synaply-purple disabled:opacity-50 transition-all"
               >
                 {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : (answer.trim() ? t('dashboard.check_answer') : t('dashboard.dont_remember'))}
               </button>
             ) : (
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 dark:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-blue-500 transition-colors"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-lg shadow-gray-900/10 text-base font-bold text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all"
               >
                 {t('dashboard.continue')}
                 <ArrowRight className="w-4 h-4 ml-2" />

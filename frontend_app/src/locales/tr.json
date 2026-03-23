@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Yapay Zeka ve Aralıklı Tekrar ile Kelime Öğrenin",
+    "title": "Synaply - Yapay Zeka ve Aralıklı Tekrar ile Kelime Öğrenin",
     "description": "Yapay zeka destekli aralıklı tekrar ile dil becerilerinizi geliştirin. Özel kelime listeleri oluşturun veya topluluk tarafından paylaşılan genel listelerden öğrenin.",
     "keywords": "ingilizce öğren, aralıklı tekrar, kelime geliştirici, bilgi kartları, yapay zeka dil öğrenimi, kelime listeleri, dil çalışma uygulaması, ispanyolca öğren, fransızca öğren, almanca öğren, dil yeterliliği, kelime ezberle, SRS öğrenme",
-    "og_title": "WordsGo - Akıllı Kelime Öğrenimi",
+    "og_title": "Synaply - Akıllı Kelime Öğrenimi",
     "og_description": "Yapay zeka destekli aralıklı tekrar ile dil becerilerinizi geliştirin. Daha hızlı öğrenin, daha uzun süre hatırlayın.",
-    "og_image_alt": "WordsGo Yapay Zeka Dil Öğrenme Uygulaması Arayüzü",
-    "twitter_title": "WordsGo - Yeni Kelimeleri Zahmetsizce Öğrenin",
-    "twitter_description": "Akıllı aralıklı tekrar ve yapay zeka kullanarak kelime dağarcığınızı genişletmek için WordsGo'ya katılın."
+    "og_image_alt": "Synaply Yapay Zeka Dil Öğrenme Uygulaması Arayüzü",
+    "twitter_title": "Synaply - Yeni Kelimeleri Zahmetsizce Öğrenin",
+    "twitter_description": "Akıllı aralıklı tekrar ve yapay zeka kullanarak kelime dağarcığınızı genişletmek için Synaply'ya katılın."
   },
   "landing": {
     "public_lists": "Genel Listeler",
@@ -144,10 +144,10 @@
     "support_title": "Projeyi Destekle",
     "support_desc": "Bu uygulamayı beğendiyseniz, gelişimini destekleyebilirsiniz.",
     "onboarding": {
-      "welcome": "WordsGo'ya Hoş Geldiniz!",
+      "welcome": "Synaply'ya Hoş Geldiniz!",
       "journey_begins": "Dil ustalığı yolculuğunuz burada başlıyor.",
       "best_practice": "Başarı İçin En İyi Yöntem",
-      "strategy_desc": "WordsGo'dan en iyi şekilde yararlanmak için şu basit stratejiyi öneriyoruz:",
+      "strategy_desc": "Synaply'dan en iyi şekilde yararlanmak için şu basit stratejiyi öneriyoruz:",
       "step1_title": "Bir Konuya Odaklanın",
       "step1_desc": "Güçlü bir bağlam oluşturmak için tek bir konuyla (örneğin İş veya Seyahat) ilgili yaklaşık <strong>100 kelime</strong> ekleyin.",
       "step2_title": "Günlük Tekrarlar",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Hizmet Şartları",
-    "terms_welcome": "WordsGo'ya hoş geldiniz. Hizmetlerimizi kullanarak bu şartları kabul etmiş olursunuz...",
+    "terms_welcome": "Synaply'ya hoş geldiniz. Hizmetlerimizi kullanarak bu şartları kabul etmiş olursunuz...",
     "title": "Profil Ayarları",
     "first_name": "Ad",
     "last_name": "Soyad",
@@ -286,7 +286,7 @@
     "subtitle": "Kişisel bilgilerinizi ve dil ayarlarınızı yönetin"
   },
   "login": {
-    "title": "wordsGo'ya Giriş Yap",
+    "title": "synaply'ya Giriş Yap",
     "email": "E-posta adresi",
     "password": "Şifre",
     "sign_in": "Giriş yap",
@@ -307,7 +307,7 @@
     "login": "Buradan giriş yapın"
   },
   "help": {
-    "title": "WordsGo Nasıl Kullanılır",
+    "title": "Synaply Nasıl Kullanılır",
     "best_practice": {
       "title": "Başarı İçin En İyi Yöntem",
       "strategy_desc": "En etkili öğrenme deneyimi için bu basit 3 adımlı stratejiyi öneriyoruz:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Başlarken",
-      "desc": "WordsGo, aralıklı tekrar ve yapay zeka kullanarak kelime dağarcığınızı genişletmenize ve dil becerilerinizi geliştirmenize yardımcı olmak için tasarlanmış güçlü bir araçtır.",
+      "desc": "Synaply, aralıklı tekrar ve yapay zeka kullanarak kelime dağarcığınızı genişletmenize ve dil becerilerinizi geliştirmenize yardımcı olmak için tasarlanmış güçlü bir araçtır.",
       "step1_title": "1. Adım: Kelime Ekle",
       "step1_desc": "Kelimeleri manuel olarak ekleyin veya konulara ve seviyelere göre liste oluşturmak için yapay zekayı kullanın.",
       "step2_title": "2. Adım: Günlük Alıştırma",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Aralıklı Tekrar",
-      "desc": "WordsGo, her kelimeyi tekrarlamak için ideal zamanı hesaplamak için FSRS (Free Spaced Repetition Scheduler) algoritmasını kullanır.",
+      "desc": "Synaply, her kelimeyi tekrarlamak için ideal zamanı hesaplamak için FSRS (Free Spaced Repetition Scheduler) algoritmasını kullanır.",
       "process_title": "Tekrar Süreci",
       "step1": "Size kaynak dilde bir kelime gösterilir.",
       "step2": "Çeviriyi girin ve <strong>Enter</strong>'a veya <strong>Cevabı Kontrol Et</strong>'e basın.",
