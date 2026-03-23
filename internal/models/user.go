@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/repository/modelsDB"
-	"synaply_v2/internal/utils"
+	"synaply/internal/repository/modelsDB"
+	"synaply/internal/utils"
 )
 
 type User struct {
