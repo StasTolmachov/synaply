@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wordsgo.tolmachov.dev/sitemap.xml
+Sitemap: https://synaply.me/sitemap.xml

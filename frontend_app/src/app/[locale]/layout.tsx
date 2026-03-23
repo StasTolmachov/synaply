@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   // Генерация ссылок hreflang для всех 114 языков
-  const baseUrl = "https://wordsgo.tolmachov.dev";
+  const baseUrl = "https://synaply.me";
   const languageAlternates: Record<string, string> = {};
   
   Object.keys(languages).forEach((langCode) => {
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: t('description'),
     keywords: t('keywords').split(','),
     authors: [{ name: "WordsGo Team" }],
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://wordsgo.tolmachov.dev'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://synaply.me'),
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",

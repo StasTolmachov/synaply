@@ -43,7 +43,7 @@ export default function LandingPage() {
     description: 'Learn new words with AI-powered spaced repetition. The easiest way to expand your vocabulary.',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
-    url: 'https://wordsgo.tolmachov.dev',
+    url: 'https://synaply.me',
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -52,7 +52,7 @@ export default function LandingPage() {
     author: {
       '@type': 'Organization',
       name: 'WordsGo Team',
-      logo: 'https://wordsgo.tolmachov.dev/apple-icon.png'
+      logo: 'https://synaply.me/apple-icon.png'
     },
     aggregateRating: {
       '@type': 'AggregateRating',
