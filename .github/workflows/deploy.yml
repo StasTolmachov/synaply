@@ -32,5 +32,8 @@ jobs:
             # 2. HARD reset the code state on the server to an exact copy of the main branch
             git reset --hard origin/main
             
+            # Stop and remove existing containers to free up ports
+            docker compose down
+
             # Rebuild and restart containers in the background
             docker compose up -d --build
