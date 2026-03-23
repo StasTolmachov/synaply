@@ -112,13 +112,6 @@ export function Header() {
         <List className="w-4 h-4 mr-2 md:mr-1 text-amber-500" />
         <span className="md:hidden lg:inline">{t('common.words')}</span>
       </Link>
-      <Link
-        href="/public-lists"
-        className="text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan flex items-center text-sm font-medium transition-colors py-2 md:py-0"
-      >
-        <Globe className="w-4 h-4 mr-2 md:mr-1 text-cyan-500" />
-        <span className="md:hidden lg:inline">{t('common.public_lists')}</span>
-      </Link>
     </>
   );
 
