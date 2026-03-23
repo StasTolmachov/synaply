@@ -1,4 +1,4 @@
-module wordsGo_v2
+module synaply_v2
 
 go 1.26
 

@@ -23,20 +23,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   
   if (!list) {
     return {
-      title: 'List Not Found | WordsGo',
+      title: 'List Not Found | Synaply',
     };
   }
 
   const baseUrl = "https://synaply.me";
 
   return {
-    title: `${list.title} | WordsGo`,
+    title: `${list.title} | Synaply`,
     description: list.description || `Explore this public word list: ${list.title} (${list.source_lang} to ${list.target_lang})`,
     alternates: {
       canonical: `${baseUrl}/${locale}/public-lists/${id}`,
     },
     openGraph: {
-      title: `${list.title} | WordsGo`,
+      title: `${list.title} | Synaply`,
       description: list.description,
       url: `${baseUrl}/${locale}/public-lists/${id}`,
       type: 'article',
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${list.title} | WordsGo`,
+      title: `${list.title} | Synaply`,
       description: list.description,
       images: ["/opengraph-image.png"],
     },

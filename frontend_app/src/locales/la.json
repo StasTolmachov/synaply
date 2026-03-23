@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Disce Vocabula cum AI & Spaced Repetition",
+    "title": "Synaply - Disce Vocabula cum AI & Spaced Repetition",
     "description": "Excole peritiam linguarum tuarum cum repetitione intervallata AI suffulta. Crea indices verborum proprios vel disce ex indicibus publicis a communitate communicatis.",
     "keywords": "discere anglicam, repetitio intervallata, aedificator vocabuli, chartae memoriales, AI linguas discere, indices verborum, app studii linguarum, discere latinam, discere gallicam, discere theodiscam, peritia linguae, memorare verba, SRS discendi",
-    "og_title": "WordsGo - Discenti Vocabula Callide",
+    "og_title": "Synaply - Discenti Vocabula Callide",
     "og_description": "Excole peritiam linguarum tuarum cum repetitione intervallata AI suffulta. Disce celerius, memento diutius.",
-    "og_image_alt": "WordsGo AI App Discendi Linguas Interfacies",
-    "twitter_title": "WordsGo - Disce Nova Verba Sine Labore",
-    "twitter_description": "Iunge te ad WordsGo ut augeas vocabula tua utendo repetitione intervallata callida et AI."
+    "og_image_alt": "Synaply AI App Discendi Linguas Interfacies",
+    "twitter_title": "Synaply - Disce Nova Verba Sine Labore",
+    "twitter_description": "Iunge te ad Synaply ut augeas vocabula tua utendo repetitione intervallata callida et AI."
   },
   "landing": {
     "public_lists": "Indices Publici",
@@ -144,10 +144,10 @@
     "support_title": "Adiuva Proiectum",
     "support_desc": "Si hoc app tibi placet, eius evolutionem adiuvare potes.",
     "onboarding": {
-      "welcome": "Salve ad WordsGo!",
+      "welcome": "Salve ad Synaply!",
       "journey_begins": "Iter tuum ad peritiam linguae hic incipit.",
       "best_practice": "Optima Ratio pro Successu",
-      "strategy_desc": "Ut ex WordsGo plurimum capias, hanc simplicem rationem commendamus:",
+      "strategy_desc": "Ut ex Synaply plurimum capias, hanc simplicem rationem commendamus:",
       "step1_title": "Focus in Argumento",
       "step1_desc": "Adde circiter <strong>100 verba</strong> ad unum argumentum pertinentia (ex. Negotium vel Iter) ad contextum validum aedificandum.",
       "step2_title": "Recensiones Diurnae",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Conditiones Usus",
-    "terms_welcome": "Salve ad WordsGo. Utendo servitiis nostris, his condicionibus consentis...",
+    "terms_welcome": "Salve ad Synaply. Utendo servitiis nostris, his condicionibus consentis...",
     "title": "Constitutiones Profili",
     "first_name": "Praenomen",
     "last_name": "Cognomen",
@@ -286,7 +286,7 @@
     "subtitle": "Administra res tuas personales et constitutiones linguae"
   },
   "login": {
-    "title": "Inire in wordsGo",
+    "title": "Inire in synaply",
     "email": "Inscriptio electronica",
     "password": "Tessera",
     "sign_in": "Inire",
@@ -307,7 +307,7 @@
     "login": "Inire hic"
   },
   "help": {
-    "title": "Quomodo WordsGo utaris",
+    "title": "Quomodo Synaply utaris",
     "best_practice": {
       "title": "Optima Ratio pro Successu",
       "strategy_desc": "Pro experientia discendi efficacissima, hanc simplicem rationem 3 graduum commendamus:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Incipere",
-      "desc": "WordsGo est instrumentum validum ad vocabula tua augenda et peritiam linguae emendandam utendo repetitione intervallata et intellegentia artificiali.",
+      "desc": "Synaply est instrumentum validum ad vocabula tua augenda et peritiam linguae emendandam utendo repetitione intervallata et intellegentia artificiali.",
       "step1_title": "Gradus 1: Addere Verba",
       "step1_desc": "Adde verba manu vel utere AI ad indices per argumenta et gradus generandos.",
       "step2_title": "Gradus 2: Exercitium Diurnum",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Repetitio Intervallata",
-      "desc": "WordsGo utitur algorithmo FSRS (Free Spaced Repetition Scheduler) ad tempus optimum pro unoquoque verbo repetendo calculandum.",
+      "desc": "Synaply utitur algorithmo FSRS (Free Spaced Repetition Scheduler) ad tempus optimum pro unoquoque verbo repetendo calculandum.",
       "process_title": "Processus Recensionis",
       "step1": "Ostenditur tibi verbum in lingua fontis.",
       "step2": "Insera translationem et preme <strong>Enter</strong> vel <strong>Probare Responsum</strong>.",

@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Õpi sõnavara tehisintellekti ja kordussüsteemi abil",
+    "title": "Synaply - Õpi sõnavara tehisintellekti ja kordussüsteemi abil",
     "description": "Paranda oma keeleoskust AI-toega kordussüsteemi abil. Loo kohandatud sõnalisteid või õpi teiste kasutajate jagatud avalikest listidest.",
     "keywords": "õpi inglise keelt, kordussüsteem, sõnavara arendamine, mälukaardid, AI keeleõpe, sõnalistid, keeleõppe rakendus, õpi hispaania keelt, õpi prantsuse keelt, õpi saksa keelt, keeleoskus, sõnade meeldejätmine, SRS õpe",
-    "og_title": "WordsGo - Nutikas sõnavara õppimine",
+    "og_title": "Synaply - Nutikas sõnavara õppimine",
     "og_description": "Paranda oma keeleoskust AI-toega kordussüsteemi abil. Õpi kiiremini, mäleta kauem.",
-    "og_image_alt": "WordsGo AI keeleõppe rakenduse liides",
-    "twitter_title": "WordsGo - Õpi uusi sõnu vaevata",
-    "twitter_description": "Liitu WordsGo-ga, et laiendada oma sõnavara, kasutades nutikat kordussüsteemi ja tehisintellekti."
+    "og_image_alt": "Synaply AI keeleõppe rakenduse liides",
+    "twitter_title": "Synaply - Õpi uusi sõnu vaevata",
+    "twitter_description": "Liitu Synaply-ga, et laiendada oma sõnavara, kasutades nutikat kordussüsteemi ja tehisintellekti."
   },
   "landing": {
     "public_lists": "Avalikud listid",
@@ -144,10 +144,10 @@
     "support_title": "Toeta projekti",
     "support_desc": "Kui sulle see rakendus meeldib, saad toetada selle arendamist.",
     "onboarding": {
-      "welcome": "Tere tulemast WordsGo-sse!",
+      "welcome": "Tere tulemast Synaply-sse!",
       "journey_begins": "Sinu teekond keelevaldamiseni algab siit.",
       "best_practice": "Parim praktika eduks",
-      "strategy_desc": "WordsGo-st maksimumi saamiseks soovitame seda lihtsat strateegiat:",
+      "strategy_desc": "Synaply-st maksimumi saamiseks soovitame seda lihtsat strateegiat:",
       "step1_title": "Keskendu teemale",
       "step1_desc": "Lisa umbes <strong>100 sõna</strong>, mis on seotud ühe teemaga (nt äri või reisimine), et luua tugev kontekst.",
       "step2_title": "Igapäevased kordamised",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Kasutustingimused",
-    "terms_welcome": "Tere tulemast WordsGo-sse. Meie teenuseid kasutades nõustute nende tingimustega...",
+    "terms_welcome": "Tere tulemast Synaply-sse. Meie teenuseid kasutades nõustute nende tingimustega...",
     "title": "Profiili seaded",
     "first_name": "Eesnimi",
     "last_name": "Perekonnanimi",
@@ -286,7 +286,7 @@
     "subtitle": "Halda oma isikuandmeid ja keeleseadeid"
   },
   "login": {
-    "title": "Logi sisse WordsGo-sse",
+    "title": "Logi sisse Synaply-sse",
     "email": "E-posti aadress",
     "password": "Parool",
     "sign_in": "Logi sisse",
@@ -307,7 +307,7 @@
     "login": "Logi sisse siin"
   },
   "help": {
-    "title": "Kuidas kasutada WordsGo-d",
+    "title": "Kuidas kasutada Synaply-d",
     "best_practice": {
       "title": "Parim praktika eduks",
       "strategy_desc": "Kõige tõhusamaks õppimiskogemuseks soovitame seda lihtsat 3-etapilist strateegiat:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Alustamine",
-      "desc": "WordsGo on võimas tööriist, mis on loodud aitama sul laiendada oma sõnavara ja parandada keeleoskust, kasutades kordussüsteemi ja tehisintellekti.",
+      "desc": "Synaply on võimas tööriist, mis on loodud aitama sul laiendada oma sõnavara ja parandada keeleoskust, kasutades kordussüsteemi ja tehisintellekti.",
       "step1_title": "Samm 1: Lisa sõnu",
       "step1_desc": "Lisa sõnu käsitsi või kasuta tehisintellekti, et genereerida liste teemade ja tasemete kaupa.",
       "step2_title": "Samm 2: Igapäevane harjutamine",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Kordussüsteem",
-      "desc": "WordsGo kasutab FSRS (Free Spaced Repetition Scheduler) algoritmi, et arvutada iga sõna kordamiseks ideaalne aeg.",
+      "desc": "Synaply kasutab FSRS (Free Spaced Repetition Scheduler) algoritmi, et arvutada iga sõna kordamiseks ideaalne aeg.",
       "process_title": "Kordamisprotsess",
       "step1": "Sulle näidatakse sõna algkeeles.",
       "step2": "Sisesta tõlge ja vajuta <strong>Enter</strong> või <strong>Kontrolli vastust</strong>.",

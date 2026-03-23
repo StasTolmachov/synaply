@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Matuto ng Bokabularyo gamit ang AI at Spaced Repetition",
+    "title": "Synaply - Matuto ng Bokabularyo gamit ang AI at Spaced Repetition",
     "description": "Pahusayin ang iyong mga kasanayan sa wika gamit ang AI-powered spaced repetition. Gumawa ng mga pasadyang listahan ng salita o matuto mula sa mga pampublikong listahan na ibinahagi ng komunidad.",
     "keywords": "matuto ng ingles, spaced repetition, vocabulary builder, flashcards, AI language learning, listahan ng salita, language study app, matuto ng kastila, matuto ng pranses, matuto ng aleman, language proficiency, kabisaduhin ang mga salita, SRS learning",
-    "og_title": "WordsGo - Matalinong Pag-aaral ng Bokabularyo",
+    "og_title": "Synaply - Matalinong Pag-aaral ng Bokabularyo",
     "og_description": "Pahusayin ang iyong mga kasanayan sa wika gamit ang AI-powered spaced repetition. Matuto nang mas mabilis, matandaan nang mas matagal.",
-    "og_image_alt": "Interface ng WordsGo AI Language Learning App",
-    "twitter_title": "WordsGo - Matuto ng Bagong Salita nang Walang Hirap",
-    "twitter_description": "Sumali sa WordsGo upang palawakin ang iyong bokabularyo gamit ang matalinong spaced repetition at AI."
+    "og_image_alt": "Interface ng Synaply AI Language Learning App",
+    "twitter_title": "Synaply - Matuto ng Bagong Salita nang Walang Hirap",
+    "twitter_description": "Sumali sa Synaply upang palawakin ang iyong bokabularyo gamit ang matalinong spaced repetition at AI."
   },
   "landing": {
     "public_lists": "Mga Pampublikong Listahan",
@@ -144,10 +144,10 @@
     "support_title": "Suportahan ang Proyekto",
     "support_desc": "Kung gusto mo ang app na ito, maaari mong suportahan ang pag-unlad nito.",
     "onboarding": {
-      "welcome": "Maligayang pagdating sa WordsGo!",
+      "welcome": "Maligayang pagdating sa Synaply!",
       "journey_begins": "Dito nagsisimula ang iyong paglalakbay sa pag-master ng wika.",
       "best_practice": "Pinakamahusay na Paraan para sa Tagumpay",
-      "strategy_desc": "Upang masulit ang WordsGo, inirerekumenda namin ang simpleng strategy na ito:",
+      "strategy_desc": "Upang masulit ang Synaply, inirerekumenda namin ang simpleng strategy na ito:",
       "step1_title": "Tumutok sa Isang Paksa",
       "step1_desc": "Magdagdag ng humigit-kumulang <strong>100 salita</strong> na may kaugnayan sa isang paksa (hal., Negosyo o Paglalakbay) upang bumuo ng malakas na konteksto.",
       "step2_title": "Araw-araw na Repaso",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Mga Tuntunin ng Serbisyo",
-    "terms_welcome": "Maligayang pagdating sa WordsGo. Sa paggamit ng aming mga serbisyo, sumasang-ayon ka sa mga tuntuning ito...",
+    "terms_welcome": "Maligayang pagdating sa Synaply. Sa paggamit ng aming mga serbisyo, sumasang-ayon ka sa mga tuntuning ito...",
     "title": "Mga Setting ng Profile",
     "first_name": "Pangalan",
     "last_name": "Apelyido",
@@ -286,7 +286,7 @@
     "subtitle": "Pamahalaan ang iyong personal na impormasyon at mga setting ng wika"
   },
   "login": {
-    "title": "Mag-sign in sa wordsGo",
+    "title": "Mag-sign in sa synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Mag-sign in",
@@ -306,7 +306,7 @@
     "login": "Mag-login dito"
   },
   "help": {
-    "title": "Paano gamitin ang WordsGo",
+    "title": "Paano gamitin ang Synaply",
     "best_practice": {
       "title": "Pinakamahusay na Paraan para sa Tagumpay",
       "strategy_desc": "Para sa pinaka-epektibong karanasan sa pag-aaral, inirerekumenda namin ang simpleng 3-step na strategy na ito:",
@@ -319,7 +319,7 @@
     },
     "getting_started": {
       "title": "Pagsisimula",
-      "desc": "Ang WordsGo ay isang makapangyarihang tool na idinisenyo upang tulungan kang palawakin ang iyong bokabularyo at pagbutihin ang iyong mga kasanayan sa wika gamit ang spaced repetition at artificial intelligence.",
+      "desc": "Ang Synaply ay isang makapangyarihang tool na idinisenyo upang tulungan kang palawakin ang iyong bokabularyo at pagbutihin ang iyong mga kasanayan sa wika gamit ang spaced repetition at artificial intelligence.",
       "step1_title": "Hakbang 1: Magdagdag ng mga Salita",
       "step1_desc": "Magdagdag ng mga salita nang manu-mano o gumamit ng AI upang bumuo ng mga listahan ayon sa mga paksa at antas.",
       "step2_title": "Hakbang 2: Araw-araw na Pagsasanay",
@@ -346,7 +346,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "Gumagamit ang WordsGo ng FSRS (Free Spaced Repetition Scheduler) algorithm upang kalkulahin ang perpektong oras upang ulitin ang bawat salita.",
+      "desc": "Gumagamit ang Synaply ng FSRS (Free Spaced Repetition Scheduler) algorithm upang kalkulahin ang perpektong oras upang ulitin ang bawat salita.",
       "process_title": "Proseso ng Pagsusuri",
       "step1": "Ipapakita sa iyo ang isang salita sa source language.",
       "step2": "Ipasok ang salin at pindutin ang <strong>Enter</strong> o <strong>I-check ang Sagot</strong>.",

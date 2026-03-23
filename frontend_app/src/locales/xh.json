@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "wordsgo - Funda Amagama kunye no-AI",
+    "title": "synaply - Funda Amagama kunye no-AI",
     "description": "Iqonga lokufunda ulwimi elitshabalalisa amagama, elisebenza ngokuzenzekelayo kwaye lisebenzisa i-AI",
-    "og_title": "wordsgo - Funda Amagama ngokukhawuleza",
+    "og_title": "synaply - Funda Amagama ngokukhawuleza",
     "og_description": "Fumana amagama amatsha, wakhe uluhlu lwakho lwamagama, kwaye ufunde ngokukhawuleza."
   },
   "landing": {
@@ -65,7 +65,7 @@
   "onboarding": {
     "steps": {
       "welcome": {
-        "title": "Wamkelekile ku-wordsgo",
+        "title": "Wamkelekile ku-synaply",
         "description": "Masikuncede ufunde iilwimi ezintsha ngobulumko kwaye ngokukhawuleza."
       },
       "languages": {

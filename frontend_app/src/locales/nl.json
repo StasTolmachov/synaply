@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Leer woordenschat met AI & Gespreide Herhaling",
+    "title": "Synaply - Leer woordenschat met AI & Gespreide Herhaling",
     "description": "Verbeter je taalvaardigheid met AI-gestuurde gespreide herhaling. Maak aangepaste woordenlijsten of leer van door de community gedeelde openbare lijsten.",
     "keywords": "engels leren, gespreide herhaling, woordenschatopbouw, flitskaarten, AI taalonderwijs, woordenlijsten, taalstudie app, spaans leren, frans leren, duits leren, taalvaardigheid, woorden onthouden, SRS leren",
-    "og_title": "WordsGo - Slim Woordenschat Leren",
+    "og_title": "Synaply - Slim Woordenschat Leren",
     "og_description": "Verbeter je taalvaardigheid met AI-gestuurde gespreide herhaling. Leer sneller, onthoud langer.",
-    "og_image_alt": "WordsGo AI Taalonderwijs App Interface",
-    "twitter_title": "WordsGo - Moeiteloos Nieuwe Woorden Leren",
-    "twitter_description": "Word lid van WordsGo om je woordenschat uit te breiden met slimme gespreide herhaling en AI."
+    "og_image_alt": "Synaply AI Taalonderwijs App Interface",
+    "twitter_title": "Synaply - Moeiteloos Nieuwe Woorden Leren",
+    "twitter_description": "Word lid van Synaply om je woordenschat uit te breiden met slimme gespreide herhaling en AI."
   },
   "landing": {
     "public_lists": "Openbare Lijsten",
@@ -144,10 +144,10 @@
     "support_title": "Ondersteun het Project",
     "support_desc": "Als je deze app leuk vindt, kun je de ontwikkeling ervan ondersteunen.",
     "onboarding": {
-      "welcome": "Welkom bij WordsGo!",
+      "welcome": "Welkom bij Synaply!",
       "journey_begins": "Je reis naar taalbeheersing begint hier.",
       "best_practice": "Beste Methode voor Succes",
-      "strategy_desc": "Om het meeste uit WordsGo te halen, raden we deze eenvoudige strategie aan:",
+      "strategy_desc": "Om het meeste uit Synaply te halen, raden we deze eenvoudige strategie aan:",
       "step1_title": "Focus op een Onderwerp",
       "step1_desc": "Voeg ongeveer <strong>100 woorden</strong> toe gerelateerd aan één onderwerp (bijv. Zakelijk of Reizen) om een sterke context op te bouwen.",
       "step2_title": "Dagelijkse Herhalingen",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Servicevoorwaarden",
-    "terms_welcome": "Welkom bij WordsGo. Door onze diensten te gebruiken, ga je akkoord met deze voorwaarden...",
+    "terms_welcome": "Welkom bij Synaply. Door onze diensten te gebruiken, ga je akkoord met deze voorwaarden...",
     "title": "Profielinstellingen",
     "first_name": "Voornaam",
     "last_name": "Achternaam",
@@ -286,7 +286,7 @@
     "subtitle": "Beheer je persoonlijke informatie en taalinstellingen"
   },
   "login": {
-    "title": "Inloggen bij wordsGo",
+    "title": "Inloggen bij synaply",
     "email": "E-mailadres",
     "password": "Wachtwoord",
     "sign_in": "Inloggen",
@@ -307,7 +307,7 @@
     "login": "Login hier"
   },
   "help": {
-    "title": "Hoe WordsGo te gebruiken",
+    "title": "Hoe Synaply te gebruiken",
     "best_practice": {
       "title": "Beste Methode voor Succes",
       "strategy_desc": "Voor de meest effectieve leerervaring raden we deze eenvoudige strategie in 3 stappen aan:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Aan de Slag",
-      "desc": "WordsGo is een krachtig hulpmiddel dat is ontworpen om je te helpen je woordenschat uit te breiden en je taalvaardigheid te verbeteren met behulp van gespreide herhaling en kunstmatige intelligentie.",
+      "desc": "Synaply is een krachtig hulpmiddel dat is ontworpen om je te helpen je woordenschat uit te breiden en je taalvaardigheid te verbeteren met behulp van gespreide herhaling en kunstmatige intelligentie.",
       "step1_title": "Stap 1: Woorden Toevoegen",
       "step1_desc": "Voeg woorden handmatig toe of gebruik AI om lijsten te genereren op basis van onderwerpen en niveaus.",
       "step2_title": "Stap 2: Dagelijkse Oefening",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Gespreide Herhaling",
-      "desc": "WordsGo gebruikt het FSRS (Free Spaced Repetition Scheduler)-algoritme om het ideale moment te berekenen om elk woord te herhalen.",
+      "desc": "Synaply gebruikt het FSRS (Free Spaced Repetition Scheduler)-algoritme om het ideale moment te berekenen om elk woord te herhalen.",
       "process_title": "Herhalingsproces",
       "step1": "Je krijgt een woord in de brontaal te zien.",
       "step2": "Voer de vertaling in en druk op <strong>Enter</strong> of <strong>Antwoord Controleren</strong>.",

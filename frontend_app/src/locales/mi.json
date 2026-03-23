@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Ako te Reo me te AI & Spaced Repetition",
+    "title": "Synaply - Ako te Reo me te AI & Spaced Repetition",
     "description": "Whakapiki i o pūkenga reo me te AI-powered spaced repetition. Waihanga i au ake rārangi kupu, ako rānei i ngā rārangi tūmatanui i tuarihia e te hapori.",
     "keywords": "ako reo Ingarihi, spaced repetition, kaihanga kupu, kāri uira, AI ako reo, rārangi kupu, taupānga ako reo, ako reo Pāniora, ako reo Wīwī, ako reo Tiamana, matatau reo, maumahara kupu, SRS ako",
-    "og_title": "WordsGo - Ako Kupu Ataamai",
+    "og_title": "Synaply - Ako Kupu Ataamai",
     "og_description": "Whakapiki i o pūkenga reo me te AI-powered spaced repetition. Ako tere atu, maumahara roa atu.",
-    "og_image_alt": "WordsGo AI Taupānga Ako Reo Atanga",
-    "twitter_title": "WordsGo - Ako i ngā Kupu Hou me te ngāwari",
-    "twitter_description": "Hono ki WordsGo ki te whakawhānui i o kupu mā te whakamahi i te spaced repetition ataamai me te AI."
+    "og_image_alt": "Synaply AI Taupānga Ako Reo Atanga",
+    "twitter_title": "Synaply - Ako i ngā Kupu Hou me te ngāwari",
+    "twitter_description": "Hono ki Synaply ki te whakawhānui i o kupu mā te whakamahi i te spaced repetition ataamai me te AI."
   },
   "landing": {
     "public_lists": "Rārangi Tūmatanui",
@@ -144,10 +144,10 @@
     "support_title": "Tautoko i te kaupapa",
     "support_desc": "Ki te pai ki a koe tēnei taupānga, ka taea e koe te tautoko i tona whanaketanga.",
     "onboarding": {
-      "welcome": "Nau mai ki WordsGo!",
+      "welcome": "Nau mai ki Synaply!",
       "journey_begins": "Ka tīmata to haerenga ki te matatau reo i konei.",
       "best_practice": "Tikanga Pai mō te Angitu",
-      "strategy_desc": "Kia whai hua ai koe i WordsGo, ka tūtohu mātou i tēnei rautaki ngāwari:",
+      "strategy_desc": "Kia whai hua ai koe i Synaply, ka tūtohu mātou i tēnei rautaki ngāwari:",
       "step1_title": "Arotahi ki tētahi kaupapa",
       "step1_desc": "Tāpirihia kia <strong>100 pea ngā kupu</strong> e pā ana ki tētahi kaupapa kotahi (hei tauira, Pakihi, Haereere rānei) hei hanga horopaki pakari.",
       "step2_title": "Arotake o ia Rā",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Ngā Tikanga Ratonga",
-    "terms_welcome": "Nau mai ki WordsGo. Mā te whakamahi i ā mātou ratonga, ka whakaae koe ki ēnei tikanga...",
+    "terms_welcome": "Nau mai ki Synaply. Mā te whakamahi i ā mātou ratonga, ka whakaae koe ki ēnei tikanga...",
     "title": "Whakatakotoranga Kōtaha",
     "first_name": "Ingoa Tuatahi",
     "last_name": "Ingoa Whānau",
@@ -286,7 +286,7 @@
     "subtitle": "Whakahaerehia o mōhiohio whaiaro me o whakatakotoranga reo"
   },
   "login": {
-    "title": "Takiuru ki wordsGo",
+    "title": "Takiuru ki synaply",
     "email": "Īmēra",
     "password": "Kupuhipa",
     "sign_in": "Takiuru",
@@ -307,7 +307,7 @@
     "login": "Takiuru ki konei"
   },
   "help": {
-    "title": "Me pēhea te whakamahi i WordsGo",
+    "title": "Me pēhea te whakamahi i Synaply",
     "best_practice": {
       "title": "Tikanga Pai mō te Angitu",
       "strategy_desc": "Mō te wheako ako tino whai hua, ka tūtohu mātou i tēnei rautaki 3-taahiraa ngāwari:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Te Tīmatanga",
-      "desc": "He taputapu pakari a WordsGo i hangaia hei āwhina i a koe ki te whakawhānui i o kupu me te whakapai ake i o pūkenga reo mā te whakamahi i te spaced repetition me te atamai hangarau.",
+      "desc": "He taputapu pakari a Synaply i hangaia hei āwhina i a koe ki te whakawhānui i o kupu me te whakapai ake i o pūkenga reo mā te whakamahi i te spaced repetition me te atamai hangarau.",
       "step1_title": "Taahiraa 1: Tāpiri Kupu",
       "step1_desc": "Tāpirihia ngā kupu ā-ringa, whakamahia rānei te AI ki te whakaputa rārangi mā te kaupapa me te taumata.",
       "step2_title": "Taahiraa 2: Whakangungu o ia Rā",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "Whakamahia ai e WordsGo te algorithm FSRS (Free Spaced Repetition Scheduler) ki te tātai i te wā tino pai ki te tukurua i ia kupu.",
+      "desc": "Whakamahia ai e Synaply te algorithm FSRS (Free Spaced Repetition Scheduler) ki te tātai i te wā tino pai ki te tukurua i ia kupu.",
       "process_title": "Hātepe Arotake",
       "step1": "Ka whakaatuhia ki a koe he kupu i roto i te reo taketake.",
       "step2": "Tāuruhia te whakamāoritanga ka pēhi i te <strong>Enter</strong>, i te <strong>Tirohia te Whakahoki</strong> rānei.",

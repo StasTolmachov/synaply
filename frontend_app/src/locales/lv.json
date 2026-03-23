@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Mācieties vārdu krājumu ar AI un intervālu atkārtošanu",
+    "title": "Synaply - Mācieties vārdu krājumu ar AI un intervālu atkārtošanu",
     "description": "Uzlabojiet savas valodu prasmes ar AI darbinātu intervālu atkārtošanu. Izveidojiet pielāgotus vārdu sarakstus vai mācieties no kopienas kopīgotajiem publiskajiem sarakstiem.",
     "keywords": "mācīties angļu valodu, intervālu atkārtošana, vārdu krājuma veidotājs, zibkartītes, AI valodu mācīšanās, vārdu saraksti, valodu mācību lietotne, mācīties spāņu valodu, mācīties franču valodu, mācīties vācu valodu, valodas prasme, iegaumēt vārdus, SRS mācīšanās",
-    "og_title": "WordsGo - Vieda vārdu krājuma mācīšanās",
+    "og_title": "Synaply - Vieda vārdu krājuma mācīšanās",
     "og_description": "Uzlabojiet savas valodu prasmes ar AI darbinātu intervālu atkārtošanu. Mācieties ātrāk, atcerieties ilgāk.",
-    "og_image_alt": "WordsGo AI valodu mācību lietotnes saskarne",
-    "twitter_title": "WordsGo - Mācieties jaunus vārdus bez piepūles",
-    "twitter_description": "Pievienojieties WordsGo, lai paplašinātu savu vārdu krājumu, izmantojot viedo intervālu atkārtošanu un AI."
+    "og_image_alt": "Synaply AI valodu mācību lietotnes saskarne",
+    "twitter_title": "Synaply - Mācieties jaunus vārdus bez piepūles",
+    "twitter_description": "Pievienojieties Synaply, lai paplašinātu savu vārdu krājumu, izmantojot viedo intervālu atkārtošanu un AI."
   },
   "landing": {
     "public_lists": "Publiskie saraksti",
@@ -144,10 +144,10 @@
     "support_title": "Atbalstiet projektu",
     "support_desc": "Ja jums patīk šī lietotne, varat atbalstīt tās izstrādi.",
     "onboarding": {
-      "welcome": "Laipni lūdzam WordsGo!",
+      "welcome": "Laipni lūdzam Synaply!",
       "journey_begins": "Jūsu ceļojums uz valodas apguvi sākas šeit.",
       "best_practice": "Labākā prakse panākumiem",
-      "strategy_desc": "Lai gūtu maksimālu labumu no WordsGo, mēs iesakām šo vienkāršo stratēģiju:",
+      "strategy_desc": "Lai gūtu maksimālu labumu no Synaply, mēs iesakām šo vienkāršo stratēģiju:",
       "step1_title": "Koncentrējieties uz tēmu",
       "step1_desc": "Pievienojiet aptuveni <strong>100 vārdus</strong>, kas saistīti ar vienu tēmu (piemēram, bizness vai ceļošana), lai izveidotu spēcīgu kontekstu.",
       "step2_title": "Ikdienas atkārtojumi",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Pakalpojumu sniegšanas noteikumi",
-    "terms_welcome": "Laipni lūdzam WordsGo. Izmantojot mūsu pakalpojumus, jūs piekrītat šiem noteikumiem...",
+    "terms_welcome": "Laipni lūdzam Synaply. Izmantojot mūsu pakalpojumus, jūs piekrītat šiem noteikumiem...",
     "title": "Profila iestatījumi",
     "first_name": "Vārds",
     "last_name": "Uzvārds",
@@ -286,7 +286,7 @@
     "subtitle": "Pārvaldiet savu personīgo informāciju un valodas iestatījumus"
   },
   "login": {
-    "title": "Pieteikties wordsGo",
+    "title": "Pieteikties synaply",
     "email": "E-pasta adrese",
     "password": "Parole",
     "sign_in": "Pieteikties",
@@ -307,7 +307,7 @@
     "login": "Pieteikties šeit"
   },
   "help": {
-    "title": "Kā lietot WordsGo",
+    "title": "Kā lietot Synaply",
     "best_practice": {
       "title": "Labākā prakse panākumiem",
       "strategy_desc": "Visefektīvākajai mācību pieredzei mēs iesakām šo vienkāršo 3 soļu stratēģiju:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Darba sākšana",
-      "desc": "WordsGo ir jaudīgs rīks, kas izstrādāts, lai palīdzētu jums paplašināt vārdu krājumu un uzlabot valodas prasmes, izmantojot intervālu atkārtošanu un mākslīgo intelektu.",
+      "desc": "Synaply ir jaudīgs rīks, kas izstrādāts, lai palīdzētu jums paplašināt vārdu krājumu un uzlabot valodas prasmes, izmantojot intervālu atkārtošanu un mākslīgo intelektu.",
       "step1_title": "1. solis: Pievienojiet vārdus",
       "step1_desc": "Pievienojiet vārdus manuāli vai izmantojiet AI, lai ģenerētu sarakstus pēc tēmām un līmeņiem.",
       "step2_title": "2. solis: Ikdienas prakse",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Intervālu atkārtošana",
-      "desc": "WordsGo izmanto FSRS (Free Spaced Repetition Scheduler) algoritmu, lai aprēķinātu ideālo laiku katra vārda atkārtošanai.",
+      "desc": "Synaply izmanto FSRS (Free Spaced Repetition Scheduler) algoritmu, lai aprēķinātu ideālo laiku katra vārda atkārtošanai.",
       "process_title": "Atkārtošanas process",
       "step1": "Jums tiek parādīts vārds oriģinālvalodā.",
       "step2": "Ievadiet tulkojumu un nospiediet <strong>Enter</strong> vai <strong>Pārbaudīt atbildi</strong>.",

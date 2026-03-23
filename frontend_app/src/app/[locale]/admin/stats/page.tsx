@@ -148,7 +148,7 @@ export default function AdminStatsPage() {
             {t('admin.title')}
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            WordsGo System Overview
+            Synaply System Overview
           </p>
         </div>
         <button

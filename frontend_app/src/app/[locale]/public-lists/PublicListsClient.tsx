@@ -46,7 +46,7 @@ const jsonLd = {
   description: 'Browse and learn from public word lists shared by the community.',
   publisher: {
     '@type': 'Organization',
-    name: 'WordsGo'
+    name: 'Synaply'
   }
 };
 

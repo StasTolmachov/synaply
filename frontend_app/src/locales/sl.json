@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Učenje besedišča z umetno inteligenco in razmaknjenim ponavljanjem",
+    "title": "Synaply - Učenje besedišča z umetno inteligenco in razmaknjenim ponavljanjem",
     "description": "Izboljšajte svoje jezikovne veščine z razmaknjenim ponavljanjem na podlagi umetne inteligence. Ustvarite sezname besed po meri ali se učite iz javnih seznamov, ki jih deli skupnost.",
     "keywords": "učenje angleščine, razmaknjeno ponavljanje, gradnik besedišča, kartice, učenje jezikov z UI, seznami besed, aplikacija za učenje jezikov, učenje španščine, učenje francoščine, učenje nemščine, jezikovna tekočnost, pomnjenje besed, učenje SRS",
-    "og_title": "WordsGo - Pametno učenje besedišča",
+    "og_title": "Synaply - Pametno učenje besedišča",
     "og_description": "Izboljšajte svoje jezikovne veščine z razmaknjenim ponavljanjem na podlagi umetne inteligence. Učite se hitreje, zapomnite si dlje.",
-    "og_image_alt": "Vmesnik WordsGo aplikacije za učenje jezikov z UI",
-    "twitter_title": "WordsGo - Naučite se novih besed brez truda",
-    "twitter_description": "Pridružite se WordsGo in razširite svoje besedišče s pametnim razmaknjenim ponavljanjem in umetno inteligenco."
+    "og_image_alt": "Vmesnik Synaply aplikacije za učenje jezikov z UI",
+    "twitter_title": "Synaply - Naučite se novih besed brez truda",
+    "twitter_description": "Pridružite se Synaply in razširite svoje besedišče s pametnim razmaknjenim ponavljanjem in umetno inteligenco."
   },
   "landing": {
     "public_lists": "Javni seznami",
@@ -144,10 +144,10 @@
     "support_title": "Podprite projekt",
     "support_desc": "Če vam je ta aplikacija všeč, lahko podprete njen razvoj.",
     "onboarding": {
-      "welcome": "Dobrodošli v WordsGo!",
+      "welcome": "Dobrodošli v Synaply!",
       "journey_begins": "Vaša pot do obvladovanja jezika se začne tukaj.",
       "best_practice": "Najboljša praksa za uspeh",
-      "strategy_desc": "Da bi kar najbolje izkoristili WordsGo, priporočamo to preprosto strategijo:",
+      "strategy_desc": "Da bi kar najbolje izkoristili Synaply, priporočamo to preprosto strategijo:",
       "step1_title": "Osredotočite se na temo",
       "step1_desc": "Dodajte približno <strong>100 besed</strong>, povezanih z eno temo (npr. posel ali potovanja), da zgradite močan kontekst.",
       "step2_title": "Dnevni pregledi",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Pogoji storitve",
-    "terms_welcome": "Dobrodošli v WordsGo. Z uporabo naših storitev se strinjate s temi pogoji...",
+    "terms_welcome": "Dobrodošli v Synaply. Z uporabo naših storitev se strinjate s temi pogoji...",
     "title": "Nastavitve profila",
     "first_name": "Ime",
     "last_name": "Priimek",
@@ -286,7 +286,7 @@
     "subtitle": "Upravljajte svoje osebne podatke in jezikovne nastavitve"
   },
   "login": {
-    "title": "Prijava v WordsGo",
+    "title": "Prijava v Synaply",
     "email": "E-poštni naslov",
     "password": "Geslo",
     "sign_in": "Prijava",
@@ -307,7 +307,7 @@
     "login": "Prijavite se tukaj"
   },
   "help": {
-    "title": "Kako uporabljati WordsGo",
+    "title": "Kako uporabljati Synaply",
     "best_practice": {
       "title": "Najboljša praksa za uspeh",
       "strategy_desc": "Za najučinkovitejšo izkušnjo učenja priporočamo to preprosto strategijo v 3 korakih:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Uvod",
-      "desc": "WordsGo je močno orodje, zasnovano za pomoč pri širjenju besedišča in izboljšanju jezikovnih veščin z uporabo razmaknjenega ponavljanja in umetne inteligence.",
+      "desc": "Synaply je močno orodje, zasnovano za pomoč pri širjenju besedišča in izboljšanju jezikovnih veščin z uporabo razmaknjenega ponavljanja in umetne inteligence.",
       "step1_title": "1. korak: Dodajanje besed",
       "step1_desc": "Besede dodajte ročno ali uporabite UI za ustvarjanje seznamov po temah in ravneh.",
       "step2_title": "2. korak: Dnevna vaja",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Razmaknjeno ponavljanje",
-      "desc": "WordsGo uporablja algoritem FSRS (Free Spaced Repetition Scheduler) za izračun idealnega časa za ponavljanje vsake besede.",
+      "desc": "Synaply uporablja algoritem FSRS (Free Spaced Repetition Scheduler) za izračun idealnega časa za ponavljanje vsake besede.",
       "process_title": "Postopek pregleda",
       "step1": "Prikaže se vam beseda v izvirnem jeziku.",
       "step2": "Vnesite prevod in pritisnite <strong>Enter</strong> ali <strong>Preveri odgovor</strong>.",

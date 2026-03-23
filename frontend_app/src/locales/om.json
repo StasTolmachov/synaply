@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AI fi Spaced Repetition'n Jechoota Baradhu",
+    "title": "Synaply - AI fi Spaced Repetition'n Jechoota Baradhu",
     "description": "Dandeettii afaan keetii spaced repetition AI'n deeggarameen guddisi. Tarree jechoota dhuunfaa uumi ykn tarree uummataa kanneen biroon qoodame irraa baradhu.",
     "keywords": "ingiliffa baradhu, spaced repetition, jechoota ijaaruu, flashcards, barumsa afaan AI, tarree jechoota, app barumsa afaanii, ispeenish baradhu, firaansay baradhu, jarmanii baradhu, dandeettii afaanii, jechoota qomatti qabachuu, barumsa SRS",
-    "og_title": "WordsGo - Jechoota Akka Tooraatti Barachuu",
+    "og_title": "Synaply - Jechoota Akka Tooraatti Barachuu",
     "og_description": "Dandeettii afaan keetii spaced repetition AI'n deeggarameen guddisi. Ariitiin baradhu, yeroo dheeraaf yaadadhu.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Jechoota Haaraa Salphaatti Baradhu",
-    "twitter_description": "Jechoota kee bal'ifachuuf spaced repetition gariifi AI fayyadamuun WordsGo'tti makami."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Jechoota Haaraa Salphaatti Baradhu",
+    "twitter_description": "Jechoota kee bal'ifachuuf spaced repetition gariifi AI fayyadamuun Synaply'tti makami."
   },
   "landing": {
     "public_lists": "Tarree Uummataa",
@@ -150,7 +150,7 @@
     "offline_ready": "Tooraan alatti barachuuf qophii dha"
   },
   "onboarding": {
-    "title": "Baga WordsGo'tti nagaan dhufte",
+    "title": "Baga Synaply'tti nagaan dhufte",
     "subtitle": "Adeemsa barumsa afaan keetii spaced repetition AI'n deeggarameen jalqabi.",
     "step1_title": "Afaan Kee Filadhu",
     "step1_desc": "Afaan barachuu barbaaddu fi afaan hiikkaa itti argachuu barbaaddu filadhu.",
@@ -227,8 +227,8 @@
     "title": "Gargaarsa",
     "faq": "Gaaffilee Yeroo Baay'ee Gaafataman",
     "contact_us": "Nuraa qunnami",
-    "about_title": "Waa'ee WordsGo",
-    "about_desc": "WordsGo appii jechoota ittiin baratan kan spaced repetition fi AI fayyadamuun barumsa kee siif ariifachiisu dha.",
+    "about_title": "Waa'ee Synaply",
+    "about_desc": "Synaply appii jechoota ittiin baratan kan spaced repetition fi AI fayyadamuun barumsa kee siif ariifachiisu dha.",
     "srs_title": "Spaced Repetition Maali?",
     "srs_desc": "Spaced repetition mala barumsaa kan yeroo barumsaa jechoota kanaan dura baratamanii gidduu jiru babal'isuu irratti hundaa'u dha. Kunis odeeffannoo yeroo dheeraaf qomatti qabachuuf si gargaara."
   },

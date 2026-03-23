@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - AIと間隔反復で語彙を学ぶ",
+    "title": "Synaply - AIと間隔反復で語彙を学ぶ",
     "description": "AIを活用した間隔反復で語学力を向上させましょう。カスタム単語リストを作成したり、コミュニティで共有されている公開リストから学ぶことができます。",
     "keywords": "英語学習, 間隔反復, 語彙力向上, 単語帳, AI語学学習, 単語リスト, 語学学習アプリ, スペイン語学習, フランス語学習, ドイツ語学習, 語学熟達度, 単語暗記, SRS学習",
-    "og_title": "WordsGo - スマートな語彙学習",
+    "og_title": "Synaply - スマートな語彙学習",
     "og_description": "AIを活用した間隔反復で語学力を向上させましょう。より速く学び、より長く記憶に定着させます。",
-    "og_image_alt": "WordsGo AI語学学習アプリのインターフェース",
-    "twitter_title": "WordsGo - 楽に新しい単語を学ぶ",
-    "twitter_description": "WordsGoに参加して、スマートな間隔反復とAIを使用して語彙を広げましょう。"
+    "og_image_alt": "Synaply AI語学学習アプリのインターフェース",
+    "twitter_title": "Synaply - 楽に新しい単語を学ぶ",
+    "twitter_description": "Synaplyに参加して、スマートな間隔反復とAIを使用して語彙を広げましょう。"
   },
   "landing": {
     "public_lists": "公開リスト",
@@ -144,10 +144,10 @@
     "support_title": "プロジェクトを支援する",
     "support_desc": "このアプリを気に入っていただけましたら、開発の支援をお願いいたします。",
     "onboarding": {
-      "welcome": "WordsGoへようこそ！",
+      "welcome": "Synaplyへようこそ！",
       "journey_begins": "言語習得への旅がここから始まります。",
       "best_practice": "成功のためのベストプラクティス",
-      "strategy_desc": "WordsGoを最大限に活用するために、以下のシンプルな戦略をお勧めします：",
+      "strategy_desc": "Synaplyを最大限に活用するために、以下のシンプルな戦略をお勧めします：",
       "step1_title": "トピックに集中する",
       "step1_desc": "特定のトピック（例：ビジネスや旅行）に関連する単語を<strong>約100語</strong>追加して、強いコンテキストを構築します。",
       "step2_title": "毎日の復習",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "利用規約",
-    "terms_welcome": "WordsGoへようこそ。当サービスを利用することで、以下の規約に同意したものとみなされます...",
+    "terms_welcome": "Synaplyへようこそ。当サービスを利用することで、以下の規約に同意したものとみなされます...",
     "title": "プロフィール設定",
     "first_name": "名",
     "last_name": "姓",
@@ -286,7 +286,7 @@
     "subtitle": "個人情報と言語設定を管理します"
   },
   "login": {
-    "title": "wordsGoにサインイン",
+    "title": "synaplyにサインイン",
     "email": "メールアドレス",
     "password": "パスワード",
     "sign_in": "サインイン",
@@ -307,7 +307,7 @@
     "login": "こちらからログイン"
   },
   "help": {
-    "title": "WordsGoの使い方",
+    "title": "Synaplyの使い方",
     "best_practice": {
       "title": "成功のためのベストプラクティス",
       "strategy_desc": "最も効果的な学習体験のために、以下のシンプルな3ステップ戦略をお勧めします：",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "はじめに",
-      "desc": "WordsGoは、間隔反復と人工知能を使用して語彙を広げ、語学力を向上させるために設計された強力なツールです。",
+      "desc": "Synaplyは、間隔反復と人工知能を使用して語彙を広げ、語学力を向上させるために設計された強力なツールです。",
       "step1_title": "ステップ 1: 単語を追加する",
       "step1_desc": "手動で単語を追加するか、AIを使用してトピックやレベルごとにリストを生成します。",
       "step2_title": "ステップ 2: 毎日の練習",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "間隔反復",
-      "desc": "WordsGoはFSRS (Free Spaced Repetition Scheduler) アルゴリズムを使用して、各単語を復習する最適なタイミングを計算します。",
+      "desc": "SynaplyはFSRS (Free Spaced Repetition Scheduler) アルゴリズムを使用して、各単語を復習する最適なタイミングを計算します。",
       "process_title": "復習プロセス",
       "step1": "元の言語で単語が表示されます。",
       "step2": "翻訳を入力し、<strong>Enter</strong>キーまたは<strong>「回答を確認」</strong>を押します。",

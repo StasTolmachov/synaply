@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Manalis na Vocabulary tan AI & Spaced Repetition",
+    "title": "Synaply - Manalis na Vocabulary tan AI & Spaced Repetition",
     "description": "Paaligwasen so kabat mo ed lenguahe panamegley na AI-powered spaced repetition. Man-gawa na sarilim a listaan na salita odino manalis manlapud saray public list na komunidad.",
     "keywords": "manalis na english, spaced repetition, vocabulary builder, flashcards, AI language learning, word lists, language study app, manalis na spanish, manalis na french, manalis na german, language proficiency, memorisay salita, SRS learning",
-    "og_title": "WordsGo - Masirib a Panag-aral na Vocabulary",
+    "og_title": "Synaply - Masirib a Panag-aral na Vocabulary",
     "og_description": "Paaligwasen so kabat mo ed lenguahe panamegley na AI-powered spaced repetition. Man-aral na mas maples, nodnonoten na mas mabayag.",
-    "og_image_alt": "WordsGo AI Language Learning App Interface",
-    "twitter_title": "WordsGo - Man-aral na Balon Salita ya Ag-makaaba",
-    "twitter_description": "Mila ed WordsGo pian pabaleguen so vocabulary mo panamegley na masirib a spaced repetition tan AI."
+    "og_image_alt": "Synaply AI Language Learning App Interface",
+    "twitter_title": "Synaply - Man-aral na Balon Salita ya Ag-makaaba",
+    "twitter_description": "Mila ed Synaply pian pabaleguen so vocabulary mo panamegley na masirib a spaced repetition tan AI."
   },
   "landing": {
     "public_lists": "Saray Public List",
@@ -144,10 +144,10 @@
     "support_title": "Suportaan so Proyekto",
     "support_desc": "No labay mo iyan app, nayarin suportaan mo so kimey na pamaaligwas ed saya.",
     "onboarding": {
-      "welcome": "Maliket a isabi ed WordsGo!",
+      "welcome": "Maliket a isabi ed Synaply!",
       "journey_begins": "Say biahem ed kaba-tan na lenguahe et onggapo dia.",
       "best_practice": "Sankaabigan a Panag-gawa parad Onatagey",
-      "strategy_desc": "Pian na-ala so sankaabigan ed WordsGo, rekomendaan mi iyan simplin istratehiya:",
+      "strategy_desc": "Pian na-ala so sankaabigan ed Synaply, rekomendaan mi iyan simplin istratehiya:",
       "step1_title": "I-focus ed Topic",
       "step1_desc": "Man-arum na manga <strong>100 ya salita</strong> ya konektado ed sankasakey a topic (alimbawa: Business odino Travel) pian man-gawa na mabiskeg a konteksto.",
       "step2_title": "Inagew-agew a Rebyu",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Saray Termino na Serbisyo",
-    "terms_welcome": "Maliket a isabi ed WordsGo. Panamegley na pan-usar mo ed saray serbisyo mi, mipakna ka ed sarayan termino...",
+    "terms_welcome": "Maliket a isabi ed Synaply. Panamegley na pan-usar mo ed saray serbisyo mi, mipakna ka ed sarayan termino...",
     "title": "Saray Setting na Profile",
     "first_name": "Unona ya Ngaran",
     "last_name": "Apelyido",
@@ -286,7 +286,7 @@
     "subtitle": "I-manage so personal ya impormasyon mo tan saray setting na lenguahe"
   },
   "login": {
-    "title": "Sign-in ed wordsGo",
+    "title": "Sign-in ed synaply",
     "email": "Email address",
     "password": "Password",
     "sign_in": "Sign-in",
@@ -307,7 +307,7 @@
     "login": "Log-in dia"
   },
   "help": {
-    "title": "Panon ya usaren so WordsGo",
+    "title": "Panon ya usaren so Synaply",
     "best_practice": {
       "title": "Sankaabigan a Panag-gawa parad Onatagey",
       "strategy_desc": "Parad sankaabigan a panag-aral, rekomendaan mi iyan simplin 3-step ya istratehiya:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Iggapo la",
-      "desc": "Say WordsGo et mabiskeg a tool ya na-gawa pian tulongan kan pabaleguen so vocabulary mo tan paaligwasen so kabat mo ed lenguahe panamegley na spaced repetition tan artificial intelligence.",
+      "desc": "Say Synaply et mabiskeg a tool ya na-gawa pian tulongan kan pabaleguen so vocabulary mo tan paaligwasen so kabat mo ed lenguahe panamegley na spaced repetition tan artificial intelligence.",
       "step1_title": "Step 1: Man-arum na saray Salita",
       "step1_desc": "Man-arum na salita na sarili odino usaren so AI pian man-gawa na saray listaan base ed topic tan level.",
       "step2_title": "Step 2: Inagew-agew a Panag-ensayo",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "Say WordsGo et manguusar na FSRS (Free Spaced Repetition Scheduler) ya algorithm pian kwentaen so sankaabigan a panaon ya pan-ulit ed balang salita.",
+      "desc": "Say Synaply et manguusar na FSRS (Free Spaced Repetition Scheduler) ya algorithm pian kwentaen so sankaabigan a panaon ya pan-ulit ed balang salita.",
       "process_title": "Proseso na Rebyu",
       "step1": "I-panengneng ed sika so salita ed original a lenguahe.",
       "step2": "I-enter so translation tan liseken so <strong>Enter</strong> odino <strong>I-check so Sagbat</strong>.",

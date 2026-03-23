@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/genai"
 
-	"wordsGo_v2/slogger"
+	"synaply_v2/slogger"
 )
 
 type Service interface {

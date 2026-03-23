@@ -8,13 +8,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const baseUrl = "https://synaply.me";
 
   return {
-    title: `${tLists('title')} | WordsGo`,
+    title: `${tLists('title')} | Synaply`,
     description: tLists('subtitle'),
     alternates: {
       canonical: `${baseUrl}/${locale}/public-lists`,
     },
     openGraph: {
-      title: `${tLists('title')} | WordsGo`,
+      title: `${tLists('title')} | Synaply`,
       description: tLists('subtitle'),
       url: `${baseUrl}/${locale}/public-lists`,
       type: 'website',

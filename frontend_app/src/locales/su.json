@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Diajar Kosakata nganggo AI & Spaced Repetition",
+    "title": "Synaply - Diajar Kosakata nganggo AI & Spaced Repetition",
     "description": "Ningkatkeun kamampuh basa anjeun nganggo spaced repetition anu didukung ku AI. Jieun daptar kecap custom atanapi diajar tina daptar publik anu dibagikeun ku komunitas.",
     "keywords": "diajar basa inggris, spaced repetition, vocabulary builder, flashcards, AI diajar basa, daptar kecap, aplikasi diajar basa, diajar basa spanyol, diajar basa perancis, diajar basa jerman, kamampuh basa, ngapalkeun kecap, SRS learning",
-    "og_title": "WordsGo - Diajar Kosakata anu Pinter",
+    "og_title": "Synaply - Diajar Kosakata anu Pinter",
     "og_description": "Ningkatkeun kamampuh basa anjeun nganggo spaced repetition anu didukung ku AI. Diajar langkung gancang, émut langkung lami.",
-    "og_image_alt": "Antarbeungeut Aplikasi Diajar Basa WordsGo AI",
-    "twitter_title": "WordsGo - Diajar Kecap Anyar kalayan Gampang",
-    "twitter_description": "Gabung sareng WordsGo pikeun ngalegaan kosakata anjeun nganggo spaced repetition anu pinter sareng AI."
+    "og_image_alt": "Antarbeungeut Aplikasi Diajar Basa Synaply AI",
+    "twitter_title": "Synaply - Diajar Kecap Anyar kalayan Gampang",
+    "twitter_description": "Gabung sareng Synaply pikeun ngalegaan kosakata anjeun nganggo spaced repetition anu pinter sareng AI."
   },
   "landing": {
     "public_lists": "Daptar Publik",
@@ -145,10 +145,10 @@
     "support_title": "Rojong Proyék Ieu",
     "support_desc": "Upami anjeun resep kana aplikasi ieu, anjeun tiasa ngarojong pamekaranana.",
     "onboarding": {
-      "welcome": "Wilujeng sumping di WordsGo!",
+      "welcome": "Wilujeng sumping di Synaply!",
       "journey_begins": "Lalampahan anjeun pikeun ngawasa basa dimimitian di dieu.",
       "best_practice": "Prakték Pangalusna pikeun Kasuksésan",
-      "strategy_desc": "Pikeun meunangkeun hasil maksimal tina WordsGo, kami nyarankeun strategi saderhana ieu:",
+      "strategy_desc": "Pikeun meunangkeun hasil maksimal tina Synaply, kami nyarankeun strategi saderhana ieu:",
       "step1_title": "Fokus kana Topik",
       "step1_desc": "Tambahkeun sakitar <strong>100 kecap</strong> anu aya patalina sareng hiji topik (contona: Bisnis atanapi Wisata) pikeun ngawangun kontéks anu kuat.",
       "step2_title": "Tingali deui Poéan",
@@ -270,7 +270,7 @@
   },
   "profile": {
     "terms_title": "Sarat Layanan",
-    "terms_welcome": "Wilujeng sumping di WordsGo. Ku ngagunakeun jasa kami, anjeun satuju kana sarat ieu...",
+    "terms_welcome": "Wilujeng sumping di Synaply. Ku ngagunakeun jasa kami, anjeun satuju kana sarat ieu...",
     "title": "Setélan Profil",
     "first_name": "Nami payun",
     "last_name": "Nami pengker",
@@ -287,7 +287,7 @@
     "subtitle": "Atur inpormasi pribadi sareng setélan basa anjeun"
   },
   "login": {
-    "title": "Masuk ka wordsGo",
+    "title": "Masuk ka synaply",
     "email": "Alamat émail",
     "password": "Kata sandi",
     "sign_in": "Masuk",
@@ -308,7 +308,7 @@
     "login": "Masuk di dieu"
   },
   "help": {
-    "title": "Kumaha cara ngagunakeun WordsGo",
+    "title": "Kumaha cara ngagunakeun Synaply",
     "best_practice": {
       "title": "Prakték Pangalusna pikeun Kasuksésan",
       "strategy_desc": "Pikeun pangalaman diajar anu paling éféktif, kami nyarankeun strategi 3-léngkah saderhana ieu:",
@@ -321,7 +321,7 @@
     },
     "getting_started": {
       "title": "Mimitian",
-      "desc": "WordsGo mangrupikeun alat anu kuat anu dirancang pikeun ngabantosan anjeun ngalegaan kosakata sareng ningkatkeun kamampuh basa anjeun nganggo spaced repetition sareng kecerdasan buatan (AI).",
+      "desc": "Synaply mangrupikeun alat anu kuat anu dirancang pikeun ngabantosan anjeun ngalegaan kosakata sareng ningkatkeun kamampuh basa anjeun nganggo spaced repetition sareng kecerdasan buatan (AI).",
       "step1_title": "Léngkah 1: Tambahkeun Kecap",
       "step1_desc": "Tambahkeun kecap sacara manual atanapi paké AI pikeun ngahasilkeun daptar dumasar topik sareng tingkat.",
       "step2_title": "Léngkah 2: Latihan Poéan",
@@ -348,7 +348,7 @@
     },
     "spaced_repetition": {
       "title": "Spaced Repetition",
-      "desc": "WordsGo ngagunakeun algoritma FSRS (Free Spaced Repetition Scheduler) pikeun ngitung waktos idéal pikeun ngulang unggal kecap.",
+      "desc": "Synaply ngagunakeun algoritma FSRS (Free Spaced Repetition Scheduler) pikeun ngitung waktos idéal pikeun ngulang unggal kecap.",
       "process_title": "Prosés Tinjauan",
       "step1": "Anjeun bakal ditingalikeun kecap dina basa asli.",
       "step2": "Lebetkeun tarjamahanna teras pencét <strong>Enter</strong> atanapi <strong>Pariksa Jawaban</strong>.",

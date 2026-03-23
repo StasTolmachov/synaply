@@ -9,8 +9,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const tHelp = await getTranslations({ locale, namespace: 'help' });
   
   return {
-    title: `${tHelp('title')} | WordsGo`,
-    description: 'Learn how to use WordsGo effectively with our help guide.',
+    title: `${tHelp('title')} | Synaply`,
+    description: 'Learn how to use Synaply effectively with our help guide.',
   };
 }
 

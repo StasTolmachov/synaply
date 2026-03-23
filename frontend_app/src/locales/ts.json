@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Dyondza Silo na AI na ku Phindha-phindha loku Engeteleleke",
+    "title": "Synaply - Dyondza Silo na AI na ku Phindha-phindha loku Engeteleleke",
     "description": "Engetela vutshila bya wena bya ririmi hi ku phindha-phindha loku engeteleleke loku fambisiwaka hi AI. Tumbuluxa nxaxamelo wa marito ya wena n’wini kumbe u dyondza eka minxaxamelo ya vanhu hinkwavo leyi avelanaka.",
     "keywords": "dyondza Xinghezi, ku phindha-phindha loku engeteleleke, muaki wa vuswikoti bya marito, tiflexikhadi, AI ku dyondza ririmi, minxaxamelo ya marito, apu yo dyondza ririmi, dyondza Xipaniya, dyondza Xifrench, dyondza Xigerman, vuswikoti bya ririmi, hlayisa marito eka mianakanyo, ku dyondza hi SRS",
-    "og_title": "WordsGo - Ku Dyondza Marito hi Vutlhari",
+    "og_title": "Synaply - Ku Dyondza Marito hi Vutlhari",
     "og_description": "Engetela vutshila bya wena bya ririmi hi ku phindha-phindha loku engeteleleke loku fambisiwaka hi AI. Dyondza hi ku tsutsuma, u tsundzuka nkarhi wo leha.",
-    "og_image_alt": "Xirhangana xa Apu yo Dyondza Ririmi ya WordsGo AI",
-    "twitter_title": "WordsGo - Dyondza Marito Lamantshwa Handle ko Tikarhata",
-    "twitter_description": "Nghena eka WordsGo leswaku u ndlandlamuxa vutshila bya wena bya marito hi ku tirhisa ku phindha-phindha loku engeteleleke loku tlhariheke na AI."
+    "og_image_alt": "Xirhangana xa Apu yo Dyondza Ririmi ya Synaply AI",
+    "twitter_title": "Synaply - Dyondza Marito Lamantshwa Handle ko Tikarhata",
+    "twitter_description": "Nghena eka Synaply leswaku u ndlandlamuxa vutshila bya wena bya marito hi ku tirhisa ku phindha-phindha loku engeteleleke loku tlhariheke na AI."
   },
   "landing": {
     "public_lists": "Minxaxamelo ya Mani na Mani",
@@ -144,10 +144,10 @@
     "support_title": "Seketela Phurojeke",
     "support_desc": "Loko u tsakela apu leyi, u nga seketela nhluvuko wa yona.",
     "onboarding": {
-      "welcome": "Wamukelekile eka WordsGo!",
+      "welcome": "Wamukelekile eka Synaply!",
       "journey_begins": "Riendzo ra wena ra ku va n’wini wa ririmi ri sungula laha.",
       "best_practice": "Vuleteri lebyinene bya ku humelela",
-      "strategy_desc": "Leswaku u kuma leswinene eka WordsGo, hi ku khutaza tindlela leti to olova:",
+      "strategy_desc": "Leswaku u kuma leswinene eka Synaply, hi ku khutaza tindlela leti to olova:",
       "step1_title": "Vekani mianakanyo eka Nhlokomhaka",
       "step1_desc": "Engetela kwalomu ka <strong>100 wa marito</strong> lama fambelanaka na nhlokomhaka yin’we (xikombiso, Mabindzu kumbe Riendzo) leswaku u aka mongo lowu tiyeke.",
       "step2_title": "Ku pfuxeta ka Siku na Siku",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Milawu ya Ntirho",
-    "terms_welcome": "Wamukelekile eka WordsGo. Hi ku tirhisa mitirho ya hina, u pfumelelana na milawu leyi...",
+    "terms_welcome": "Wamukelekile eka Synaply. Hi ku tirhisa mitirho ya hina, u pfumelelana na milawu leyi...",
     "title": "Ndzulamiso wa Phurofayili",
     "first_name": "Vito",
     "last_name": "Xivongo",
@@ -286,7 +286,7 @@
     "subtitle": "Lawula mahungu ya wena na ndzulamiso wa ririmi"
   },
   "login": {
-    "title": "Nghena eka wordsGo",
+    "title": "Nghena eka synaply",
     "email": "Kherefu ya i-meyili",
     "password": "Phasiwedi",
     "sign_in": "Nghena",
@@ -307,7 +307,7 @@
     "login": "Nghena laha"
   },
   "help": {
-    "title": "Ndlela yo tirhisa WordsGo",
+    "title": "Ndlela yo tirhisa Synaply",
     "best_practice": {
       "title": "Vuleteri lebyinene bya ku humelela",
       "strategy_desc": "Leswaku u kuma vutivi lebyi humelelaka ngopfu bya ku dyondza, hi ku khutaza tindlela leti ta 3 to olova:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ku sungula",
-      "desc": "WordsGo i xitirhisiwa xa matimba lexi endleriweke ku ku pfuna ku ndlandlamuxa marito ya wena na ku antswisa vutshila bya wena bya ririmi hi ku tirhisa ku phindha-phindha loku engeteleleke na vutlhari bya rito.",
+      "desc": "Synaply i xitirhisiwa xa matimba lexi endleriweke ku ku pfuna ku ndlandlamuxa marito ya wena na ku antswisa vutshila bya wena bya ririmi hi ku tirhisa ku phindha-phindha loku engeteleleke na vutlhari bya rito.",
       "step1_title": "Goba ra 1: Engetela Marito",
       "step1_desc": "Engetela marito hi mavoko kumbe u tirhisa AI leswaku u endla minxaxamelo hi tinhlokomhaka na min'wangulo.",
       "step2_title": "Goba ra 2: Vuleteri bya Siku na Siku",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Ku Phindha-phindha loku Engeteleleke",
-      "desc": "WordsGo yi tirhisa algorithm ya FSRS (Free Spaced Repetition Scheduler) leswaku yi hlayela nkarhi lowu faneleke wo phindha rito rin’wana na rin’wana.",
+      "desc": "Synaply yi tirhisa algorithm ya FSRS (Free Spaced Repetition Scheduler) leswaku yi hlayela nkarhi lowu faneleke wo phindha rito rin’wana na rin’wana.",
       "process_title": "Maendlelo yo Pfuxeta",
       "step1": "U kombiwa rito eka ririmi ro sungula.",
       "step2": "Nghenisa vuhundzuluxi u tlanya <strong>Enter</strong> kumbe <strong>Kambela N'wangulo</strong>.",

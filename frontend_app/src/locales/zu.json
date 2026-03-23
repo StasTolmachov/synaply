@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Funda Silulumagama nge-AI & Isikhala Sokuphindaphinda",
+    "title": "Synaply - Funda Silulumagama nge-AI & Isikhala Sokuphindaphinda",
     "description": "Thuthukisa amakhono akho olimi ngesikhala sokuphindaphinda esisizwa yi-AI. Yakha uhlu lwamagama akho noma ufunde ohlwini lomphakathi olwabiwe.",
     "keywords": "funda isiNgisi, isikhala sokuphindaphinda, umakhi wesilulumagama, amakhadi okufunda, ukufunda ulimi nge-AI, uhlu lwamagama, uhlelo lokusebenza lokufunda ulimi, funda isiSpanish, funda isiFulentshi, funda isiJalimane, ubuchule bolimi, ngeza amagama ekhanda, ukufunda kwe-SRS",
-    "og_title": "WordsGo - Ukufunda Isilulumagama Ngobuhlakani",
+    "og_title": "Synaply - Ukufunda Isilulumagama Ngobuhlakani",
     "og_description": "Thuthukisa amakhono akho olimi ngesikhala sokuphindaphinda esisizwa yi-AI. Funda ngokushesha, khumbula isikhathi eside.",
-    "og_image_alt": "I-interface yoHlelo lokusebenza lokufunda ulimi lwe-AI lwe-WordsGo",
-    "twitter_title": "WordsGo - Funda Amagama Amasha Kalula",
-    "twitter_description": "Joyina i-WordsGo ukuze wandise isilulumagama sakho usebenzisa isikhala sokuphindaphinda esihlakaniphile ne-AI."
+    "og_image_alt": "I-interface yoHlelo lokusebenza lokufunda ulimi lwe-AI lwe-Synaply",
+    "twitter_title": "Synaply - Funda Amagama Amasha Kalula",
+    "twitter_description": "Joyina i-Synaply ukuze wandise isilulumagama sakho usebenzisa isikhala sokuphindaphinda esihlakaniphile ne-AI."
   },
   "landing": {
     "public_lists": "Uhlu Lomphakathi",
@@ -144,10 +144,10 @@
     "support_title": "Sekela Iphrojekthi",
     "support_desc": "Uma uthanda lolu hlelo lokusebenza, ungasekela ukuthuthukiswa kwalo.",
     "onboarding": {
-      "welcome": "Siyakwamukela ku-WordsGo!",
+      "welcome": "Siyakwamukela ku-Synaply!",
       "journey_begins": "Uhambo lwakho lokufunda ulimi luqala lapha.",
       "best_practice": "Indlela Engcono Yokuzuza Impumelelo",
-      "strategy_desc": "Ukuze uthole okuningi ku-WordsGo, sincoma leli qhinga elilula:",
+      "strategy_desc": "Ukuze uthole okuningi ku-Synaply, sincoma leli qhinga elilula:",
       "step1_title": "Gxila Esihlokweni",
       "step1_desc": "Engeza cishe <strong>amagama ayi-100</strong> ahlobene nesihloko esisodwa (isib., Ibhizinisi noma Ukuvakasha) ukuze wakhe umongo onamandla.",
       "step2_title": "Ukubuyekeza Kwansuku Zonke",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Imigomo Yesevisi",
-    "terms_welcome": "Siyakwamukela ku-WordsGo. Ngokusebenzisa izinsiza zethu, uyavumelana nale migomo...",
+    "terms_welcome": "Siyakwamukela ku-Synaply. Ngokusebenzisa izinsiza zethu, uyavumelana nale migomo...",
     "title": "Izilungiselelo Zephrofayili",
     "first_name": "Igama Lokuqala",
     "last_name": "Isibongo",
@@ -286,7 +286,7 @@
     "subtitle": "Phatha ulwazi lwakho lomuntu siqu nezilungiselelo zolimi"
   },
   "login": {
-    "title": "Ngena ku-wordsGo",
+    "title": "Ngena ku-synaply",
     "email": "Ikheli le-imeyili",
     "password": "Iphasiwedi",
     "sign_in": "Ngena",
@@ -307,7 +307,7 @@
     "login": "Ngena lapha"
   },
   "help": {
-    "title": "Indlela yokusebenzisa i-WordsGo",
+    "title": "Indlela yokusebenzisa i-Synaply",
     "best_practice": {
       "title": "Indlela Engcono Yokuzuza Impumelelo",
       "strategy_desc": "Ukuze uthole ulwazi oluhle kakhulu lokufunda, sincoma leli qhinga elilula elinezinyathelo ezi-3:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Ukuqalisa",
-      "desc": "I-WordsGo iyithuluzi elinamandla elakhelwe ukukusiza wandise isilulumagama sakho futhi uthuthukise amakhono akho olimi usebenzisa isikhala sokuphindaphinda nobuhlakani bokufakelwa.",
+      "desc": "I-Synaply iyithuluzi elinamandla elakhelwe ukukusiza wandise isilulumagama sakho futhi uthuthukise amakhono akho olimi usebenzisa isikhala sokuphindaphinda nobuhlakani bokufakelwa.",
       "step1_title": "Isinyathelo 1: Engeza Amagama",
       "step1_desc": "Engeza amagama mathupha noma usebenzise i-AI ukuze wakhe uhlu ngezihloko namazinga.",
       "step2_title": "Isinyathelo 2: Ukuprakthiza Kwansuku Zonke",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Isikhala Sokuphindaphinda",
-      "desc": "I-WordsGo isebenzisa i-algorithm ye-FSRS (Free Spaced Repetition Scheduler) ukubala isikhathi esikahle sokuphinda igama ngalinye.",
+      "desc": "I-Synaply isebenzisa i-algorithm ye-FSRS (Free Spaced Repetition Scheduler) ukubala isikhathi esikahle sokuphinda igama ngalinye.",
       "process_title": "Inqubo Yokubuyekeza",
       "step1": "Ukhonjiswa igama ngolimi lokuqala.",
       "step2": "Faka ukuhumusha bese ucindezela u-<strong>Enter</strong> noma <strong>Hlola Impendulo</strong>.",

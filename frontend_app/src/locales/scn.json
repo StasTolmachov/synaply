@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Mpari u vucabbulariu cu l'IA e a Ripitizioni Spaziata",
+    "title": "Synaply - Mpari u vucabbulariu cu l'IA e a Ripitizioni Spaziata",
     "description": "Amigghiori i to cumpitenzi linguìstichi cu a ripitizioni spaziata guidata di l'IA. Crea i to listi di paroli o mpari di chiddi pùbblichi spartuti dâ cumunitati.",
     "keywords": "mparari u sicilianu, ripitizioni spaziata, custruzzioni vucabbulariu, flashcards, mparari lingui cu l'IA, listi di paroli, app pi studiari lingui, mparari u ngrisi, mparari u spagnolu, pruficiènza linguìstica, mimurizzari paroli, mparari SRS",
-    "og_title": "WordsGo - Mparari u Vucabbulariu n modu Spertu",
+    "og_title": "Synaply - Mparari u Vucabbulariu n modu Spertu",
     "og_description": "Amigghiori i to cumpitenzi linguìstichi cu a ripitizioni spaziata guidata di l'IA. Mpari cchiù lestu, arricuordi cchiù a longu.",
-    "og_image_alt": "Interfaccia di l'App WordsGo pi Mparari i Lingui cu l'IA",
-    "twitter_title": "WordsGo - Mpari Paroli Novi senza Sforzu",
-    "twitter_description": "Trasi nta WordsGo pi fari crìsciri u to vucabbulariu usannu a ripitizioni spaziata sperta e l'IA."
+    "og_image_alt": "Interfaccia di l'App Synaply pi Mparari i Lingui cu l'IA",
+    "twitter_title": "Synaply - Mpari Paroli Novi senza Sforzu",
+    "twitter_description": "Trasi nta Synaply pi fari crìsciri u to vucabbulariu usannu a ripitizioni spaziata sperta e l'IA."
   },
   "landing": {
     "public_lists": "Listi Pùbblichi",
@@ -144,10 +144,10 @@
     "support_title": "Susteni u Prugettu",
     "support_desc": "Si t'abbasta st'app, poi susteniri u sò sviluppu.",
     "onboarding": {
-      "welcome": "Bimminutu nta WordsGo!",
+      "welcome": "Bimminutu nta Synaply!",
       "journey_begins": "U to viàggiu pi duminari a lingua accumincia ccà.",
       "best_practice": "U megghiu modu pi aviri succissu",
-      "strategy_desc": "Pi ottèniri u màssimu di WordsGo, ti ricumandamu sta semplici stratiggìa:",
+      "strategy_desc": "Pi ottèniri u màssimu di Synaply, ti ricumandamu sta semplici stratiggìa:",
       "step1_title": "Cuncèntrati supra n'Argumentu",
       "step1_desc": "Agghiunci circa <strong>100 paroli</strong> rilativi a n'argumentu sùlicu (es. Affari o Viàggiu) pi custruiri un cuntestu forti.",
       "step2_title": "Ripassi Cutidiani",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Tèrmini di Sirvizziu",
-    "terms_welcome": "Bimminutu nta WordsGo. Usannu i nòstri sirvizzi, accetti sti tèrmini...",
+    "terms_welcome": "Bimminutu nta Synaply. Usannu i nòstri sirvizzi, accetti sti tèrmini...",
     "title": "Configurazzioni dû Prufilu",
     "first_name": "Nomi",
     "last_name": "Cognomi",
@@ -286,7 +286,7 @@
     "subtitle": "Gisci i to nfurmazzioni pirsunali e i mpustazzioni linguìstichi"
   },
   "login": {
-    "title": "Trasi nta wordsGo",
+    "title": "Trasi nta synaply",
     "email": "Indirizzu Email",
     "password": "Password",
     "sign_in": "Trasi",
@@ -307,7 +307,7 @@
     "login": "Trasi ccà"
   },
   "help": {
-    "title": "Comu usari WordsGo",
+    "title": "Comu usari Synaply",
     "best_practice": {
       "title": "U megghiu modu pi aviri succissu",
       "strategy_desc": "Pi l'apprendimentu cchiù efficaci, ti ricumandamu sta semplici stratiggìa n 3 passi:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Accuminciannu",
-      "desc": "WordsGo è un strumentu putenti prugettu pi t'aiutari a fari crìsciri u to vucabbulariu e amigghiorari i to cumpitenzi linguìstichi usannu a ripitizzioni spaziata e l'intilliggenza artificiali.",
+      "desc": "Synaply è un strumentu putenti prugettu pi t'aiutari a fari crìsciri u to vucabbulariu e amigghiorari i to cumpitenzi linguìstichi usannu a ripitizzioni spaziata e l'intilliggenza artificiali.",
       "step1_title": "Passu 1: Agghiunci Paroli",
       "step1_desc": "Agghiunci paroli a manu o usa l'IA pi ginirari listi pi argumenti e livelli.",
       "step2_title": "Passu 2: Pràtica Cutidiana",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Ripitizzioni Spaziata",
-      "desc": "WordsGo usa l'alguritmu FSRS (Free Spaced Repetition Scheduler) pi calculari u tempu idiali pi ripitiri ogni parola.",
+      "desc": "Synaply usa l'alguritmu FSRS (Free Spaced Repetition Scheduler) pi calculari u tempu idiali pi ripitiri ogni parola.",
       "process_title": "Prucessu di Ripassu",
       "step1": "Ti veni mustrata na parola nâ lingua d'urìggini.",
       "step2": "Nzerisci a traduzzioni e ammacca <strong>Enter</strong> o <strong>Cunferma Risposta</strong>.",

@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "title": "WordsGo - Opi sanastoa tekoälyn ja jaksotetun kertauksen avulla",
+    "title": "Synaply - Opi sanastoa tekoälyn ja jaksotetun kertauksen avulla",
     "description": "Paranna kielitaitoasi tekoälypohjaisella jaksotetulla kertauksella. Luo omia sanalistoja tai opi yhteisön jakamista julkisista listoista.",
     "keywords": "opi englantia, jaksotettu kertaus, sanaston rakentaminen, muistikortit, tekoäly kieltenopiskelu, sanalistat, kieltenopiskelusovellus, opi espanjaa, opi ranskaa, opi saksaa, kielitaito, muista sanat, SRS-oppiminen",
-    "og_title": "WordsGo - Älykästä sanaston oppimista",
+    "og_title": "Synaply - Älykästä sanaston oppimista",
     "og_description": "Paranna kielitaitoasi tekoälypohjaisella jaksotetulla kertauksella. Opi nopeammin, muista pidempään.",
-    "og_image_alt": "WordsGo AI -kieltenopiskelusovelluksen käyttöliittymä",
-    "twitter_title": "WordsGo - Opi uusia sanoja vaivattomasti",
-    "twitter_description": "Liity WordsGoon ja laajenna sanastoasi älykkään jaksotetun kertauksen ja tekoälyn avulla."
+    "og_image_alt": "Synaply AI -kieltenopiskelusovelluksen käyttöliittymä",
+    "twitter_title": "Synaply - Opi uusia sanoja vaivattomasti",
+    "twitter_description": "Liity Synaplyon ja laajenna sanastoasi älykkään jaksotetun kertauksen ja tekoälyn avulla."
   },
   "landing": {
     "public_lists": "Julkiset listat",
@@ -144,10 +144,10 @@
     "support_title": "Tue projektia",
     "support_desc": "Jos pidät tästä sovelluksesta, voit tukea sen kehitystä.",
     "onboarding": {
-      "welcome": "Tervetuloa WordsGoon!",
+      "welcome": "Tervetuloa Synaplyon!",
       "journey_begins": "Matkasi kielen hallintaan alkaa tästä.",
       "best_practice": "Paras tapa onnistua",
-      "strategy_desc": "Saadaksesi kaiken irti WordsGosta, suosittelemme tätä yksinkertaista strategiaa:",
+      "strategy_desc": "Saadaksesi kaiken irti Synaplysta, suosittelemme tätä yksinkertaista strategiaa:",
       "step1_title": "Keskity aiheeseen",
       "step1_desc": "Lisää noin <strong>100 sanaa</strong> liittyen yhteen aiheeseen (esim. liike-elämä tai matkustus) luodaksesi vahvan kontekstin.",
       "step2_title": "Päivittäiset kertaukset",
@@ -269,7 +269,7 @@
   },
   "profile": {
     "terms_title": "Käyttöehdot",
-    "terms_welcome": "Tervetuloa WordsGoon. Käyttämällä palveluitamme hyväksyt nämä ehdot...",
+    "terms_welcome": "Tervetuloa Synaplyon. Käyttämällä palveluitamme hyväksyt nämä ehdot...",
     "title": "Profiilin asetukset",
     "first_name": "Etunimi",
     "last_name": "Sukunimi",
@@ -286,7 +286,7 @@
     "subtitle": "Hallitse henkilötietojasi ja kieliasetuksiasi"
   },
   "login": {
-    "title": "Kirjaudu sisään WordsGoon",
+    "title": "Kirjaudu sisään Synaplyon",
     "email": "Sähköpostiosoite",
     "password": "Salasana",
     "sign_in": "Kirjaudu sisään",
@@ -307,7 +307,7 @@
     "login": "Kirjaudu tästä"
   },
   "help": {
-    "title": "Kuinka käyttää WordsGota",
+    "title": "Kuinka käyttää Synaplyta",
     "best_practice": {
       "title": "Paras tapa onnistua",
       "strategy_desc": "Tehokkaimman oppimiskokemuksen saavuttamiseksi suosittelemme tätä yksinkertaista 3-vaiheista strategiaa:",
@@ -320,7 +320,7 @@
     },
     "getting_started": {
       "title": "Aloittaminen",
-      "desc": "WordsGo on tehokas työkalu, joka on suunniteltu auttamaan sinua laajentamaan sanastoasi ja parantamaan kielitaitoasi jaksotetun kertauksen ja tekoälyn avulla.",
+      "desc": "Synaply on tehokas työkalu, joka on suunniteltu auttamaan sinua laajentamaan sanastoasi ja parantamaan kielitaitoasi jaksotetun kertauksen ja tekoälyn avulla.",
       "step1_title": "Vaihe 1: Lisää sanoja",
       "step1_desc": "Lisää sanoja manuaalisesti tai käytä tekoälyä luomaan listoja aiheiden ja tasojen mukaan.",
       "step2_title": "Vaihe 2: Päivittäinen harjoitus",
@@ -347,7 +347,7 @@
     },
     "spaced_repetition": {
       "title": "Jaksotettu kertaus",
-      "desc": "WordsGo käyttää FSRS (Free Spaced Repetition Scheduler) -algoritmia laskemaan ihanteellisen ajan kunkin sanan toistamiselle.",
+      "desc": "Synaply käyttää FSRS (Free Spaced Repetition Scheduler) -algoritmia laskemaan ihanteellisen ajan kunkin sanan toistamiselle.",
       "process_title": "Kertausprosessi",
       "step1": "Sinulle näytetään sana alkukielellä.",
       "step2": "Kirjoita käännös ja paina <strong>Enter</strong> tai <strong>Tarkista vastaus</strong>.",

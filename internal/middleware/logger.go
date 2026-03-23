@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"wordsGo_v2/slogger"
+	"synaply_v2/slogger"
 )
 
 func LoggerMiddleware(next http.Handler) http.Handler {
