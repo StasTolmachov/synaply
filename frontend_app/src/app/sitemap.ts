@@ -18,7 +18,7 @@ async function getPublicLists() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://wordsgo.tolmachov.dev';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://synaply.me';
   const locales = Object.keys(languages).map(lang => lang.toLowerCase());
   
   const staticRoutes = ['', '/terms', '/help', '/public-lists'];
