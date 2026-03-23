@@ -16,6 +16,10 @@
 
   --color-synaply-blue: #023a78; /* Темно-синий из логотипа */
   --color-synaply-cyan: #06b6d4; /* Бирюзовый из логотипа */
+  --color-synaply-light-blue: #3b82f6; /* Светло-синий (blue-500) */
+  --color-synaply-purple: #7c3aed; /* Фиолетовый (violet-600) для новой гаммы */
+  --color-synaply-purple-shadow: rgba(124, 58, 237, 0.2);
+  --color-synaply-blue-shadow: rgba(2, 58, 120, 0.2);
   --color-synaply-light: #f8fafc; /* Светлый фон */
 
   --color-gray-950: #020617;
@@ -59,10 +63,10 @@
   }
 
   .synaply-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-synaply-blue to-synaply-cyan;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-synaply-blue via-synaply-light-blue to-synaply-purple;
   }
 
   .synaply-gradient-bg {
-    @apply bg-gradient-to-br from-synaply-blue to-synaply-cyan;
+    @apply bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple shadow-lg shadow-synaply-purple-shadow;
   }
 }

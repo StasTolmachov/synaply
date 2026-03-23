@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter, Link } from '@/i18n/routing';
-import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe } from 'lucide-react';
+import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe, ArrowLeft } from 'lucide-react';
 import { useTranslation } from '@/components/I18nContext';
 
 export default function LandingPage() {
   const router = useRouter();
   const { t, setLang, resetToSaved } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const flags = [
     '🇺🇸', '🇬🇧', '🇩🇪', '🇫🇷', '🇪🇸', '🇮🇹', '🇵🇹', '🇳🇱', '🇵🇱', '🇷🇺', '🇯🇵', '🇰🇷', '🇨🇳', '🇹🇷', '🇮🇩', '🇺🇦', '🇬🇷', '🇨🇿',
@@ -22,6 +23,7 @@ export default function LandingPage() {
   ]; // Approximately 114 flags (18 + 96 = 114)
 
   useEffect(() => {
+    setMounted(true);
     // Check login state
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
@@ -245,7 +247,7 @@ export default function LandingPage() {
       
       <header>
         {/* Header/Nav */}
-        <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
               <div className="flex items-center gap-2">
@@ -257,16 +259,16 @@ export default function LandingPage() {
                     height={40}
                     className="w-auto h-8 mr-2"
                   />
-                  <span className="text-xl font-bold tracking-tight text-synaply-blue">
-                    synaply<span className="text-synaply-cyan">.me</span>
+                  <span className="text-xl font-bold tracking-tight text-synaply-blue dark:text-blue-400">
+                    synaply<span className="text-synaply-cyan dark:text-blue-300">.me</span>
                   </span>
-                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 border border-synaply-blue/10 rounded">{t('common.beta')}</span>
+                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-synaply-blue bg-synaply-blue/5 dark:bg-blue-900/30 border border-synaply-blue/10 dark:border-blue-800 rounded">{t('common.beta')}</span>
                 </Link>
               </div>
               <div className="flex items-center gap-4">
                 <Link 
                   href="/public-lists"
-                  className="text-gray-600 hover:text-synaply-blue font-medium px-2 transition-colors flex items-center gap-1"
+                  className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-sm uppercase tracking-wider px-2 transition-colors flex items-center gap-1"
                 >
                   <Globe className="w-4 h-4 text-synaply-cyan" />
                   {t('landing.public_lists')}
@@ -274,16 +276,16 @@ export default function LandingPage() {
                 {isLoggedIn ? (
                   <Link 
                     href="/dashboard"
-                    className="px-4 py-2 rounded-full bg-synaply-blue text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
+                    className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
                   >
                     Dashboard
                   </Link>
                 ) : (
                   <>
-                    <Link href="/login" className="text-gray-600 hover:text-synaply-blue font-medium px-2 transition-colors">Sign in</Link>
+                    <Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-sm uppercase tracking-wider px-2 transition-colors">Sign in</Link>
                     <Link 
                       href="/register"
-                      className="px-4 py-2 rounded-full bg-synaply-blue text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
+                      className="px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
                     >
                       Get Started
                     </Link>
@@ -302,7 +304,7 @@ export default function LandingPage() {
           <div className="inline-block px-4 py-1.5 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-semibold mb-6 animate-fade-in border border-synaply-blue/10">
             Next-Gen Language Learning
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-blue to-synaply-cyan bg-clip-text text-transparent pb-2">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple bg-clip-text text-transparent pb-2">
             Build Neural Synapses <br />
             for Language Fluency
           </h1>
@@ -313,24 +315,26 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
-              className="w-full sm:w-auto px-8 py-4 bg-synaply-blue text-white rounded-full font-bold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-xl shadow-synaply-blue/20 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-10 py-4 synaply-gradient-bg text-white rounded-full font-bold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-xl shadow-synaply-blue-shadow flex items-center justify-center gap-2"
             >
               {t('landing.try_for_free')}
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link 
               href="/public-lists"
-              className="w-full sm:w-auto px-8 py-4 bg-white/70 backdrop-blur-md text-gray-700 border border-white/50 rounded-full font-bold text-lg hover:bg-white hover:border-synaply-blue/20 transition-all shadow-xl flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-10 py-4 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-200 border border-white/50 dark:border-gray-700 rounded-full font-bold text-lg hover:bg-white dark:hover:bg-gray-800 hover:border-synaply-blue/20 transition-all shadow-xl flex items-center justify-center gap-2"
             >
               <Globe className="w-5 h-5 text-synaply-cyan" />
               {t('landing.browse_lists')}
             </Link>
           </div>
           <div className="mt-16 relative max-w-5xl mx-auto">
-            <div className="absolute -inset-1 bg-gradient-to-r from-synaply-blue to-synaply-cyan rounded-3xl blur opacity-20"></div>
-            <img 
+            <div className="absolute -inset-1 bg-gradient-to-r from-synaply-blue via-synaply-light-blue to-synaply-purple rounded-3xl blur opacity-20"></div>
+            <Image 
               src="/opengraph-image.png" 
               alt="Synaply App Interface - AI-powered vocabulary learning dashboard" 
+              width={1200}
+              height={630}
               className="relative rounded-2xl shadow-2xl border border-gray-100 w-full"
             />
           </div>
@@ -481,9 +485,11 @@ export default function LandingPage() {
             </div>
             <div className="lg:w-1/2 relative">
               <div className="bg-gradient-to-tr from-synaply-blue to-synaply-cyan rounded-[3rem] p-1 shadow-2xl overflow-hidden">
-                <img 
+                <Image 
                   src="/synaply.png" 
                   alt="Synaply - Smart language learning platform" 
+                  width={800}
+                  height={600}
                   className="w-full h-full object-cover rounded-[2.8rem]"
                 />
               </div>
@@ -711,26 +717,27 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 bg-synaply-blue text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-synaply-cyan/20 blur-[100px] rounded-full"></div>
+      <section className="py-24 px-4 synaply-gradient-bg text-white overflow-hidden relative shadow-none">
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-synaply-purple/20 blur-[100px] rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-synaply-light-blue/10 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-synaply-blue/20 blur-[100px] rounded-full"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to hack your memory?</h2>
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">Ready to hack your memory?</h2>
           <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto opacity-90">
             Join Synaply and try the most advanced AI-powered system for learning foreign words.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
-              className="px-10 py-5 bg-synaply-cyan text-synaply-blue rounded-full font-bold text-lg hover:bg-white hover:scale-105 transition-all shadow-xl shadow-synaply-cyan/20"
+              className="px-12 py-5 bg-white text-synaply-blue rounded-full font-bold text-lg hover:bg-synaply-cyan hover:scale-105 transition-all shadow-2xl shadow-white/10"
             >
               Create free account
             </Link>
             {!isLoggedIn && (
               <Link 
                 href="/login"
-                className="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
+                className="px-12 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
               >
                 Already have an account? Sign in
               </Link>
