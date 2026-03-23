@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"synaply_v2/internal/config"
-	"synaply_v2/internal/server"
-	"synaply_v2/slogger"
+	"synaply/internal/config"
+	"synaply/internal/server"
+	"synaply/slogger"
 )
 
 // @title Synaply API

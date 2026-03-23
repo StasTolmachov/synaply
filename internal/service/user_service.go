@@ -7,12 +7,12 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/config"
-	"synaply_v2/internal/models"
-	"synaply_v2/internal/repository"
-	"synaply_v2/internal/repository/modelsDB"
-	"synaply_v2/internal/utils"
-	"synaply_v2/slogger"
+	"synaply/internal/config"
+	"synaply/internal/models"
+	"synaply/internal/repository"
+	"synaply/internal/repository/modelsDB"
+	"synaply/internal/utils"
+	"synaply/slogger"
 )
 
 type UserService interface {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply_v2/internal/cache"
-	"synaply_v2/internal/repository/modelsDB"
+	"synaply/internal/cache"
+	"synaply/internal/repository/modelsDB"
 )
 
 type UserRepository interface {
