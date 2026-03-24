@@ -112,10 +112,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
       // next-intl useTranslations() t function handles nested keys with dots by default
       // but if it fails, we want to return the path as a fallback
-      const result = (tNext as any)(path, { ...params, ...htmlHandlers });
+      const result = (tNext as any)(path, { 
+        ...params, 
+        ...htmlHandlers
+      });
       
-      // If the result is the same as the path, it might mean the translation is missing
-      // (though next-intl might throw an error or return the key depending on config)
       return result;
     } catch (e) {
       // Если ключ не найден, возвращаем сам путь (как и в старой реализации)
