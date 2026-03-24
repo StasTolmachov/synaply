@@ -103,20 +103,26 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   // Адаптер для старого t() метода, чтобы не переписывать все компоненты сразу
   const t = (path: string, params?: Record<string, any>): any => {
     try {
-      const htmlHandlers: Record<string, (chunks: ReactNode) => string> = {
-        strong: (chunks) => `<strong>${chunks}</strong>`,
-        b: (chunks) => `<b>${chunks}</b>`,
-        i: (chunks) => `<i>${chunks}</i>`,
-        br: () => `<br/>`
+      const htmlHandlers: Record<string, (chunks: ReactNode) => any> = {
+        strong: (chunks) => <strong>{chunks}</strong>,
+        b: (chunks) => <b>{chunks}</b>,
+        i: (chunks) => <i>{chunks}</i>,
+        br: () => <br/>
       };
 
       // next-intl useTranslations() t function handles nested keys with dots by default
       // but if it fails, we want to return the path as a fallback
-      const result = (tNext as any)(path, { 
+      const result = tNext(path, { 
         ...params, 
         ...htmlHandlers
       });
       
+      // If result is a React element and it's being used with dangerouslySetInnerHTML,
+      // we need to be careful. But since tNext returns a string if no rich text is used,
+      // or a ReactNode if it is, we should keep it as is for modern usage.
+      // However, to support legacy dangerouslySetInnerHTML={{ __html: t(...) }},
+      // we need a way to get the string version if possible, but next-intl rich text
+      // returns React elements which cannot be easily converted to string here.
       return result;
     } catch (e) {
       // Если ключ не найден, возвращаем сам путь (как и в старой реализации)
@@ -124,8 +130,27 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Специальная версия t для dangerouslySetInnerHTML
+  const tHtml = (path: string, params?: Record<string, any>): string => {
+    try {
+      const stringHandlers: Record<string, (chunks: ReactNode) => string> = {
+        strong: (chunks) => `<strong>${chunks}</strong>`,
+        b: (chunks) => `<b>${chunks}</b>`,
+        i: (chunks) => `<i>${chunks}</i>`,
+        br: () => `<br/>`
+      };
+
+      return (tNext as any)(path, { 
+        ...params, 
+        ...stringHandlers
+      });
+    } catch (e) {
+      return path;
+    }
+  };
+
   return (
-    <I18nContext.Provider value={{ lang: locale, setLang, resetToSaved, t }}>
+    <I18nContext.Provider value={{ lang: locale, setLang, resetToSaved, t, tHtml } as any}>
       {children}
     </I18nContext.Provider>
   );
