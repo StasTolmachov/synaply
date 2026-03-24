@@ -338,7 +338,9 @@ export default function LandingPage() {
             {t('landing.next_gen_learning')}
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple bg-clip-text text-transparent pb-2">
-            {t('landing.hero_title', { br: <br /> })}
+            {t('landing.hero_title', { 
+              br: (chunks: any) => <br />
+            })}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             {t('landing.hero_subtitle')}
