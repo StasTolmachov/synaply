@@ -8,7 +8,7 @@ import { useTranslation } from '@/components/I18nContext';
 
 export default function LandingPage() {
   const router = useRouter();
-  const { t, setLang, resetToSaved } = useTranslation();
+  const { t, tHtml, setLang, resetToSaved } = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -420,7 +420,7 @@ export default function LandingPage() {
                 <Brain className="w-7 h-7 text-synaply-blue dark:text-blue-400" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_fsrs_title')}</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: t('landing.card_fsrs_desc') }} />
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_fsrs_desc') }} />
               <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-bold text-sm">
                 <Target className="w-4 h-4" />
                 {t('landing.card_fsrs_tag')}
@@ -452,11 +452,11 @@ export default function LandingPage() {
               <ul className="space-y-3">
                 <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span dangerouslySetInnerHTML={{ __html: t('landing.card_ai_example') }} />
+                  <span dangerouslySetInnerHTML={{ __html: tHtml('landing.card_ai_example') }} />
                 </li>
                 <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span dangerouslySetInnerHTML={{ __html: t('landing.card_ai_interactive') }} />
+                  <span dangerouslySetInnerHTML={{ __html: tHtml('landing.card_ai_interactive') }} />
                 </li>
               </ul>
             </div>
@@ -576,32 +576,32 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_p1') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_p1') }} />
 
           <div className="article-card">
             <h3>{t('landing.seo_fsrs_title')}</h3>
-            <p dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_p1') }} />
-            <p dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_p2') }} />
+            <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_p1') }} />
+            <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_p2') }} />
             
             <div className="mt-8 p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800">
               <h4 className="!mt-0">{t('landing.seo_fsrs_vs_sm2_title')}</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_vs_sm2_p1') }} />
+              <p className="text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_vs_sm2_p1') }} />
             </div>
           </div>
 
           <h3>{t('landing.seo_forgetting_title')}</h3>
           <p>{t('landing.seo_forgetting_p1')}</p>
           
-          <blockquote dangerouslySetInnerHTML={{ __html: t('landing.seo_forgetting_quote') }} />
+          <blockquote dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_quote') }} />
 
-          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_forgetting_p2') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_p2') }} />
 
           <h3>{t('landing.seo_tech_stack_title')}</h3>
           <p>{t('landing.seo_tech_stack_p1')}</p>
           <ul className="list-disc pl-6 space-y-4">
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li1') }} />
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li2') }} />
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li3') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_li1') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_li2') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_li3') }} />
           </ul>
 
           <div className="article-card bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800">
@@ -642,16 +642,16 @@ export default function LandingPage() {
           </div>
 
           <h3>{t('landing.seo_cognitive_title')}</h3>
-          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_cognitive_p1') }} />
-          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_cognitive_p2') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_cognitive_p1') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_cognitive_p2') }} />
 
           <h3>{t('landing.seo_core_features_title')}</h3>
           <p>{t('landing.seo_core_features_p1')}</p>
           <ul className="list-disc pl-6 space-y-4">
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li1') }} />
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li2') }} />
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li3') }} />
-            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li4') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li1') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li2') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li3') }} />
+            <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li4') }} />
           </ul>
 
           <h3>{t('landing.seo_social_title')}</h3>
