@@ -8,7 +8,7 @@ interface I18nContextProps {
   lang: string;
   setLang: (lang: string, saveToLocal?: boolean) => void;
   resetToSaved: () => void;
-  t: (path: string, params?: Record<string, string | number>) => string;
+  t: (path: string, params?: Record<string, any>) => any;
 }
 
 const I18nContext = createContext<I18nContextProps | undefined>(undefined);
@@ -101,7 +101,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   };
 
   // Адаптер для старого t() метода, чтобы не переписывать все компоненты сразу
-  const t = (path: string, params?: Record<string, string | number>): string => {
+  const t = (path: string, params?: Record<string, any>): any => {
     try {
       const htmlHandlers: Record<string, (chunks: ReactNode) => string> = {
         strong: (chunks) => `<strong>${chunks}</strong>`,
