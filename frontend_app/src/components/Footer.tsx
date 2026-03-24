@@ -9,17 +9,13 @@ const Footer = () => {
   const pathname = usePathname();
   const isLandingPage = pathname === '/' || pathname === '';
 
-  const [year, setYear] = React.useState<number | null>(null);
-
-  React.useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+  const year = typeof window === 'undefined' ? 2026 : (new Date().getFullYear());
 
   return (
     <footer className={`border-t border-gray-200 dark:border-gray-800 p-8 mt-8 ${isLandingPage ? 'bg-white dark:bg-gray-950' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="mb-4 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>© {year || '...'} Synaply. {t('common.all_rights_reserved')}</p>
+          <p>© {year} Synaply. {t('common.all_rights_reserved')}</p>
         </div>
         <nav className="mb-4 flex justify-center gap-6 sm:gap-8 flex-wrap" aria-label="Footer Navigation">
           <Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">{t('common.terms')}</Link>
@@ -28,7 +24,7 @@ const Footer = () => {
           <a href="/sitemap.xml" className="text-sm text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan no-underline transition-colors">Sitemap</a>
         </nav>
         <div className="mb-4 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>
+          <p key="help-text">
             {t('common.footer_help_text')}
             {' '}
             <a href="mailto:support@tolmachov.dev" className="text-synaply-blue dark:text-synaply-cyan hover:underline">support@tolmachov.dev</a>
