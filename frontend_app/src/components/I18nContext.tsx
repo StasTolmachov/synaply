@@ -9,6 +9,7 @@ interface I18nContextProps {
   setLang: (lang: string, saveToLocal?: boolean) => void;
   resetToSaved: () => void;
   t: (path: string, params?: Record<string, any>) => any;
+  tHtml: (path: string, params?: Record<string, any>) => string;
 }
 
 const I18nContext = createContext<I18nContextProps | undefined>(undefined);
@@ -150,7 +151,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <I18nContext.Provider value={{ lang: locale, setLang, resetToSaved, t, tHtml } as any}>
+    <I18nContext.Provider value={{ lang: locale, setLang, resetToSaved, t, tHtml }}>
       {children}
     </I18nContext.Provider>
   );
