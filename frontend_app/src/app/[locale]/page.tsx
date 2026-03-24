@@ -337,14 +337,14 @@ export default function LandingPage() {
           <div className="inline-block px-4 py-1.5 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-semibold mb-6 animate-fade-in border border-synaply-blue/10">
             {t('landing.next_gen_learning')}
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple bg-clip-text text-transparent pb-2">
-            {t('landing.hero_title', { 
-              br: (chunks: any) => <br />
-            })}
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {t('landing.hero_subtitle')}
-          </p>
+          <h1 
+            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple bg-clip-text text-transparent pb-2"
+            dangerouslySetInnerHTML={{ __html: tHtml('landing.hero_title') }}
+          />
+          <p 
+            className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: tHtml('landing.hero_subtitle') }}
+          />
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
@@ -408,10 +408,8 @@ export default function LandingPage() {
       <section className="py-24 bg-white/40 dark:bg-gray-950/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6 text-synaply-blue dark:text-blue-400">{t('landing.feature_title')}</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-xl">
-              {t('landing.feature_subtitle')}
-            </p>
+            <h2 className="text-4xl font-bold mb-6 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.feature_title') }} />
+            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-xl" dangerouslySetInnerHTML={{ __html: tHtml('landing.feature_subtitle') }} />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -419,7 +417,7 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-8">
                 <Brain className="w-7 h-7 text-synaply-blue dark:text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_fsrs_title')}</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_fsrs_title') }} />
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_fsrs_desc') }} />
               <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-bold text-sm">
                 <Target className="w-4 h-4" />
@@ -431,10 +429,8 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-2xl flex items-center justify-center mb-8">
                 <Globe className="w-7 h-7 text-synaply-cyan" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_lang_title')}</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                {t('landing.card_lang_desc')}
-              </p>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_lang_title') }} />
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_lang_desc') }} />
               <div className="flex items-center gap-2 text-synaply-cyan font-bold text-sm">
                 <Target className="w-4 h-4" />
                 {t('landing.card_lang_tag')}
@@ -445,10 +441,8 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-amber-100/50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-8">
                 <Sparkles className="w-7 h-7 text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_ai_title')}</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                {t('landing.card_ai_desc')}
-              </p>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_ai_title') }} />
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: tHtml('landing.card_ai_desc') }} />
               <ul className="space-y-3">
                 <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
@@ -473,15 +467,15 @@ export default function LandingPage() {
                 <Bot className="w-4 h-4" />
                 {t('landing.ai_companion_tag')}
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue dark:text-blue-400">{t('landing.beyond_translation_title')}</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.beyond_translation_title') }} />
               <div className="space-y-8">
                 <div className="flex gap-6">
                   <div className="w-12 h-12 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center shrink-0">
                     <MessageSquare className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.context_title')}</h4>
-                    <p className="text-gray-600 dark:text-gray-400">{t('landing.context_desc')}</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.context_title') }} />
+                    <p className="text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.context_desc') }} />
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -489,8 +483,8 @@ export default function LandingPage() {
                     <Target className="w-6 h-6 text-synaply-cyan" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.personalized_title')}</h4>
-                    <p className="text-gray-600 dark:text-gray-400">{t('landing.personalized_desc')}</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.personalized_title') }} />
+                    <p className="text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.personalized_desc') }} />
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -498,8 +492,8 @@ export default function LandingPage() {
                     <Languages className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.precision_title')}</h4>
-                    <p className="text-gray-600 dark:text-gray-400">{t('landing.precision_desc')}</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.precision_title') }} />
+                    <p className="text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.precision_desc') }} />
                   </div>
                 </div>
               </div>
@@ -525,31 +519,31 @@ export default function LandingPage() {
       <section className="py-24 px-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.how_it_works_title')}</h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">{t('landing.how_it_works_subtitle')}</p>
+            <h2 className="text-4xl font-bold mb-4 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.how_it_works_title') }} />
+            <p className="text-gray-600 dark:text-gray-400 text-lg" dangerouslySetInnerHTML={{ __html: tHtml('landing.how_it_works_subtitle') }} />
           </div>
 
           <div className="space-y-12">
             {[
               {
                 step: "1",
-                title: t('landing.step1_title'),
-                description: t('landing.step1_desc')
+                title: tHtml('landing.step1_title'),
+                description: tHtml('landing.step1_desc')
               },
               {
                 step: "2",
-                title: t('landing.step2_title'),
-                description: t('landing.step2_desc')
+                title: tHtml('landing.step2_title'),
+                description: tHtml('landing.step2_desc')
               },
               {
                 step: "3",
-                title: t('landing.step3_title'),
-                description: t('landing.step3_desc')
+                title: tHtml('landing.step3_title'),
+                description: tHtml('landing.step3_desc')
               },
               {
                 step: "4",
-                title: t('landing.step4_title'),
-                description: t('landing.step4_desc')
+                title: tHtml('landing.step4_title'),
+                description: tHtml('landing.step4_desc')
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
@@ -557,8 +551,8 @@ export default function LandingPage() {
                   {item.step}
                 </div>
                 <div className="pt-2">
-                  <h3 className="text-2xl font-bold mb-3 text-synaply-blue dark:text-blue-400">{item.title}</h3>
-                  <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">{item.description}</p>
+                  <h3 className="text-2xl font-bold mb-3 text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: item.title }} />
+                  <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: item.description }} />
                 </div>
               </div>
             ))}
@@ -570,34 +564,32 @@ export default function LandingPage() {
       <section className="py-32 px-4 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
         <article className="prose-article">
           <div className="mb-20 text-center">
-            <h2 className="!mt-0">{t('landing.seo_title')}</h2>
-            <p className="text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
-              {t('landing.seo_subtitle')}
-            </p>
+            <h2 className="!mt-0" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_title') }} />
+            <p className="text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_subtitle') }} />
           </div>
 
           <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_p1') }} />
 
           <div className="article-card">
-            <h3>{t('landing.seo_fsrs_title')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_title') }} />
             <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_p1') }} />
             <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_p2') }} />
             
             <div className="mt-8 p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800">
-              <h4 className="!mt-0">{t('landing.seo_fsrs_vs_sm2_title')}</h4>
+              <h4 className="!mt-0" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_vs_sm2_title') }} />
               <p className="text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_fsrs_vs_sm2_p1') }} />
             </div>
           </div>
 
-          <h3>{t('landing.seo_forgetting_title')}</h3>
-          <p>{t('landing.seo_forgetting_p1')}</p>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_title') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_p1') }} />
           
           <blockquote dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_quote') }} />
 
           <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_forgetting_p2') }} />
 
-          <h3>{t('landing.seo_tech_stack_title')}</h3>
-          <p>{t('landing.seo_tech_stack_p1')}</p>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_title') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_p1') }} />
           <ul className="list-disc pl-6 space-y-4">
             <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_li1') }} />
             <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_tech_stack_li2') }} />
@@ -605,48 +597,48 @@ export default function LandingPage() {
           </ul>
 
           <div className="article-card bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800">
-            <h3>{t('landing.seo_comparison_title')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_comparison_title') }} />
             <div className="comparison-table-wrapper">
               <table className="comparison-table">
                 <thead>
                   <tr>
-                    <th>{t('landing.seo_table_h1')}</th>
-                    <th>{t('landing.seo_table_h2')}</th>
-                    <th>{t('landing.seo_table_h3')}</th>
+                    <th dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_h1') }} />
+                    <th dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_h2') }} />
+                    <th dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_h3') }} />
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>{t('landing.seo_table_r1_c1')}</strong></td>
-                    <td>{t('landing.seo_table_r1_c2')}</td>
-                    <td>{t('landing.seo_table_r1_c3')}</td>
+                    <td><strong dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r1_c1') }} /></td>
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r1_c2') }} />
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r1_c3') }} />
                   </tr>
                   <tr>
-                    <td><strong>{t('landing.seo_table_r2_c1')}</strong></td>
-                    <td>{t('landing.seo_table_r2_c2')}</td>
-                    <td>{t('landing.seo_table_r2_c3')}</td>
+                    <td><strong dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r2_c1') }} /></td>
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r2_c2') }} />
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r2_c3') }} />
                   </tr>
                   <tr>
-                    <td><strong>{t('landing.seo_table_r3_c1')}</strong></td>
-                    <td>{t('landing.seo_table_r3_c2')}</td>
-                    <td>{t('landing.seo_table_r3_c3')}</td>
+                    <td><strong dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r3_c1') }} /></td>
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r3_c2') }} />
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r3_c3') }} />
                   </tr>
                   <tr>
-                    <td><strong>{t('landing.seo_table_r4_c1')}</strong></td>
-                    <td>{t('landing.seo_table_r4_c2')}</td>
-                    <td>{t('landing.seo_table_r4_c3')}</td>
+                    <td><strong dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r4_c1') }} /></td>
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r4_c2') }} />
+                    <td dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_table_r4_c3') }} />
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <h3>{t('landing.seo_cognitive_title')}</h3>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_cognitive_title') }} />
           <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_cognitive_p1') }} />
           <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_cognitive_p2') }} />
 
-          <h3>{t('landing.seo_core_features_title')}</h3>
-          <p>{t('landing.seo_core_features_p1')}</p>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_title') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_p1') }} />
           <ul className="list-disc pl-6 space-y-4">
             <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li1') }} />
             <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li2') }} />
@@ -654,53 +646,47 @@ export default function LandingPage() {
             <li dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_core_features_li4') }} />
           </ul>
 
-          <h3>{t('landing.seo_social_title')}</h3>
-          <p>{t('landing.seo_social_p1')}</p>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_social_title') }} />
+          <p dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_social_p1') }} />
 
           <div className="article-card bg-synaply-blue/5 dark:bg-synaply-blue/10 border-synaply-blue/10 dark:border-synaply-blue/20">
-            <h3 className="text-synaply-blue dark:text-blue-400">{t('landing.seo_use_cases_title')}</h3>
+            <h3 className="text-synaply-blue dark:text-blue-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_cases_title') }} />
             <div className="space-y-12">
               <div>
-                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">{t('landing.seo_use_case1_title')}</h4>
-                <p className="italic text-gray-800 dark:text-gray-300">{t('landing.seo_use_case1_p1')}</p>
-                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">{t('landing.seo_use_case1_author')}</p>
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case1_title') }} />
+                <p className="italic text-gray-800 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case1_p1') }} />
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case1_author') }} />
               </div>
               <div className="pt-6 border-t border-synaply-blue/10 dark:border-synaply-blue/20">
-                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">{t('landing.seo_use_case2_title')}</h4>
-                <p className="italic text-gray-800 dark:text-gray-300">{t('landing.seo_use_case2_p1')}</p>
-                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">{t('landing.seo_use_case2_author')}</p>
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case2_title') }} />
+                <p className="italic text-gray-800 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case2_p1') }} />
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_use_case2_author') }} />
               </div>
             </div>
           </div>
 
-          <h3>{t('landing.seo_faq_title')}</h3>
+          <h3 dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_title') }} />
           <div className="space-y-4">
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>{t('landing.seo_faq_q1')}</span>
+                <span dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_q1') }} />
               </div>
-              <div className="faq-answer text-gray-600 dark:text-gray-400">
-                {t('landing.seo_faq_a1')}
-              </div>
+              <div className="faq-answer text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_a1') }} />
             </div>
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>{t('landing.seo_faq_q2')}</span>
+                <span dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_q2') }} />
               </div>
-              <div className="faq-answer text-gray-600 dark:text-gray-400">
-                {t('landing.seo_faq_a2')}
-              </div>
+              <div className="faq-answer text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_a2') }} />
             </div>
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>{t('landing.seo_faq_q3')}</span>
+                <span dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_q3') }} />
               </div>
-              <div className="faq-answer text-gray-600 dark:text-gray-400">
-                {t('landing.seo_faq_a3')}
-              </div>
+              <div className="faq-answer text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: tHtml('landing.seo_faq_a3') }} />
             </div>
           </div>
 

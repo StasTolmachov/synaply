@@ -108,26 +108,30 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         strong: (chunks) => <strong>{chunks}</strong>,
         b: (chunks) => <b>{chunks}</b>,
         i: (chunks) => <i>{chunks}</i>,
+        em: (chunks) => <em>{chunks}</em>,
+        u: (chunks) => <u>{chunks}</u>,
         br: () => <br/>
       };
 
       // next-intl useTranslations() t function handles nested keys with dots by default
       // but if it fails, we want to return the path as a fallback
-      const result = tNext(path, { 
-        ...params, 
-        ...htmlHandlers
+      // result is a React element if rich text is used, or a string otherwise
+      const result = tNext.rich(path as any, { 
+        ...htmlHandlers,
+        ...params
       });
       
-      // If result is a React element and it's being used with dangerouslySetInnerHTML,
-      // we need to be careful. But since tNext returns a string if no rich text is used,
-      // or a ReactNode if it is, we should keep it as is for modern usage.
-      // However, to support legacy dangerouslySetInnerHTML={{ __html: t(...) }},
-      // we need a way to get the string version if possible, but next-intl rich text
-      // returns React elements which cannot be easily converted to string here.
+      // If the result is the same as the path, it might be because next-intl 
+      // returns the key if it's missing (depending on configuration)
       return result;
     } catch (e) {
-      // Если ключ не найден, возвращаем сам путь (как и в старой реализации)
-      return path;
+      // If rich fails, try simple t
+      try {
+        return tNext(path as any, params);
+      } catch (e2) {
+        // Если ключ не найден, возвращаем сам путь
+        return path;
+      }
     }
   };
 
@@ -138,15 +142,28 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         strong: (chunks) => `<strong>${chunks}</strong>`,
         b: (chunks) => `<b>${chunks}</b>`,
         i: (chunks) => `<i>${chunks}</i>`,
+        em: (chunks) => `<em>${chunks}</em>`,
+        u: (chunks) => `<u>${chunks}</u>`,
         br: () => `<br/>`
       };
 
-      return (tNext as any)(path, { 
-        ...params, 
-        ...stringHandlers
+      // next-intl's rich text expects <tag></tag> or <tag/>.
+      // If the source JSON has <br/>, we need to make sure next-intl
+      // processes it as a rich text tag.
+      
+      const result = (tNext.rich as any)(path, { 
+        ...stringHandlers,
+        ...params
       });
+      
+      return typeof result === 'string' ? result : (Array.isArray(result) ? result.join('') : String(result));
     } catch (e) {
-      return path;
+      try {
+        const result = (tNext as any)(path, params);
+        return typeof result === 'string' ? result : path;
+      } catch (e2) {
+        return path;
+      }
     }
   };
 
