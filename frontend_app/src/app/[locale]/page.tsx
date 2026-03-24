@@ -43,7 +43,7 @@ export default function LandingPage() {
     '@type': 'WebApplication',
     name: 'Synaply',
     alternateName: 'Synaply AI',
-    description: 'Learn new words with AI-powered spaced repetition. The easiest way to expand your vocabulary.',
+    description: t('metadata.description'),
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'Web',
     url: 'https://synaply.me',
@@ -63,10 +63,10 @@ export default function LandingPage() {
       ratingCount: '1540',
     },
     featureList: [
-      'Spaced Repetition System',
-      'AI-powered translations',
-      'Public word lists',
-      'Progress tracking'
+      t('help.spaced_repetition.title'),
+      t('landing.tag_ai_powered'),
+      t('common.public_lists'),
+      t('dashboard.progress')
     ]
   };
 
@@ -308,16 +308,16 @@ export default function LandingPage() {
                     href="/dashboard"
                     className="px-4 sm:px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue-shadow"
                   >
-                    Dashboard
+                    {t('common.dashboard')}
                   </Link>
                 ) : (
                   <>
-                    <Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-xs sm:text-sm uppercase tracking-wider px-2 transition-colors">Sign in</Link>
+                    <Link href="/login" className="text-gray-600 dark:text-gray-400 hover:text-synaply-blue dark:hover:text-synaply-cyan font-bold text-xs sm:text-sm uppercase tracking-wider px-2 transition-colors">{t('common.login')}</Link>
                     <Link 
                       href="/register"
                       className="px-4 sm:px-6 py-2 rounded-full synaply-gradient-bg text-white font-bold text-xs sm:text-sm uppercase tracking-wider hover:opacity-90 transition-all shadow-lg shadow-synaply-blue/20"
                     >
-                      Get Started
+                      {t('landing.cta_btn')}
                     </Link>
                   </>
                 ))}
@@ -335,15 +335,13 @@ export default function LandingPage() {
         <section className="pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-semibold mb-6 animate-fade-in border border-synaply-blue/10">
-            Next-Gen Language Learning
+            {t('landing.next_gen_learning')}
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 bg-gradient-to-br from-synaply-blue via-synaply-light-blue to-synaply-purple bg-clip-text text-transparent pb-2">
-            Build Neural Synapses <br />
-            for Language Fluency
+            {t('landing.hero_title', { br: <br /> })}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Synaply uses a scientific algorithm that creates synapses in your brain, 
-            reinforced by AI to ensure you never forget a word again.
+            {t('landing.hero_subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
@@ -358,7 +356,7 @@ export default function LandingPage() {
             <div className="absolute -inset-1 bg-gradient-to-r from-synaply-blue via-synaply-light-blue to-synaply-purple rounded-3xl blur opacity-20"></div>
             <Image 
               src="/opengraph-image.png" 
-              alt="Synaply App Interface - AI-powered vocabulary learning dashboard" 
+              alt={t('landing.og_image_alt')} 
               width={1200}
               height={630}
               className="relative rounded-2xl shadow-2xl border border-gray-100 w-full"
@@ -371,17 +369,17 @@ export default function LandingPage() {
       <section className="py-12 border-y border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">FSRS</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Memory Algorithm</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">{t('landing.stat_fsrs')}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">{t('landing.stat_memory_algo')}</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">AI</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Gemini Integration</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">{t('landing.stat_ai')}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">{t('landing.stat_gemini')}</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">114</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">{t('landing.stat_114')}</div>
             <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold text-center relative overflow-hidden">
-              Languages
+              {t('landing.stat_languages')}
               <div className="mt-2 overflow-hidden flex whitespace-nowrap mask-fade">
                 <div className="animate-scroll flex gap-2">
                   {[...flags, ...flags].map((flag, i) => (
@@ -398,8 +396,8 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">DeepL</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Accurate Translation</div>
+            <div className="text-3xl font-bold text-synaply-blue dark:text-blue-400 mb-10">{t('landing.stat_deepl')}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">{t('landing.stat_accuracy')}</div>
           </div>
         </div>
       </section>
@@ -408,10 +406,9 @@ export default function LandingPage() {
       <section className="py-24 bg-white/40 dark:bg-gray-950/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl font-bold mb-6 text-synaply-blue dark:text-blue-400">Algorithm That Builds Synapses</h2>
+            <h2 className="text-4xl font-bold mb-6 text-synaply-blue dark:text-blue-400">{t('landing.feature_title')}</h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-xl">
-              Our system focuses on the neurological process of memory. We use scientific algorithms 
-              to create lasting synaptic connections for every word you learn.
+              {t('landing.feature_subtitle')}
             </p>
           </div>
 
@@ -420,14 +417,11 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-8">
                 <Brain className="w-7 h-7 text-synaply-blue dark:text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Neural FSRS+</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                We utilize the <strong>FSRS</strong> algorithm, 
-                enhanced to create and strengthen <strong>synaptic pathways</strong> by predicting your memory decay with unprecedented accuracy.
-              </p>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_fsrs_title')}</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: t('landing.card_fsrs_desc') }} />
               <div className="flex items-center gap-2 text-synaply-blue dark:text-blue-400 font-bold text-sm">
                 <Target className="w-4 h-4" />
-                Scientifically proven memory optimization
+                {t('landing.card_fsrs_tag')}
               </div>
             </div>
 
@@ -435,14 +429,13 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-synaply-cyan/10 dark:bg-synaply-cyan/20 rounded-2xl flex items-center justify-center mb-8">
                 <Globe className="w-7 h-7 text-synaply-cyan" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">114+ Languages</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_lang_title')}</h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                From Spanish and French to more niche languages like Icelandic or Vietnamese — Synaply supports 
-                a global community of learners.
+                {t('landing.card_lang_desc')}
               </p>
               <div className="flex items-center gap-2 text-synaply-cyan font-bold text-sm">
                 <Target className="w-4 h-4" />
-                Master any language you desire
+                {t('landing.card_lang_tag')}
               </div>
             </div>
 
@@ -450,18 +443,18 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-amber-100/50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-8">
                 <Sparkles className="w-7 h-7 text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">Gemini AI Tutor</h3>
+              <h3 className="text-2xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.card_ai_title')}</h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                Practice in context. Gemini AI generates personalized examples and exercises using the specific words you are currently learning.
+                {t('landing.card_ai_desc')}
               </p>
               <ul className="space-y-3">
                 <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span><strong>Smart Examples:</strong> Sentences tailored to your level.</span>
+                  <span dangerouslySetInnerHTML={{ __html: t('landing.card_ai_example') }} />
                 </li>
                 <li className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <CheckCircle className="w-5 h-5 text-amber-500 shrink-0" />
-                  <span><strong>Interactive Practice:</strong> Real-time feedback on your usage.</span>
+                  <span dangerouslySetInnerHTML={{ __html: t('landing.card_ai_interactive') }} />
                 </li>
               </ul>
             </div>
@@ -476,17 +469,17 @@ export default function LandingPage() {
             <div className="lg:w-1/2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-synaply-blue/5 text-synaply-blue text-sm font-bold mb-6 border border-synaply-blue/10">
                 <Bot className="w-4 h-4" />
-                Next-Gen AI Companion
+                {t('landing.ai_companion_tag')}
               </div>
-              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue dark:text-blue-400">Beyond Simple Translation</h2>
+              <h2 className="text-4xl font-bold mb-8 leading-tight text-synaply-blue dark:text-blue-400">{t('landing.beyond_translation_title')}</h2>
               <div className="space-y-8">
                 <div className="flex gap-6">
                   <div className="w-12 h-12 bg-synaply-blue/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center shrink-0">
                     <MessageSquare className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Infinite Context</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Don&apos;t just learn words, learn how to use them. Gemini AI generates real-world examples specifically for your vocabulary.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.context_title')}</h4>
+                    <p className="text-gray-600 dark:text-gray-400">{t('landing.context_desc')}</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -494,8 +487,8 @@ export default function LandingPage() {
                     <Target className="w-6 h-6 text-synaply-cyan" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">Personalized Learning</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Our system adapts to your pace, ensuring you focus on the words that need the most attention.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.personalized_title')}</h4>
+                    <p className="text-gray-600 dark:text-gray-400">{t('landing.personalized_desc')}</p>
                   </div>
                 </div>
                 <div className="flex gap-6">
@@ -503,8 +496,8 @@ export default function LandingPage() {
                     <Languages className="w-6 h-6 text-synaply-blue dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">DeepL Precision</h4>
-                    <p className="text-gray-600 dark:text-gray-400">We use the world&apos;s best translation algorithms to ensure you learn only correct and natural language options.</p>
+                    <h4 className="text-xl font-bold mb-2 text-synaply-blue dark:text-blue-400">{t('landing.precision_title')}</h4>
+                    <p className="text-gray-600 dark:text-gray-400">{t('landing.precision_desc')}</p>
                   </div>
                 </div>
               </div>
@@ -530,31 +523,31 @@ export default function LandingPage() {
       <section className="py-24 px-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-synaply-blue dark:text-blue-400">How does it work?</h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">4 simple steps to language fluency</p>
+            <h2 className="text-4xl font-bold mb-4 text-synaply-blue dark:text-blue-400">{t('landing.how_it_works_title')}</h2>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">{t('landing.how_it_works_subtitle')}</p>
           </div>
 
           <div className="space-y-12">
             {[
               {
                 step: "1",
-                title: "Initialize Neural Paths",
-                description: "Met an unfamiliar word? Add it to your collection. Our system begins mapping the neural path for this new information immediately."
+                title: t('landing.step1_title'),
+                description: t('landing.step1_desc')
               },
               {
                 step: "2",
-                title: "Create Synapses",
-                description: "Our algorithm selects words at the precise moment before they fade. Each review strengthens the synapse, making the memory permanent."
+                title: t('landing.step2_title'),
+                description: t('landing.step2_desc')
               },
               {
                 step: "3",
-                title: "Reinforce with AI",
-                description: "Apply your knowledge in context. The AI Tutor generates sentences that force your brain to use the newly formed synapses in real-world scenarios."
+                title: t('landing.step3_title'),
+                description: t('landing.step3_desc')
               },
               {
                 step: "4",
-                title: "Seal the Memory",
-                description: "Track your progress. Once the synapse is fully formed and reinforced, the word moves from \"new\" to the \"permanent knowledge\" category."
+                title: t('landing.step4_title'),
+                description: t('landing.step4_desc')
               }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col md:flex-row gap-8 items-start group">
@@ -575,166 +568,136 @@ export default function LandingPage() {
       <section className="py-32 px-4 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800">
         <article className="prose-article">
           <div className="mb-20 text-center">
-            <h2 className="!mt-0">Synaptic Learning: The Science Behind Synaply</h2>
+            <h2 className="!mt-0">{t('landing.seo_title')}</h2>
             <p className="text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
-              How our scientific algorithm creates and strengthens neural connections, reinforced by Artificial Intelligence.
+              {t('landing.seo_subtitle')}
             </p>
           </div>
 
-          <p>
-            In today&apos;s interconnected world, mastering a new language is more than just a hobby—it&apos;s a gateway to new cultures, professional opportunities, and personal growth. However, the biggest challenge for most learners isn&apos;t starting; it&apos;s <strong>retention</strong>. Traditional methods often lead to the &quot;forgetting curve,&quot; where new vocabulary vanishes as quickly as it was acquired. Synaply was built to solve this problem by combining cutting-edge cognitive science with state-of-the-art Artificial Intelligence.
-          </p>
+          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_p1') }} />
 
           <div className="article-card">
-            <h3>The Science of Memory: Our Advanced FSRS+ Algorithm</h3>
-            <p>
-              At the heart of Synaply lies the <strong>Free Spaced Repetition Scheduler (FSRS)</strong>. Unlike the older SM-2 algorithms used by many popular apps, FSRS is a modern, data-driven model designed to predict the stability of your memory with incredible precision.
-            </p>
-            <p>
-              Our proprietary <strong>FSRS+ enhancement</strong> takes this a step further. It analyzes your unique learning patterns—how quickly you recall a word, how often you struggle with specific types of vocabulary, and your individual forgetting rate. By calculating the exact moment before a word slips from your mind, Synaply schedules reviews at the <strong>optimal interval</strong>, ensuring maximum retention with minimum effort.
-            </p>
+            <h3>{t('landing.seo_fsrs_title')}</h3>
+            <p dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_p1') }} />
+            <p dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_p2') }} />
             
             <div className="mt-8 p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800">
-              <h4 className="!mt-0">FSRS vs. Traditional SM-2</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                While SM-2 uses fixed multipliers (the &quot;ease factor&quot;), FSRS implements a <strong>Stochastic Shortest Path</strong> algorithm to optimize for long-term retention. Studies show that FSRS can reduce study time by up to 30% while achieving the same target retention levels compared to traditional spaced repetition models.
-              </p>
+              <h4 className="!mt-0">{t('landing.seo_fsrs_vs_sm2_title')}</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: t('landing.seo_fsrs_vs_sm2_p1') }} />
             </div>
           </div>
 
-          <h3>Why We Forget: Combatting the Forgetting Curve</h3>
-          <p>
-            The &quot;Forgetting Curve,&quot; first proposed by Hermann Ebbinghaus, illustrates how information is lost over time when there is no attempt to retain it. Without reinforcement, humans forget approximately 50% of new information within 24 hours. Synaply is engineered specifically to disrupt this curve.
-          </p>
+          <h3>{t('landing.seo_forgetting_title')}</h3>
+          <p>{t('landing.seo_forgetting_p1')}</p>
           
-          <blockquote>
-            &quot;The secret to permanent memory isn&apos;t repetition; it&apos;s <strong>timed retrieval</strong>. By forcing the brain to recall information just as it is about to be lost, we strengthen the synaptic connections permanently.&quot;
-          </blockquote>
+          <blockquote dangerouslySetInnerHTML={{ __html: t('landing.seo_forgetting_quote') }} />
 
-          <p>
-            By utilizing the <strong>FSRS algorithm</strong>, we don&apos;t just remind you of words randomly. We present them at the precise point of &quot;desirable difficulty&quot;—the moment when your brain has to work just hard enough to recall the information, which significantly strengthens the neural pathways associated with that memory. This makes your study sessions 300% more efficient than traditional rote memorization.
-          </p>
+          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_forgetting_p2') }} />
 
-          <h3>The Technology Stack: AI-Powered Context</h3>
-          <p>
-            Learning a word in isolation is rarely effective. To truly &quot;own&quot; a word, you must understand its nuances and see it in action. This is where our AI integration becomes your most powerful ally:
-          </p>
+          <h3>{t('landing.seo_tech_stack_title')}</h3>
+          <p>{t('landing.seo_tech_stack_p1')}</p>
           <ul className="list-disc pl-6 space-y-4">
-            <li>
-              <strong>DeepL Precision:</strong> For every word you add, we utilize DeepL—widely recognized as the world&apos;s most accurate translation engine. This ensures that the definitions and synonyms you learn are natural and contextually correct.
-            </li>
-            <li>
-              <strong>Gemini AI Tutor:</strong> Synaply leverages Google&apos;s Gemini AI to generate personalized usage examples. If you&apos;re learning the word &quot;sustainable&quot; in a business context, Gemini won&apos;t just give you a generic sentence; it will craft examples relevant to your specific field of interest.
-            </li>
-            <li>
-              <strong>Interactive Feedback:</strong> During AI Practice sessions, Gemini acts as a live tutor. It doesn&apos;t just tell you if you&apos;re wrong; it explains <em>why</em> and suggests more idiomatic ways to express your thoughts.
-            </li>
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li1') }} />
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li2') }} />
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_tech_stack_li3') }} />
           </ul>
 
           <div className="article-card bg-blue-50/30 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800">
-            <h3>Comparison: Synaply vs. The Old Way</h3>
+            <h3>{t('landing.seo_comparison_title')}</h3>
             <div className="comparison-table-wrapper">
               <table className="comparison-table">
                 <thead>
                   <tr>
-                    <th>Feature</th>
-                    <th>Traditional Apps</th>
-                    <th>Synaply (AI + FSRS)</th>
+                    <th>{t('landing.seo_table_h1')}</th>
+                    <th>{t('landing.seo_table_h2')}</th>
+                    <th>{t('landing.seo_table_h3')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Algorithm</strong></td>
-                    <td>SM-2 (1980s Tech)</td>
-                    <td>FSRS v4.5 (Modern AI)</td>
+                    <td><strong>{t('landing.seo_table_r1_c1')}</strong></td>
+                    <td>{t('landing.seo_table_r1_c2')}</td>
+                    <td>{t('landing.seo_table_r1_c3')}</td>
                   </tr>
                   <tr>
-                    <td><strong>Context</strong></td>
-                    <td>Generic sentences</td>
-                    <td>AI-Generated personalized context</td>
+                    <td><strong>{t('landing.seo_table_r2_c1')}</strong></td>
+                    <td>{t('landing.seo_table_r2_c2')}</td>
+                    <td>{t('landing.seo_table_r2_c3')}</td>
                   </tr>
                   <tr>
-                    <td><strong>Translations</strong></td>
-                    <td>Community-vetted (Slow)</td>
-                    <td>DeepL + Gemini (Instant/Pro)</td>
+                    <td><strong>{t('landing.seo_table_r3_c1')}</strong></td>
+                    <td>{t('landing.seo_table_r3_c2')}</td>
+                    <td>{t('landing.seo_table_r3_c3')}</td>
                   </tr>
                   <tr>
-                    <td><strong>Adaptability</strong></td>
-                    <td>Linear progression</td>
-                    <td>Dynamic cognitive modeling</td>
+                    <td><strong>{t('landing.seo_table_r4_c1')}</strong></td>
+                    <td>{t('landing.seo_table_r4_c2')}</td>
+                    <td>{t('landing.seo_table_r4_c3')}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <h3>Advanced Cognitive Load Management</h3>
-          <p>
-            One of the primary reasons learners quit is &quot;overwhelm.&quot; When you have too many words to review, the task becomes daunting. Synaply implements <strong>Cognitive Load Balancing</strong>. Our AI monitors your performance and, if it detects fatigue or a drop in accuracy, it automatically throttles the introduction of new words while prioritizing the most critical reviews.
-          </p>
-          <p>
-            This ensures that you remain in the <strong>&quot;Flow State&quot;</strong>—a psychological state where you are fully immersed in the activity, feeling energized and focused. Learning becomes addictive rather than exhaustive.
-          </p>
+          <h3>{t('landing.seo_cognitive_title')}</h3>
+          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_cognitive_p1') }} />
+          <p dangerouslySetInnerHTML={{ __html: t('landing.seo_cognitive_p2') }} />
 
-          <h3>Core Features for Global Learners</h3>
-          <p>
-            Synaply is more than just a flashcard app; it&apos;s a comprehensive AI-powered language-learning ecosystem. Our features are designed to support every stage of your journey:
-          </p>
+          <h3>{t('landing.seo_core_features_title')}</h3>
+          <p>{t('landing.seo_core_features_p1')}</p>
           <ul className="list-disc pl-6 space-y-4">
-            <li><strong>114+ Languages Supported:</strong> From Spanish and French to more niche languages like Icelandic or Vietnamese, our platform provides robust support for a global community of learners.</li>
-            <li><strong>AI-Powered Practice:</strong> Master your vocabulary with context-aware exercises generated by Gemini AI, tailored to your learning progress.</li>
-            <li><strong>Smart Playlists:</strong> Group multiple word lists into cohesive &quot;playlists&quot; to manage complex learning goals effortlessly.</li>
-            <li><strong>Progress Analytics:</strong> Track your growth with detailed statistics. Watch your &quot;Memory Rating&quot; climb as you move words from short-term struggle to long-term mastery.</li>
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li1') }} />
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li2') }} />
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li3') }} />
+            <li dangerouslySetInnerHTML={{ __html: t('landing.seo_core_features_li4') }} />
           </ul>
 
-          <h3>The Social Learning Revolution</h3>
-          <p>
-            Language learning shouldn&apos;t be a solitary endeavor. Synaply fosters a vibrant community where learners exchange insights, usage examples, and study strategies. Get exposure to real-world language usage beyond textbooks—from regional slang to highly technical professional terms.
-          </p>
+          <h3>{t('landing.seo_social_title')}</h3>
+          <p>{t('landing.seo_social_p1')}</p>
 
           <div className="article-card bg-synaply-blue/5 dark:bg-synaply-blue/10 border-synaply-blue/10 dark:border-synaply-blue/20">
-            <h3 className="text-synaply-blue dark:text-blue-400">Real-World Use Cases: How Synaply Changes Lives</h3>
+            <h3 className="text-synaply-blue dark:text-blue-400">{t('landing.seo_use_cases_title')}</h3>
             <div className="space-y-12">
               <div>
-                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Professional Track</h4>
-                <p className="italic text-gray-800 dark:text-gray-300">&quot;I needed to learn technical German for my new job in engineering. Standard apps were too generic. With Synaply, I created a custom list of engineering terms, and the AI helped me use them in professional emails. I felt confident in my first meeting!&quot;</p>
-                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Mark S., Mechanical Engineer</p>
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">{t('landing.seo_use_case1_title')}</h4>
+                <p className="italic text-gray-800 dark:text-gray-300">{t('landing.seo_use_case1_p1')}</p>
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">{t('landing.seo_use_case1_author')}</p>
               </div>
               <div className="pt-6 border-t border-synaply-blue/10 dark:border-synaply-blue/20">
-                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">The Academic Path</h4>
-                <p className="italic text-gray-800 dark:text-gray-300">&quot;Preparing for the SAT vocabulary section was a nightmare. Synaply helped me organize my study routine, and the FSRS algorithm made sure I didn&apos;t forget the words I learned in week one by the time the exam came around.&quot;</p>
-                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">— Sarah L., High School Student</p>
+                <h4 className="text-synaply-blue dark:text-blue-400 font-bold">{t('landing.seo_use_case2_title')}</h4>
+                <p className="italic text-gray-800 dark:text-gray-300">{t('landing.seo_use_case2_p1')}</p>
+                <p className="font-bold text-synaply-blue/80 dark:text-blue-400/80">{t('landing.seo_use_case2_author')}</p>
               </div>
             </div>
           </div>
 
-          <h3>Frequently Asked Questions (FAQ)</h3>
+          <h3>{t('landing.seo_faq_title')}</h3>
           <div className="space-y-4">
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>How is FSRS better than Anki?</span>
+                <span>{t('landing.seo_faq_q1')}</span>
               </div>
               <div className="faq-answer text-gray-600 dark:text-gray-400">
-                While Anki is powerful, its default algorithm is based on SM-2. Synaply uses FSRS, which is mathematically proven to be more efficient. Furthermore, Synaply integrates AI (Gemini/DeepL) directly into the workflow, whereas Anki requires manual deck creation.
+                {t('landing.seo_faq_a1')}
               </div>
             </div>
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>Can I use Synaply offline?</span>
+                <span>{t('landing.seo_faq_q2')}</span>
               </div>
               <div className="faq-answer text-gray-600 dark:text-gray-400">
-                Yes! Our Progressive Web App (PWA) technology allows you to continue your reviews even without an active internet connection. Your progress will sync automatically once you&apos;re back online.
+                {t('landing.seo_faq_a2')}
               </div>
             </div>
             <div className="faq-item group">
               <div className="faq-question text-synaply-blue dark:text-blue-400 group-hover:text-synaply-cyan transition-colors">
                 <CheckCircle className="w-6 h-6 text-synaply-cyan shrink-0" />
-                <span>Is it free to use?</span>
+                <span>{t('landing.seo_faq_q3')}</span>
               </div>
               <div className="faq-answer text-gray-600 dark:text-gray-400">
-                Synaply offers a generous free tier that includes access to all core FSRS features and a limited number of AI-powered translations and practices per day.
+                {t('landing.seo_faq_a3')}
               </div>
             </div>
           </div>
@@ -749,31 +712,31 @@ export default function LandingPage() {
         <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-synaply-blue/10 blur-[100px] rounded-full"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">Ready to hack your memory?</h2>
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">{t('landing.cta_title')}</h2>
           <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto opacity-90">
-            Join Synaply and try the most advanced AI-powered system for learning foreign words.
+            {t('landing.cta_subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               href={isLoggedIn ? "/dashboard" : "/register"}
               className="px-12 py-5 bg-white text-synaply-blue rounded-full font-bold text-lg hover:bg-synaply-cyan hover:scale-105 transition-all shadow-2xl shadow-white/10"
             >
-              Create free account
+              {t('landing.cta_btn')}
             </Link>
             {!isLoggedIn && (
               <Link 
                 href="/login"
                 className="px-12 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/20 transition-all"
               >
-                Already have an account? Sign in
+                {t('landing.cta_already_account')}
               </Link>
             )}
           </div>
           <div className="mt-16 flex flex-wrap justify-center items-center gap-8 grayscale opacity-50">
-            <div className="text-xl font-bold tracking-tighter text-blue-100">AI-POWERED</div>
-            <div className="text-xl font-bold tracking-tighter text-blue-100">ENHANCED FSRS+</div>
-            <div className="text-xl font-bold tracking-tighter text-blue-100">DEEPL-READY</div>
-            <div className="text-xl font-bold tracking-tighter text-blue-100">114 LANGUAGES</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">{t('landing.tag_ai_powered')}</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">{t('landing.tag_fsrs')}</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">{t('landing.tag_deepl')}</div>
+            <div className="text-xl font-bold tracking-tighter text-blue-100">{t('landing.tag_114_languages')}</div>
           </div>
         </div>
       </section>
