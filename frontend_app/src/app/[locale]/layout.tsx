@@ -64,11 +64,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     icons: {
       icon: [
-        { url: "/favicon.ico?v=2", type: "image/x-icon" },
-        { url: "/favicon.png?v=2", type: "image/png" },
-        { url: "/favicon.png?v=2", type: "image/png", rel: "shortcut icon" }
+        { url: "/favicon.ico?v=3", type: "image/x-icon" },
+        { url: "/favicon.png?v=3", type: "image/png" },
+        { url: "/icon-192.png?v=3", type: "image/png", sizes: "192x192" },
+        { url: "/icon-512.png?v=3", type: "image/png", sizes: "512x512" },
       ],
-      apple: "/apple-icon.png?v=2",
+      apple: "/apple-icon.png?v=3",
     },
     openGraph: {
       title: t('og_title') || t('title'),
@@ -136,10 +137,9 @@ export default async function RootLayout({
     '@type': 'Organization',
     name: 'Synaply',
     url: baseUrl,
-    logo: `${baseUrl}/apple-icon.png`,
+    logo: `${baseUrl}/icon-512.png`,
     sameAs: [
       'https://twitter.com/SynaplyTeam',
-      // 'https://github.com/synaply', // add if exists
     ],
   };
 
