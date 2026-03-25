@@ -7,11 +7,11 @@ import (
 
 	"github.com/google/uuid"
 
+	"synaply/internal/auth"
 	"synaply/internal/config"
 	"synaply/internal/models"
 	"synaply/internal/repository"
 	"synaply/internal/repository/modelsDB"
-	"synaply/internal/utils"
 	"synaply/slogger"
 )
 
@@ -68,10 +68,10 @@ func (s *userService) Login(ctx context.Context, req models.LoginRequest) (strin
 		}
 		return "", "", fmt.Errorf("failed to get user by email: %w", err)
 	}
-	if !utils.ComparePasswords(userDB.PasswordHash, req.Password) {
+	if !auth.ComparePasswords(userDB.PasswordHash, req.Password) {
 		return "", "", models.ErrInvalidCredentials
 	}
-	token, err := utils.GenerateToken(userDB.ID, userDB.Role, s.jwt)
+	token, err := auth.GenerateToken(userDB.ID, userDB.Role, s.jwt)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to generate token: %w", err)
 	}
@@ -103,7 +103,7 @@ func (s *userService) SyncAdmin(ctx context.Context, adminCfg config.Admin) erro
 		return err
 	}
 
-	hash, err := utils.HashPassword(adminCfg.Password)
+	hash, err := auth.HashPassword(adminCfg.Password)
 	if err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func (s *userService) Authenticate(ctx context.Context, email, password string) 
 		return nil, fmt.Errorf("failed to get user by email: %w", err)
 	}
 
-	if !utils.ComparePasswords(user.PasswordHash, password) {
+	if !auth.ComparePasswords(user.PasswordHash, password) {
 		return nil, models.ErrInvalidCredentials
 	}
 	return models.UserDBToUser(user), nil
@@ -166,7 +166,7 @@ func (s *userService) Update(ctx context.Context, id uuid.UUID, req models.Updat
 		fields["email"] = *req.Email
 	}
 	if req.Password != nil {
-		fields["password_hash"], err = utils.HashPassword(*req.Password)
+		fields["password_hash"], err = auth.HashPassword(*req.Password)
 		if err != nil {
 			return nil, err
 		}

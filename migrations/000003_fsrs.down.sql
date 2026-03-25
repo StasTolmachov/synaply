@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS review_logs;
+DROP TABLE IF EXISTS card_states;
