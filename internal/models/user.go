@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 
+	"synaply/internal/auth"
 	"synaply/internal/repository/modelsDB"
-	"synaply/internal/utils"
 )
 
 type User struct {
@@ -46,12 +46,12 @@ func NewUser(req CreateUserRequest, role UserRole) (*User, error) {
 	if req.Email == "" || req.Password == "" || req.FirstName == "" || req.LastName == "" {
 		return nil, fmt.Errorf("cannot create user with empty fields")
 	}
-	err := utils.ValidatePassword(req.Password)
+	err := auth.ValidatePassword(req.Password)
 	if err != nil {
 		return nil, fmt.Errorf("%w: %s", ErrInvalidPassword, err.Error())
 	}
 
-	hash, err := utils.HashPassword(req.Password)
+	hash, err := auth.HashPassword(req.Password)
 	if err != nil {
 		return nil, fmt.Errorf("cannot hash password: %w", err)
 	}
@@ -80,8 +80,7 @@ var (
 	ErrUserNotFound       = errors.New("user not found")
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrPermissionDenied   = errors.New("permission denied")
-
-	ErrInvalidPassword = errors.New("invalid password")
+	ErrInvalidPassword    = errors.New("invalid password")
 )
 
 type UserResponse struct {

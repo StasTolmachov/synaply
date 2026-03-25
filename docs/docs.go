@@ -532,7 +532,7 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Create a new user",
+                "summary": "CreateUserWithProfile a new user",
                 "parameters": [
                     {
                         "description": "User registration info",
@@ -814,7 +814,7 @@ const docTemplate = `{
                 "tags": [
                     "words"
                 ],
-                "summary": "Create a new word",
+                "summary": "CreateUserWithProfile a new word",
                 "parameters": [
                     {
                         "description": "Word data",

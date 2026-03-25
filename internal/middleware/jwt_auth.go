@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/uuid"
 
+	"synaply/internal/auth"
 	"synaply/internal/models"
-	"synaply/internal/utils"
 	"synaply/slogger"
 )
 
@@ -30,7 +30,7 @@ func AuthMidleware(secret string) func(next http.Handler) http.Handler {
 			}
 
 			tokenString := parts[1]
-			claims, err := utils.ParseToken(tokenString, secret)
+			claims, err := auth.ParseToken(tokenString, secret)
 			if err != nil {
 				http.Error(w, "Invalid token", http.StatusUnauthorized)
 				slogger.Log.DebugContext(r.Context(), "Token parse error", "err", err)
