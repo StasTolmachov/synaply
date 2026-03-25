@@ -597,7 +597,6 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
-	//todo
 	req.ID = userCtx.ID
 	req.SourceLang = user.SourceLang
 	req.TargetLang = user.TargetLang
