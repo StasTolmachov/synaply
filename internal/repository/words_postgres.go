@@ -48,26 +48,30 @@ func (p *wordsPostgres) Create(ctx context.Context, req modelsDB.CreateReq) (*mo
 
 func (p *wordsPostgres) GetLessonWords(ctx context.Context, userID uuid.UUID) ([]modelsDB.LessonDB, error) {
 	query := `
-	WITH
-	new_words AS (
-		-- Take 3 new words (State = 0)
-		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
-		FROM words
-		WHERE user_id = $1 AND state = 0
-		ORDER BY created_at ASC
-		LIMIT 3
-	),
-	review_words AS (
-		-- Take 7 words that are already in the process of learning (State != 0)
-		SELECT id, source_word, target_word, comment, source_lang, target_lang, due, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, last_review
-		FROM words
-		WHERE user_id = $1 AND state != 0
-		ORDER BY due ASC -- MAGIC HERE: First those that are long overdue for review
-		LIMIT 7
-	)
-	SELECT * FROM new_words
-	UNION ALL 
-	SELECT * FROM review_words;
+SELECT 
+    id, source_word, target_word, comment, source_lang, target_lang, 
+    due, stability, difficulty, elapsed_days, scheduled_days, 
+    reps, lapses, state, last_review
+FROM words
+WHERE user_id = $1 
+  AND (
+      -- Кандидат 1: Слова на повторение, чье время УЖЕ ПРИШЛО (due <= сейчас)
+      (state != 0 AND due <= NOW()) 
+      OR 
+      -- Кандидат 2: Абсолютно новые слова
+      (state = 0)
+  )
+ORDER BY 
+    -- МАГИЯ ЗДЕСЬ: Присваиваем приоритеты.
+    -- Сначала берем слова на повторение (приоритет 1), затем новые (приоритет 2)
+    CASE WHEN state != 0 THEN 1 ELSE 2 END ASC,
+    
+    -- Внутри группы повторения сортируем так, чтобы самые "просроченные" шли первыми
+    due ASC,
+    
+    -- Внутри группы новых слов сортируем по дате добавления (старые добавленные первыми)
+    created_at ASC
+LIMIT 10;
 	`
 
 	//todo
