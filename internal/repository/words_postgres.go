@@ -287,14 +287,17 @@ func (p *wordsPostgres) UpdateWordFields(ctx context.Context, req modelsDB.Updat
 
 func (p *wordsPostgres) GetWordsForGemini(ctx context.Context, req *modelsDB.WordsForGeminiReq) ([]modelsDB.WordsForGeminiResp, error) {
 	query := `
-select source_word, target_word
-from words
-where user_id = $1
-and source_lang = $2
-and target_lang = $3
-order by due asc 
-limit 500
-`
+	SELECT source_word, target_word
+	FROM words
+	WHERE user_id = $1
+	  AND source_lang = $2
+	  AND target_lang = $3
+	  AND state = 2 
+	ORDER BY 
+	  stability DESC, 
+	  lapses ASC     
+	LIMIT 500         
+	`
 	var resp []modelsDB.WordsForGeminiResp
 	err := p.db.db.SelectContext(ctx, &resp, query, req.UserID, req.SourceLang, req.TargetLang)
 	if err != nil {
