@@ -168,6 +168,7 @@ func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	lesson := make(map[string]models.Lesson)
 	var word models.Lesson
 
+	// 1. Достаем урок из кэша или БД
 	data, err := s.cache.Get(ctx, key)
 	if err == nil {
 		if err := json.Unmarshal([]byte(data), &lesson); err != nil {
@@ -202,23 +203,58 @@ func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 		LastReview:    word.LastReview,
 	}
 
-	rating := fsrs.Good
-	isCorrect = true
-	if !strings.EqualFold(req.TargetWord, word.TargetWord) {
-		rating = fsrs.Again
-		isCorrect = false
+	isMistake := !strings.EqualFold(req.TargetWord, word.TargetWord)
+	isCorrect = !isMistake
+
+	var newCard fsrs.Card
+
+	if word.FSRSLocked {
+		if isMistake {
+			schedulingInfo := fsrsScheduler.Next(card, time.Now().UTC(), fsrs.Again)
+			newCard = schedulingInfo.Card
+
+			word.FSRSLocked = false
+			word.MistakesInSession++
+		} else {
+			newCard = card
+		}
+	} else {
+		if isMistake {
+			if word.MistakesInSession == 0 {
+				schedulingInfo := fsrsScheduler.Next(card, time.Now().UTC(), fsrs.Again)
+				newCard = schedulingInfo.Card
+			} else {
+				newCard = card
+			}
+			word.MistakesInSession++
+
+		} else {
+			var rating fsrs.Rating
+			if word.MistakesInSession == 0 {
+				if word.State == 0 {
+					rating = fsrs.Easy
+				} else {
+					rating = fsrs.Good
+				}
+			} else {
+				rating = fsrs.Hard
+			}
+
+			schedulingInfo := fsrsScheduler.Next(card, time.Now().UTC(), rating)
+			newCard = schedulingInfo.Card
+
+			word.FSRSLocked = true
+		}
 	}
 
-	schedulingInfo := fsrsScheduler.Next(card, time.Now(), rating)
-	newCard := schedulingInfo.Card
-
 	lesson[req.ID] = models.Lesson{
-		ID:            word.ID,
-		SourceWord:    word.SourceWord,
-		TargetWord:    word.TargetWord,
-		Comment:       word.Comment,
-		SourceLang:    word.SourceLang,
-		TargetLang:    word.TargetLang,
+		ID:         word.ID,
+		SourceWord: word.SourceWord,
+		TargetWord: word.TargetWord,
+		Comment:    word.Comment,
+		SourceLang: word.SourceLang,
+		TargetLang: word.TargetLang,
+
 		Due:           newCard.Due,
 		Stability:     newCard.Stability,
 		Difficulty:    newCard.Difficulty,
@@ -228,8 +264,12 @@ func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 		Lapses:        newCard.Lapses,
 		State:         newCard.State,
 		LastReview:    newCard.LastReview,
-		Index:         word.Index + 1,
+
+		Index:             word.Index + 1,
+		MistakesInSession: word.MistakesInSession,
+		FSRSLocked:        word.FSRSLocked,
 	}
+
 	val, err := json.Marshal(lesson)
 	if err != nil {
 		return isCorrect, nil, fmt.Errorf("failed to marshal lesson: %w", err)
@@ -238,19 +278,16 @@ func (s *wordsService) CheckAnswer(ctx context.Context, req models.AnswerReq, us
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "failed to cache lesson", "key", key, "error", err)
 	}
-	bgCtx := context.WithoutCancel(ctx)
 
+	bgCtx := context.WithoutCancel(ctx)
 	s.wg.Add(1)
-	//todo RabitMQ
 	updatedWord := lesson[req.ID]
 	go func(wordToSave models.Lesson) {
 		defer s.wg.Done()
-
 		timeoutCtx, cancel := context.WithTimeout(bgCtx, 5*time.Second)
 		defer cancel()
 
 		wordDB := models.LessonToLessonDB(&wordToSave)
-
 		err := s.repo.UpdateWord(timeoutCtx, wordDB)
 		if err != nil {
 			slogger.Log.ErrorContext(timeoutCtx, "failed to update lesson", "key", key, "error", err)
