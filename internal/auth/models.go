@@ -30,14 +30,6 @@ type User struct {
 	DeletedAt *time.Time `db:"deleted_at"`
 }
 
-var (
-	ErrUserAlreadyExists  = errors.New("user already exists")
-	ErrUserNotFound       = errors.New("user not found")
-	ErrInvalidCredentials = errors.New("invalid credentials")
-	ErrPermissionDenied   = errors.New("permission denied")
-	ErrInvalidPassword    = errors.New("invalid password")
-)
-
 type UserLearningProfile struct {
 	ID               uuid.UUID       `db:"id"`
 	UserID           uuid.UUID       `db:"user_id"`
@@ -50,3 +42,13 @@ type UserLearningProfile struct {
 	CreatedAt        time.Time       `db:"created_at"`
 	UpdatedAt        time.Time       `db:"updated_at"`
 }
+
+var (
+	ErrUserAlreadyExists  = errors.New("user already exists")
+	ErrUserNotFound       = errors.New("user not found")
+	ErrInvalidCredentials = errors.New("invalid credentials")
+	ErrPermissionDenied   = errors.New("permission denied")
+	ErrInvalidPassword    = errors.New("invalid password")
+	ErrReqTooLarge        = errors.New("request body too large")
+	ErrInvalidJSON        = errors.New("invalid JSON format")
+)

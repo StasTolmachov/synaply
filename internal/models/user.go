@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"synaply/internal/auth"
 	"synaply/internal/repository/modelsDB"
 )
 

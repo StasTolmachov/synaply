@@ -1,11 +1,9 @@
 package auth
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
-	"synaply/internal/utils"
 	"synaply/slogger"
 )
 
@@ -17,28 +15,15 @@ func NewHandler(service Service) *handler {
 	return &handler{service: service}
 }
 
+const MaxBodySize = 1048576 // 1MB
+
 func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
-	var req RegisterRequest
-	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		if _, ok := errors.AsType[*http.MaxBytesError](err); ok {
-			WriteError(w, http.StatusRequestEntityTooLarge, "Request body too large")
-			return
-		}
-		WriteError(w, http.StatusBadRequest, "Invalid JSON format")
+	req, ok := DecodeJSON[RegisterRequest](w, r, MaxBodySize)
+	if !ok {
 		return
 	}
 
-	if err := utils.Validate.Struct(req); err != nil {
-		validationResp := utils.FormatValidationError(err)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(validationResp)
-		return
-	}
-
-	err = ValidatePassword(req.Password)
+	err := ValidatePassword(req.Password)
 	if err != nil {
 		WriteError(w, http.StatusBadRequest, err.Error())
 		return
@@ -47,7 +32,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	createdUser, err := h.service.Register(r.Context(), req)
 	if err != nil {
 		if errors.Is(err, ErrUserAlreadyExists) {
-			WriteError(w, http.StatusConflict, "User already exists")
+			WriteError(w, http.StatusConflict, ErrUserAlreadyExists.Error())
 			return
 		}
 		slogger.Log.ErrorContext(r.Context(), "Failed to register user", "email", req.Email, "error", err)
@@ -56,4 +41,22 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	JSONResponse(w, http.StatusCreated, createdUser)
+}
+
+func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
+	req, ok := DecodeJSON[LoginRequest](w, r, MaxBodySize)
+	if !ok {
+		return
+	}
+
+	resp, err := h.service.Login(r.Context(), req)
+	if err != nil {
+		if errors.Is(err, ErrUserAlreadyExists) {
+			WriteError(w, http.StatusConflict, ErrUserAlreadyExists.Error())
+			return
+		}
+		WriteError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	JSONResponse(w, http.StatusOK, resp)
 }
