@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"errors"
@@ -44,11 +44,9 @@ type UserLearningProfile struct {
 }
 
 var (
-	ErrUserAlreadyExists  = errors.New("user already exists")
 	ErrUserNotFound       = errors.New("user not found")
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrPermissionDenied   = errors.New("permission denied")
 	ErrInvalidPassword    = errors.New("invalid password")
-	ErrReqTooLarge        = errors.New("request body too large")
-	ErrInvalidJSON        = errors.New("invalid JSON format")
+	ErrUserAlreadyExists  = errors.New("user already exists")
 )

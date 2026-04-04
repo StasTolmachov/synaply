@@ -1,11 +1,9 @@
-package auth
+package utils
 
 import (
 	"encoding/json"
 	"errors"
 	"net/http"
-
-	"synaply/internal/utils"
 )
 
 type JSONError struct {
@@ -25,7 +23,7 @@ func WriteError(w http.ResponseWriter, code int, message string) {
 }
 
 func WriteValidationError(w http.ResponseWriter, err error) {
-	validationResp := utils.FormatValidationError(err)
+	validationResp := FormatValidationError(err)
 	JSONResponse(w, http.StatusBadRequest, validationResp)
 }
 
@@ -45,10 +43,15 @@ func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, maxBytes int64) (
 		return val, false
 	}
 
-	if err := utils.Validate.Struct(val); err != nil {
+	if err := Validate.Struct(val); err != nil {
 		WriteValidationError(w, err)
 		return val, false
 	}
 
 	return val, true
 }
+
+var (
+	ErrReqTooLarge = errors.New("request body too large")
+	ErrInvalidJSON = errors.New("invalid JSON format")
+)

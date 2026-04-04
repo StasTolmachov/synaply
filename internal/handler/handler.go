@@ -22,6 +22,7 @@ import (
 	"synaply/internal/models"
 	"synaply/internal/repository/modelsDB"
 	"synaply/internal/service"
+	"synaply/internal/utils"
 	"synaply/slogger"
 )
 
@@ -171,7 +172,7 @@ func (h *Handler) Lang(w http.ResponseWriter, r *http.Request) {
 	Response.Source = models.SortedSourceLanguages
 	Response.Target = models.SortedTargetLanguages
 	slogger.Log.Debug("lang called", Response)
-	auth.JSONResponse(w, http.StatusOK, Response)
+	utils.JSONResponse(w, http.StatusOK, Response)
 }
 
 // Login
@@ -188,12 +189,12 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	var req models.LoginRequest
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.DebugContext(r.Context(), "Invalid request body in Login", "err", err)
 		return
 	}
 	if req.Email == "" || req.Password == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Email and password are required")
+		utils.WriteError(w, http.StatusBadRequest, "Email and password are required")
 		return
 	}
 
@@ -204,15 +205,15 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	slogger.Log.DebugContext(ctx, "Login response", "token", token)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
-			auth.WriteError(w, http.StatusUnauthorized, "Invalid email or password")
+			utils.WriteError(w, http.StatusUnauthorized, "Invalid email or password")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Login failed", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token, SourceLang: sourceLang})
+	utils.JSONResponse(w, http.StatusOK, models.LoginResponse{Token: token, SourceLang: sourceLang})
 }
 
 // Create creates a new user
@@ -233,23 +234,23 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(r.Context(), "Invalid request body", "err", err)
 		return
 	}
 
 	if req.Email == "" || req.Password == "" || req.FirstName == "" || req.LastName == "" || req.SourceLang == "" || req.TargetLang == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Fields cannot be empty")
+		utils.WriteError(w, http.StatusBadRequest, "Fields cannot be empty")
 		slogger.Log.DebugContext(r.Context(), "Registration failed: empty fields", "req", req)
 		return
 	}
 	if req.SourceLang == req.TargetLang {
-		auth.WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
+		utils.WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
 		slogger.Log.DebugContext(r.Context(), "Registration failed: target lang cannot be same as source lang", "req", req)
 		return
 	}
 	if err := auth.ValidatePassword(req.Password); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, err.Error())
+		utils.WriteError(w, http.StatusBadRequest, err.Error())
 		slogger.Log.DebugContext(r.Context(), "Registration failed: invalid password", "err", err)
 		return
 	}
@@ -260,15 +261,15 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrUserAlreadyExists):
-			auth.WriteError(w, http.StatusConflict, "User already exists")
+			utils.WriteError(w, http.StatusConflict, "User already exists")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, err.Error())
+		utils.WriteError(w, http.StatusInternalServerError, err.Error())
 		slogger.Log.ErrorContext(ctx, "Failed to create user", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusCreated, createdUser)
+	utils.JSONResponse(w, http.StatusCreated, createdUser)
 }
 
 // GetUserByID Get User By Slug
@@ -287,7 +288,7 @@ func (h *Handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
 		slogger.Log.DebugContext(r.Context(), "Invalid user Slug", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
@@ -298,16 +299,16 @@ func (h *Handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrUserNotFound):
-			auth.WriteError(w, http.StatusNotFound, "User not found")
+			utils.WriteError(w, http.StatusNotFound, "User not found")
 			slogger.Log.DebugContext(ctx, "User not found", "err", err, "id", id)
 			return
 		default:
-			auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+			utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 			slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 			return
 		}
 	}
-	auth.JSONResponse(w, http.StatusOK, user)
+	utils.JSONResponse(w, http.StatusOK, user)
 }
 
 // GetUsers Get list of users
@@ -332,7 +333,7 @@ func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {
 	if s := r.URL.Query().Get("limit"); s != "" {
 		l, err := strconv.ParseUint(s, 10, 64)
 		if err != nil {
-			auth.WriteError(w, http.StatusBadRequest, "Invalid limit")
+			utils.WriteError(w, http.StatusBadRequest, "Invalid limit")
 			return
 		}
 		limit = l
@@ -341,7 +342,7 @@ func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {
 	if s := r.URL.Query().Get("page"); s != "" {
 		p, err := strconv.ParseUint(s, 10, 64)
 		if err != nil {
-			auth.WriteError(w, http.StatusBadRequest, "Invalid page")
+			utils.WriteError(w, http.StatusBadRequest, "Invalid page")
 			return
 		}
 		page = p
@@ -356,11 +357,11 @@ func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {
 
 	users, err := h.userService.GetUsers(ctx, limit, page, order)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get users")
+		users.WriteError(w, http.StatusInternalServerError, "Failed to get users")
 		slogger.Log.ErrorContext(ctx, "Failed to get users", "err", err)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, users)
+	users.JSONResponse(w, http.StatusOK, users)
 }
 
 // Delete User delete by Slug
@@ -379,19 +380,19 @@ func (h *Handler) GetUsers(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
 		slogger.Log.DebugContext(r.Context(), "Invalid user Slug in Delete", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 	target, err := h.userService.GetUserByID(r.Context(), targetID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(r.Context(), "Failed to get user in Delete", "err", err, "target_id", targetID)
 		return
 	}
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(r.Context(), "Unauthorized", "error", err)
 		return
 	}
@@ -399,26 +400,26 @@ func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	if !models.PermissionCheck(user, target) {
-		auth.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
+		utils.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
 		return
 	}
 	err = h.userService.Delete(ctx, targetID)
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrUserNotFound):
-			auth.WriteError(w, http.StatusNotFound, "User not found")
+			utils.WriteError(w, http.StatusNotFound, "User not found")
 			return
 		case errors.Is(err, models.ErrPermissionDenied):
-			auth.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
+			utils.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
 			return
 
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to delete user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to delete user")
 		slogger.Log.ErrorContext(ctx, "Failed to delete user", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, nil)
+	utils.JSONResponse(w, http.StatusOK, nil)
 }
 
 // Update User update by Slug
@@ -439,14 +440,14 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 
 	targetID, err := uuid.Parse(chi.URLParam(r, "id"))
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid user Slug")
 		slogger.Log.DebugContext(r.Context(), "Invalid user Slug in Update", "err", err, "id", chi.URLParam(r, "id"))
 		return
 	}
 
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(r.Context(), "Unauthorized", "error", err)
 		return
 	}
@@ -454,37 +455,37 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 
 	target, err := h.userService.GetUserByID(r.Context(), targetID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(r.Context(), "Failed to get user in Update", "err", err, "target_id", targetID)
 		return
 	}
 
 	if !models.PermissionCheck(user, target) {
-		auth.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
+		utils.WriteError(w, http.StatusForbidden, models.ErrPermissionDenied.Error())
 		return
 	}
 
 	var req models.UpdateUserRequest
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(r.Context(), "Invalid request body", "err", err)
 		return
 	}
 	ctx := r.Context()
 
 	if req.Role != nil && user.Role != models.RoleAdmin {
-		auth.WriteError(w, http.StatusBadRequest, models.ErrPermissionDenied.Error())
+		utils.WriteError(w, http.StatusBadRequest, models.ErrPermissionDenied.Error())
 		return
 	}
 	if req.Password != nil {
 		if err := auth.ValidatePassword(*req.Password); err != nil {
-			auth.WriteError(w, http.StatusBadRequest, err.Error())
+			utils.WriteError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
 	if req.SourceLang != nil && req.TargetLang != nil && *req.SourceLang == *req.TargetLang {
-		auth.WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
+		utils.WriteError(w, http.StatusBadRequest, "Target lang cannot be same as source lang")
 		return
 	}
 
@@ -492,15 +493,15 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrUserNotFound):
-			auth.WriteError(w, http.StatusNotFound, "User not found")
+			utils.WriteError(w, http.StatusNotFound, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to update user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to update user")
 		slogger.Log.ErrorContext(ctx, "Failed to update user", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, updatedUser)
+	utils.JSONResponse(w, http.StatusOK, updatedUser)
 }
 
 // GetMe Get current user info
@@ -518,7 +519,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -526,10 +527,10 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, models.ErrUserNotFound) {
-			auth.WriteError(w, http.StatusUnauthorized, "User not found")
+			utils.WriteError(w, http.StatusUnauthorized, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
@@ -548,7 +549,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 		TotalCorrect: user.TotalCorrect,
 	}
 
-	auth.JSONResponse(w, http.StatusOK, response)
+	utils.JSONResponse(w, http.StatusOK, response)
 }
 
 // Translate Translate a word
@@ -569,12 +570,12 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	var req models.TranslateReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.DebugContext(r.Context(), "Invalid request body in Translate", "err", err)
 		return
 	}
 	if req.SourceWord == "" && req.TargetWord == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Both source and target words are empty")
+		utils.WriteError(w, http.StatusBadRequest, "Both source and target words are empty")
 		return
 	}
 
@@ -582,7 +583,7 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -590,10 +591,10 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, models.ErrUserNotFound) {
-			auth.WriteError(w, http.StatusUnauthorized, "User not found")
+			utils.WriteError(w, http.StatusUnauthorized, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
@@ -603,13 +604,13 @@ func (h *Handler) Translate(w http.ResponseWriter, r *http.Request) {
 	slogger.Log.Debug("translate req %+v", "req", req)
 	resp, err := h.wordsService.Translate(ctx, req)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to translate")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to translate")
 		slogger.Log.ErrorContext(ctx, "Translation failed", "error", err)
 		return
 	}
 	slogger.Log.Debug("translate resp %+v", "resp", resp)
 
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
 // NewWord Create a new word
@@ -633,7 +634,7 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
@@ -641,7 +642,7 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -650,22 +651,22 @@ func (h *Handler) NewWord(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrWordAlreadyExists):
-			auth.WriteError(w, http.StatusConflict, "Word already exists")
+			utils.WriteError(w, http.StatusConflict, "Word already exists")
 			slogger.Log.ErrorContext(ctx, "Word already exists", "error", err)
 			return
 		case errors.Is(err, models.ErrDBTimeout):
-			auth.WriteError(w, http.StatusRequestTimeout, "Timeout")
+			utils.WriteError(w, http.StatusRequestTimeout, "Timeout")
 			slogger.Log.ErrorContext(ctx, "Timeout", "error", err)
 			return
 		default:
-			auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+			utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 			slogger.Log.ErrorContext(ctx, "Internal server error", "error", err)
 			return
 		}
 	}
 
 	slogger.Log.DebugContext(ctx, "Handler NewWord called with resp", "resp", resp)
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
 // StartLesson Start a new lesson
@@ -683,7 +684,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -692,11 +693,11 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, models.ErrNoWordsForLesson):
-			auth.WriteError(w, http.StatusNotFound, "no_words_for_lesson")
+			utils.WriteError(w, http.StatusNotFound, "no_words_for_lesson")
 			slogger.Log.ErrorContext(ctx, "No words found for lesson", "error", err)
 			return
 		default:
-			auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+			utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 			slogger.Log.ErrorContext(ctx, "Internal server error", "error", err)
 			return
 		}
@@ -712,7 +713,7 @@ func (h *Handler) StartLesson(w http.ResponseWriter, r *http.Request) {
 		Word:         word,
 	}
 
-	auth.JSONResponse(w, http.StatusOK, response)
+	utils.JSONResponse(w, http.StatusOK, response)
 
 }
 
@@ -733,7 +734,7 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -741,7 +742,7 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 	var req models.AnswerReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
@@ -749,12 +750,12 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 
 	if req.ID == "" {
 		slogger.Log.ErrorContext(ctx, "Handler CheckAnswer called with empty req.Slug", "req", req.ID)
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request Slug")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request Slug")
 		return
 	}
 	isCorrect, resp, err := h.wordsService.CheckAnswer(ctx, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to check answer")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to check answer")
 		slogger.Log.ErrorContext(ctx, "Failed to check answer", "err", err)
 		return
 	}
@@ -785,7 +786,7 @@ func (h *Handler) CheckAnswer(w http.ResponseWriter, r *http.Request) {
 		slogger.Log.DebugContext(ctx, "Handler CheckAnswer is NOT correct")
 	}
 
-	auth.JSONResponse(w, http.StatusOK, response)
+	utils.JSONResponse(w, http.StatusOK, response)
 
 }
 
@@ -802,13 +803,13 @@ func (h *Handler) Finish(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	h.wordsService.Finish(ctx, user.ID)
-	auth.JSONResponse(w, http.StatusOK, nil)
+	utils.JSONResponse(w, http.StatusOK, nil)
 }
 
 // WordInfo Get AI-generated information about a word
@@ -828,7 +829,7 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -836,7 +837,7 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	var req gemini.WordInfoRequest
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.DebugContext(ctx, "Invalid request body", "err", err)
 		return
 	}
@@ -844,10 +845,10 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, models.ErrUserNotFound) {
-			auth.WriteError(w, http.StatusUnauthorized, "User not found")
+			utils.WriteError(w, http.StatusUnauthorized, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
@@ -858,14 +859,14 @@ func (h *Handler) WordInfo(w http.ResponseWriter, r *http.Request) {
 	resp, err := h.wordsService.WordInfo(ctx, req)
 	if err != nil {
 		if errors.Is(err, gemini.ErrLimitExceeded) {
-			auth.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			utils.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get word info")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get word info")
 		slogger.Log.ErrorContext(ctx, "Failed to get word info", "err", err)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 
 }
 
@@ -887,7 +888,7 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -895,10 +896,10 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, models.ErrUserNotFound) {
-			auth.WriteError(w, http.StatusUnauthorized, "User not found")
+			utils.WriteError(w, http.StatusUnauthorized, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
@@ -908,12 +909,12 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	}
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
 	if len(reqBody.Topic) > 300 {
-		auth.WriteError(w, http.StatusBadRequest, "Topic must be less than 300 characters")
+		utils.WriteError(w, http.StatusBadRequest, "Topic must be less than 300 characters")
 		return
 	}
 
@@ -925,14 +926,14 @@ func (h *Handler) StartPracticeWithGemini(w http.ResponseWriter, r *http.Request
 	resp, err := h.wordsService.StartPracticeWithGemini(ctx, gemReq, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, gemini.ErrLimitExceeded) {
-			auth.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			utils.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to start practice")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to start practice")
 		slogger.Log.ErrorContext(ctx, "Failed to start practice", "err", err)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
 // CheckAnswerPracticeWithGemini Check answers for AI practice
@@ -953,7 +954,7 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -961,10 +962,10 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
 		if errors.Is(err, models.ErrUserNotFound) {
-			auth.WriteError(w, http.StatusUnauthorized, "User not found")
+			utils.WriteError(w, http.StatusUnauthorized, "User not found")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "err", err)
 		return
 	}
@@ -972,7 +973,7 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	var userTranslateResponse models.UserTranslateResponse
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&userTranslateResponse); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
@@ -984,14 +985,14 @@ func (h *Handler) CheckAnswerPracticeWithGemini(w http.ResponseWriter, r *http.R
 	resp, err := h.wordsService.CheckAnswerPracticeWithGemini(ctx, gemReq, userCtx.ID, userTranslateResponse.Translation)
 	if err != nil {
 		if errors.Is(err, gemini.ErrLimitExceeded) {
-			auth.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
+			utils.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended")
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to check answer")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to check answer")
 		slogger.Log.ErrorContext(ctx, "Failed to check answer", "err", err)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
 // FinishPracticeWithGemini Finish the AI practice session
@@ -1008,25 +1009,25 @@ func (h *Handler) FinishPracticeWithGemini(w http.ResponseWriter, r *http.Reques
 	ctx := r.Context()
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	err = h.wordsService.FinishPracticeWithGemini(ctx, userCtx.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to finish practice")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to finish practice")
 		slogger.Log.ErrorContext(ctx, "Failed to finish practice", "err", err)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -1053,12 +1054,12 @@ func (h *Handler) GetWordsList(w http.ResponseWriter, r *http.Request) {
 
 	words, total, err := h.wordsService.GetWordsList(ctx, req)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to get words list", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]any{
+	utils.JSONResponse(w, http.StatusOK, map[string]any{
 		"words": words,
 		"total": total,
 	})
@@ -1068,7 +1069,7 @@ func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -1076,14 +1077,14 @@ func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid Slug")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid Slug")
 		slogger.Log.DebugContext(ctx, "Invalid Slug in UpdateWordFields", "err", err, "id", idStr)
 		return
 	}
 
 	var req modelsDB.UpdateWordReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
@@ -1091,19 +1092,19 @@ func (h *Handler) UpdateWordFields(w http.ResponseWriter, r *http.Request) {
 
 	err = h.wordsService.UpdateWordFields(ctx, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to update word fields", "err", err, "word_id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
@@ -1111,31 +1112,31 @@ func (h *Handler) DeleteWord(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	err = h.wordsService.DeleteWord(ctx, idStr, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to delete word", "err", err, "word_id", idStr)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 func (h *Handler) DeleteAllWords(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	err = h.wordsService.DeleteAllWords(ctx, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to delete all words", "err", err, "user_id", user.ID)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 // WordList Generate a thematic word list using AI
@@ -1159,14 +1160,14 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		slogger.Log.ErrorContext(ctx, "Failed to get user", "error", err)
 		return
 	}
@@ -1174,7 +1175,7 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	var wordListReq models.WordListReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576)
 	if err := json.NewDecoder(r.Body).Decode(&wordListReq); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		slogger.Log.ErrorContext(ctx, "Invalid request body", "error", err)
 		return
 	}
@@ -1183,7 +1184,7 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 	wordListReq.TargetLang = user.TargetLang
 
 	if wordListReq.Topic == "" && wordListReq.UserTopic == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Please select a topic or provide a custom request")
+		utils.WriteError(w, http.StatusBadRequest, "Please select a topic or provide a custom request")
 		return
 	}
 
@@ -1192,15 +1193,15 @@ func (h *Handler) WordList(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if errors.Is(err, gemini.ErrLimitExceeded) {
-			auth.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
+			utils.WriteError(w, http.StatusTooManyRequests, "Sorry, but the free mode has ended. Please try again tomorrow.")
 			return
 		}
 		// Corrected error message
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to generate word list. Please try again with a different topic or request.")
 		slogger.Log.ErrorContext(ctx, "Failed to generate word list", "error", err, "req", wordListReq)
 		return
 	}
-	auth.JSONResponse(w, http.StatusOK, resp)
+	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
 // CreateBatchWords mass save words
@@ -1221,31 +1222,31 @@ func (h *Handler) CreateBatchWords(w http.ResponseWriter, r *http.Request) {
 
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	var req models.CreateBatchReq
 	r.Body = http.MaxBytesReader(w, r.Body, 1048576) // 1MB limit
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body format")
 		slogger.Log.ErrorContext(ctx, "Invalid request body format in CreateBatchWords", "error", err)
 		return
 	}
 
 	if len(req.Words) > 500 {
-		auth.WriteError(w, http.StatusBadRequest, "Too many words in one batch (maximum is 500)")
+		utils.WriteError(w, http.StatusBadRequest, "Too many words in one batch (maximum is 500)")
 		return
 	}
 
 	err = h.wordsService.CreateBatch(ctx, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to save words")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to save words")
 		slogger.Log.ErrorContext(ctx, "Failed to CreateBatchWords", "error", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words saved"})
 }
 
 // ImportWords Import words from CSV or JSON file
@@ -1266,98 +1267,98 @@ func (h *Handler) ImportWords(w http.ResponseWriter, r *http.Request) {
 
 	userCtx, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	user, err := h.userService.GetUserByID(ctx, userCtx.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get user")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get user")
 		return
 	}
 
 	// Parse multipart form
 	err = r.ParseMultipartForm(5 << 20) // 5MB limit
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Failed to parse form")
+		utils.WriteError(w, http.StatusBadRequest, "Failed to parse form")
 		return
 	}
 
 	file, header, err := r.FormFile("file")
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "File is required")
+		utils.WriteError(w, http.StatusBadRequest, "File is required")
 		return
 	}
 	defer file.Close()
 
 	fileBytes, err := io.ReadAll(file)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to read file")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to read file")
 		return
 	}
 
 	id, err := uuid.Parse(user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to parse user ID")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to parse user ID")
 		return
 	}
 
 	err = h.wordsService.ImportWords(ctx, fileBytes, header.Filename, id, user.SourceLang, user.TargetLang)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, err.Error())
+		utils.WriteError(w, http.StatusInternalServerError, err.Error())
 		slogger.Log.ErrorContext(ctx, "Failed to import words", "error", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words imported successfully"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success", "message": "Words imported successfully"})
 }
 
 func (h *Handler) GetProgressStats(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		slogger.Log.ErrorContext(ctx, "Unauthorized", "error", err)
 		return
 	}
 
 	stats, err := h.wordsService.GetProgressStats(ctx, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Internal server error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal server error")
 		slogger.Log.ErrorContext(ctx, "Failed to get progress stats", "err", err, "user_id", user.ID)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, stats)
+	utils.JSONResponse(w, http.StatusOK, stats)
 }
 
 func (h *Handler) CreatePublicWordList(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	var req models.CreatePublicWordListRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
 	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Title, level and words are required")
+		utils.WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
 	id, err := h.wordsService.CreatePublicWordList(ctx, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to create public word list")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to create public word list")
 		slogger.Log.ErrorContext(ctx, "Failed to create public word list", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
+	utils.JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
 }
 
 // GetPublicWordLists returns all public word lists
@@ -1378,12 +1379,12 @@ func (h *Handler) GetPublicWordLists(w http.ResponseWriter, r *http.Request) {
 
 	lists, err := h.wordsService.GetPublicWordLists(ctx, sourceLang, targetLang, level)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get public word lists")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get public word lists")
 		slogger.Log.ErrorContext(ctx, "Failed to get public word lists", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, lists)
+	utils.JSONResponse(w, http.StatusOK, lists)
 }
 
 // GetPublicWordListByID returns a public word list with its items
@@ -1399,112 +1400,112 @@ func (h *Handler) GetPublicWordListByID(w http.ResponseWriter, r *http.Request) 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	detail, err := h.wordsService.GetPublicWordListByID(ctx, id)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get public word list")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get public word list")
 		slogger.Log.ErrorContext(ctx, "Failed to get public word list", "err", err, "id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, detail)
+	utils.JSONResponse(w, http.StatusOK, detail)
 }
 
 func (h *Handler) UpdatePublicWordList(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	var req models.CreatePublicWordListRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
 	if req.Title == "" || len(req.Words) == 0 || req.Level == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Title, level and words are required")
+		utils.WriteError(w, http.StatusBadRequest, "Title, level and words are required")
 		return
 	}
 
 	err = h.wordsService.UpdatePublicWordList(ctx, id, req, user.ID)
 	if err != nil {
 		if strings.Contains(err.Error(), "unauthorized") {
-			auth.WriteError(w, http.StatusForbidden, err.Error())
+			utils.WriteError(w, http.StatusForbidden, err.Error())
 			return
 		}
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to update public word list")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to update public word list")
 		slogger.Log.ErrorContext(ctx, "Failed to update public word list", "err", err, "id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
 func (h *Handler) AddPublicListToUser(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	err = h.wordsService.AddPublicListToUser(ctx, id, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to add words to dictionary")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to add words to dictionary")
 		slogger.Log.ErrorContext(ctx, "Failed to add public list to user", "err", err, "list_id", id, "user_id", user.ID)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
 func (h *Handler) CreatePlaylist(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	var req models.CreatePlaylistRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
 	if req.Title == "" {
-		auth.WriteError(w, http.StatusBadRequest, "Title is required")
+		utils.WriteError(w, http.StatusBadRequest, "Title is required")
 		return
 	}
 
 	id, err := h.wordsService.CreatePlaylist(ctx, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to create playlist")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to create playlist")
 		slogger.Log.ErrorContext(ctx, "Failed to create playlist", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
+	utils.JSONResponse(w, http.StatusCreated, map[string]any{"id": id})
 }
 
 // GetPlaylists returns all playlists
@@ -1518,12 +1519,12 @@ func (h *Handler) GetPlaylists(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	playlists, err := h.wordsService.GetPlaylists(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get playlists")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get playlists")
 		slogger.Log.ErrorContext(ctx, "Failed to get playlists", "err", err)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, playlists)
+	utils.JSONResponse(w, http.StatusOK, playlists)
 }
 
 // GetPlaylistByID returns a playlist with its public word lists
@@ -1539,74 +1540,74 @@ func (h *Handler) GetPlaylistByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	detail, err := h.wordsService.GetPlaylistByID(ctx, id)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to get playlist")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to get playlist")
 		slogger.Log.ErrorContext(ctx, "Failed to get playlist", "err", err, "id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, detail)
+	utils.JSONResponse(w, http.StatusOK, detail)
 }
 
 func (h *Handler) UpdatePlaylist(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	var req models.CreatePlaylistRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid request body")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
 	err = h.wordsService.UpdatePlaylist(ctx, id, req, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to update playlist")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to update playlist")
 		slogger.Log.ErrorContext(ctx, "Failed to update playlist", "err", err, "id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
 func (h *Handler) DeletePlaylist(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	user, err := middleware.GetUserFromContext(ctx)
 	if err != nil {
-		auth.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
 
 	idStr := chi.URLParam(r, "id")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		auth.WriteError(w, http.StatusBadRequest, "Invalid ID format")
+		utils.WriteError(w, http.StatusBadRequest, "Invalid ID format")
 		return
 	}
 
 	err = h.wordsService.DeletePlaylist(ctx, id, user.ID)
 	if err != nil {
-		auth.WriteError(w, http.StatusInternalServerError, "Failed to delete playlist")
+		utils.WriteError(w, http.StatusInternalServerError, "Failed to delete playlist")
 		slogger.Log.ErrorContext(ctx, "Failed to delete playlist", "err", err, "id", id)
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
+	utils.JSONResponse(w, http.StatusOK, map[string]string{"status": "success"})
 }
 
 func (h *Handler) GetAdminStats(w http.ResponseWriter, r *http.Request) {
@@ -1615,9 +1616,9 @@ func (h *Handler) GetAdminStats(w http.ResponseWriter, r *http.Request) {
 	stats, err := h.userService.GetAdminStats(ctx, search)
 	if err != nil {
 		slogger.Log.ErrorContext(ctx, "Failed to get admin stats", "err", err)
-		auth.WriteError(w, http.StatusInternalServerError, "Internal Server Error")
+		utils.WriteError(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
 
-	auth.JSONResponse(w, http.StatusOK, stats)
+	utils.JSONResponse(w, http.StatusOK, stats)
 }

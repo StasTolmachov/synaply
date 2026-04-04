@@ -20,6 +20,13 @@ func ComparePasswords(hash, pass string) bool {
 	return err == nil
 }
 
+// ValidatePassword проверяет, соответствует ли пароль критериям безопасности:
+// - Минимум 8 символов;
+// - Наличие заглавной буквы;
+// - Наличие строчной буквы;
+// - Наличие цифры;
+// - Наличие специального символа.
+// Если пароль не соответствует хотя бы одному из критериев, возвращается ошибка.
 func ValidatePassword(password string) error {
 	var (
 		hasMinLen  = false

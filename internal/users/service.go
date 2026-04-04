@@ -1,10 +1,11 @@
-package auth
+package users
 
 import (
 	"context"
 
 	"github.com/google/uuid"
 
+	"synaply/internal/auth"
 	"synaply/internal/models"
 )
 
@@ -15,16 +16,16 @@ type Service interface {
 
 type authService struct {
 	repo Repository
-	jwt  TokenMaker
+	jwt  auth.TokenMaker
 }
 
-func NewService(repo Repository, jwt TokenMaker) Service {
+func NewService(repo Repository, jwt auth.TokenMaker) Service {
 	return &authService{repo, jwt}
 }
 
 func (s *authService) Register(ctx context.Context, req RegisterRequest) (*TokenResponse, error) {
 
-	hash, err := HashPassword(req.Password)
+	hash, err := auth.HashPassword(req.Password)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (s *authService) Login(ctx context.Context, req LoginRequest) (*TokenRespon
 	if err != nil {
 		return nil, err
 	}
-	if !ComparePasswords(user.PasswordHash, req.Password) {
+	if !auth.ComparePasswords(user.PasswordHash, req.Password) {
 		return nil, models.ErrInvalidCredentials
 	}
 	token, err := s.jwt.GenerateToken(user.ID, string(user.Role))
