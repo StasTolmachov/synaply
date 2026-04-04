@@ -89,3 +89,18 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.JSONResponse(w, http.StatusOK, updatedUser)
 }
+
+func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	user, err := middleware.GetUserFromContext(r.Context())
+	if err != nil {
+		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	err = h.service.DeleteUser(r.Context(), user.ID)
+	if err != nil {
+		utils.WriteError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	utils.JSONResponse(w, http.StatusOK, nil)
+}
