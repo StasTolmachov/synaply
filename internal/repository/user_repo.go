@@ -9,7 +9,7 @@ import (
 	"synaply/internal/repository/modelsDB"
 )
 
-type UserRepository interface {
+type UserRepositoryOld interface {
 	Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.UserDB, error)
 	GetPasswordHashByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error)
 	GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.UserDB, error)

@@ -8,8 +8,7 @@ CREATE TABLE classrooms (
                             source_lang VARCHAR(10) NOT NULL,
                             target_lang VARCHAR(10) NOT NULL,
                             invite_code VARCHAR(20) UNIQUE NOT NULL,
-                            status VARCHAR(20) DEFAULT 'active'
-                                cover_url VARCHAR(512) NULL,
+                            status VARCHAR(20) DEFAULT 'active',
 
                             created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                             updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -22,8 +21,8 @@ CREATE TABLE classroom_students (
                                     classroom_id UUID NOT NULL REFERENCES classrooms(id) ON DELETE CASCADE,
                                     student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                                     class_role VARCHAR(20) NOT NULL DEFAULT 'student',
-                                    join_status VARCHAR(20) DEFAULT 'pending'
-                                        joined_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                    join_status VARCHAR(20) DEFAULT 'pending',
+                                    joined_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
                                     PRIMARY KEY (classroom_id, student_id)
 );

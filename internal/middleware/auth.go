@@ -9,15 +9,15 @@ import (
 	"github.com/google/uuid"
 
 	"synaply/internal/auth"
-	"synaply/internal/users"
+	"synaply/internal/models"
 	"synaply/internal/utils"
 )
 
 type UserCtxKey struct{}
 
 // GetUserFromContext safely extracts user from context
-func GetUserFromContext(ctx context.Context) (*users.User, error) {
-	user, ok := ctx.Value(UserCtxKey{}).(*users.User)
+func GetUserFromContext(ctx context.Context) (*models.User, error) {
+	user, ok := ctx.Value(UserCtxKey{}).(*models.User)
 	if !ok {
 		return nil, errors.New("user not found in context")
 	}
@@ -32,7 +32,7 @@ func AdminOnly(next http.Handler) http.Handler {
 			return
 		}
 
-		if user.Role != users.RoleAdmin {
+		if user.Role != models.RoleAdmin {
 			http.Error(w, "Forbidden", http.StatusForbidden)
 			return
 		}
@@ -66,9 +66,9 @@ func AuthMiddleware(tm auth.TokenMaker) func(next http.Handler) http.Handler {
 				utils.WriteError(w, http.StatusInternalServerError, "Failed to parse user Slug")
 				return
 			}
-			userCtx := &users.User{
+			userCtx := &models.User{
 				ID:   id,
-				Role: users.Role(claims.Role),
+				Role: models.Role(claims.Role),
 			}
 
 			ctx := context.WithValue(r.Context(), UserCtxKey{}, userCtx)
