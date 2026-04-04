@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -57,3 +58,8 @@ func (p *Postgres) runMigratopns(path string) error {
 	}
 	return nil
 }
+
+var (
+	ErrDuplicateEmail = errors.New("duplicate email")
+	ErrUserNotFound   = errors.New("user not found")
+)

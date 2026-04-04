@@ -2,25 +2,56 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"strings"
 
+	"github.com/go-playground/locales/en"
+	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
+	enTranslations "github.com/go-playground/validator/v10/translations/en"
 )
 
-var Validate *validator.Validate
+// Константы для стандартных ответов
+const (
+	ErrCodeInvalidRequest   = "invalid_request"
+	ErrCodeValidationFailed = "validation_failed"
+)
 
-func init() {
-	Validate = validator.New()
+type Validator struct {
+	validate   *validator.Validate
+	translator ut.Translator
+}
 
-	//use tag name
-	Validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+func NewValidator() (*Validator, error) {
+	v := validator.New()
+
+	// 1. Привязываем имена полей к JSON-тегам
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
 		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
 		if name == "-" {
 			return ""
 		}
 		return name
 	})
+
+	// 2. Настраиваем транслятор (по умолчанию английский)
+	english := en.New()
+	uni := ut.New(english, english)
+	trans, ok := uni.GetTranslator("en")
+	if !ok {
+		return nil, errors.New("translator not found")
+	}
+
+	// Регистрация дефолтных переводов (избавляет от switch-case)
+	if err := enTranslations.RegisterDefaultTranslations(v, trans); err != nil {
+		return nil, fmt.Errorf("failed to register translations: %w", err)
+	}
+
+	return &Validator{
+		validate:   v,
+		translator: trans,
+	}, nil
 }
 
 type ValidationErrorResponse struct {
@@ -28,36 +59,27 @@ type ValidationErrorResponse struct {
 	Details map[string]string `json:"details"`
 }
 
-func FormatValidationError(err error) ValidationErrorResponse {
-	var valErrors validator.ValidationErrors
-
-	if !errors.As(err, &valErrors) {
-		return ValidationErrorResponse{
-			Error: "invalid_request",
+// FormatError теперь метод структуры, так как ему нужен доступ к транслятору
+func (v *Validator) FormatError(err error) ValidationErrorResponse {
+	if valErrors, ok := errors.AsType[validator.ValidationErrors](err); ok {
+		details := make(map[string]string, len(valErrors))
+		// Translate превращает ошибки в человекочитаемые строки автоматически
+		for _, fieldErr := range valErrors {
+			details[fieldErr.Field()] = fieldErr.Translate(v.translator)
 		}
-	}
 
-	details := make(map[string]string)
-
-	for _, fieldErr := range valErrors {
-		field := fieldErr.Field()
-
-		switch fieldErr.Tag() {
-		case "required":
-			details[field] = "This field is required"
-		case "email":
-			details[field] = "Invalid email format"
-		case "min":
-			details[field] = "Minimum length is " + fieldErr.Param()
-		case "nefield":
-			details[field] = "Cannot be the same as " + fieldErr.Param()
-		default:
-			details[field] = "Invalid value"
+		return ValidationErrorResponse{
+			Error:   ErrCodeValidationFailed,
+			Details: details,
 		}
 	}
 
 	return ValidationErrorResponse{
-		Error:   "validation_failed",
-		Details: details,
+		Error: ErrCodeInvalidRequest,
 	}
+}
+
+// ValidateStruct — обертка для удобства
+func (v *Validator) ValidateStruct(s any) error {
+	return v.validate.Struct(s)
 }

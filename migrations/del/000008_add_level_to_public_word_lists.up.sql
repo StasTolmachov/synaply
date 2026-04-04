@@ -1,2 +1,0 @@
-ALTER TABLE public_word_lists ADD COLUMN level VARCHAR(10) NOT NULL DEFAULT 'A1';
-ALTER TABLE public_word_lists ALTER COLUMN level DROP DEFAULT;

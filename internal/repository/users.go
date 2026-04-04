@@ -12,7 +12,6 @@ import (
 	"github.com/lib/pq"
 
 	"synaply/internal/models"
-	"synaply/internal/repository/modelsDB"
 )
 
 var allowedUpdateColumns = map[string]bool{
@@ -27,9 +26,12 @@ var allowedUpdateColumns = map[string]bool{
 }
 
 type UserRepository interface {
+	CreateUser(ctx context.Context, user *models.User) error
 	CreateUserWithProfile(ctx context.Context, user *models.User, profile *models.UserLearningProfile) error
+	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
+	GetUserByID(ctx context.Context, id uuid.UUID) (*models.User, error)
 	GetUserWithProfileByEmail(ctx context.Context, email string) (*models.User, *models.UserLearningProfile, error)
-	GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*models.User, *models.UserLearningProfile, error)
+	//GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*models.User, *models.UserLearningProfile, error)
 	UpdateUser(ctx context.Context, id uuid.UUID, fields map[string]any) (*models.User, error)
 	DeleteUser(ctx context.Context, id uuid.UUID) error
 }
@@ -95,15 +97,41 @@ RETURNING created_at, updated_at
 	}
 	return nil
 }
+func (r *userRepository) CreateUser(ctx context.Context, user *models.User) error {
+
+	userQuery := `
+INSERT INTO users (id, email, password_hash, first_name, last_name, role)
+VALUES ($1, $2, $3, $4, $5, $6)
+RETURNING created_at, updated_at
+`
+
+	err := r.db.db.QueryRowxContext(ctx, userQuery,
+		user.ID,
+		user.Email,
+		user.PasswordHash,
+		user.FirstName,
+		user.LastName,
+		user.Role,
+	).Scan(&user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		if pqErr, ok := errors.AsType[*pq.Error](err); ok && pqErr.Code == "23505" {
+			return models.ErrUserAlreadyExists
+		}
+		return err
+	}
+
+	return nil
+}
 func (r *userRepository) GetUserWithProfileByEmail(ctx context.Context, email string) (*models.User, *models.UserLearningProfile, error) {
 	query := `
 SELECT 
-    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role, u.avatar_url,
+    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role,
     p.id as "profile.id", p.source_lang as "profile.source_lang", 
     p.target_lang as "profile.target_lang"
 FROM users u
 LEFT JOIN user_learning_profiles p ON u.id = p.user_id
-WHERE u.id = $1 AND u.deleted_at IS NULL AND is_active = true
+WHERE u.email = $1 AND u.deleted_at IS NULL AND is_active = true
 `
 	var result struct {
 		models.User
@@ -120,15 +148,33 @@ WHERE u.id = $1 AND u.deleted_at IS NULL AND is_active = true
 
 	return &result.User, &result.UserLearningProfile, nil
 }
-func (r *userRepository) GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*models.User, *models.UserLearningProfile, error) {
+func (r *userRepository) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
 	query := `
 SELECT 
-    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role, u.avatar_url,
-    p.id as "profile.id", p.source_lang as "profile.source_lang", 
-    p.target_lang as "profile.target_lang"
+    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role
 FROM users u
-LEFT JOIN user_learning_profiles p ON u.id = p.user_id
-WHERE u.id = $1 AND u.deleted_at IS NULL AND is_active = true
+
+WHERE u.email = $1 AND u.deleted_at IS NULL
+`
+	var result models.User
+
+	err := r.db.db.GetContext(ctx, &result, query, email)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, models.ErrUserNotFound
+		}
+		return nil, err
+	}
+
+	return &result, nil
+}
+func (r *userRepository) GetUserByID(ctx context.Context, id uuid.UUID) (*models.User, error) {
+	query := `
+SELECT 
+    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role
+FROM users u
+
+WHERE u.id = $1 AND u.deleted_at IS NULL
 `
 	var result struct {
 		models.User
@@ -138,13 +184,43 @@ WHERE u.id = $1 AND u.deleted_at IS NULL AND is_active = true
 	err := r.db.db.GetContext(ctx, &result, query, id)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, nil, models.ErrUserNotFound
+			return nil, models.ErrUserNotFound
 		}
-		return nil, nil, err
+		return nil, err
 	}
 
-	return &result.User, &result.UserLearningProfile, nil
+	return &result.User, nil
 }
+
+//	func (r *userRepository) GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*models.User, *models.UserLearningProfile, error) {
+//		query := `
+//
+// SELECT
+//
+//	u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role, u.avatar_url,
+//	p.id as "profile.id", p.source_lang as "profile.source_lang",
+//	p.target_lang as "profile.target_lang"
+//
+// FROM users u
+// LEFT JOIN user_learning_profiles p ON u.id = p.user_id
+// WHERE u.id = $1 AND u.deleted_at IS NULL AND is_active = true
+// `
+//
+//		var result struct {
+//			models.User
+//			models.UserLearningProfile
+//		}
+//
+//		err := r.db.db.GetContext(ctx, &result, query, id)
+//		if err != nil {
+//			if errors.Is(err, sql.ErrNoRows) {
+//				return nil, nil, models.ErrUserNotFound
+//			}
+//			return nil, nil, err
+//		}
+//
+//		return &result.User, &result.UserLearningProfile, nil
+//	}
 func (r *userRepository) UpdateUser(ctx context.Context, id uuid.UUID, fields map[string]any) (*models.User, error) {
 	setParts := make([]string, 0, len(fields))
 	args := make([]any, 0, len(fields)+1)
@@ -175,7 +251,7 @@ func (r *userRepository) UpdateUser(ctx context.Context, id uuid.UUID, fields ma
 	err := r.db.db.QueryRowxContext(ctx, query, args...).StructScan(&updatedUser)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, modelsDB.ErrUserNotFound
+			return nil, err //todo
 		}
 		return nil, err
 	}

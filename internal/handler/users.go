@@ -13,19 +13,19 @@ import (
 	"synaply/slogger"
 )
 
-type Handler interface{}
-type handler struct {
-	service service.UserService
+type Handler struct {
+	service   service.UserService
+	validator *utils.Validator
 }
 
-func NewHandler(service service.UserService) Handler {
-	return &handler{service: service}
+func NewHandler(service service.UserService, v *utils.Validator) *Handler {
+	return &Handler{service: service, validator: v}
 }
 
 const MaxBodySize = 1048576 // 1MB
 
-func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
-	req, ok := utils.DecodeJSON[dto.RegisterRequest](w, r, MaxBodySize)
+func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
+	req, ok := utils.DecodeJSON[dto.RegisterRequest](w, r, MaxBodySize, h.validator)
 	if !ok {
 		return
 	}
@@ -51,8 +51,8 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	utils.JSONResponse(w, http.StatusCreated, createdUser)
 }
 
-func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
-	req, ok := utils.DecodeJSON[dto.LoginRequest](w, r, MaxBodySize)
+func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+	req, ok := utils.DecodeJSON[dto.LoginRequest](w, r, MaxBodySize, h.validator)
 	if !ok {
 		return
 	}
@@ -71,13 +71,13 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 	utils.JSONResponse(w, http.StatusOK, resp)
 }
 
-func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
 		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
-	req, ok := utils.DecodeJSON[dto.UpdateRequest](w, r, MaxBodySize)
+	req, ok := utils.DecodeJSON[dto.UpdateRequest](w, r, MaxBodySize, h.validator)
 	if !ok {
 		return
 	}
@@ -90,7 +90,7 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	utils.JSONResponse(w, http.StatusOK, updatedUser)
 }
 
-func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	user, err := middleware.GetUserFromContext(r.Context())
 	if err != nil {
 		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")

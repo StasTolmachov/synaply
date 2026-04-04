@@ -11,7 +11,7 @@ import (
 	"synaply/internal/middleware"
 )
 
-func RegisterRoutes(h *handler) *chi.Mux {
+func RegisterRoutes(h *Handler) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{

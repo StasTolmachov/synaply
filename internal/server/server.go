@@ -6,17 +6,15 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 
-	"synaply/external/deepl"
-	"synaply/external/gemini"
-	"synaply/internal/cache"
+	"synaply/internal/auth"
 	"synaply/internal/config"
 	"synaply/internal/handler"
 	"synaply/internal/repository"
 	"synaply/internal/service"
+	"synaply/internal/utils"
 	"synaply/slogger"
 )
 
@@ -27,38 +25,23 @@ func StartServer(cfg config.Config) {
 	}
 	defer db.Close()
 
-	wordsRepo := repository.NewWordsPostgres(db)
 	userRepo := repository.NewUserRepo(db)
 
-	redisClient, err := cache.NewRedisClient(cfg.Redis)
+	jwt := auth.NewJWTManager(cfg.JWT.Secret, cfg.JWT.TTL)
+
+	userServ := service.NewService(userRepo, jwt)
+	validator, err := utils.NewValidator()
 	if err != nil {
-		slogger.Log.Warn("Error connecting to redis:", "error", err)
+		log.Fatalf("Error creating validator: %s", err)
 	}
-	defer redisClient.Close()
-
-	userRepo.SetCache(redisClient)
-
-	client := &http.Client{
-		Timeout: time.Second * 10,
-	}
-	deeplServ := deepl.NewService(cfg.Deepl.Key, cfg.Deepl.Url, client)
-	geminiServ, err := gemini.NewService(cfg.Gemini.Key, cfg.Gemini.Model)
-	if err != nil {
-		slogger.Log.Warn("Error connecting to gemini:", "error", err)
-	}
-
-	var wg sync.WaitGroup
-	wordsService := service.NewWordsService(wordsRepo, redisClient, deeplServ, &wg, geminiServ)
-	userService := service.NewUserService(userRepo, cfg.JWT)
+	userHandler := handler.NewHandler(userServ, validator)
 
 	ctxBG := context.Background()
-	if err := userService.SyncAdmin(ctxBG, cfg.Admin); err != nil {
+	if err := userServ.SyncAdmin(ctxBG, cfg.Admin); err != nil {
 		log.Fatal("Failed to sync admin user:", err)
 	}
 
-	wordsHandler := handler.NewHandler(wordsService, userService)
-
-	router := handler.RegisterRoutes(wordsHandler, cfg.JWT.Secret)
+	router := handler.RegisterRoutes(userHandler)
 
 	httpServer := &http.Server{
 		Addr:         ":" + cfg.Api.Port,
@@ -88,7 +71,6 @@ func StartServer(cfg config.Config) {
 	}
 
 	log.Println("Waiting for background tasks to finish...")
-	wg.Wait()
 
 	log.Println("Server exiting")
 }

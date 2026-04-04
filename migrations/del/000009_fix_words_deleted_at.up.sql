@@ -1,3 +1,0 @@
-ALTER TABLE words ALTER COLUMN deleted_at DROP NOT NULL;
-ALTER TABLE words ALTER COLUMN deleted_at SET DEFAULT NULL;
-UPDATE words SET deleted_at = NULL WHERE deleted_at IS NOT NULL;

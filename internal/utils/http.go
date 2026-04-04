@@ -13,21 +13,21 @@ type JSONError struct {
 func JSONResponse(w http.ResponseWriter, statusCode int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
-
 	if err := json.NewEncoder(w).Encode(payload); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
+
 }
 func WriteError(w http.ResponseWriter, code int, message string) {
 	JSONResponse(w, code, JSONError{Error: message})
 }
 
-func WriteValidationError(w http.ResponseWriter, err error) {
-	validationResp := FormatValidationError(err)
+func WriteValidationError(w http.ResponseWriter, err error, v *Validator) {
+	validationResp := v.FormatError(err)
 	JSONResponse(w, http.StatusBadRequest, validationResp)
 }
 
-func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, maxBytes int64) (T, bool) {
+func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, maxBytes int64, v *Validator) (T, bool) {
 	var val T
 	if maxBytes > 0 {
 		r.Body = http.MaxBytesReader(w, r.Body, maxBytes)
@@ -43,8 +43,8 @@ func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, maxBytes int64) (
 		return val, false
 	}
 
-	if err := Validate.Struct(val); err != nil {
-		WriteValidationError(w, err)
+	if err := v.ValidateStruct(val); err != nil {
+		WriteValidationError(w, err, v)
 		return val, false
 	}
 
