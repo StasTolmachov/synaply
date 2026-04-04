@@ -2,21 +2,25 @@ package service
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/google/uuid"
 
 	"synaply/internal/auth"
+	"synaply/internal/config"
 	"synaply/internal/handler/dto"
 	"synaply/internal/models"
 	"synaply/internal/repository"
+	"synaply/slogger"
 )
 
 type UserService interface {
 	Register(ctx context.Context, req dto.RegisterRequest) (*dto.TokenResponse, error)
 	Login(ctx context.Context, req dto.LoginRequest) (*dto.TokenResponse, error)
-	GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*dto.UserDTO, error)
 	UpdateUser(ctx context.Context, id uuid.UUID, req dto.UpdateRequest) (*dto.UpdateResponse, error)
 	DeleteUser(ctx context.Context, id uuid.UUID) error
+	SyncAdmin(ctx context.Context, adminCfg config.Admin) error
 }
 
 type userService struct {
@@ -113,25 +117,6 @@ func (s *userService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 	}
 	return resp, nil
 }
-func (s *userService) GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*dto.UserDTO, error) {
-	user, profile, err := s.repo.GetUserWithProfileByID(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return &dto.UserDTO{
-		ID:        user.ID,
-		Email:     user.Email,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Role:      string(user.Role),
-		ActiveProfile: &dto.ProfileDTO{
-			ID:         profile.ID,
-			SourceLang: profile.SourceLang,
-			TargetLang: profile.TargetLang,
-		},
-	}, nil
-}
 func (s *userService) UpdateUser(ctx context.Context, id uuid.UUID, req dto.UpdateRequest) (*dto.UpdateResponse, error) {
 	fieldsReq := map[string]any{}
 	var err error
@@ -153,7 +138,7 @@ func (s *userService) UpdateUser(ctx context.Context, id uuid.UUID, req dto.Upda
 	}
 
 	if len(fieldsReq) == 0 {
-		user, err := s.GetUserWithProfileByID(ctx, id)
+		user, err := s.repo.GetUserByID(ctx, id)
 		if err != nil {
 			return nil, err
 		}
@@ -180,5 +165,53 @@ func (s *userService) DeleteUser(ctx context.Context, id uuid.UUID) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+func (s *userService) SyncAdmin(ctx context.Context, adminCfg config.Admin) error {
+	slogger.Log.InfoContext(ctx, "Syncing admin user...", "email", adminCfg.Email)
+
+	adminUser, err := s.repo.GetUserByEmail(ctx, adminCfg.Email)
+	if err != nil {
+		if errors.Is(err, models.ErrUserNotFound) {
+			slogger.Log.InfoContext(ctx, "Admin not found, creating new one")
+
+			hash, err := auth.HashPassword(adminCfg.Password)
+			if err != nil {
+				return err
+			}
+			newAdmin := &models.User{
+				ID:           uuid.New(),
+				Email:        adminCfg.Email,
+				PasswordHash: hash,
+				FirstName:    "Super",
+				LastName:     "Admin",
+				Role:         models.RoleAdmin,
+			}
+
+			err = s.repo.CreateUser(ctx, newAdmin)
+			if err != nil {
+				return fmt.Errorf("failed to create admin: %w", err)
+			}
+			return nil
+		}
+		return err
+	}
+
+	hash, err := auth.HashPassword(adminCfg.Password)
+	if err != nil {
+		return err
+	}
+
+	fields := map[string]any{
+		"password_hash": hash,
+		"role":          string(models.RoleAdmin),
+	}
+
+	_, err = s.repo.UpdateUser(ctx, adminUser.ID, fields)
+	if err != nil {
+		return fmt.Errorf("failed to update admin: %w", err)
+	}
+	slogger.Log.InfoContext(ctx, "Admin user synced successfully")
+
 	return nil
 }

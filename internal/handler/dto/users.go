@@ -38,10 +38,10 @@ type ProfileDTO struct {
 }
 
 type UpdateRequest struct {
-	Email     *string `json:"email"`
-	Password  *string `json:"password"`
-	FirstName *string `json:"first_name"`
-	LastName  *string `json:"last_name"`
+	Email     *string `json:"email" validate:"omitempty,email" example:"test@user.com"`
+	Password  *string `json:"password" validate:"omitempty,min=8" example:"SecurePass123!"`
+	FirstName *string `json:"first_name" validate:"omitempty" example:"John"`
+	LastName  *string `json:"last_name" validate:"omitempty" example:"Doe"`
 }
 
 type UpdateResponse struct {

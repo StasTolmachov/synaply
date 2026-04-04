@@ -8,13 +8,6 @@ import (
 	"synaply/slogger"
 )
 
-// @title Synaply API
-// @version 1.1
-// @description AI-Powered Language Learning Platform API
-
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
 func main() {
 
 	slogger.MakeLogger(true)
