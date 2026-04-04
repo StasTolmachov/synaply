@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"context"
@@ -12,6 +12,8 @@ import (
 type Repository interface {
 	CreateUserWithProfile(ctx context.Context, user *User, profile *UserLearningProfile) error
 	GetUserWithProfileByEmail(ctx context.Context, email string) (*User, *UserLearningProfile, error)
+	UpdateUser(ctx context.Context, user *User) error
+	DeleteUser(ctx context.Context, id string) error
 }
 
 type postgresRepo struct {
@@ -103,4 +105,51 @@ WHERE u.email = $1 AND u.deleted_at IS NULL
 	}
 
 	return &result.User, &result.UserLearningProfile, nil
+}
+
+func (r *postgresRepo) UpdateUser(ctx context.Context, user *User) error {
+	query := `
+UPDATE users 
+SET first_name = $1, last_name = $2, avatar_url = $3, updated_at = NOW()
+WHERE id = $4 AND deleted_at IS NULL
+RETURNING updated_at
+`
+	err := r.db.QueryRowxContext(ctx, query,
+		user.FirstName,
+		user.LastName,
+		user.AvatarURL,
+		user.ID,
+	).Scan(&user.UpdatedAt)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return ErrUserNotFound
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (r *postgresRepo) DeleteUser(ctx context.Context, id string) error {
+	query := `
+UPDATE users 
+SET deleted_at = NOW()
+WHERE id = $1 AND deleted_at IS NULL
+`
+	result, err := r.db.ExecContext(ctx, query, id)
+	if err != nil {
+		return err
+	}
+
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rows == 0 {
+		return ErrUserNotFound
+	}
+
+	return nil
 }
