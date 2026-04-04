@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 
 	"github.com/jmoiron/sqlx"
@@ -10,6 +11,7 @@ import (
 
 type Repository interface {
 	CreateUserWithProfile(ctx context.Context, user *User, profile *UserLearningProfile) error
+	GetUserWithProfileByEmail(ctx context.Context, email string) (*User, *UserLearningProfile, error)
 }
 
 type postgresRepo struct {
@@ -73,4 +75,32 @@ RETURNING created_at, updated_at
 		return err
 	}
 	return nil
+}
+
+func (r *postgresRepo) GetUserWithProfileByEmail(ctx context.Context, email string) (*User, *UserLearningProfile, error) {
+	query := `
+SELECT 
+    u.id, u.email, u.password_hash, u.first_name, u.last_name, u.role, u.avatar_url, u.created_at, u.updated_at,
+    p.id as "profile.id", p.user_id as "profile.user_id", p.source_lang as "profile.source_lang", 
+    p.target_lang as "profile.target_lang", p.fsrs_weights as "profile.fsrs_weights", 
+    p.request_retention as "profile.request_retention", p.maximum_interval as "profile.maximum_interval", 
+    p.is_active as "profile.is_active", p.created_at as "profile.created_at", p.updated_at as "profile.updated_at"
+FROM users u
+LEFT JOIN user_learning_profiles p ON u.id = p.user_id
+WHERE u.email = $1 AND u.deleted_at IS NULL
+`
+	var result struct {
+		User
+		UserLearningProfile
+	}
+
+	err := r.db.GetContext(ctx, &result, query, email)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil, ErrUserNotFound
+		}
+		return nil, nil, err
+	}
+
+	return &result.User, &result.UserLearningProfile, nil
 }
