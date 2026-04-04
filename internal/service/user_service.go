@@ -15,7 +15,7 @@ import (
 	"synaply/slogger"
 )
 
-type UserService interface {
+type UserServiceOld interface {
 	Create(ctx context.Context, req models.CreateUserRequest) (*models.UserResponse, error)
 	Authenticate(ctx context.Context, email, password string) (*models.User, error)
 	GetUserByID(ctx context.Context, id uuid.UUID) (*models.UserResponse, error)
@@ -30,12 +30,12 @@ type UserService interface {
 	GetAdminStats(ctx context.Context, search string) (*models.AdminStats, error)
 }
 
-type userService struct {
-	repo repository.UserRepository
+type userServiceOld struct {
+	repo repository.userRepo
 	jwt  config.JWT
 }
 
-func NewUserService(repo repository.UserRepository, jwt config.JWT) UserService {
+func NewUserService(repo repository.userRepo, jwt config.JWT) UserService {
 	return &userService{
 		repo: repo,
 		jwt:  jwt,
@@ -59,7 +59,7 @@ func (s *userService) Create(ctx context.Context, req models.CreateUserRequest) 
 
 	return models.FromDBToUserResponse(userDB), nil
 }
-func (s *userService) Login(ctx context.Context, req models.LoginRequest) (string, string, error) {
+func (s *userService) LoginOld(ctx context.Context, req models.LoginRequest) (string, string, error) {
 	userDB, err := s.repo.GetPasswordHashByEmail(ctx, req.Email)
 	slogger.Log.DebugContext(ctx, "Login request", "userDB", userDB)
 	if err != nil {
@@ -132,7 +132,7 @@ func (s *userService) Authenticate(ctx context.Context, email, password string) 
 	}
 	return models.UserDBToUser(user), nil
 }
-func (s *userService) GetUserByID(ctx context.Context, id uuid.UUID) (*models.UserResponse, error) {
+func (s *userService) _GetUserByID(ctx context.Context, id uuid.UUID) (*models.UserResponse, error) {
 
 	slogger.Log.DebugContext(ctx, "Cache MISS for user", "id", id)
 	user, err := s.repo.GetUserByID(ctx, id)

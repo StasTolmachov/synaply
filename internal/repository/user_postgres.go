@@ -15,30 +15,19 @@ import (
 	"synaply/internal/repository/modelsDB"
 )
 
-var allowedUpdateColumns = map[string]bool{
-	"email":         true,
-	"password_hash": true,
-	"first_name":    true,
-	"last_name":     true,
-	"role":          true,
-	"source_lang":   true,
-	"target_lang":   true,
-	"total_correct": true,
-}
-
-type userRepo struct {
+type userRepoOld struct {
 	db    *Postgres
 	cache cache.CacheRepositoryI
 }
 
-func NewUserRepo(pg *Postgres) UserRepository {
-	return &userRepo{db: pg}
+func NewUserRepoOld(pg *Postgres) userRepository {
+	return &userRepository{db: pg}
 }
 
-func (r *userRepo) SetCache(c cache.CacheRepositoryI) {
+func (r *userRepository) SetCache(c cache.CacheRepositoryI) {
 	r.cache = c
 }
-func (r *userRepo) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.UserDB, error) {
+func (r *userRepository) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.UserDB, error) {
 
 	query := `
 		insert into users 
@@ -65,7 +54,7 @@ func (r *userRepo) Create(ctx context.Context, req *modelsDB.UserDB) (*modelsDB.
 	return &res, nil
 }
 
-func (r *userRepo) GetPasswordHashByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
+func (r *userRepository) GetPasswordHashByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
 	query := `select id, email, password_hash, role, total_correct, first_name, last_name, source_lang, target_lang, created_at, updated_at from users where email = $1 and deleted_at is null`
 
 	var userModel modelsDB.UserDB
@@ -80,7 +69,7 @@ func (r *userRepo) GetPasswordHashByEmail(ctx context.Context, email string) (*m
 
 }
 
-func (r *userRepo) GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.UserDB, error) {
+func (r *userRepository) GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.UserDB, error) {
 	query := `
         select id, email, first_name, last_name, role, created_at, updated_at, source_lang, target_lang, total_correct, password_hash
         from users 
@@ -96,7 +85,7 @@ func (r *userRepo) GetUserByID(ctx context.Context, id uuid.UUID) (*modelsDB.Use
 	return &userModel, nil
 }
 
-func (r *userRepo) Delete(ctx context.Context, id uuid.UUID) error {
+func (r *userRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	query := `update users set deleted_at = now() where id = $1`
 	_, err := r.db.db.ExecContext(ctx, query, id)
 	if err != nil {
@@ -106,7 +95,7 @@ func (r *userRepo) Delete(ctx context.Context, id uuid.UUID) error {
 	return nil
 }
 
-func (r *userRepo) Update(ctx context.Context, id uuid.UUID, fields map[string]any) (*modelsDB.UserDB, error) {
+func (r *userRepository) Update(ctx context.Context, id uuid.UUID, fields map[string]any) (*modelsDB.UserDB, error) {
 
 	setParts := make([]string, 0, len(fields))
 	args := make([]any, 0, len(fields)+1)
@@ -144,7 +133,7 @@ func (r *userRepo) Update(ctx context.Context, id uuid.UUID, fields map[string]a
 	return &updatedUser, nil
 }
 
-func (r *userRepo) GetUsers(ctx context.Context, order string, pagination modelsDB.Pagination) ([]modelsDB.UserDB, uint64, error) {
+func (r *userRepository) GetUsers(ctx context.Context, order string, pagination modelsDB.Pagination) ([]modelsDB.UserDB, uint64, error) {
 	sortOrder := "DESC"
 	if strings.ToUpper(order) == "ASC" {
 		sortOrder = "ASC"
@@ -177,7 +166,7 @@ func (r *userRepo) GetUsers(ctx context.Context, order string, pagination models
 	return usersDB, total, nil
 }
 
-func (r *userRepo) GetUserByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
+func (r *userRepository) GetUserByEmail(ctx context.Context, email string) (*modelsDB.UserDB, error) {
 	query := `
         select id, email, first_name, last_name, role, source_lang, target_lang, created_at, updated_at, total_correct, password_hash
         from users 
@@ -193,7 +182,7 @@ func (r *userRepo) GetUserByEmail(ctx context.Context, email string) (*modelsDB.
 	return &userModel, nil
 }
 
-func (r *userRepo) GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error) {
+func (r *userRepository) GetTotalCorrect(ctx context.Context, userID uuid.UUID) (int64, error) {
 	query := `
 select total_correct
 from users
@@ -209,7 +198,7 @@ where deleted_at is null and id = $1
 	}
 	return totalCorrect, nil
 }
-func (r *userRepo) SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error) {
+func (r *userRepository) SetTotalCorrect(ctx context.Context, userID uuid.UUID, totalCorrectUpdate int64) (int64, error) {
 	query := `
 update users
 set total_correct = $1
@@ -228,7 +217,7 @@ returning total_correct
 	return totalCorrect, nil
 }
 
-func (r *userRepo) GetAdminStats(ctx context.Context, search string) (*modelsDB.AdminStatsDB, error) {
+func (r *userRepository) GetAdminStats(ctx context.Context, search string) (*modelsDB.AdminStatsDB, error) {
 	queryStats := `
 		SELECT
 			(SELECT count(*) FROM users WHERE deleted_at IS NULL) as total_users,

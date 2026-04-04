@@ -7,7 +7,6 @@ CREATE TABLE word_lists (
                             title VARCHAR(255) NOT NULL,
                             description TEXT,
                             visibility VARCHAR(20) NOT NULL DEFAULT 'private',
-                            cover_url VARCHAR(512) NULL,
 
                             created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                             updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -32,7 +31,6 @@ CREATE TABLE courses (
                          description TEXT,
                          level VARCHAR(10),
                          status VARCHAR(20) NOT NULL DEFAULT 'draft',
-                         cover_url VARCHAR(512) NULL,
 
                          created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                          updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),

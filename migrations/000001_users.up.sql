@@ -7,7 +7,6 @@ CREATE TABLE users (
                        first_name VARCHAR(100) NOT NULL,
                        last_name VARCHAR(100) NOT NULL,
                        role VARCHAR(20) NOT NULL DEFAULT 'user',
-                       avatar_url VARCHAR(512) NULL,
 
                        created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                        updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
