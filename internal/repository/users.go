@@ -31,7 +31,7 @@ type UserRepository interface {
 	GetUserWithProfileByEmail(ctx context.Context, email string) (*models.User, *models.UserLearningProfile, error)
 	GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*models.User, *models.UserLearningProfile, error)
 	UpdateUser(ctx context.Context, id uuid.UUID, fields map[string]any) (*models.User, error)
-	DeleteUser(ctx context.Context, id string) error
+	DeleteUser(ctx context.Context, id uuid.UUID) error
 }
 
 type userRepository struct {
@@ -181,8 +181,7 @@ func (r *userRepository) UpdateUser(ctx context.Context, id uuid.UUID, fields ma
 	}
 	return &updatedUser, nil
 }
-
-func (r *userRepository) DeleteUser(ctx context.Context, id string) error {
+func (r *userRepository) DeleteUser(ctx context.Context, id uuid.UUID) error {
 	query := `
 UPDATE users 
 SET deleted_at = NOW()

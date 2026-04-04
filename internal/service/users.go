@@ -16,6 +16,7 @@ type UserService interface {
 	Login(ctx context.Context, req dto.LoginRequest) (*dto.TokenResponse, error)
 	GetUserWithProfileByID(ctx context.Context, id uuid.UUID) (*dto.UserDTO, error)
 	UpdateUser(ctx context.Context, id uuid.UUID, req dto.UpdateRequest) (*dto.UpdateResponse, error)
+	DeleteUser(ctx context.Context, id uuid.UUID) error
 }
 
 type userService struct {
@@ -173,4 +174,11 @@ func (s *userService) UpdateUser(ctx context.Context, id uuid.UUID, req dto.Upda
 		FirstName: updatedUser.FirstName,
 		LastName:  updatedUser.LastName,
 	}, nil
+}
+func (s *userService) DeleteUser(ctx context.Context, id uuid.UUID) error {
+	err := s.repo.DeleteUser(ctx, id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
