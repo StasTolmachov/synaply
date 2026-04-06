@@ -10,7 +10,6 @@ import (
 	"synaply/internal/models"
 	"synaply/internal/service"
 	"synaply/internal/utils"
-	"synaply/slogger"
 )
 
 type Handler struct {
@@ -22,15 +21,13 @@ func NewHandler(service service.UserService, v *utils.Validator) *Handler {
 	return &Handler{service: service, validator: v}
 }
 
-const MaxBodySize = 1048576 // 1MB
-
 func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
-	req, ok := utils.DecodeJSON[dto.RegisterRequest](w, r, MaxBodySize, h.validator)
+	req, ok := utils.DecodeJSON[dto.RegisterRequest](w, r, h.validator)
 	if !ok {
 		return
 	}
 
-	err := auth.ValidatePassword(req.Password)
+	err := auth.ValidatePassword(req.Password) //todo move to service
 	if err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err.Error())
 		return
@@ -43,7 +40,6 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		slogger.Log.ErrorContext(r.Context(), "Failed to register user", "email", req.Email, "error", err)
 		utils.WriteError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -52,7 +48,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
-	req, ok := utils.DecodeJSON[dto.LoginRequest](w, r, MaxBodySize, h.validator)
+	req, ok := utils.DecodeJSON[dto.LoginRequest](w, r, h.validator)
 	if !ok {
 		return
 	}
@@ -77,7 +73,7 @@ func (h *Handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(w, http.StatusUnauthorized, "Unauthorized")
 		return
 	}
-	req, ok := utils.DecodeJSON[dto.UpdateRequest](w, r, MaxBodySize, h.validator)
+	req, ok := utils.DecodeJSON[dto.UpdateRequest](w, r, h.validator)
 	if !ok {
 		return
 	}

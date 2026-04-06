@@ -1,0 +1,22 @@
+# .mockery.yaml
+
+# Включает генерацию type-safe методов (это просто киллер-фича, объясню ниже!)
+with-expecter: true
+
+# Глобальные настройки путей и имен файлов
+# {{.InterfaceDir}} - это папка, где лежит сам интерфейс
+dir: "{{.InterfaceDir}}/mocks"
+outpkg: "mocks"
+mockname: "Mock{{.InterfaceName}}"
+filename: "mock_{{.InterfaceName | snakecase}}.go"
+
+# Указываем, в каких пакетах искать интерфейсы для генерации
+packages:
+  synaply/internal/service:
+    interfaces:
+      # Указываем имена интерфейсов. Если оставить пустым, сгенерирует для указанного
+      UserService:
+
+  synaply/internal/repository:
+    interfaces:
+      UserRepository:
