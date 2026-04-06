@@ -27,11 +27,8 @@ func WriteValidationError(w http.ResponseWriter, err error, v *Validator) {
 	JSONResponse(w, http.StatusBadRequest, validationResp)
 }
 
-func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, maxBytes int64, v *Validator) (T, bool) {
+func DecodeJSON[T any](w http.ResponseWriter, r *http.Request, v *Validator) (T, bool) {
 	var val T
-	if maxBytes > 0 {
-		r.Body = http.MaxBytesReader(w, r.Body, maxBytes)
-	}
 
 	err := json.NewDecoder(r.Body).Decode(&val)
 	if err != nil {

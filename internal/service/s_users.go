@@ -41,7 +41,7 @@ func (s *userService) Register(ctx context.Context, req dto.RegisterRequest) (*d
 	userID := uuid.New()
 	profileID := uuid.New()
 
-	user := &models.User{
+	user := &models.User{ //todo
 		ID:           userID,
 		Email:        req.Email,
 		PasswordHash: hash,
@@ -55,7 +55,7 @@ func (s *userService) Register(ctx context.Context, req dto.RegisterRequest) (*d
 		UserID:           userID,
 		SourceLang:       req.SourceLang,
 		TargetLang:       req.TargetLang,
-		RequestRetention: 0.90,
+		RequestRetention: 0.90, //todo
 		MaximumInterval:  36500,
 		IsActive:         true,
 	}
@@ -100,7 +100,7 @@ func (s *userService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 	if err != nil {
 		return nil, err
 	}
-	resp := &dto.TokenResponse{
+	resp := &dto.TokenResponse{ //todo
 		Token: token,
 		User: dto.UserDTO{
 			ID:        user.ID,
@@ -138,7 +138,7 @@ func (s *userService) UpdateUser(ctx context.Context, id uuid.UUID, req dto.Upda
 	}
 
 	if len(fieldsReq) == 0 {
-		user, err := s.repo.GetUserByID(ctx, id)
+		user, err := s.repo.GetUserByID(ctx, id) //todo is it needed?
 		if err != nil {
 			return nil, err
 		}

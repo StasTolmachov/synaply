@@ -27,6 +27,7 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 	}))
 
 	r.Use(middleware.LoggerMiddleware)
+	r.Use(middleware.LimitPayloadSize)
 
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
