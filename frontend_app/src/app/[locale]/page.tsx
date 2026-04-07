@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter, Link } from '@/i18n/routing';
-import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe, ArrowLeft } from 'lucide-react';
+import { Brain, Zap, Infinity, Bot, ArrowRight, CheckCircle, Sparkles, MessageSquare, Languages, Database, BarChart3, Target, Globe, ArrowLeft, Star } from 'lucide-react';
 import { useTranslation } from '@/components/I18nContext';
 
 export default function LandingPage() {
