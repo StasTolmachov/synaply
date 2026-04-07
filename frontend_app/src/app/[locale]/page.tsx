@@ -24,6 +24,10 @@ export default function LandingPage() {
 
   useEffect(() => {
     setMounted(true);
+    // Force English for landing page
+    if (setLang) {
+      setLang('en', false);
+    }
     // Check login state
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
@@ -36,7 +40,7 @@ export default function LandingPage() {
         resetToSaved();
       }
     };
-  }, [resetToSaved]); // Only on mount/unmount
+  }, [resetToSaved, setLang]); // Only on mount/unmount
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -301,6 +305,16 @@ export default function LandingPage() {
               </Link>
             </div>
               <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
+                <a 
+                  href="https://calendar.app.google/h6jhP5YxKDxrjobw9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-2 rounded-full bg-synaply-blue/10 text-synaply-blue dark:text-blue-400 font-bold text-xs uppercase tracking-wider hover:bg-synaply-blue/20 transition-all border border-synaply-blue/20"
+                >
+                  <Star className="w-3.5 h-3.5 mr-2 fill-current" />
+                  <span className="hidden sm:inline">{t('landing.book_demo')}</span>
+                  <span className="sm:hidden">Demo</span>
+                </a>
                 <Link href="/public-lists" className="hidden md:inline text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors">{t('dashboard.public_lists.title')}</Link>
                 <Link href="/help" className="hidden md:inline text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-synaply-blue dark:hover:text-synaply-cyan transition-colors">{t('common.help')}</Link>
                 {mounted && (isLoggedIn ? (
