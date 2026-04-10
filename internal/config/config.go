@@ -31,7 +31,8 @@ type DB struct {
 }
 
 type Api struct {
-	Port string
+	Port           string
+	AllowedOrigins []string
 }
 
 type Redis struct {
