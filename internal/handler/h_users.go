@@ -98,5 +98,5 @@ func (h *Handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	utils.JSONResponse(w, http.StatusOK, nil)
+	w.WriteHeader(http.StatusNoContent)
 }

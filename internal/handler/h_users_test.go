@@ -131,7 +131,7 @@ func TestHandler_Register(t *testing.T) {
 			// Проверяем, совпадает ли реальный статус код с ожидаемым
 			assert.Equal(t, tc.expectedStatus, rec.Code)
 
-			if tc.expectedStatus == http.StatusOK {
+			if tc.expectedStatus == http.StatusCreated {
 				var resp dto.TokenResponse
 				err := json.Unmarshal(rec.Body.Bytes(), &resp)
 				assert.NoError(t, err)
