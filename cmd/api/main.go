@@ -1,8 +1,9 @@
 package main
 
 import (
-	"log"
+	"context"
 	"log/slog"
+	"os"
 
 	"synaply/internal/config"
 	"synaply/internal/server"
@@ -10,14 +11,16 @@ import (
 )
 
 func main() {
-
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	slogger.MakeLogger("development")
 
 	cfg, err := config.Load()
 	if err != nil {
-		log.Fatalf("Error loading config: %s", err)
+		slog.Error("Error loading config", slog.String("error", err.Error()))
+		os.Exit(1)
 	}
 
-	slog.Info("Starting server...", "env", cfg.Env, slogger.KeyPort, cfg.HTTPPort)
-	server.StartServer(*cfg)
+	slog.Info("Starting server...")
+	server.StartServer(ctx, *cfg)
 }
