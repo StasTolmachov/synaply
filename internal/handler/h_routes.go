@@ -26,7 +26,7 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 		MaxAge:           300,
 	}))
 
-	r.Use(middleware.LoggerMiddleware)
+	r.Use(middleware.RequestLogger())
 	r.Use(middleware.LimitPayloadSize)
 
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
@@ -36,8 +36,6 @@ func RegisterRoutes(h *Handler) *chi.Mux {
 		r.Route("/users", func(r chi.Router) {
 			r.Use(httprate.LimitByIP(5, 1*time.Minute))
 
-			r.Post("/register", h.Register)
-			r.Post("/login", h.Login)
 		})
 
 	})

@@ -1,42 +1,59 @@
 package config
 
 import (
-	"errors"
+	"fmt"
+	"log/slog"
 	"os"
+	"time"
 
+	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	Env         string
-	HTTPPort    string
-	PostgresDSN string
-	RedisURL    string
+	Api      Api      `yaml:"api"`
+	Postgres Postgres `yaml:"postgres"`
+	Redis    Redis    `yaml:"redis"`
+	JWT      JWT
+}
+
+type Api struct {
+	Env      string `yaml:"env"`
+	HTTPPort string `yaml:"http_port"`
+}
+
+type Postgres struct {
+	URl      string `yaml:"url" env:"POSTGRES_URL"`
+	MaxConns int32  `yaml:"max_conns"`
+	MinConns int32  `yaml:"min_conns"`
+}
+
+type Redis struct {
+	URL string `yaml:"url" env:"REDIS_URL"`
+}
+type JWT struct {
+	Secret string        `yaml:"secret" env:"JWT_SECRET"`
+	TTL    time.Duration `yaml:"ttl" env:"JWT_TTL"`
 }
 
 func Load() (*Config, error) {
-	_ = godotenv.Load()
 
-	cfg := &Config{
-		Env:         getEnv("APP_ENV", "development"),
-		HTTPPort:    getEnv("HTTP_PORT", "8080"),
-		PostgresDSN: getEnv("POSTGRES_DSN", ""),
-		RedisURL:    getEnv("REDIS_URL", ""),
+	if err := godotenv.Load(); err != nil {
+		slog.Warn("No .env file found")
 	}
 
-	if cfg.PostgresDSN == "" {
-		return nil, errors.New("POSTGRES_DSN environment variable is required")
-	}
-	if cfg.RedisURL == "" {
-		return nil, errors.New("REDIS_URL environment variable is required")
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		configPath = "config.yaml"
 	}
 
-	return cfg, nil
-}
-
-func getEnv(key, fallback string) string {
-	if value, exists := os.LookupEnv(key); exists {
-		return value
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("config file not found: %s", configPath)
 	}
-	return fallback
+	var config Config
+
+	if err := cleanenv.ReadConfig(configPath, &config); err != nil {
+		return nil, fmt.Errorf("config error: %w", err)
+	}
+	return &config, nil
 }
