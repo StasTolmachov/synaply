@@ -14,7 +14,7 @@ type Config struct {
 	Api      Api      `yaml:"api"`
 	Postgres Postgres `yaml:"postgres"`
 	Redis    Redis    `yaml:"redis"`
-	JWT      JWT
+	JWT      JWT      `yaml:"jwt"`
 }
 
 type Api struct {
