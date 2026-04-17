@@ -8,6 +8,8 @@ services:
       POSTGRES_URL: ${POSTGRES_URL}
       REDIS_URL: ${REDIS_URL}
       CONFIG_PATH: /app/config.yaml
+    volumes:
+      - ./config.yaml:/app/config.yaml
     depends_on:
       - postgres
       - redis
