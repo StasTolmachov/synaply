@@ -50,6 +50,7 @@ func Load() (*Config, error) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		return nil, fmt.Errorf("config file not found: %s", configPath)
 	}
+
 	var config Config
 
 	if err := cleanenv.ReadConfig(configPath, &config); err != nil {

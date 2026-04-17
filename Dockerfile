@@ -27,4 +27,4 @@ HEALTHCHECK --interval=30s --timeout=3s \
 
 EXPOSE 8080
 
-CMD ["./app"]
+CMD ["./app"] 
