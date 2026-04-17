@@ -21,6 +21,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	slogger.MakeLogger(cfg.Api.Env)
+
 	slog.Info("Starting server...")
 	server.StartServer(ctx, *cfg)
 }

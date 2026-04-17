@@ -10,7 +10,7 @@ import (
 )
 
 func NewPostgres(ctx context.Context, config config.Postgres) (*pgxpool.Pool, error) {
-	configPool, err := pgxpool.ParseConfig(config.URl)
+	configPool, err := pgxpool.ParseConfig(config.URL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse URL config DB: %w", err)
 	}
