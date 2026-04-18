@@ -58,10 +58,13 @@ func StartServer(ctx context.Context, config config.Config) {
 	httpServer := &http.Server{
 		Addr:         ":" + config.Api.HTTPPort,
 		Handler:      router,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  120 * time.Second,
 	}
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
 		slogger.Log.Info("Starting http server on port", "port:", config.Api.HTTPPort)
@@ -70,16 +73,14 @@ func StartServer(ctx context.Context, config config.Config) {
 		}
 	}()
 
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+	sig := <-stop
+	log.Printf("Got a signal: %v. Shutting down server...", sig)
 
-	<-stop
-	log.Println("Shutting down server...")
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	if err := httpServer.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown:", err)
+		log.Fatalf("Server forced to shutdown: %v", err)
 	}
 
 	log.Println("Waiting for background tasks to finish...")
