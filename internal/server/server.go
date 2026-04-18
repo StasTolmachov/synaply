@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -11,6 +12,7 @@ import (
 
 	"synaply/internal/auth"
 	"synaply/internal/config"
+	"synaply/internal/database"
 	"synaply/internal/handler"
 	"synaply/internal/repository"
 	"synaply/internal/service"
@@ -18,33 +20,43 @@ import (
 	"synaply/slogger"
 )
 
-func StartServer(cfg config.Config) {
-	db, err := repository.NewPostgres(cfg.DB)
+func StartServer(ctx context.Context, config config.Config) {
+
+	pgPool, err := database.NewPostgres(ctx, config.Postgres)
 	if err != nil {
-		log.Fatalf("Error connecting to database: %s", err)
+		slog.ErrorContext(ctx, "Error connecting to database", slog.String("error", err.Error()))
+		os.Exit(1)
 	}
-	defer db.Close()
+	defer pgPool.Close()
 
-	userRepo := repository.NewUserRepo(db)
+	redisClient, err := database.NewRedis(ctx, config.Redis)
+	if err != nil {
+		slog.ErrorContext(ctx, "Error connecting to redis", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
 
-	jwt := auth.NewJWTManager(cfg.JWT.Secret, cfg.JWT.TTL)
+	userRepo := repository.NewUserRepo(pgPool)
 
-	userServ := service.NewService(userRepo, jwt)
+	jwt := auth.NewJWTManager(config.JWT.Secret, config.JWT.TTL)
+
+	userServ := service.NewService(userRepo, jwt, redisClient)
+
 	validator, err := utils.NewValidator()
 	if err != nil {
 		log.Fatalf("Error creating validator: %s", err)
 	}
+
 	userHandler := handler.NewHandler(userServ, validator)
 
-	ctxBG := context.Background()
-	if err := userServ.SyncAdmin(ctxBG, cfg.Admin); err != nil {
-		log.Fatal("Failed to sync admin user:", err)
-	}
+	//ctxBG := context.Background()
+	//if err := userServ.SyncAdmin(ctxBG, config.Admin); err != nil {
+	//	log.Fatal("Failed to sync admin user:", err)
+	//}
 
 	router := handler.RegisterRoutes(userHandler)
 
 	httpServer := &http.Server{
-		Addr:         ":" + cfg.Api.Port,
+		Addr:         ":" + config.Api.HTTPPort,
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
@@ -52,7 +64,7 @@ func StartServer(cfg config.Config) {
 	}
 
 	go func() {
-		slogger.Log.Info("Starting http server on port", "port:", cfg.Api.Port)
+		slogger.Log.Info("Starting http server on port", "port:", config.Api.HTTPPort)
 		if err := httpServer.ListenAndServe(); err != nil {
 			log.Fatalf("Error starting server: %s", err)
 		}

@@ -1,0 +1,9 @@
+api:
+  env: "development"
+  http_port: "8080"
+
+postgres:
+  max_conns: 20
+  min_conns: 5
+
+redis:

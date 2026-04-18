@@ -1,7 +1,7 @@
 .PHONY: run db-up db-down redis-up api-up docker-up docker-down dev frontend-dev docker-del
 
 db-up:
-	docker compose up -d db
+	docker compose up -d postgres
 
 redis-up:
 	docker compose up -d redis
