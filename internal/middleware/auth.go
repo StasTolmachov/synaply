@@ -24,6 +24,9 @@ func GetUserFromContext(ctx context.Context) (*models.User, error) {
 	return user, nil
 }
 
+// AdminOnly is middleware that restricts access to routes for users with an admin role.
+// It checks the user's role from the context and returns a 403 Forbidden response if the role is not admin.
+// If no user is found in the context, it returns a 401 Unauthorized response.
 func AdminOnly(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user, err := GetUserFromContext(r.Context())
@@ -41,6 +44,8 @@ func AdminOnly(next http.Handler) http.Handler {
 	})
 }
 
+// AuthMiddleware is an HTTP middleware that authenticates and authorizes requests using a TokenMaker.
+// It extracts the Authorization header, validates the Bearer token, and sets the user context for downstream handlers.
 func AuthMiddleware(tm auth.TokenMaker) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
