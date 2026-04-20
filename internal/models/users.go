@@ -14,6 +14,7 @@ const (
 	RoleUser      Role = "user"
 	RoleModerator Role = "moderator"
 	RoleAdmin     Role = "admin"
+	RoleTeacher   Role = "teacher"
 )
 
 type User struct {
@@ -23,6 +24,7 @@ type User struct {
 	FirstName    string    `db:"first_name"`
 	LastName     string    `db:"last_name"`
 	Role         Role      `db:"role"`
+	SourceLang   string    `db:"source_lang"`
 
 	CreatedAt time.Time  `db:"created_at"`
 	UpdatedAt time.Time  `db:"updated_at"`

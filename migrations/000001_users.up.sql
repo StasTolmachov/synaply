@@ -6,13 +6,14 @@ CREATE TABLE users (
                        password_hash VARCHAR(255) NOT NULL,
                        first_name VARCHAR(100) NOT NULL,
                        last_name VARCHAR(100) NOT NULL,
+                       source_lang VARCHAR(10) NOT NULL,
                        role VARCHAR(20) NOT NULL DEFAULT 'user',
 
                        created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                        updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                        deleted_at TIMESTAMPTZ NULL,
 
-                       CONSTRAINT check_role CHECK ( role IN ('user', 'moderator', 'admin') )
+                       CONSTRAINT check_role CHECK ( role IN ('user', 'moderator', 'admin', 'teacher') )
 );
 CREATE UNIQUE INDEX idx_users_email_active ON users (email) WHERE deleted_at IS NULL;
 

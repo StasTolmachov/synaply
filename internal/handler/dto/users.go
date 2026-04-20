@@ -10,7 +10,7 @@ type RegisterRequest struct {
 	FirstName  string `json:"first_name" validate:"required" example:"John"`
 	LastName   string `json:"last_name" validate:"required" example:"Doe"`
 	SourceLang string `json:"source_lang" validate:"required" example:"en"`
-	TargetLang string `json:"target_lang" validate:"required,nefield=SourceLang" example:"es"`
+	//TargetLang string `json:"target_lang" validate:"required,nefield=SourceLang" example:"es"`
 }
 
 type LoginRequest struct {
